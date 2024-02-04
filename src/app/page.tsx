@@ -1,5 +1,9 @@
-import Image from "next/image";
+import { NextPage } from "next";
 
-export default function Home() {
-  return <main className=""></main>;
-}
+const Home: NextPage = () => (
+  <div className="text-3xl font-bold underline p-10">
+    <h1 className="text-blue-500"> Hello </h1>
+  </div>
+);
+
+export default Home;
