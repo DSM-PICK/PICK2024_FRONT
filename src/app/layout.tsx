@@ -1,4 +1,5 @@
 import "../../tailwind.config";
+import "../styles/global.css";
 
 export const metadata = {
   title: "pick",
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="s">{children}</body>
+      <body className="">{children}</body>
     </html>
   );
 }
