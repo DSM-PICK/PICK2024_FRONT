@@ -57,7 +57,7 @@ const Input: React.FC<InputProps> = ({
           type={type === "password" ? (showOpen ? "text" : "password") : type}
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange({ text: e.target.value, name: "value" })}
+          onChange={(e) => onChange({ text: e.target.value, name })}
           disabled={disabled}
         />
         {type === "password" && (
