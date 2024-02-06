@@ -34,7 +34,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const [showOpen, setShowOpen] = useState<boolean>(false);
 
-  const containerClassName = `w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2
+  const containerClassName = ` font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2
     ${
       error
         ? "border-error-500 bg-error-900"
@@ -45,12 +45,12 @@ const Input: React.FC<InputProps> = ({
     `;
 
   const inputClassName = ` h-10 px-2 border-none bg-transparent placeholder-neutral-500 
-    focus:outline-none rounded
+    focus:outline-none rounded font-sans
     `;
 
   return (
     <div>
-      <label className="text-label1 text-neutral-50">{label}</label>
+      <label className=" font-sans text-label1 text-neutral-50">{label}</label>
       <div className={containerClassName}>
         <input
           className={inputClassName}
