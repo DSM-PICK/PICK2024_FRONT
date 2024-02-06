@@ -21,13 +21,13 @@ const config: Config = {
           "200": "#4d2485",
           "300": "#6532ad",
           "400": "#7e40d5",
-          "500": "9650fa",
+          "500": "#9650fa",
           "600": "#aa71fb",
           "700": "#be93fc",
           "800": "#d2b4fd",
           "900": "#e6d5fe",
           "1000": "#faf6ff",
-          "1200": "#f714f9",
+          "1200": "#f7f4f9",
         },
         secondary: {
           "50": "#130C33",
@@ -275,6 +275,12 @@ const config: Config = {
             fontWeight: "500",
           },
         ],
+      },
+      placeholderColor: {
+        nature: "#98a2b3",
+      },
+      width: {
+        "92": "27.375rem",
       },
     },
   },
