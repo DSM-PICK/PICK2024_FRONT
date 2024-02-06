@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.font-sans-kr {
+.font-sans {
   font-family: "Noto Sans KR";
 }
