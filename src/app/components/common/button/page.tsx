@@ -9,7 +9,7 @@ interface ButtonProp {
     | "ghost"
     | "solidDisabled"
     | "ghostDisabled";
-  content: string;
+  children: string;
   buttonSize:
     | "full"
     | "extraLarge"
@@ -23,7 +23,7 @@ interface ButtonProp {
 
 const Button: React.FC<ButtonProp> = ({
   colorType,
-  content,
+  children,
   buttonSize,
   Icon,
 }) => {
@@ -72,7 +72,7 @@ const Button: React.FC<ButtonProp> = ({
     <div
       className={`flex gap-2.5 ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
     >
-      <div>{content}</div>
+      <div>{children}</div>
       <div>{Icon && <img src={Icon.src} width={20} height={20} />}</div>
     </div>
   );
