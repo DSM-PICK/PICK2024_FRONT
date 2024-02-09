@@ -20,7 +20,6 @@ const SignUp: NextPage = () => {
 
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
-    console.log({ ...data });
   };
   return (
     <div className=" font-sans flex justify-center items-center gap-6 bg-primary-1200 p-sign h-lvh">
