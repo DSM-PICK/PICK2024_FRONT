@@ -19,6 +19,7 @@ interface ButtonProp {
     | "extraSmall"
     | "extraSmall2";
   Icon?: StaticImageData;
+  onClick: () => void;
 }
 
 const Button: React.FC<ButtonProp> = ({
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProp> = ({
   children,
   buttonSize,
   Icon,
+  onClick,
 }) => {
   const getColorClass = () => {
     switch (colorType) {
@@ -70,6 +72,7 @@ const Button: React.FC<ButtonProp> = ({
 
   return (
     <div
+      onClick={onClick}
       className={`flex gap-2.5 ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
     >
       <div>{children}</div>
