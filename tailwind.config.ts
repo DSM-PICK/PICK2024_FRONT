@@ -13,6 +13,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        sideImg: "url('/assets/img/signUpImg.svg')",
       },
       colors: {
         primary: {
@@ -280,7 +281,26 @@ const config: Config = {
         nature: "#98a2b3",
       },
       width: {
+        "100": "34.563rem",
         "92": "27.375rem",
+        "76": "18.5rem",
+        "50": "12.438rem",
+        "42": "10.25rem",
+        "38": "9.375rem",
+        "30": "7.438rem",
+      },
+      height: {
+        "13": "3.25rem",
+        "7.5": "1.875rem",
+        "": "53.75rem",
+      },
+      gap: {
+        "29": "7.25rem",
+      },
+      padding: {
+        sign: "6.875rem 0rem",
+        13: "3.25rem",
+        44: "10.688rem",
       },
     },
   },
