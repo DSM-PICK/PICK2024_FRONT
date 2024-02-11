@@ -15,15 +15,13 @@ import outStudent from "../../assets/img/외출 일러스트.png";
 import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
+import { getWeekDay } from "@/utils/getWeekDay";
 
 const Main = () => {
   const teacher = "";
   const today = new Date();
   const Nightcheck = `${1}층 자습감독`;
   //api연동하면서 추가 할 예정
-  const onClickF = () => {
-    console.log("클릭");
-  };
 
   return (
     <div className="bg-primary-1200 h-full">
@@ -81,27 +79,27 @@ const Main = () => {
         <div className="flex gap-6">
           <div className=" bg-white rounded-tl-max rounded-lg">
             <CheckPage
+              href="outAccept"
               img={outStudent}
               buttonChildren="외출 수락하러 가기"
-              onClick={onClickF}
               color="primary"
               contentChildren="현재 외출중인 "
             />
           </div>
           <div className=" bg-white rounded-tr-max rounded-lg">
             <CheckPage
+              href=""
               img={apply}
               buttonChildren="출결 상태 확인하기"
-              onClick={onClickF}
               color="secondary"
               contentChildren="현재 외출/조기 귀가 신청 "
             />
           </div>
           <div className=" bg-white rounded-br-max rounded-lg">
             <CheckPage
+              href="classChange"
               img={changeStudent}
               buttonChildren="외출 수락하러 가기"
-              onClick={onClickF}
               color="tertiary"
               contentChildren="현재 교실 이동한 "
             />
