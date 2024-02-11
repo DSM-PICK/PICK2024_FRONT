@@ -277,6 +277,7 @@ const config: Config = {
           },
         ],
       },
+
       placeholderColor: {
         nature: "#98a2b3",
       },
@@ -288,19 +289,28 @@ const config: Config = {
         "42": "10.25rem",
         "38": "9.375rem",
         "30": "7.438rem",
+        "29": "7.25rem",
       },
       height: {
         "13": "3.25rem",
         "7.5": "1.875rem",
         "": "53.75rem",
+        "29": "7.25rem",
       },
       gap: {
         "29": "7.25rem",
+        17: "4.5rem",
       },
       padding: {
         sign: "6.875rem 0rem",
         13: "3.25rem",
         44: "10.688rem",
+        70: "17.5rem",
+        100: "24.688rem",
+        23: "5.75rem",
+      },
+      borderRadius: {
+        max: "3.75rem",
       },
     },
   },
