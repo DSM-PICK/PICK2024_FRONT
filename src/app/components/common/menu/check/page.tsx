@@ -1,22 +1,27 @@
+"use client";
 import { StaticImageData } from "next/image";
 import Button from "../../button/page";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface CheckProps {
   img: StaticImageData;
   buttonChildren: string;
-  onClick: () => void;
   color: "primary" | "secondary" | "tertiary";
   contentChildren: string;
+  href: string;
 }
 
 const CheckPage: React.FC<CheckProps> = ({
   img,
+  href,
   buttonChildren,
-  onClick,
   color,
   contentChildren,
 }) => {
+  const router = useRouter();
+
   const children = () => {
     switch (color) {
       case "primary":
@@ -24,7 +29,7 @@ const CheckPage: React.FC<CheckProps> = ({
           <div className=" text-center">
             {contentChildren}
             학생은 <br /> 총
-            <span className={`text-${color}-500`}> {/*api*/ 4}명</span>
+            <span className="text-primary-500"> {/*api*/ 4}명</span>
             입니다.
           </div>
         );
@@ -32,14 +37,14 @@ const CheckPage: React.FC<CheckProps> = ({
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생은 총
-            <span className={`text-${color}-500`}> {/*api*/ 4}명</span>입니다.
+            <span className="text-secondary-500"> {/*api*/ 4}명</span>입니다.
           </div>
         );
       case "tertiary":
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생수는 총
-            <span className={`text-${color}-500`}> {/*api*/ 4}명</span>입니다.
+            <span className="text-tertiary-500"> {/*api*/ 4}명</span>입니다.
           </div>
         );
       default:
@@ -59,7 +64,7 @@ const CheckPage: React.FC<CheckProps> = ({
         colorType={color}
         children={buttonChildren}
         buttonSize="extraLarge"
-        onClick={onClick}
+        onClick={() => router.push(href)}
       />
     </div>
   );

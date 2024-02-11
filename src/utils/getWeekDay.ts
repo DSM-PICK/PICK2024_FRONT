@@ -1,5 +1,5 @@
 const today = new Date();
-const getWeekDay = () => {
+export function getWeekDay() {
   switch (today.getDay()) {
     case 0:
       return "일";
@@ -18,4 +18,4 @@ const getWeekDay = () => {
     default:
       return "";
   }
-};
+}
