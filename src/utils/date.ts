@@ -1,4 +1,5 @@
 const today = new Date();
+
 export function getWeekDay() {
   switch (today.getDay()) {
     case 0:
@@ -20,8 +21,21 @@ export function getWeekDay() {
   }
 }
 
+export function getMonth() {
+  return today.getMonth() + 1;
+}
+
+export function getDay() {
+  return today.getDate();
+}
+
+const month = getMonth().toString().padStart(2, "0");
+const day = getDay().toString().padStart(2, "0");
+
+export function getFullToday() {
+  return `${today.getFullYear()}-${month}-${day}`;
+}
+
 export function getToday() {
-  const formattedMonth = (today.getMonth() + 1).toString().padStart(2, "0");
-  const formattedDay = today.getDate().toString().padStart(2, "0");
-  return `${today.getFullYear()}-${formattedMonth}-${formattedDay}`;
+  return `${month}-${day}`;
 }
