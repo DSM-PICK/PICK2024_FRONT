@@ -15,7 +15,7 @@ import outStudent from "../../assets/img/외출 일러스트.png";
 import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
-import { getWeekDay } from "@/utils/getWeekDay";
+import { getWeekDay } from "@/utils/date";
 
 const Main = () => {
   const teacher = "";

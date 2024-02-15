@@ -77,7 +77,7 @@ const Button: React.FC<ButtonProp> = ({
   return (
     <div
       onClick={onClick}
-      className={`flex gap-2.5 ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
+      className={`flex ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
     >
       <div>{children}</div>
       <div>{Icon && <img src={Icon.src} width={20} height={20} />}</div>
