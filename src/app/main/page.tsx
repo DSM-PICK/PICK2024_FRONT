@@ -88,7 +88,7 @@ const Main = () => {
           </div>
           <div className=" bg-white rounded-tr-max rounded-lg">
             <CheckPage
-              href=""
+              href="/outList"
               img={apply}
               buttonChildren="출결 상태 확인하기"
               color="secondary"
