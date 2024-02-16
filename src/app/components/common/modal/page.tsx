@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
         <div className="bg-white rounded-xl px-24 py-13 w-155">
           <div className="flex flex-col gap-8 items-center">
             <div className="font-sans text-heading5 text-neutral-50 text-center">
-              <div>{heading1}</div>
+              <div className=" max-w-none">{heading1}</div>
               <div>{heading2}</div>
             </div>
             <div className="font-sans text-sub-title2-M text-neutral-400 text-center">
