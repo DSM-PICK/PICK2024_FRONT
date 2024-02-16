@@ -27,7 +27,7 @@ export const Dropdown: React.FC<DropProps> = ({ type }) => {
     setSelectedOption(option);
     setIsDropdownVisible(false);
   };
-  const commonStyle = "py-5 px-3 rouded";
+  const commonStyle = "py-5 px-3 rouded hover:bg-primary-200 hover:text-white";
 
   return (
     <div className="relative w-38">
@@ -44,7 +44,7 @@ export const Dropdown: React.FC<DropProps> = ({ type }) => {
         />
       </div>
       {isDropdownVisible && (
-        <div className="absolute bg-white border rounded-lg w-full text-Button-S">
+        <div className="absolute bg-white border rounded-lg w-full text-Button-S z-20">
           {type === "floor" && (
             <>
               <div

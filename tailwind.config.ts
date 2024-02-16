@@ -316,6 +316,7 @@ const config: Config = {
         44: "10.688rem",
         70: "17.5rem",
         100: "24.688rem",
+        30: "7.4rem",
         23: "5.75rem",
       },
       borderRadius: {
@@ -326,6 +327,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;
