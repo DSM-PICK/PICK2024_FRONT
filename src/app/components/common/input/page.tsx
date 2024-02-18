@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({
     `;
 
   return (
-    <div>
+    <div className=" flex flex-col items-start">
       <label className=" font-sans text-label1 text-neutral-50">{label}</label>
       <div className={containerClassName}>
         <input
