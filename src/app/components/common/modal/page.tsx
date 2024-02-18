@@ -17,7 +17,7 @@ interface ModalProps {
   onCancel: () => void;
   onConfirm: () => void;
   date?: Date | null;
-  teachers: string[] | undefined;
+  teachers?: string[] | undefined;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -42,8 +42,16 @@ const Modal: React.FC<ModalProps> = ({
     fourth: "",
   });
 
+  const [scheduleData, setScheduleData] = useState({
+    schedule: "",
+  });
+
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
+  };
+
+  const SchehandleChange = ({ text, name }: ChangeProps) => {
+    setScheduleData({ ...scheduleData, [name]: text });
   };
 
   const renderButtons = () => {
@@ -130,9 +138,9 @@ const Modal: React.FC<ModalProps> = ({
                   <Input
                     type="text"
                     label="제목*"
-                    onChange={handleChange}
-                    value=""
-                    name="schdule"
+                    onChange={SchehandleChange}
+                    value={scheduleData.schedule}
+                    name="schedule"
                     placeholder="일정제목"
                     width="92"
                   />
