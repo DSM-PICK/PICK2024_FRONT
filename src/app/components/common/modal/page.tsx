@@ -17,7 +17,7 @@ interface ModalProps {
   onCancel: () => void;
   onConfirm: () => void;
   date?: Date | null;
-  teachers: string[] | undefined;
+  teachers?: string[] | undefined;
 }
 
 const Modal: React.FC<ModalProps> = ({
