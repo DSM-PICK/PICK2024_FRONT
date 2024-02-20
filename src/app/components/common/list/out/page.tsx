@@ -54,7 +54,7 @@ export const Out: React.FC<OutProps> = ({ student, returnTime }) => {
       {modal && (
         <Modal
           heading1={`${student} 학생의`}
-          heading2="외출을 수락하시겠습니까?"
+          heading2="외출을 끝내시겠습니까?"
           type="button"
           buttonMessage="확인"
           onCancel={closeModal}
