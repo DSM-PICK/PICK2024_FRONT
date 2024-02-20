@@ -30,7 +30,7 @@ export const AcceptList: React.FC<AcceptProps> = ({
       onClick={handleClick}
     >
       <div className="flex justify-between">
-        <div className="text-ladel1">{student}</div>
+        <div className="text-label1">{student}</div>
         <div className="text-neutral-400">{time}</div>
       </div>
       <div className={`${isActive ? "flex" : "hidden"} group-hover:flex`}>

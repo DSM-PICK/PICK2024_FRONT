@@ -234,14 +234,14 @@ const config: Config = {
             fontWeight: "400",
           },
         ],
-        ladel1: [
+        label1: [
           "16px",
           {
             letterSpacing: "0.15px",
             fontWeight: "500",
           },
         ],
-        ladel2: [
+        label2: [
           "12px",
           {
             letterSpacing: "0.15px",

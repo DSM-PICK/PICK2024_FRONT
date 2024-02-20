@@ -57,7 +57,7 @@ const SignUp: NextPage = () => {
                 value={data.rePassword}
               />
             </div>
-            <div className=" font-sans text-ladel2 text-neutral-50 flex gap-1">
+            <div className=" font-sans text-label2 text-neutral-50 flex gap-1">
               이미 계정이 있으신가요?
               <Link href={"/login"} className=" text-secondary-500 underline">
                 로그인
