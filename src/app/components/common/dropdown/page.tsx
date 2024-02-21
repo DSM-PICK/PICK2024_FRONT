@@ -4,7 +4,7 @@ import nonearrow from "@/assets/img/Icon/chevron-right.svg";
 import clickarrow from "@/assets/img/Icon/downarrow.svg";
 
 interface DropProps {
-  type: "floor" | "grade" | "class";
+  type: "floor" | "grade" | "class" | "club";
 }
 
 export const Dropdown: React.FC<DropProps> = ({ type }) => {
@@ -12,6 +12,7 @@ export const Dropdown: React.FC<DropProps> = ({ type }) => {
     floor: "2층",
     grade: "1학년",
     class: "1반",
+    club: "픽",
   };
 
   const [selectedOption, setSelectedOption] = useState<string>(
@@ -115,6 +116,29 @@ export const Dropdown: React.FC<DropProps> = ({ type }) => {
               >
                 4반
               </div>
+            </>
+          )}
+          {type === "club" && (
+            <>
+              <div
+                onClick={() => handleOptionClick("픽")}
+                className={commonStyle}
+              >
+                픽
+              </div>
+              <div
+                onClick={() => handleOptionClick("정")}
+                className={commonStyle}
+              >
+                정
+              </div>
+              <div
+                onClick={() => handleOptionClick("등등")}
+                className={commonStyle}
+              >
+                등등
+              </div>
+              {/*api연결하면 map함수로 바꿀 예정 */}
             </>
           )}
         </div>

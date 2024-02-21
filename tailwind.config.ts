@@ -324,6 +324,7 @@ const config: Config = {
       },
       borderRadius: {
         max: "3.75rem",
+        60: "3.75rem",
       },
       borderWidth: {
         1: "0.063rem",

@@ -7,9 +7,15 @@ import Button from "../components/common/button/page";
 import { Dropdown } from "../components/common/dropdown/page";
 import DoubleTab from "../components/common/tab/page";
 import { AfterCheck } from "../components/common/list/after/page";
+import { AfterTab } from "../components/common/tab/after/page";
+import Modal from "../components/common/modal/page";
+import { AfterDelete } from "../components/common/list/after/delete/page";
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
+  const [change, setChange] = useState<boolean>(false);
+  const [add, setAdd] = useState<boolean>(false);
+  const [modal, setModal] = useState<boolean>(false);
 
   const onClickEdit = () => {
     setEdit(true);
@@ -17,6 +23,22 @@ const AfterManage = () => {
 
   const onClickSave = () => {
     setEdit(false);
+  };
+
+  const onClickChange = () => {
+    setChange(!change);
+  };
+
+  const onClickAdd = () => {
+    setModal(true);
+  };
+
+  const handleModalCancel = () => {
+    setModal(false);
+  };
+
+  const handleModalConfirm = () => {
+    setModal(false);
   };
 
   const commonStyle = " bg-white text-label1 rounded-lg py-3 px-10";
@@ -34,6 +56,7 @@ const AfterManage = () => {
     ],
     state: ["취업", "자퇴", "출석", "현체", "귀가", "출석"],
   };
+
   return (
     <div className=" h-dvh">
       <Header teacher="박현아" />
@@ -45,79 +68,143 @@ const AfterManage = () => {
           <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
             방과후 관리
             <div className="text-neutral-200 text-heading5">
-              <DoubleTab
+              <AfterTab
                 firstChildren="전공동아리"
                 secondChildren="방과후"
-                onClick={() => {}}
+                onClick={onClickChange}
               />
             </div>
           </div>
-          <div className="flex items-center gap-5">
-            {edit ? (
+          {change ? (
+            <div className="flex items-center gap-5">
+              {edit ? (
+                <Button
+                  colorType="ghost"
+                  children="출결 저장하기"
+                  buttonSize="small"
+                  onClick={onClickSave}
+                />
+              ) : (
+                <Button
+                  colorType="ghost"
+                  children="출결 체크하기"
+                  buttonSize="small"
+                  onClick={onClickEdit}
+                />
+              )}
+              <Dropdown type="grade" />
+              <Dropdown type="club" />
+            </div>
+          ) : (
+            <div>
               <Button
                 colorType="ghost"
-                children="출결 저장하기"
+                children="인원 추가하기"
                 buttonSize="small"
-                onClick={onClickSave}
+                onClick={onClickAdd}
               />
-            ) : (
-              <Button
-                colorType="ghost"
-                children="출결 체크하기"
-                buttonSize="small"
-                onClick={onClickEdit}
-              />
-            )}
-            <Dropdown type="grade" />
-            <Dropdown type="class" />
-          </div>
+            </div>
+          )}
         </div>
         <div className="w-full content-start rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
-          <div className=" flex gap-13">
-            <div className=" flex gap-2 items-center">
-              <div className=" text-heading5 text-primary-100">
-                픽{/**api연결 */}
-              </div>
-              <div className=" text-sub-title2-M text-neutral-300">
-                세미나실 2-1{/**api연결 */}
-              </div>
-            </div>
-            {getWeekDay() === "금" ? (
-              <div className="flex gap-11">
-                <div className={commonStyle}>6교시</div>
-                <div className={commonStyle}>7교시</div>
-                <div className={commonStyle}>8교시</div>
-                <div className={commonStyle}>9교시</div>
-                <div className={commonStyle}>10교시</div>
-              </div>
-            ) : (
-              <div className="flex gap-11">
-                <div className={threeStyle}>8교시</div>
-                <div className={threeStyle}>9교시</div>
-                <div className={threeStyle}>10교시</div>
-              </div>
-            )}
-          </div>
-          <div className=" flex gap-13">
-            <div className=" flex flex-col gap-6">
-              {datalist.name.map((name, index) => (
-                <div
-                  className="flex bg-white py-4 px-6 rounded-lg text-label1"
-                  key={index}
-                >
-                  {name}
+          {change ? (
+            <>
+              <div className=" flex gap-13">
+                <div className=" flex gap-2 items-center">
+                  <div className=" text-heading5 text-primary-100">
+                    픽{/**api연결 */}
+                  </div>
+                  <div className=" text-sub-title2-M text-neutral-300">
+                    세미나실 2-1{/**api연결 */}
+                  </div>
                 </div>
-              ))}
-            </div>
-            <div className=" flex gap-11 w-155">
-              <AfterCheck state="현체" day={3} />
-              <AfterCheck state="무단" day={5} />
-              <AfterCheck state="이동" day={3} />
-              {/*이부분은 api연결하면서 할 예정 */}
-            </div>
-          </div>
+                {getWeekDay() === "금" ? (
+                  <div className="flex gap-11">
+                    <div className={commonStyle}>6교시</div>
+                    <div className={commonStyle}>7교시</div>
+                    <div className={commonStyle}>8교시</div>
+                    <div className={commonStyle}>9교시</div>
+                    <div className={commonStyle}>10교시</div>
+                  </div>
+                ) : (
+                  <div className="flex gap-11">
+                    <div className={threeStyle}>8교시</div>
+                    <div className={threeStyle}>9교시</div>
+                    <div className={threeStyle}>10교시</div>
+                  </div>
+                )}
+              </div>
+              <div className=" flex gap-13">
+                <div className=" flex flex-col gap-6">
+                  {datalist.name.map((name, index) => (
+                    <div
+                      className="flex bg-white py-4 px-6 rounded-lg text-label1"
+                      key={index}
+                    >
+                      {name}
+                    </div>
+                  ))}
+                </div>
+                <div className=" flex gap-11">
+                  <AfterCheck state="현체" day={3} />
+                  <AfterCheck state="무단" day={5} />
+                  <AfterCheck state="이동" day={3} />
+                  {/*이부분은 api연결하면서 할 예정 */}
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className=" flex gap-13">
+                <div className=" flex gap-2 items-center">
+                  <div className=" text-heading5 text-primary-100">
+                    픽{/**api연결 */}
+                  </div>
+                  <div className=" text-sub-title2-M text-neutral-300">
+                    세미나실 2-1{/**api연결 */}
+                  </div>
+                </div>
+                <div className="flex gap-11">
+                  <div className={threeStyle}>8교시</div>
+                  <div className={threeStyle}>9교시</div>
+                  <div className={threeStyle}>10교시</div>
+                </div>
+                {/* <AfterDelete student="1410 박현아" /> */}
+              </div>
+              <div className=" flex gap-13">
+                <div className=" flex flex-col gap-6">
+                  {datalist.name.map((name, index) => (
+                    <div
+                      className="flex w-max bg-white py-4 px-6 rounded-lg text-label1"
+                      key={index}
+                    >
+                      {name}
+                    </div>
+                  ))}
+                </div>
+                <div className=" flex gap-x-11 gap-y-6 flex-wrap content-start">
+                  <AfterCheck state="현체" day={3} />
+                  <AfterCheck state="무단" day={3} />
+                  <AfterCheck state="이동" day={3} />
+                  <AfterCheck state="현체" day={3} />
+                  <AfterCheck state="무단" day={3} />
+                  <AfterCheck state="이동" day={3} />
+                  {/*이부분은 api연결하면서 할 예정 */}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
+      {modal && (
+        <Modal
+          type="add"
+          heading1="창조실 인원추가"
+          buttonMessage="추가"
+          onCancel={handleModalCancel}
+          onConfirm={handleModalConfirm}
+        />
+      )}
     </div>
   );
 };
