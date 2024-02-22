@@ -296,6 +296,7 @@ const config: Config = {
         "38": "9.375rem",
         "30": "7.438rem",
         "29": "7.25rem",
+        "25": "6.25rem",
       },
       height: {
         "13": "3.25rem",
@@ -309,6 +310,7 @@ const config: Config = {
       gap: {
         "29": "7.25rem",
         17: "4.5rem",
+        13: "3.875rem",
       },
       padding: {
         sign: "6.875rem 0rem",
@@ -318,9 +320,11 @@ const config: Config = {
         100: "24.688rem",
         30: "7.4rem",
         23: "5.75rem",
+        25: "6.25rem",
       },
       borderRadius: {
         max: "3.75rem",
+        60: "3.75rem",
       },
       borderWidth: {
         1: "0.063rem",

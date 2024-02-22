@@ -1,5 +1,5 @@
 interface colorProp {
-  color: string;
+  color?: string;
 }
 
 export const CaretDown: React.FC<colorProp> = ({ color }) => {

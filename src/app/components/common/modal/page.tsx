@@ -3,6 +3,7 @@ import Button from "../button/page";
 import Input from "../input/page";
 
 import moment from "moment";
+import { AutoInput } from "../input/auto/page";
 
 interface ChangeProps {
   text: string;
@@ -12,7 +13,7 @@ interface ChangeProps {
 interface ModalProps {
   heading1?: string;
   heading2?: string;
-  type: "button" | "changeTeacher" | "error" | "addSchedule";
+  type: "button" | "changeTeacher" | "error" | "addSchedule" | "add";
   buttonMessage: string;
   onCancel: () => void;
   onConfirm: () => void;
@@ -31,6 +32,11 @@ const Modal: React.FC<ModalProps> = ({
   teachers,
 }) => {
   const [teacherData, setTeacherData] = useState<string[]>(teachers || []);
+  const [inputValue, setInputValue] = useState("");
+
+  const [addstudent, setAddstudent] = useState({
+    student: "",
+  });
 
   useEffect(() => {
     setTeacherData(teachers || []);
@@ -52,6 +58,11 @@ const Modal: React.FC<ModalProps> = ({
 
   const SchehandleChange = ({ text, name }: ChangeProps) => {
     setScheduleData({ ...scheduleData, [name]: text });
+  };
+
+  const AutohandleChange = ({ text, name }: ChangeProps) => {
+    setAddstudent({ ...addstudent, [name]: text });
+    setInputValue(text);
   };
 
   const renderButtons = () => {
@@ -150,6 +161,31 @@ const Modal: React.FC<ModalProps> = ({
             </div>
           </div>
         )
+      )}
+      {type === "add" && (
+        <div className="bg-white rounded-xl px-24 py-13 w-155">
+          <div className="flex flex-col gap-8 items-center">
+            <div className=" text-neutral-50 text-center">
+              {heading1 && (
+                <div className=" flex flex-col gap-9 max-w-none items-center">
+                  <div className="text-heading6-M flex gap-2">
+                    <div className=" text-purple-400">창조실</div> 인원추가
+                  </div>
+                  <div className="">
+                    <AutoInput
+                      placeholder="학번과 이름을 입력하세요"
+                      width="92"
+                      onChange={AutohandleChange}
+                      value={addstudent.student}
+                      name="student"
+                    />
+                  </div>
+                  {renderButtons()}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

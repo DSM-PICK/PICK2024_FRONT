@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
 
 interface ManageDropProps {
@@ -6,33 +6,24 @@ interface ManageDropProps {
   third?: boolean;
 }
 
-interface ThirdStateStyles {
-  출석: string;
-  귀가: string;
-  현체: string;
-  취업: string;
-  자퇴: string;
-}
-
 interface StateStyles {
   출석: string;
   귀가: string;
   현체: string;
   자퇴: string;
+  취업: string;
 }
 
 const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
   let defaultOptions: Record<string, string> = {
     출석: "출석",
     귀가: "귀가",
     현체: "현체",
     자퇴: "자퇴",
+    취업: "취업",
   };
 
   let stateStyles: StateStyles = {
@@ -40,23 +31,12 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
     귀가: "bg-primary-800 text-label1 text-white",
     현체: "bg-primary-500 text-button-S text-white",
     자퇴: "bg-error-400 text-label1 text-white",
+    취업: "bg-tertiary-500 text-button-S text-white",
   };
 
-  if (third) {
-    defaultOptions = {
-      ...defaultOptions,
-      취업: "취업",
-    };
-
-    stateStyles = {
-      ...stateStyles,
-      취업: "bg-tertiary-500 text-button-S text-white",
-    };
+  if (!third) {
+    delete defaultOptions.취업;
   }
-
-  const [selectedOption, setSelectedOption] = useState<string>(
-    defaultOptions[state]
-  );
 
   const stateStyle = stateStyles[selectedOption] || "";
 
@@ -67,12 +47,21 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const commonStyle =
     "py-3 px-2 rounded hover:bg-primary-200 hover:text-white text-neutral-400";
 
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsDropdownVisible(false);
   };
 
   const dropdownOptions = Object.keys(defaultOptions);
+
+  // 선택된 값이 변경될 때마다 stateStyle 업데이트
+  useEffect(() => {
+    setSelectedOption(defaultOptions[state]);
+  }, [state]);
 
   return (
     <div
