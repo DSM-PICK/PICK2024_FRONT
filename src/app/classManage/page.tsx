@@ -14,19 +14,15 @@ const ClassManage = () => {
 
   const onClickEdit = () => {
     setEdit(true);
+    console.log("왜안됨");
   };
+
+  console.log(setEdit);
+  console.log("바보");
 
   const onClickSave = () => {
     setModal(true);
     setEdit(false);
-  };
-
-  const handleModalConfirm = () => {
-    setModal(false);
-  };
-
-  const handleModalCancel = () => {
-    setModal(false);
   };
 
   const datalist = {
@@ -40,6 +36,14 @@ const ClassManage = () => {
     ],
     state: ["취업", "자퇴", "출석", "현체", "귀가", "출석"],
   };
+  const handleModalConfirm = () => {
+    setModal(false);
+  };
+
+  const handleModalCancel = () => {
+    setModal(false);
+  };
+
   return (
     <div className=" h-dvh">
       <Header teacher="박현아" />
@@ -49,7 +53,6 @@ const ClassManage = () => {
         </div>
         <div className="flex justify-between">
           <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
-            {/*api연동할때 데이터 오는 값보고 작성 예정 */}
             <div className="text-neutral-200 text-heading5">
               {getFullToday()}
             </div>
@@ -96,7 +99,7 @@ const ClassManage = () => {
         {modal && (
           <Modal
             type="button"
-            heading1={`${datalist}외 1명의`} //api연동하면서 수정할 예정
+            heading1={`${datalist.name.length}외 1명의`}
             heading2="변경된 상태를 저장하시겠습니까?"
             buttonMessage="확인"
             onCancel={handleModalCancel}
