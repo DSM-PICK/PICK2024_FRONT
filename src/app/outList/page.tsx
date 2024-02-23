@@ -59,11 +59,7 @@ const OutList = () => {
           {selectedTab ? (
             <div className="flex flex-wrap gap-5 justify-between">
               {returnhomeData.names.map((name, index) => (
-                <ReturnHome
-                  key={index}
-                  returnTime={returnhomeData.times[index]}
-                  student={name}
-                />
+                <ReturnHome key={index} student={name} />
               ))}
             </div>
           ) : (
