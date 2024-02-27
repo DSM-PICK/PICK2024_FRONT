@@ -15,7 +15,7 @@ const OutList = () => {
   const router = useRouter();
 
   const returnhomeData = {
-    names: ["1410 강해민", "1410 강해민", "1410 강해민", "1410 강해민"],
+    names: ["김도경", "1410 강해민", "1410 강해민", "1410 강해민"],
     times: ["11:20", "12:00", "13:30", "14:45"],
   };
 
@@ -24,7 +24,7 @@ const OutList = () => {
   };
 
   const reason = () => {
-    router.push("/outList/reason");
+    router.push(`/outList/reason`);
   };
 
   return (

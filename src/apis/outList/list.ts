@@ -60,12 +60,13 @@ export const getAuthHeader = () => {
 
 export const AlloutList = () => {
   const { handleError } = apiError();
+  const accessToken = getToken();
   return useMutation<Error, void, ReasonAll>({
     mutationFn: async (param: ReasonAll) => {
       try {
         const response = await instance.get("/application/reason/all", {
           params: param,
-          headers: getAuthHeader(),
+          headers: { Authorization: `Bearer ${accessToken}` },
         });
         return response.data as any;
       } catch (error) {
@@ -78,13 +79,15 @@ export const AlloutList = () => {
 
 export const ReturnHome = () => {
   const { handleError } = apiError();
-  console.log("g");
+  const accessToken = getToken();
   return useMutation<Error, void, ReturnHomeData, Token>({
     mutationFn: async (param: ReturnHomeData) => {
       try {
         const response = await instance.get("/early-return/reason/all", {
           params: param,
-          headers: getAuthHeader(),
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
         return response.data as any;
       } catch (error) {
@@ -97,19 +100,19 @@ export const ReturnHome = () => {
 
 export const previous = () => {
   const { handleError } = apiError();
-  return useMutation<Error, void, previousStudent>({
-    mutationFn: async (param: previousStudent) => {
+
+  return useMutation<Error, previousStudent, { name: string }>({
+    mutationFn: async (requestParam: { name: string }) => {
       try {
         const accessToken = getToken();
-        const response = await instance.get(
-          `/story/query?name=${param.name}`,
-          null,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await instance.get(`/story/query`, {
+          params: {
+            name: requestParam.name,
+          },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         return response.data;
       } catch (error) {
         handleError(error);
@@ -123,11 +126,16 @@ export const returnSchool = () => {
   const { handleError } = apiError();
 
   return useMutation<Error, void, UuidProp>({
-    mutationFn: async (uuidProp: UuidProp) => {
+    mutationFn: async (param: UuidProp) => {
+      console.log(param.id);
       try {
         const response = await instance.patch(
-          `/application/change/${uuidProp.id}`,
-          null,
+          `/application/change/${param.id}`,
+          {
+            params: {
+              params: param,
+            },
+          },
           {
             headers: getAuthHeader(),
           }
