@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 
-const BASEURL = "http://localhost:3000";
+const BASEURL = "https://prod-server.xquare.app/dsm-pick";
 
 export const instance = axios.create({
   baseURL: BASEURL,
@@ -26,9 +26,9 @@ instance.interceptors.request.use(
 
 refreshInstance.interceptors.request.use(
   (config) => {
-    const refresgToken = localStorage.getItem("refresh_token");
-    if (refresgToken) {
-      config.headers.Authorization = `Bearer ${refresgToken}`;
+    const refreshToken = localStorage.getItem("refresh_token");
+    if (refreshToken) {
+      config.headers.Authorization = `Bearer ${refreshToken}`;
     }
 
     return config;

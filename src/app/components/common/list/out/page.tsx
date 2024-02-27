@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../../button/page";
 import Modal from "../../modal/page";
+import { returnSchool } from "@/apis/outList/list";
+import { v4 as uuidv4 } from "uuid";
 
 interface OutProps {
   student: string;
@@ -10,16 +12,35 @@ interface OutProps {
 
 export const Out: React.FC<OutProps> = ({ student, returnTime }) => {
   const router = useRouter();
+  const { mutate: returnSchoolMutate } = returnSchool();
+  const uuid = uuidv4();
 
   const preOut = () => {
-    router.push("/outlist/previous");
+    router.push(`/outList/${student}`);
   };
 
   const returnStudent = () => {
     setModal(true);
   };
 
-  const confirmReturn = () => {
+  const exid = "dsddf";
+
+  const confirmReturn = async () => {
+    try {
+      const result = await returnSchoolMutate(
+        { id: exid },
+        {
+          onSuccess: () => {
+            console.log("성공");
+          },
+          onError: () => {
+            console.log("에러발생");
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
     setModal(false);
   };
 
