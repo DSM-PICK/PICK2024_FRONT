@@ -15,7 +15,7 @@ import outStudent from "../../assets/img/외출 일러스트.png";
 import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
-import { getWeekDay } from "@/utils/getWeekDay";
+import { getWeekDay } from "@/utils/date";
 
 const Main = () => {
   const teacher = "";
@@ -38,7 +38,7 @@ const Main = () => {
         </div>
         <div className=" flex flex-col gap-4">
           <div className=" text-heading6-M">메뉴</div>
-          <div className=" flex gap-2">
+          <div className=" flex justify-between">
             <Menu children="외출자 목록" href="/outList" icon={outList} />
             <Menu children="외출 수락" href="/outAccept" icon={outAccept} />
             <Menu children="교실 이동" href="/classChange" icon={classChange} />
@@ -63,17 +63,23 @@ const Main = () => {
               href="/changeTeacher"
               icon={changeTeacher}
             />
-            <Menu children="공지 사항" href="/notice" icon={notice} />
+            <Menu children="일정변경" href="/notice" icon={notice} />
           </div>
         </div>
         <div className=" flex flex-col gap-3">
           <div className=" font-sans text-heading6-M">
             오늘의 자습 감독 선생님
           </div>
-          <div className=" flex justify-between bg-white w-auto px-23 py-8 rounded-lg rounded-tr-max text-neutral-100">
-            <div>2층 {/*나중에 api연결시 추가 */} 선생님</div>{" "}
-            <div>3층 {/*나중에 api연결시 추가 */} 선생님</div>
-            <div>4층 {/*나중에 api연결시 추가 */} 선생님</div>
+          <div className=" flex justify-between bg-white w-auto  px-23 py-8 rounded-lg rounded-tr-max text-heading6-M text-neutral-100">
+            <div>
+              <b>2층</b> {/*나중에 api연결시 추가 */}박현이 선생님
+            </div>
+            <div>
+              <b>3층</b> {/*나중에 api연결시 추가 */}박현아 선생님
+            </div>
+            <div>
+              <b>4층</b> {/*나중에 api연결시 추가 */}박현아 선생님
+            </div>
           </div>
         </div>
         <div className="flex gap-6">

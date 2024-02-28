@@ -8,7 +8,8 @@ interface ButtonProp {
     | "tertiary"
     | "ghost"
     | "solidDisabled"
-    | "ghostDisabled";
+    | "ghostDisabled"
+    | "red";
   children: string;
   buttonSize:
     | "full"
@@ -48,6 +49,9 @@ const Button: React.FC<ButtonProp> = ({
 
       case "ghostDisabled":
         return " rounded-lg border border-neutral-500 text-neutral-500 bg-neutral-1000";
+
+      case "red":
+        return " rounded-lg text-error-1000 bg-error-200 hover:bg-error-400 focus:bg-error-400 focus:border focus:border-error-800 active:bg-error-700";
     }
   };
 
@@ -73,7 +77,7 @@ const Button: React.FC<ButtonProp> = ({
   return (
     <div
       onClick={onClick}
-      className={`flex gap-2.5 ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
+      className={`flex ${getColorClass()} ${getSizeClass()} justify-center items-center cursor-pointer`}
     >
       <div>{children}</div>
       <div>{Icon && <img src={Icon.src} width={20} height={20} />}</div>

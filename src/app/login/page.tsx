@@ -46,7 +46,7 @@ const Login: NextPage = () => {
                 value={data.password}
               />
             </div>
-            <div className=" font-sans text-ladel2 text-neutral-50 flex gap-1">
+            <div className=" font-sans text-label2 text-neutral-50 flex gap-1">
               아직 회원가입을 하지 않으셨다면?
               <Link href={"/signUp"} className=" text-secondary-500 underline">
                 회원가입
