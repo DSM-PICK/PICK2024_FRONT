@@ -99,7 +99,7 @@ const Main = () => {
             <CheckPage
               href="classChange"
               img={changeStudent}
-              buttonChildren="외출 수락하러 가기"
+              buttonChildren="교실 이동 학생 목록 보기"
               color="tertiary"
               contentChildren="현재 교실 이동한 "
             />
