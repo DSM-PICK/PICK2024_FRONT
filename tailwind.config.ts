@@ -234,14 +234,14 @@ const config: Config = {
             fontWeight: "400",
           },
         ],
-        ladel1: [
+        label1: [
           "16px",
           {
             letterSpacing: "0.15px",
             fontWeight: "500",
           },
         ],
-        ladel2: [
+        label2: [
           "12px",
           {
             letterSpacing: "0.15px",
@@ -282,24 +282,36 @@ const config: Config = {
         nature: "#98a2b3",
       },
       width: {
+        "155": "38.75rem",
+        "120": "30rem",
         "100": "34.563rem",
         "92": "27.375rem",
+        "78": "19rem",
+        "77.5": "18.9rem",
+        "77": "18.75rem",
         "76": "18.5rem",
+        "54": "13.5rem",
         "50": "12.438rem",
         "42": "10.25rem",
         "38": "9.375rem",
         "30": "7.438rem",
         "29": "7.25rem",
+        "25": "6.25rem",
       },
       height: {
         "13": "3.25rem",
         "7.5": "1.875rem",
         "": "53.75rem",
         "29": "7.25rem",
+        "700": "43.75rem",
+        "90%": "90%",
+        "25": "6.25rem",
+        "15": "3.75rem",
       },
       gap: {
         "29": "7.25rem",
         17: "4.5rem",
+        13: "3.875rem",
       },
       padding: {
         sign: "6.875rem 0rem",
@@ -307,13 +319,19 @@ const config: Config = {
         44: "10.688rem",
         70: "17.5rem",
         100: "24.688rem",
+        30: "7.4rem",
         23: "5.75rem",
+        25: "6.25rem",
       },
       borderRadius: {
         max: "3.75rem",
+        60: "3.75rem",
+      },
+      borderWidth: {
+        1: "0.063rem",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;

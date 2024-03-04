@@ -2,7 +2,6 @@
 import { StaticImageData } from "next/image";
 import Button from "../../button/page";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface CheckProps {
