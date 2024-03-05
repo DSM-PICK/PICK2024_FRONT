@@ -58,7 +58,6 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
 
   const dropdownOptions = Object.keys(defaultOptions);
 
-  // 선택된 값이 변경될 때마다 stateStyle 업데이트
   useEffect(() => {
     setSelectedOption(defaultOptions[state]);
   }, [state]);

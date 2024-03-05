@@ -4,7 +4,7 @@ import Header from "../components/common/header/page";
 import react, { useState } from "react";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import Button from "../components/common/button/page";
-import { Dropdown } from "../components/common/dropdown/page";
+import Dropdown from "../components/common/dropdown/page";
 import { AfterCheck } from "../components/common/list/after/page";
 import { AfterTab } from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
@@ -76,7 +76,7 @@ const AfterManage = () => {
 
   return (
     <div className=" h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className=" h-full flex flex-col px-100 py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 학급 관리
@@ -109,7 +109,7 @@ const AfterManage = () => {
                   onClick={onClickEdit}
                 />
               )}
-              <Dropdown type="grade" />
+              <Dropdown type="floor" />
               <Dropdown type="club" />
             </div>
           ) : (

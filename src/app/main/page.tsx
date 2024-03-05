@@ -25,7 +25,7 @@ const Main = () => {
 
   return (
     <div className="bg-primary-1200 h-full">
-      <Header teacher="박현아" />
+      <Header />
       <div className="px-100 py-20 flex flex-col gap-17">
         <div className=" flex flex-col gap-5">
           <div className=" font-sans text-heading5 text-neutral-300">
@@ -72,7 +72,7 @@ const Main = () => {
           </div>
           <div className=" flex justify-between bg-white w-auto  px-23 py-8 rounded-lg rounded-tr-max text-heading6-M text-neutral-100">
             <div>
-              <b>2층</b> {/*나중에 api연결시 추가 */}박현이 선생님
+              <b>2층</b> {/*나중에 api연결시 추가 */}박현아 선생님
             </div>
             <div>
               <b>3층</b> {/*나중에 api연결시 추가 */}박현아 선생님

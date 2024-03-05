@@ -19,3 +19,5 @@ export const getStudentString = ({
   num,
   username,
 }: Student): string => `${grade}-${class_num}-${num}-${username}`;
+
+export type outCheck = "OK" | "NO";

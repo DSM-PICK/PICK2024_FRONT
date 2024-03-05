@@ -3,7 +3,7 @@ import React from "react";
 import { Allmeals } from "@/app/components/common/list/Allmeals/page";
 import Link from "next/link";
 import { useState } from "react";
-import { Dropdown } from "@/app/components/common/dropdown/page";
+import Dropdown from "@/app/components/common/dropdown/page";
 import Button from "@/app/components/common/button/page";
 import Header from "@/app/components/common/header/page";
 import { Classmeals } from "@/app/components/common/list/classmeal/page";
@@ -21,7 +21,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   };
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;

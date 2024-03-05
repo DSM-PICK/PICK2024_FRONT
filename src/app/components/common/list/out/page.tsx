@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Button from "../../button/page";
 import Modal from "../../modal/page";
 import { returnSchool } from "@/apis/outList/list";
 import { v4 as uuidv4 } from "uuid";
-import Previous from "@/app/outList/[student]/page";
-import Link from "next/link";
 
 interface OutProps {
   student: string;
   returnTime: string;
+  id: string;
 }
 
-export const Out: React.FC<OutProps> = ({ student, returnTime }) => {
+export const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
   const router = useRouter();
   const [showPrevious, setShowPrevious] = useState(false);
   const { mutate: returnSchoolMutate } = returnSchool();
@@ -26,7 +25,7 @@ export const Out: React.FC<OutProps> = ({ student, returnTime }) => {
     setModal(true);
   };
 
-  const exid = "dsddf";
+  const exid = id;
 
   const confirmReturn = async () => {
     try {

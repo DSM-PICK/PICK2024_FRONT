@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../components/common/header/page";
 import Link from "next/link";
 import { useState } from "react";
-import { Dropdown } from "../components/common/dropdown/page";
+import Dropdown from "../components/common/dropdown/page";
 import Button from "../components/common/button/page";
 import { Allmeals } from "../components/common/list/Allmeals/page";
 
@@ -16,7 +16,7 @@ const WeekendMeals = () => {
 
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 주말 급식 신청 현황

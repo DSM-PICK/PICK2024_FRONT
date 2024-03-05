@@ -5,7 +5,7 @@ import Link from "next/link";
 import DoubleTab from "../components/common/tab/page";
 import { getFullToday } from "@/utils/date";
 import { useState } from "react";
-import { Dropdown } from "../components/common/dropdown/page";
+import Dropdown from "../components/common/dropdown/page";
 import { ChangeClass } from "../components/common/list/changeClass/page";
 
 const OutList = () => {
@@ -23,7 +23,7 @@ const OutList = () => {
 
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 교실 이동
@@ -42,12 +42,12 @@ const OutList = () => {
               onClick={onClickTab}
             />
             {selectedTab ? (
-              <Dropdown type="floor" />
-            ) : (
               <>
                 <Dropdown type="grade" />
                 <Dropdown type="class" />
               </>
+            ) : (
+              <Dropdown type="floor" />
             )}
           </div>
         </div>

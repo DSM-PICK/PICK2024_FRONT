@@ -4,7 +4,7 @@ type HandleType = {
   [error: string | number]: any;
 };
 
-export const apiError = (handlers?: HandleType) => {
+export const apiError = () => {
   const handle400 = () => {
     alert("잘못된 요청입니다");
   };
@@ -41,28 +41,25 @@ export const apiError = (handlers?: HandleType) => {
     default: handleDefault,
   };
 
-  const handleError = useCallback(
-    (error: any) => {
-      const httpStatus = error.response?.status;
-      const errorMessage = error.data?.errorMessage;
+  const handleError = useCallback((error: any) => {
+    const httpStatus = error.response?.status;
+    const errorMessage = error.data?.errorMessage;
 
-      const selectedHandlers = handlers || defaultHandlers;
+    const selectedHandlers = defaultHandlers;
 
-      if (
-        httpStatus &&
-        selectedHandlers[httpStatus] &&
-        errorMessage &&
-        selectedHandlers[httpStatus][errorMessage]
-      ) {
-        selectedHandlers[httpStatus][errorMessage]();
-      } else if (httpStatus && selectedHandlers[httpStatus]) {
-        selectedHandlers[httpStatus](error);
-      } else {
-        selectedHandlers.default(error);
-      }
-    },
-    [handlers]
-  );
+    if (
+      httpStatus &&
+      selectedHandlers[httpStatus] &&
+      errorMessage &&
+      selectedHandlers[httpStatus][errorMessage]
+    ) {
+      selectedHandlers[httpStatus][errorMessage]();
+    } else if (httpStatus && selectedHandlers[httpStatus]) {
+      selectedHandlers[httpStatus](error);
+    } else {
+      selectedHandlers.default(error);
+    }
+  }, []);
 
   return { handleError };
 };

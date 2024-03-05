@@ -55,7 +55,7 @@ const Reason = () => {
   const Outdata = async () => {
     console.log(data);
     try {
-      await outMutate(data, {
+      const result = await outMutate(data, {
         onSuccess: () => {
           console.log("OutData: Success");
         },
@@ -63,6 +63,11 @@ const Reason = () => {
           console.error("OutData: Error", error);
         },
       });
+      if (result !== undefined && Array.isArray(result)) {
+        setData(result);
+      } else {
+        console.error("Invalid result received:", result);
+      }
     } catch (error) {
       console.error("OutData: Catch Error", error);
     }
@@ -113,7 +118,7 @@ const Reason = () => {
 
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;

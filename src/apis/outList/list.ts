@@ -132,11 +132,6 @@ export const returnSchool = () => {
         const response = await instance.patch(
           `/application/change/${param.id}`,
           {
-            params: {
-              params: param,
-            },
-          },
-          {
             headers: getAuthHeader(),
           }
         );
@@ -147,4 +142,51 @@ export const returnSchool = () => {
       }
     },
   });
+};
+
+export const selfstudyGet = () => {
+  const { handleError } = apiError();
+
+  return useMutation<Error, void, { month: string; year: string }>({
+    mutationFn: async (param) => {
+      try {
+        const accessToken = getToken();
+        const response = await instance.get(
+          `/self-study/month?month=${param.month}&year=${param.year}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        return response.data;
+      } catch (error) {
+        handleError(error);
+        throw error;
+      }
+    },
+  });
+};
+
+// export const dayTeacher = () => {
+//   const {handleError} = apiError();
+
+//   return useMutation<Error, void>({
+//     mutationFn: async () => {
+//       try{
+//         const accessToken = getToken();
+//         const response = await instance.get(`/self-stydy/`)
+//       }
+//     }
+//   })
+// }
+
+export const noMeal = () => {
+  const handleError = apiError();
+
+  return useMutation<Error>;
+};
+
+export const outList = () => {
+  useMutation;
 };

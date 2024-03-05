@@ -15,7 +15,7 @@ const OutList = () => {
   const router = useRouter();
 
   const returnhomeData = {
-    names: ["김도경", "1410 강해민", "1410 강해민", "1410 강해민"],
+    names: ["도경", "1410 강해민", "1410 강해민", "1410 강해민"],
     times: ["11:20", "12:00", "13:30", "14:45"],
   };
 
@@ -29,7 +29,7 @@ const OutList = () => {
 
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 외출자 목록
@@ -66,6 +66,7 @@ const OutList = () => {
             <div className="flex flex-wrap gap-5 justify-between">
               {returnhomeData.names.map((name, index) => (
                 <Out
+                  id="ss"
                   key={index}
                   returnTime={returnhomeData.times[index]}
                   student={name}

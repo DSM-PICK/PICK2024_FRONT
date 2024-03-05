@@ -61,7 +61,7 @@ const Previous: NextPage = () => {
 
   return (
     <div className="flex flex-col">
-      <Header teacher="dd" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
