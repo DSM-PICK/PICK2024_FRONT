@@ -39,7 +39,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
         </div>
         <div className="w-auto flex py-8 pl-8 bg-primary-1200 rounded-xl gap-28">
           <div className=" flex flex-col gap-9">
-            <div className=" flex flex-col gap-1">
+            <div className=" flex gap-36">
               <div className=" text-heading6-M text-gray-900">응답자</div>
               <div className=" text-caption1 text-neutral-300">
                 응답자의 상태는 수정할 수 없습니다.
