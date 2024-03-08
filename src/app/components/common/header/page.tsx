@@ -4,11 +4,9 @@ import Link from "next/link";
 import React from "react";
 import pick from "@/assets/img/Icon/pick.svg";
 
-interface HeaderProp {
-  teacher: string;
-}
+const Header: NextPage = ({}) => {
+  const teacher = "이기혁";
 
-const Header: React.FC<HeaderProp> = ({ teacher }) => {
   return (
     <div className=" flex px-70 justify-between items-center bg-white">
       <div className=" font-sans text-heading4 text-primary-300">

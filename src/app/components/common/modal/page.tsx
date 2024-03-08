@@ -56,6 +56,8 @@ const Modal: React.FC<ModalProps> = ({
     setData({ ...data, [name]: text });
   };
 
+  const changeTeacherData = () => {};
+
   const SchehandleChange = ({ text, name }: ChangeProps) => {
     setScheduleData({ ...scheduleData, [name]: text });
   };

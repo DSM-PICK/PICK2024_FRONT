@@ -29,7 +29,7 @@ const Schedule = () => {
 
   return (
     <div>
-      <Header teacher="박현아" />
+      <Header />
       <div className=" flex flex-col px-100 py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 일정 관리

@@ -1,34 +1,99 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/header/page";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import DoubleTab from "../components/common/tab/page";
 import Button from "../components/common/button/page";
-import { getFullToday, getToday } from "@/utils/date";
-import { useState } from "react";
+import { getFullToday } from "@/utils/date";
 import { AcceptList } from "../components/common/list/accept/page";
-import { Dropdown } from "../components/common/dropdown/page";
+import Dropdown from "../components/common/dropdown/page";
 import Modal from "../components/common/modal/page";
+import { getClass, outAccept } from "@/apis/outAccept/outAccept";
+
+interface applicationDataProp {
+  class_num: number;
+  end_time: string;
+  grade: number;
+  id: string;
+  num: number;
+  reason: string;
+  start_time: string;
+  user_id: string;
+  username: string;
+}
 
 const OutAccept = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [refuse, setRefuse] = useState<boolean>(false);
+  const [selectedGrade, setSelectedGrade] = useState<number>(1);
+  const [selectedClass, setSelectedClass] = useState<number>(1);
+  const [outSelectedGrade, setOutSelectedGrade] = useState<number>();
+  const [outSelectedClass, setOutSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
-  const router = useRouter();
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const [data, setData] = useState<applicationDataProp[]>([]);
 
-  const Data = {
-    names: ["1410 강해민", "1410 rkkdk", "1410 박현아", "1410 누굴까"],
-    times: ["11:20 ~ 11:20", "12:00 ~ 14:00", "13:30 ~ 18:00", "14:45 ~ 45:00"],
-    whys: [],
-  };
+  const { mutate: outAcceptMutate } = outAccept();
+  const { mutate: getClassMutate } = getClass();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
+
+    if (tab) {
+      handleGradeChange(1);
+      handleClassChange(1);
+    } else {
+      handleGradeChange(1);
+      handleClassChange(1);
+    }
   };
 
-  const Accept = () => {
+  useEffect(() => {
+    console.log(`외출 grade: ${outSelectedGrade} , class: ${outSelectedClass}`);
+    AcceptDataList();
+  }, [outSelectedClass, outSelectedGrade]);
+
+  useEffect(() => {
+    console.log(`grade: ${selectedGrade} class: ${selectedClass}`);
+    AcceptDataList();
+  }, [selectedGrade, selectedClass]);
+
+  const handleGradeChange = (selectedOption: number) => {
+    setSelectedGrade(selectedOption);
+  };
+
+  const handleClassChange = (selectedOption: number) => {
+    setSelectedClass(selectedOption);
+  };
+
+  const AcceptDataList = async () => {
+    try {
+      if (selectedGrade && selectedClass) {
+        const reqOption = selectedTab ? "early-return" : "application";
+        const response = await getClassMutate(
+          {
+            type: reqOption,
+            grade: selectedGrade,
+            class: selectedClass,
+          },
+          {
+            onSuccess: (data) => {
+              setData(data);
+              console.log(data);
+            },
+            onError: (error) => {
+              console.log(error);
+            },
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Out accept error", error);
+    }
+  };
+
+  const Accept = async () => {
     setAccept(true);
   };
 
@@ -36,13 +101,64 @@ const OutAccept = () => {
     setRefuse(true);
   };
 
-  const Acceptconfirm = () => {
-    setAccept(false);
+  const Acceptconfirm = async () => {
+    try {
+      if (selectedGrade && selectedClass) {
+        const reqOption = selectedTab ? "early-return" : "application";
+        await outAcceptMutate(
+          {
+            type: reqOption,
+            status: "OK",
+            ids: selectedStudents,
+          },
+          {
+            onSuccess: (response) => {
+              setData(data);
+              console.log("Out accept success", response);
+              setAccept(false);
+            },
+            onError: (error) => {
+              console.error("Out accept error", error);
+              setAccept(false);
+            },
+          }
+        );
+      }
+    } catch (error) {
+      alert("외출 수락에 실패하였습니다");
+      setAccept(false);
+    }
   };
 
-  const confirmReturn = () => {
-    setRefuse(false);
+  const confirmReturn = async () => {
+    try {
+      if (selectedGrade && selectedClass) {
+        const reqOption = selectedTab ? "early-return" : "application";
+        await outAcceptMutate(
+          {
+            type: reqOption,
+            status: "NO",
+            ids: selectedStudents,
+          },
+          {
+            onSuccess: (response) => {
+              setData(data);
+              console.log("Out accept success", response);
+              setRefuse(false);
+            },
+            onError: (error) => {
+              console.error("Out accept error", error);
+              setRefuse(false);
+            },
+          }
+        );
+      }
+    } catch (error) {
+      alert("외출 수락에 실패하였습니다");
+      setRefuse(false);
+    }
   };
+
   const closeModal = () => {
     setRefuse(false);
   };
@@ -50,26 +166,35 @@ const OutAccept = () => {
   const AcceptrCancel = () => {
     setAccept(false);
   };
-  const handleAcceptListClick = (student: string) => {
-    const isStudentSelected = selectedStudents.includes(student);
+
+  const handleAcceptListClick = (id: string, name: string) => {
+    const isStudentSelected = selectedStudents.includes(id);
+    const nameList = selectedStudentName.includes(name);
+
     if (isStudentSelected) {
       setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter(
-          (selectedStudent) => selectedStudent !== student
+        prevSelectedStudents.filter((selectedStudent) => selectedStudent !== id)
+      );
+      setSelectedStudentName((prevSelectedStudentName) =>
+        prevSelectedStudentName.filter(
+          (selectedStudentName) => selectedStudentName !== name
         )
       );
     } else {
       setSelectedStudents((prevSelectedStudents) => [
         ...prevSelectedStudents,
-        student,
+        id,
+      ]);
+      setSelectedStudentName((prevSelectedStudentName) => [
+        ...prevSelectedStudentName,
+        name,
       ]);
     }
-    console.log(selectedStudents);
   };
 
   return (
     <div className="h-dvh">
-      <Header teacher="박현아" />
+      <Header />
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 외출 수락
@@ -83,49 +208,56 @@ const OutAccept = () => {
           </div>
           <div className="flex items-center gap-5">
             <DoubleTab
-              firstChildren="층 별로 보기"
-              secondChildren="반 별로 보기"
+              firstChildren="외출"
+              secondChildren="조기귀가"
               onClick={onClickTab}
             />
             {selectedTab ? (
-              <Dropdown type="floor" />
+              <>
+                <Dropdown type="grade" onChange={handleGradeChange} />
+                <Dropdown type="class" onChange={handleClassChange} />
+              </>
             ) : (
               <>
-                <Dropdown type="grade" />
-                <Dropdown type="class" />
+                <Dropdown type="grade" onChange={handleGradeChange} />
+                <Dropdown type="class" onChange={handleClassChange} />
               </>
             )}
           </div>
         </div>
-        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 flex flex-col justify-between items-end">
+        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 flex flex-col justify-between items-start">
           <div>
             {selectedTab ? (
               <div className="flex flex-wrap gap-5 justify-between">
-                {Data.names.map((name, index) => (
+                {data.map((dataItem, index) => (
                   <AcceptList
-                    onClick={() => handleAcceptListClick(name)}
+                    onClick={() =>
+                      handleAcceptListClick(dataItem.id, dataItem.username)
+                    }
                     key={index}
-                    time={Data.times[index]}
-                    student={name}
-                    why={Data.whys[index]}
+                    time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
+                    student={`${dataItem.grade}${dataItem.class_num}${dataItem.num} ${dataItem.username}`}
+                    why={`${dataItem.reason}`}
                   />
                 ))}
               </div>
             ) : (
               <div className="flex flex-wrap gap-5 justify-between">
-                {Data.names.map((name, index) => (
+                {data.map((dataItem, index) => (
                   <AcceptList
-                    onClick={() => handleAcceptListClick(name)}
+                    onClick={() =>
+                      handleAcceptListClick(dataItem.id, dataItem.username)
+                    }
                     key={index}
-                    time={Data.times[index]}
-                    student={name}
-                    why={Data.whys[index]}
+                    time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
+                    student={dataItem.username}
+                    why={`${dataItem.grade}${dataItem.class_num}${dataItem.num} ${dataItem.username}`}
                   />
                 ))}
               </div>
             )}
           </div>
-          <div className=" flex gap-5">
+          <div className=" flex gap-5 w-full justify-end">
             <Button
               colorType="ghost"
               children="거절하기"
@@ -147,12 +279,12 @@ const OutAccept = () => {
         {refuse && (
           <Modal
             heading1={`${
-              selectedStudents.length > 1
-                ? `${selectedStudents[0]} 학생 외 ${
-                    selectedStudents.length - 1
+              selectedStudentName.length > 1
+                ? `${selectedStudentName[0]} 학생 외 ${
+                    selectedStudentName.length - 1
                   }명`
-                : selectedStudents.length === 1
-                ? `${selectedStudents[0]} 학생`
+                : selectedStudentName.length === 1
+                ? `${selectedStudentName[0]} 학생`
                 : ""
             }`}
             heading2={`외출을 거절하시겠습니까?`}
@@ -165,12 +297,12 @@ const OutAccept = () => {
         {accept && (
           <Modal
             heading1={`${
-              selectedStudents.length > 1
-                ? `${selectedStudents[0]} 학생 외 ${
-                    selectedStudents.length - 1
+              selectedStudentName.length > 1
+                ? `${selectedStudentName[0]} 학생 외 ${
+                    selectedStudentName.length - 1
                   }명`
-                : selectedStudents.length === 1
-                ? `${selectedStudents[0]} 학생`
+                : selectedStudentName.length === 1
+                ? `${selectedStudentName[0]} 학생`
                 : ""
             }`}
             heading2={`외출을 수락하시겠습니까?`}
