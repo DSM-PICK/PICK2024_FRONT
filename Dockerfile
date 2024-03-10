@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY package*.json yarn.lock ./
 
-RUN rm -rf node_modules && yarn install
+RUN rm -rf node_modules && yarn install --ignore-engines
 
 COPY . .
 
