@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { QueryClient, QueryClientProvider, useQueryClient } from "react-query";
 import Input from "../components/common/input/page";
 import Button from "../components/common/button/page";
-import logo from "../../assets/img/Icon/PICK.svg";
+import logo from "../../assets/img/Icon/pick.svg";
 import { useLogin } from "@/apis/login/login";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
