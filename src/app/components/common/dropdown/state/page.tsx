@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
 import nonearrow from "@/assets/img/Icon/chevron-right.svg";
@@ -36,7 +38,11 @@ export const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
       >
         {selectedOption}
         <Image
-          src={isDropdownVisible ? clickarrow : nonearrow}
+          src={
+            isDropdownVisible
+              ? "@/assets/img/Icon/clickarrow.svg"
+              : "@/assets/img/Icon/nonearrow.svg"
+          }
           alt="arrow"
           width={20}
           height={20}

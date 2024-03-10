@@ -1,3 +1,5 @@
+"use client";
+
 import Calendarmold from "react-calendar";
 import CalendarCss from "./style/style.css";
 import moment from "moment";

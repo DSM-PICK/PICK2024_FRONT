@@ -4,15 +4,15 @@ WORKDIR /src
 
 COPY package*.json yarn.lock ./
 
-RUN yarn install --immutable
+RUN rm -rf node_modules && yarn install
 
 COPY . .
 
-RUN next build
+RUN yarn build
 
 ARG BASE_URL
 ENV REACT_APP_API_URL $BASE_URL
 
 EXPOSE 3000
 
-CMD ["next", "dev"]
+CMD ["yarn", "dev"]
