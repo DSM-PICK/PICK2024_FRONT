@@ -1,10 +1,10 @@
-FROM node:18.12.0
+FROM node:21.5.0
 
 WORKDIR /src
 
 COPY package*.json yarn.lock ./
 
-RUN rm -rf node_modules && yarn install
+RUN yarn install
 
 COPY . .
 
