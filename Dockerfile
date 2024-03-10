@@ -8,11 +8,11 @@ RUN yarn install --immutable
 
 COPY . .
 
-RUN yarn build
+RUN next build
 
 ARG BASE_URL
 ENV REACT_APP_API_URL $BASE_URL
 
 EXPOSE 3000
 
-CMD ["yarn", "dev"]
+CMD ["next", "dev"]
