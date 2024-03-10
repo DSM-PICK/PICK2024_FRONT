@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import Button from "../../../button/page";
 import Modal from "../../../modal/page";

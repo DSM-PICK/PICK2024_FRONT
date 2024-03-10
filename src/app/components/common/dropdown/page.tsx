@@ -1,7 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import nonearrow from "@/assets/img/Icon/chevron-right.svg";
-import clickarrow from "@/assets/img/Icon/downarrow.svg";
 import { getClass, getFloor } from "@/apis/outAccept/outAccept";
 
 interface ItemType {
@@ -103,7 +103,11 @@ const Dropdown: React.FC<DropProps> = ({
           ? `${selectedClassOption}반`
           : ""}
         <Image
-          src={isDropdownVisible ? clickarrow : nonearrow}
+          src={
+            isDropdownVisible
+              ? "@/assets/img/Icon/clickarrow.svg"
+              : "@/assets/img/Icon/nonearrow.svg"
+          }
           alt="arrow"
           width={16}
           height={16}
