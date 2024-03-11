@@ -1,28 +1,19 @@
 "use client";
-import Header from "@/app/components/common/header/page";
+import Header from "@/app/components/common/Header";
 import { ReasonList } from "@/app/components/common/list/reason/page";
 import DoubleTab from "@/app/components/common/tab/page";
 import { getFullToday, getToday } from "@/utils/date";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { AlloutList, ReturnHome } from "@/apis/outList/list";
-import { getTimeString, getStudentString } from "@/utils/until";
+import { getStudentString } from "@/utils/until";
 
 interface OutListData {
+  id: string;
+  user_id: string;
   username: string;
-  start_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
-  end_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
+  start_time: string;
+  end_time: string;
   grade: number;
   class_num: number;
   num: number;
@@ -30,13 +21,10 @@ interface OutListData {
 }
 
 interface HomeData {
+  id: string;
+  user_id: string;
   username: string;
-  start_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
+  start_time: string;
   grade: number;
   class_num: number;
   num: number;
@@ -55,8 +43,9 @@ const Reason = () => {
   const Outdata = async () => {
     console.log(data);
     try {
-      const result = await outMutate(data, {
-        onSuccess: () => {
+      const result = await outMutate(null, {
+        onSuccess: (data) => {
+          setData(data);
           console.log("OutData: Success");
         },
         onError: (error) => {
@@ -72,9 +61,10 @@ const Reason = () => {
       console.error("OutData: Catch Error", error);
     }
   };
+
   const ReturnHomeData = async () => {
     try {
-      const result = await returnHomeMutate(homeData, {
+      const result = await returnHomeMutate(null, {
         onSuccess: () => {
           console.log("성공");
         },
@@ -101,14 +91,6 @@ const Reason = () => {
       Outdata();
     }
   };
-  const homeTime = ({ start_time }: HomeData) => {
-    return `${start_time.hour}:${start_time.minute}`;
-  };
-
-  const startTime = (item: { start_time: any }) =>
-    getTimeString(item.start_time);
-
-  const endTime = (item: { end_time: any }) => getTimeString(item.end_time);
 
   const student = (item: any) => getStudentString(item);
 
@@ -140,13 +122,13 @@ const Reason = () => {
             />
           </div>
         </div>
-        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll">
+        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll scrollbar-hide">
           {selectedTab ? (
             <div className="flex flex-wrap gap-5 justify-between">
               {homeData.map((item, index) => (
                 <ReasonList
                   key={index}
-                  time={homeTime(item)}
+                  time={item.start_time}
                   student={student(item)}
                   why={item.reason}
                 />
@@ -157,8 +139,8 @@ const Reason = () => {
               {data.map((item, index) => (
                 <ReasonList
                   key={index}
-                  time={startTime(item)}
-                  endTime={endTime(item)}
+                  time={item.start_time}
+                  endTime={item.end_time}
                   student={student(item)}
                   why={item.reason}
                 />

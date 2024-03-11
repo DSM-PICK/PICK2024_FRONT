@@ -1,6 +1,6 @@
 "use client";
 import { StaticImageData } from "next/image";
-import Button from "../../button/page";
+import { Button } from "../..";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Button from "../../../button/page";
+import { Button } from "../../..";
 import Modal from "../../../modal/page";
 
 interface AfterdeleteProps {

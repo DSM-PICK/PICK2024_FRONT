@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/app/components/common/header/page";
+import Header from "@/app/components/common/Header";
 import { PreviousList } from "@/app/components/common/list/previous/page";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

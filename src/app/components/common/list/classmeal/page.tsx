@@ -4,7 +4,7 @@ import { ClassmealDrop } from "../../dropdown/state/class/page";
 interface allmealsProps {
   number: string;
   name: string;
-  state: "신청" | "미신청" | "미응답";
+  state: "OK" | "NO" | "QUIET";
 }
 
 export const Classmeals: React.FC<allmealsProps> = ({

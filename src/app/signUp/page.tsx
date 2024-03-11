@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import next, { NextPage } from "next/types";
-import Image from "next/image";
-import Input from "../components/common/input/page";
+import Input from "../components/common/input";
 import Link from "next/link";
-import Button from "../components/common/button/page";
+import { Button } from '../components/common';
 import logo from "../../assets/img/Icon/eye.svg";
 
 interface ChangeProps {

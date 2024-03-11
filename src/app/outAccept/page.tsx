@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Header from "../components/common/header/page";
+import Header from "../components/common/Header";
 import Link from "next/link";
 import DoubleTab from "../components/common/tab/page";
-import Button from "../components/common/button/page";
+import { Button } from "../components/common";
 import { getFullToday } from "@/utils/date";
 import { AcceptList } from "../components/common/list/accept/page";
-import Dropdown from "../components/common/dropdown/page";
+import Dropdown from "../components/common/dropdown";
 import Modal from "../components/common/modal/page";
 import { getClass, outAccept } from "@/apis/outAccept/outAccept";
+import { getStudentString, setStudentNum } from "@/utils/until";
 
 interface applicationDataProp {
   class_num: number;
@@ -50,12 +51,10 @@ const OutAccept = () => {
   };
 
   useEffect(() => {
-    console.log(`외출 grade: ${outSelectedGrade} , class: ${outSelectedClass}`);
     AcceptDataList();
   }, [outSelectedClass, outSelectedGrade]);
 
   useEffect(() => {
-    console.log(`grade: ${selectedGrade} class: ${selectedClass}`);
     AcceptDataList();
   }, [selectedGrade, selectedClass]);
 
@@ -70,7 +69,7 @@ const OutAccept = () => {
   const AcceptDataList = async () => {
     try {
       if (selectedGrade && selectedClass) {
-        const reqOption = selectedTab ? "early-return" : "application";
+        const reqOption = selectedTab ? "application" : "early-return";
         const response = await getClassMutate(
           {
             type: reqOption,
@@ -104,7 +103,7 @@ const OutAccept = () => {
   const Acceptconfirm = async () => {
     try {
       if (selectedGrade && selectedClass) {
-        const reqOption = selectedTab ? "early-return" : "application";
+        const reqOption = selectedTab ? "application" : "early-return";
         await outAcceptMutate(
           {
             type: reqOption,
@@ -133,7 +132,7 @@ const OutAccept = () => {
   const confirmReturn = async () => {
     try {
       if (selectedGrade && selectedClass) {
-        const reqOption = selectedTab ? "early-return" : "application";
+        const reqOption = selectedTab ? "application" : "early-return";
         await outAcceptMutate(
           {
             type: reqOption,
@@ -235,8 +234,8 @@ const OutAccept = () => {
                       handleAcceptListClick(dataItem.id, dataItem.username)
                     }
                     key={index}
-                    time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
-                    student={`${dataItem.grade}${dataItem.class_num}${dataItem.num} ${dataItem.username}`}
+                    time={`${dataItem.start_time}`}
+                    student={getStudentString(dataItem)}
                     why={`${dataItem.reason}`}
                   />
                 ))}
@@ -249,9 +248,9 @@ const OutAccept = () => {
                       handleAcceptListClick(dataItem.id, dataItem.username)
                     }
                     key={index}
-                    time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
-                    student={dataItem.username}
-                    why={`${dataItem.grade}${dataItem.class_num}${dataItem.num} ${dataItem.username}`}
+                    time={dataItem.start_time}
+                    student={`${getStudentString(dataItem)}`}
+                    why={dataItem.reason}
                   />
                 ))}
               </div>

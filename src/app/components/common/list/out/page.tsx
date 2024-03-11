@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Button from "../../button/page";
+import { Button } from "../..";
 import Modal from "../../modal/page";
 import { returnSchool } from "@/apis/outList/list";
 import { v4 as uuidv4 } from "uuid";
@@ -36,6 +36,7 @@ export const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
         {
           onSuccess: () => {
             console.log("성공");
+            alert("복귀에 성공하셨습니다");
           },
           onError: () => {
             console.log("에러발생");

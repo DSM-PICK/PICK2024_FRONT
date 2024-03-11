@@ -1,31 +1,86 @@
 "use client";
 import React from "react";
-import Header from "../components/common/header/page";
+import Header from "../components/common/Header";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DoubleTab from "../components/common/tab/page";
-import Button from "../components/common/button/page";
-import { getFullToday, getToday } from "@/utils/date";
+import { Button } from "../components/common";
+import { getFullToday } from "@/utils/date";
 import { ReturnHome } from "../components/common/list/returnHome/page";
 import { Out } from "../components/common/list/out/page";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ReturnHomeList, outList } from "@/apis/outList/list";
+
+interface earlyreturnOK {
+  id: string;
+  username: string;
+  start_time: string;
+  grade: number;
+  classNum: number;
+  num: number;
+}
+
+interface applicationOK {
+  id: string;
+  username: string;
+  start_time: string;
+  end_time: string;
+  grade: number;
+  classNum: number;
+  num: number;
+}
 
 const OutList = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
+  const [applicationList, setApplicationList] = useState<applicationOK[]>([]);
+  const [earlyreturnlist, setEarlyreturnList] = useState<earlyreturnOK[]>([]);
   const router = useRouter();
 
-  const returnhomeData = {
-    names: ["도경", "1410 강해민", "1410 강해민", "1410 강해민"],
-    times: ["11:20", "12:00", "13:30", "14:45"],
-  };
+  const { mutate: outListMutate } = outList();
+  const { mutate: homeMutate } = ReturnHomeList();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
+    selectedTab ? getHomeList() : getOutlist();
   };
 
   const reason = () => {
     router.push(`/outList/reason`);
   };
+
+  const getHomeList = async () => {
+    try {
+      await homeMutate(null, {
+        onSuccess: (data) => {
+          setEarlyreturnList(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getOutlist = async () => {
+    try {
+      const result = await outListMutate(null, {
+        onSuccess: (data) => {
+          setApplicationList(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getOutlist();
+  }, []);
 
   return (
     <div className="h-dvh">
@@ -58,19 +113,19 @@ const OutList = () => {
         <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10">
           {selectedTab ? (
             <div className="flex flex-wrap gap-5 justify-between">
-              {returnhomeData.names.map((name, index) => (
-                <ReturnHome key={index} student={name} />
+              {applicationList?.map((data, index) => (
+                <Out
+                  id={data.id}
+                  key={index}
+                  returnTime={data.end_time}
+                  student={data.username}
+                />
               ))}
             </div>
           ) : (
             <div className="flex flex-wrap gap-5 justify-between">
-              {returnhomeData.names.map((name, index) => (
-                <Out
-                  id="ss"
-                  key={index}
-                  returnTime={returnhomeData.times[index]}
-                  student={name}
-                />
+              {earlyreturnlist?.map((data, index) => (
+                <ReturnHome key={index} student={data.username} />
               ))}
             </div>
           )}

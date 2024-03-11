@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Calendar } from "../components/common/calendar/page";
-import Modal from "../components/common/modal/page";
-import Header from "../components/common/header/page";
+import Header from "../components/common/Header";
 import Link from "next/link";
-import { selfstudyGet } from "@/apis/outList/list";
 
 interface data {
   floor: number;
@@ -16,7 +14,6 @@ const ChangeTeacher = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectedDate] = useState<Date | null>(null);
   const [data, setData] = useState<data[]>([]);
-  const { mutate: selfstudyMutate } = selfstudyGet();
 
   const handleChangeTeacher = (date: Date) => {
     setSelectedDate(date);

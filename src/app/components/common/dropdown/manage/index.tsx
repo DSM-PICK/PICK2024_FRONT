@@ -16,7 +16,7 @@ interface StateStyles {
   취업: string;
 }
 
-const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
+export const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
 
@@ -88,4 +88,3 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   );
 };
 
-export default ManageDrop;

@@ -1,6 +1,6 @@
 "use client";
-import Header from "../components/common/header/page";
-import React from "react";
+import Header from "../components/common/Header";
+import React, { useEffect, useState } from "react";
 import Menu from "../components/common/menu/page";
 import outList from "../../assets/img/Icon/외출자 목록.svg";
 import outAccept from "../../assets/img/Icon/외출이동수락.svg";
@@ -16,12 +16,52 @@ import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
 import { getWeekDay } from "@/utils/date";
+import { dayTeacher, selfStudyCheck } from "@/apis/outList/list";
+
+interface todaySelfStudy {
+  floor: number;
+  teacher_name: string;
+}
 
 const Main = () => {
-  const teacher = "";
   const today = new Date();
-  const Nightcheck = `${1}층 자습감독`;
-  //api연동하면서 추가 할 예정
+  const [selfStudy, setSelfStudy] = useState<todaySelfStudy[]>([]);
+  const [selfStudyChack, setSelfStudyChack] = useState<string>();
+
+  const { mutate: todayCheck } = dayTeacher();
+  const { mutate: selfChackMutate } = selfStudyCheck();
+
+  const Check = async () => {
+    try {
+      await todayCheck(null, {
+        onSuccess: (data) => {
+          setSelfStudy(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } catch (error) {
+      console.log("오류 발생", error);
+    }
+  };
+
+  const selfCheck = async () => {
+    try {
+      await selfChackMutate(null, {
+        onSuccess: (data) => {
+          setSelfStudyChack(data);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    Check();
+    selfCheck();
+  }, []);
 
   return (
     <div className="bg-primary-1200 h-full">
@@ -32,8 +72,7 @@ const Main = () => {
             {today.getMonth() + 1}월 {today.getDate()}일 {getWeekDay()}요일
           </div>
           <div className=" gap-3 text-neutral-50 flex text-heading4">
-            {teacher} 선생님은
-            <div className=" text-primary-500 flex"> {Nightcheck}</div>입니다.
+            {selfStudyChack}
           </div>
         </div>
         <div className=" flex flex-col gap-4">
@@ -71,15 +110,11 @@ const Main = () => {
             오늘의 자습 감독 선생님
           </div>
           <div className=" flex justify-between bg-white w-auto  px-23 py-8 rounded-lg rounded-tr-max text-heading6-M text-neutral-100">
-            <div>
-              <b>2층</b> {/*나중에 api연결시 추가 */}박현아 선생님
-            </div>
-            <div>
-              <b>3층</b> {/*나중에 api연결시 추가 */}박현아 선생님
-            </div>
-            <div>
-              <b>4층</b> {/*나중에 api연결시 추가 */}박현아 선생님
-            </div>
+            {selfStudy.map((item, index) => (
+              <div key={index}>
+                <b>{item.floor}층</b> {item.teacher_name}선생님
+              </div>
+            ))}
           </div>
         </div>
         <div className="flex gap-6">

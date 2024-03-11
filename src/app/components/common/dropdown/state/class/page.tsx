@@ -3,21 +3,21 @@
 import React, { useState } from "react";
 
 interface StateDropProps {
-  state: "신청" | "미신청" | "미응답";
+  state: "OK" | "NO" | "QUIET";
 }
 
 export const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
   const defaultOptions: Record<string, string> = {
-    신청: state === "신청" ? "신청" : state === "미신청" ? "미신청" : "미응답",
+    신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
   };
 
   const [selectedOption, setSelectedOption] = useState<string>(
-    defaultOptions["신청"]
+    defaultOptions[defaultOptions]
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
   const toggleDropdown = () => {
-    if (state === "미응답") {
+    if (state === "QUIET") {
       setIsDropdownVisible(!isDropdownVisible);
     }
   };
@@ -29,11 +29,11 @@ export const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
 
   const dropStyle = () => {
     switch (state) {
-      case "미응답":
+      case "QUIET":
         return "group border bg-white py-1 px-3 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-center";
-      case "미신청":
+      case "NO":
         return "bg-white py-1 border px-3 rounded-lg flex justify-center items-center border-primary-500 text-neutral-500";
-      case "신청":
+      case "OK":
         return "bg-primary-300 py-1 px-3 rounded-lg flex justify-center items-center text-white";
     }
   };
@@ -45,7 +45,7 @@ export const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
       <div className={dropStyle()} onClick={toggleDropdown}>
         {selectedOption}
       </div>
-      {state === "미응답" && isDropdownVisible && (
+      {state === "QUIET" && isDropdownVisible && (
         <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
           <div
             onClick={() => handleOptionClick("신청")}

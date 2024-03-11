@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import Header from "../components/common/header/page";
-import react, { useState } from "react";
-import { getFullToday, getWeekDay } from "@/utils/date";
-import Button from "../components/common/button/page";
-import Dropdown from "../components/common/dropdown/page";
+import Header from "../components/common/Header";
+import { useState } from "react";
+import { getWeekDay } from "@/utils/date";
+import { Button } from "../components/common";
+import Dropdown from "../components/common/dropdown";
 import { AfterCheck } from "../components/common/list/after/page";
 import { AfterTab } from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";

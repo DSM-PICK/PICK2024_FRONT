@@ -2,10 +2,10 @@
 import Link from "next/link";
 import Modal from "../components/common/modal/page";
 import react, { useState } from "react";
-import Header from "../components/common/header/page";
+import Header from "../components/common/Header";
 import { getFullToday } from "@/utils/date";
-import Dropdown from "../components/common/dropdown/page";
-import Button from "../components/common/button/page";
+import Dropdown from '../components/common/dropdown';
+import { Button } from "../components/common";
 import { ManageList } from "../components/common/list/manage/page";
 import React from "react";
 
