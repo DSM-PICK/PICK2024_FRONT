@@ -6,23 +6,15 @@ import { getAuthHeader } from "../outList/list";
 import { getToken } from "@/utils/auth";
 
 interface applicationDataProp {
-  id: string;
-  username: string;
-  start_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
-  end_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
-  grade: number;
   class_num: number;
+  end_time: string;
+  grade: number;
+  id: string;
   num: number;
+  reason: string;
+  start_time: string;
+  user_id: string;
+  username: string;
 }
 
 interface accept {
@@ -48,8 +40,8 @@ interface ClassProp {
 
 export const getFloor = () => {
   const { handleError } = apiError();
-  return useMutation<Error, void, FloorProp>({
-    mutationFn: async (param: FloorProp) => {
+  return useMutation<FloorProp, void, { type: string; floor: number }>({
+    mutationFn: async (param) => {
       try {
         const response = await instance.get(
           `/${param.type}/floor?floor=${param.floor}`,
@@ -69,7 +61,7 @@ export const getFloor = () => {
 export const getClass = () => {
   const { handleError } = apiError();
   const accessToken = getToken();
-  return useMutation<Error, applicationDataProp[], ClassProp>({
+  return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
     mutationFn: async (param: ClassProp) => {
       try {
         const response = await instance.get(
@@ -96,7 +88,7 @@ export const outAccept = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.patch(
-          `${param.type}/status/ok`,
+          `${param.type}/status`,
           {
             status: param.status,
             ids: param.ids,

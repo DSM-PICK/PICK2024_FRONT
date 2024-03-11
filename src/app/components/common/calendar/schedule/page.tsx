@@ -1,11 +1,9 @@
 "use client";
-
 import Calendarmold from "react-calendar";
-import CalendarCss from "./style/style.css";
+import CalendarCss from "../style/style.css";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { selfstudyGet } from "@/apis/outList/list";
-import { SelfStudyModal } from "../modal/selfStudyTeacher.tsx/page";
+import { getSchdule } from "@/apis/outList/list";
 
 interface calendarProp {
   onClick: (date: Date) => void;
@@ -13,18 +11,19 @@ interface calendarProp {
 }
 
 interface data {
-  floor: number;
-  teacher: string;
   date: string;
+  event_name: string;
+  id: string;
 }
 
-// ... (previous imports)
-
-export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
+export const ScheduleCalendar: React.FC<calendarProp> = ({
+  onClick,
+  onChange,
+}) => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthdata, setData] = useState<data[]>([]);
-  const { mutate: selfstudyMutate } = selfstudyGet();
+  const { mutate: scheduleMutate } = getSchdule();
 
   const handleModalCancel = () => {
     setModal(false);
@@ -34,15 +33,15 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
     setModal(false);
   };
 
-  const studyData = async (selectDate: Date | null) => {
+  const scheduleData = async (selectDate: Date | null) => {
     const formattedDate = moment(selectDate).format("MMMM");
     const currentYear = new Date().getFullYear();
     console.log(formattedDate);
     try {
-      const result = await selfstudyMutate(
+      const result = await scheduleMutate(
         {
-          month: formattedDate,
           year: currentYear.toString(),
+          month: formattedDate,
         },
         {
           onSuccess: (data) => {
@@ -64,7 +63,7 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
     const currentDate = new Date();
     console.log(currentDate);
 
-    studyData(currentDate);
+    scheduleData(currentDate);
   }, []);
 
   return (
@@ -76,15 +75,15 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
           onChange(date);
         }}
         onActiveStartDateChange={({ activeStartDate }) =>
-          studyData(activeStartDate)
+          scheduleData(activeStartDate)
         }
         onClickDay={(date) => {
-          setModal(true);
           setSelectDate(date);
+          setModal(true);
           onClick(date);
         }}
         next2Label={null}
-        calendarType="US"
+        calendarType="gregory"
         formatDay={(locale, date) =>
           date.toLocaleString("en", { day: "numeric" })
         }
@@ -92,39 +91,22 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
           const formattedDate = moment(date).format("YYYY-MM-DD");
 
           if (monthdata) {
-            const dateData = monthdata
-              .filter((item) => item.date === formattedDate)
-              .sort((i, j) => {
-                console.log(i, j);
-                return i.floor - j.floor;
-              });
-            if (dateData.length > 0) {
+            const dateData = monthdata.find(
+              (item) => item.date === formattedDate
+            );
+            if (dateData) {
               return (
-                <>
-                  {dateData.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white flex px-2 py-1 shadow-md rounded gap-2 w-full"
-                    >
-                      <div className="h-auto rounded w-0.5 bg-primary-200"></div>
-                      <div className="text-black text-Button-ES">
-                        {item.teacher}
-                      </div>
-                    </div>
-                  ))}
-                </>
+                <div className="bg-white flex px-2 py-1 shadow-md rounded gap-2 w-full">
+                  <div className="h-auto rounded w-0.5 bg-primary-200"></div>
+                  <div className="text-black text-Button-ES">
+                    {dateData.event_name}
+                  </div>
+                </div>
               );
             }
           }
         }}
       />
-      {modal && (
-        <SelfStudyModal
-          initialDate={selectDate}
-          heading1="자습감독 변경"
-          onCancel={handleModalCancel}
-        />
-      )}
     </>
   );
 };

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { getClass, getFloor } from "@/apis/outAccept/outAccept";
+import arrow from "@/assets/img/Icon/chevron-right.svg";
+import downarrow from "@/assets/img/Icon/downarrow.svg";
 
 interface ItemType {
   value: string | number;
@@ -23,6 +24,7 @@ const Dropdown: React.FC<DropProps> = ({
 }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
+  const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
   const toggleDropdown = () => {
@@ -31,11 +33,13 @@ const Dropdown: React.FC<DropProps> = ({
 
   const handleOptionClick = (option: any) => {
     if (onChange) {
-      onChange(option.value, type); // option.value를 전달
+      onChange(option.value, type);
       if (type === "grade") {
         setSelectedGradeOption(option.value);
       } else if (type === "class") {
         setSelectedClassOption(option.value);
+      } else if (type === "floor") {
+        setSelectedFloorOption(option.value);
       }
     }
     setIsDropdownVisible(false);
@@ -101,13 +105,9 @@ const Dropdown: React.FC<DropProps> = ({
           ? `${selectedGradeOption}학년`
           : type === "class"
           ? `${selectedClassOption}반`
-          : ""}
+          : `${selectedFloorOption}층`}
         <Image
-          src={
-            isDropdownVisible
-              ? "@/assets/img/Icon/clickarrow.svg"
-              : "@/assets/img/Icon/nonearrow.svg"
-          }
+          src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
           alt="arrow"
           width={16}
           height={16}

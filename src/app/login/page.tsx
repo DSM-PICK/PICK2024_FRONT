@@ -1,9 +1,9 @@
 "use client";
 import { NextPage } from "next";
-import { QueryClient, QueryClientProvider, useQueryClient } from "react-query";
-import Input from "../components/common/input/page";
-import Button from "../components/common/button/page";
-import logo from "../../assets/img/Icon/pick.svg";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Input from "../components/common/input";
+import { Button } from "../components/common";
+import Picklogo from "../../assets/img/Icon/pickname.svg";
 import { useLogin } from "@/apis/login/login";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -100,7 +100,7 @@ const Login: NextPage = () => {
         <div className=" w-100 h- rounded-xl bg-sideImg">
           <div className=" rounded-xl py-12 px-13 h-full bg-primary-1000 backdrop-blur-sm bg-opacity-30 bg-blur-md">
             <div className="font-sans flex gap-3.5 text-heading6-M text-white">
-              {logo && <img src={logo.src} width={110} height={60} />}
+              {Picklogo && <img src={Picklogo.src} width={110} height={60} />}
             </div>
             <div className=" text-heading1 -space-y-5">
               <div className=" text-white">Welcome</div>

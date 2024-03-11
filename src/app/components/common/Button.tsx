@@ -1,5 +1,5 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 
 interface ButtonProp {
   colorType:
@@ -23,7 +23,7 @@ interface ButtonProp {
   onClick: () => void;
 }
 
-const Button: React.FC<ButtonProp> = ({
+export const Button: React.FC<ButtonProp> = ({
   colorType,
   children,
   buttonSize,
@@ -84,5 +84,3 @@ const Button: React.FC<ButtonProp> = ({
     </div>
   );
 };
-
-export default Button;

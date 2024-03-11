@@ -1,6 +1,5 @@
-import ManageDrop from "../../dropdown/manage/page";
+import { ManageDrop } from "../../dropdown/manage";
 import { ManageState } from "./state/page";
-import react, { useState } from "react";
 
 interface ManageProps {
   student: string;

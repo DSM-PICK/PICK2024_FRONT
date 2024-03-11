@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Button from "../button/page";
-import Input from "../input/page";
+import { Button } from "..";
+import Input from "../input";
 
 import moment from "moment";
 import { AutoInput } from "../input/auto/page";
@@ -10,6 +10,17 @@ import { AutoInput } from "../input/auto/page";
 interface ChangeProps {
   text: string;
   name: string;
+}
+
+interface selfStudyPost {
+  floor: number;
+  teacher: string;
+  date: string;
+}
+
+interface schedule {
+  name: string;
+  date: string;
 }
 
 interface ModalProps {
@@ -21,6 +32,9 @@ interface ModalProps {
   onConfirm: () => void;
   date?: Date | null;
   teachers?: string[] | undefined;
+  name?: string;
+  value?: () => void;
+  scheduleData?: schedule;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -31,10 +45,13 @@ const Modal: React.FC<ModalProps> = ({
   onCancel,
   onConfirm,
   date,
+  name,
   teachers,
+  scheduleData,
 }) => {
   const [teacherData, setTeacherData] = useState<string[]>(teachers || []);
   const [inputValue, setInputValue] = useState("");
+  const [selfStudyTeacher, setSelfStudyTeacher] = useState<selfStudyPost[]>([]);
 
   const [addstudent, setAddstudent] = useState({
     student: "",
@@ -50,18 +67,17 @@ const Modal: React.FC<ModalProps> = ({
     fourth: "",
   });
 
-  const [scheduleData, setScheduleData] = useState({
-    schedule: "",
-  });
-
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
   };
 
-  const changeTeacherData = () => {};
+  const [scheduleInputData, setScheduleInputData] = useState({
+    name: scheduleData?.name || "",
+    date: date,
+  });
 
   const SchehandleChange = ({ text, name }: ChangeProps) => {
-    setScheduleData({ ...scheduleData, [name]: text });
+    setScheduleInputData({ ...scheduleInputData, [name]: text });
   };
 
   const AutohandleChange = ({ text, name }: ChangeProps) => {
@@ -125,7 +141,7 @@ const Modal: React.FC<ModalProps> = ({
                     label="2층 자습감독"
                     onChange={handleChange}
                     value={data.second}
-                    name="second"
+                    name={name}
                     placeholder="선생님 이름을 입력해주세요."
                     width="92"
                   />
@@ -134,7 +150,7 @@ const Modal: React.FC<ModalProps> = ({
                     label="3층 자습감독"
                     onChange={handleChange}
                     value={data.third}
-                    name="third"
+                    name={name}
                     placeholder="선생님 이름을 입력해주세요."
                     width="92"
                   />
@@ -143,7 +159,7 @@ const Modal: React.FC<ModalProps> = ({
                     label="4층 자습감독"
                     onChange={handleChange}
                     value={data.fourth}
-                    name="fourth"
+                    name={name}
                     placeholder="선생님 이름을 입력해주세요."
                     width="92"
                   />
@@ -154,8 +170,8 @@ const Modal: React.FC<ModalProps> = ({
                     type="text"
                     label="제목*"
                     onChange={SchehandleChange}
-                    value={scheduleData.schedule}
-                    name="schedule"
+                    value={scheduleInputData.name}
+                    name="name"
                     placeholder="일정제목"
                     width="92"
                   />

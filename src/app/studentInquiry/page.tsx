@@ -1,8 +1,8 @@
 "use client";
 import { NextPage } from "next";
 import { useRouter } from "next/navigation";
-import Header from "../components/common/header/page";
-import Button from "../components/common/button/page";
+import Header from "../components/common/Header";
+import { Button } from '../components/common';
 
 const StudentInquiry: NextPage = () => {
   const router = useRouter();
