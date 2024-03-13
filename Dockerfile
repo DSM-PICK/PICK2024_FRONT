@@ -1,10 +1,12 @@
 FROM node:21.5.0
 
-WORKDIR /src
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+RUN yarn
 
 COPY . .
-
-RUN yarn install
 
 RUN yarn build
 
