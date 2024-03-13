@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import pick from "@/assets/img/Icon/pickName.svg";
+import pick from "@/assets/img/Icon/pickname.svg";
 
 const Header: NextPage = ({}) => {
   const teacher = "이기혁";
