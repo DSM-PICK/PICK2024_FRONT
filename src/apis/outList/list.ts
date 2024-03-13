@@ -227,15 +227,18 @@ export const SelfstudyGet = () => {
 };
 
 export const DayTeacher = () => {
-  return useMutation<todaySelfStudy[], Error, null>({
-    mutationFn: async () => {
+  return useMutation<todaySelfStudy[], Error, { date: string }>({
+    mutationFn: async (param) => {
       try {
         const accessToken = getToken();
-        const response = await instance.get(`/self-study/today`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(
+          `/self-study/today/date=${param.date}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         return response?.data.sort((i: any, j: any) => i.floor - j.floor);
       } catch (error) {
         throw error;
