@@ -33,14 +33,19 @@ const Main = () => {
 
   const Check = async () => {
     try {
-      await todayCheck(null, {
-        onSuccess: (data) => {
-          setSelfStudy(data);
+      await todayCheck(
+        {
+          date: today.toString(),
         },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
+        {
+          onSuccess: (data) => {
+            setSelfStudy(data);
+          },
+          onError: (error) => {
+            console.log(error);
+          },
+        }
+      );
     } catch (error) {
       console.log("오류 발생", error);
     }

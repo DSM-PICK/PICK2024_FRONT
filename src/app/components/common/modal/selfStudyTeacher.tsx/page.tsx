@@ -12,7 +12,7 @@ export interface ChangeProps {
 
 interface postTeacherProp {
   date: string;
-  teachers: { floor: number; teacher: string }[];
+  teacher: { floor: number; teacher: string }[];
 }
 
 interface ModalProps {
@@ -28,35 +28,15 @@ const SelfStudyModal: React.FC<ModalProps> = ({
 }) => {
   const [secondData, setSecondData] = useState({ floor: 2, teacher: "" });
   const [thirdData, setThirdData] = useState({ floor: 3, teacher: "" });
-  const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" });
+  const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" }); // 수정된 부분: fourthData
 
   const { mutate: postTeacherMutate } = PostTeacher();
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    floor: number
-  ) => {
-    const { value } = event.target;
-    switch (floor) {
-      case 2:
-        setSecondData({ ...secondData, teacher: value });
-        break;
-      case 3:
-        setThirdData({ ...thirdData, teacher: value });
-        break;
-      case 4:
-        setFourthData({ ...fourthData, teacher: value });
-        break;
-      default:
-        break;
-    }
-  };
 
   const submitTeachers = async () => {
     try {
       const postData: postTeacherProp = {
         date: moment(initialDate).format("YYYY-MM-DD"),
-        teachers: [
+        teacher: [
           { floor: secondData.floor, teacher: secondData.teacher },
           { floor: thirdData.floor, teacher: thirdData.teacher },
           { floor: fourthData.floor, teacher: fourthData.teacher },
@@ -86,6 +66,16 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     </div>
   );
 
+  const SecondhandleChange = ({ text, name }: ChangeProps) => {
+    setSecondData({ ...secondData, [name]: text });
+  };
+  const thirdhandleChange = ({ text, name }: ChangeProps) => {
+    setThirdData({ ...thirdData, [name]: text });
+  };
+  const fourthhandleChange = ({ text, name }: ChangeProps) => {
+    setFourthData({ ...fourthData, [name]: text }); // 수정된 부분: setFourthData
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
       <div className="bg-white rounded-xl px-24 py-13 w-155">
@@ -104,26 +94,29 @@ const SelfStudyModal: React.FC<ModalProps> = ({
             <Input
               type="text"
               label="2층 자습감독"
-              onChange={(e) => handleChange(e, 2)}
+              onChange={SecondhandleChange}
               value={secondData.teacher}
               placeholder="선생님 이름을 입력해주세요."
               width="92"
+              name="teacher"
             />
             <Input
               type="text"
               label="3층 자습감독"
-              onChange={(e) => handleChange(e, 3)}
+              onChange={thirdhandleChange}
               value={thirdData.teacher}
               placeholder="선생님 이름을 입력해주세요."
               width="92"
+              name="teacher"
             />
             <Input
               type="text"
               label="4층 자습감독"
-              onChange={(e) => handleChange(e, 4)}
+              onChange={fourthhandleChange}
               value={fourthData.teacher}
               placeholder="선생님 이름을 입력해주세요."
               width="92"
+              name="teacher"
             />
           </div>
           {renderButtons()}
