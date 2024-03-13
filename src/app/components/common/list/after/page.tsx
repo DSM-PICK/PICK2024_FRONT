@@ -9,7 +9,7 @@ interface AfterCheckProp {
   edit?: boolean;
 }
 
-export const AfterCheck: React.FC<AfterCheckProp> = ({ state, day, edit }) => {
+const AfterCheck: React.FC<AfterCheckProp> = ({ state, day, edit }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>(state);
 
@@ -115,3 +115,5 @@ export const AfterCheck: React.FC<AfterCheckProp> = ({ state, day, edit }) => {
     </div>
   );
 };
+
+export default AfterCheck;

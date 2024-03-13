@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { apiError } from "@/hook/apiError";
 import { getToken } from "@/utils/auth";
 
 interface accept {
@@ -9,8 +8,7 @@ interface accept {
   ids: string[];
 }
 
-export const outAccept = () => {
-  const { handleError } = apiError();
+export const useOutAccept = () => {
   const accessToken = getToken();
   return useMutation<void, Error, accept>({
     mutationFn: async (param) => {
@@ -29,7 +27,6 @@ export const outAccept = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },

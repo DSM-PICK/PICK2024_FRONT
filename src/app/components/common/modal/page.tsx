@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "..";
+import Button from "../Button";
 import Input from "../input";
 
 import moment from "moment";
-import { AutoInput } from "../input/auto/page";
+import AutoInput from "../input/auto/page";
 
 interface ChangeProps {
   text: string;
@@ -88,18 +88,16 @@ const Modal: React.FC<ModalProps> = ({
   const renderButtons = () => {
     return (
       <div className="flex gap-6">
-        <Button
-          colorType="ghost"
-          children="취소"
-          buttonSize="large"
-          onClick={onCancel}
-        />
+        <Button colorType="ghost" buttonSize="large" onClick={onCancel}>
+          취소
+        </Button>
         <Button
           colorType={type === "error" ? "red" : "primary"}
-          children={buttonMessage}
           buttonSize="large"
           onClick={onConfirm}
-        />
+        >
+          {buttonMessage}
+        </Button>
       </div>
     );
   };

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import next, { NextPage } from "next/types";
 import Input from "../components/common/input";
 import Link from "next/link";
-import { Button } from '../components/common';
+import Button from "../components/common/Button";
 import logo from "../../assets/img/Icon/eye.svg";
 
 interface ChangeProps {
@@ -64,11 +64,10 @@ const SignUp: NextPage = () => {
             </div>
           </div>
           <Button
-            children="로그인"
             colorType="solidDisabled"
             buttonSize="full"
             onClick={() => {}}
-          />
+          >로그인</Button>
         </div>
       </div>
       <div className=" w-100 h- rounded-xl bg-sideImg">

@@ -3,12 +3,12 @@ import Link from "next/link";
 import Header from "../components/common/Header";
 import { useState } from "react";
 import { getWeekDay } from "@/utils/date";
-import { Button } from "../components/common";
+import Button from "../components/common/Button";
 import Dropdown from "../components/common/dropdown";
-import { AfterCheck } from "../components/common/list/after/page";
-import { AfterTab } from "../components/common/tab/after/page";
+import AfterCheck from "../components/common/list/after/page";
+import AfterTab from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
-import { AfterDelete } from "../components/common/list/after/delete/page";
+import AfterDelete from "../components/common/list/after/delete/page";
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
@@ -89,7 +89,7 @@ const AfterManage = () => {
                 firstChildren="전공동아리"
                 secondChildren="방과후"
                 onClick={onClickChange}
-              />
+              ></AfterTab>
             </div>
           </div>
           {change ? (
@@ -97,43 +97,44 @@ const AfterManage = () => {
               {edit ? (
                 <Button
                   colorType="ghost"
-                  children="출결 저장하기"
                   buttonSize="small"
                   onClick={onClickSave}
-                />
+                >
+                  출결 저장하기
+                </Button>
               ) : (
                 <Button
                   colorType="ghost"
-                  children="출결 체크하기"
                   buttonSize="small"
                   onClick={onClickEdit}
-                />
+                >
+                  출결 체크하기
+                </Button>
               )}
               <Dropdown type="floor" />
               <Dropdown type="club" />
             </div>
           ) : (
             <div className=" flex gap-4">
-              <Button
-                colorType="ghost"
-                children="인원 추가하기"
-                buttonSize="small"
-                onClick={onClickAdd}
-              />
+              <Button colorType="ghost" buttonSize="small" onClick={onClickAdd}>
+                인원추가하기
+              </Button>
               {edit ? (
                 <Button
                   colorType="ghost"
-                  children="출결 저장하기"
                   buttonSize="small"
                   onClick={onClickSave}
-                />
+                >
+                  출결저장하기
+                </Button>
               ) : (
                 <Button
                   colorType="ghost"
-                  children="출결 체크하기"
                   buttonSize="small"
                   onClick={onClickEdit}
-                />
+                >
+                  출결 체크하기
+                </Button>
               )}
             </div>
           )}

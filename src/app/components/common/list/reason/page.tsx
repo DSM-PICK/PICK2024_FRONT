@@ -7,7 +7,7 @@ interface ReasonListProps {
   why: string;
 }
 
-export const ReasonList: React.FC<ReasonListProps> = ({
+const ReasonList: React.FC<ReasonListProps> = ({
   student,
   time,
   why,
@@ -25,3 +25,5 @@ export const ReasonList: React.FC<ReasonListProps> = ({
     </div>
   );
 };
+
+export default ReasonList

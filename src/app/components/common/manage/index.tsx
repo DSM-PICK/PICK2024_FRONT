@@ -16,7 +16,7 @@ interface StateStyles {
   취업: string;
 }
 
-export const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
+const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
 
@@ -40,7 +40,7 @@ export const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
     delete defaultOptions.취업;
   }
 
-  const stateStyle = stateStyles[selectedOption] || "";
+  const stateStyle = "";
 
   const IconColor = () => {
     return <CaretDown color={state === "출석" ? "#475467" : "white"} />;
@@ -88,3 +88,4 @@ export const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   );
 };
 
+export default ManageDrop;

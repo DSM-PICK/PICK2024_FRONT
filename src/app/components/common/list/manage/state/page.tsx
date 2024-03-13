@@ -2,7 +2,7 @@ interface ManageStateProps {
   state: "출석" | "현체" | "귀가" | "취업" | "자퇴";
 }
 
-export const ManageState: React.FC<ManageStateProps> = ({ state }) => {
+const ManageState: React.FC<ManageStateProps> = ({ state }) => {
   const stateStyle = () => {
     switch (state) {
       case "출석":
@@ -23,3 +23,5 @@ export const ManageState: React.FC<ManageStateProps> = ({ state }) => {
     </div>
   );
 };
+
+export default ManageState

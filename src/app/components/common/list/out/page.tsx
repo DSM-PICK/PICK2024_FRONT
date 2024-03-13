@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "../..";
+import Button from "../../Button";
 import Modal from "../../modal/page";
-import { returnSchool } from "@/apis/outList/list";
-import { v4 as uuidv4 } from "uuid";
+import { ReturnSchool } from "@/apis/outList/list";
 
 interface OutProps {
   student: string;
@@ -13,11 +12,9 @@ interface OutProps {
   id: string;
 }
 
-export const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
+const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
   const router = useRouter();
-  const [showPrevious, setShowPrevious] = useState(false);
-  const { mutate: returnSchoolMutate } = returnSchool();
-  const uuid = uuidv4();
+  const { mutate: returnSchoolMutate } = ReturnSchool();
 
   const preOut = () => {
     router.push(`/outList/query?name=${student}`);
@@ -65,18 +62,16 @@ export const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
           </div>
         </div>
         <div className="flex gap-2 w-42">
-          <Button
-            colorType="ghost"
-            children="이전외출"
-            buttonSize="extraSmall"
-            onClick={preOut}
-          />
+          <Button colorType="ghost" buttonSize="extraSmall" onClick={preOut}>
+            이전외출
+          </Button>
           <Button
             colorType="primary"
-            children="복귀"
             buttonSize="extraSmall"
             onClick={returnStudent}
-          />
+          >
+            복귀
+          </Button>
         </div>
         {modal && (
           <Modal
@@ -92,3 +87,5 @@ export const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
     </>
   );
 };
+
+export default Out;

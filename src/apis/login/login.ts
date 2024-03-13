@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { apiError } from "@/hook/apiError";
 import { useRouter } from "next/navigation";
 
 interface Login {
@@ -16,7 +15,6 @@ interface Token {
 
 export const useLogin = () => {
   const router = useRouter();
-  const { handleError } = apiError();
 
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
@@ -34,7 +32,6 @@ export const useLogin = () => {
           return data;
         })
         .catch((error) => {
-          handleError(error);
           throw error;
         });
     },

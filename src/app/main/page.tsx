@@ -1,6 +1,6 @@
 "use client";
-import Header from "../components/common/Header";
 import React, { useEffect, useState } from "react";
+import Header from "../components/common/Header";
 import Menu from "../components/common/menu/page";
 import outList from "../../assets/img/Icon/외출자 목록.svg";
 import outAccept from "../../assets/img/Icon/외출이동수락.svg";
@@ -16,7 +16,7 @@ import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
 import { getWeekDay } from "@/utils/date";
-import { dayTeacher, selfStudyCheck } from "@/apis/outList/list";
+import { DayTeacher, SelfStudyCheck } from "@/apis/outList/list";
 
 interface todaySelfStudy {
   floor: number;
@@ -28,8 +28,8 @@ const Main = () => {
   const [selfStudy, setSelfStudy] = useState<todaySelfStudy[]>([]);
   const [selfStudyChack, setSelfStudyChack] = useState<string>();
 
-  const { mutate: todayCheck } = dayTeacher();
-  const { mutate: selfChackMutate } = selfStudyCheck();
+  const { mutate: todayCheck } = DayTeacher();
+  const { mutate: selfChackMutate } = SelfStudyCheck();
 
   const Check = async () => {
     try {
@@ -78,31 +78,33 @@ const Main = () => {
         <div className=" flex flex-col gap-4">
           <div className=" text-heading6-M">메뉴</div>
           <div className=" flex justify-between">
-            <Menu children="외출자 목록" href="/outList" icon={outList} />
-            <Menu children="외출 수락" href="/outAccept" icon={outAccept} />
-            <Menu children="교실 이동" href="/classChange" icon={classChange} />
-            <Menu
-              children="주말급식"
-              href="/WeekendMeals"
-              icon={WeekendMeals}
-            />
-            <Menu children="학급 관리" href="/classManage" icon={classManage} />
-            <Menu
-              children="방과후 관리"
-              href="/afterManage"
-              icon={afterManage}
-            />
-            <Menu
-              children="학생 조회"
-              href="/studentInquiry"
-              icon={studentInquiry}
-            />
-            <Menu
-              children="자습감독선생님 변경"
-              href="/changeTeacher"
-              icon={changeTeacher}
-            />
-            <Menu children="일정변경" href="/notice" icon={notice} />
+            <Menu href="/outList" icon={outList}>
+              외출자 목록
+            </Menu>
+            <Menu href="/outAccept" icon={outAccept}>
+              외출 수락
+            </Menu>
+            <Menu href="/classChange" icon={classChange}>
+              교실이동
+            </Menu>
+            <Menu href="/WeekendMeals" icon={WeekendMeals}>
+              주말급식
+            </Menu>
+            <Menu href="/classManage" icon={classManage}>
+              학급 관리
+            </Menu>
+            <Menu href="/afterManage" icon={afterManage}>
+              방과후 관리
+            </Menu>
+            <Menu href="/studentInquiry" icon={studentInquiry}>
+              학생 조회
+            </Menu>
+            <Menu href="/changeTeacher" icon={changeTeacher}>
+              자습감독 선생님 변경
+            </Menu>
+            <Menu href="/notice" icon={notice}>
+              일정변경
+            </Menu>
           </div>
         </div>
         <div className=" flex flex-col gap-3">

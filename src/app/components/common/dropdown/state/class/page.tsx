@@ -6,7 +6,7 @@ interface StateDropProps {
   state: "OK" | "NO" | "QUIET";
 }
 
-export const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
+ const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
   const defaultOptions: Record<string, string> = {
     신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
   };
@@ -64,3 +64,5 @@ export const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
     </div>
   );
 };
+
+export default ClassmealDrop

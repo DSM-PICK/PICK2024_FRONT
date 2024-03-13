@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "../../..";
+import Button from "../../../Button";
 import Modal from "../../../modal/page";
 
 interface AfterdeleteProps {
@@ -9,10 +9,7 @@ interface AfterdeleteProps {
   onDelete: () => void; // onDelete 콜백 함수 추가
 }
 
-export const AfterDelete: React.FC<AfterdeleteProps> = ({
-  student,
-  onDelete,
-}) => {
+const AfterDelete: React.FC<AfterdeleteProps> = ({ student, onDelete }) => {
   const [modal, setModal] = useState<boolean>(false);
 
   const deleteStudent = () => {
@@ -33,11 +30,10 @@ export const AfterDelete: React.FC<AfterdeleteProps> = ({
       <div className="text-label1">{student}</div>
       <div className="flex w-20">
         <Button
-          children="삭제"
           buttonSize="extraSmall"
           onClick={deleteStudent}
           colorType="primary"
-        />
+        >삭제</Button>
       </div>
       {modal && (
         <Modal
@@ -52,3 +48,5 @@ export const AfterDelete: React.FC<AfterdeleteProps> = ({
     </div>
   );
 };
+
+export default AfterDelete;

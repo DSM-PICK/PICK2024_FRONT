@@ -4,9 +4,9 @@ import Modal from "../components/common/modal/page";
 import react, { useState } from "react";
 import Header from "../components/common/Header";
 import { getFullToday } from "@/utils/date";
-import Dropdown from '../components/common/dropdown';
-import { Button } from "../components/common";
-import { ManageList } from "../components/common/list/manage/page";
+import Dropdown from "../components/common/dropdown";
+import Button from "../components/common/Button";
+import ManageList from "../components/common/list/manage/page";
 import React from "react";
 
 enum ManageState {
@@ -23,7 +23,7 @@ type ManageProps = {
   edit: boolean;
 };
 
-const ClassManage: React.FC<ManageProps> = () => {
+const ClassManage: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
 
@@ -80,17 +80,19 @@ const ClassManage: React.FC<ManageProps> = () => {
             {edit ? (
               <Button
                 colorType="ghost"
-                children="상태 저장하기"
                 buttonSize="small"
                 onClick={onClickSave}
-              />
+              >
+                상태 저장하기
+              </Button>
             ) : (
               <Button
                 colorType="ghost"
-                children="상태 수정하기"
                 buttonSize="small"
-                onClick={onClickEdit}
-              />
+                onClick={onClickSave}
+              >
+                상태 저장하기
+              </Button>
             )}
             <Dropdown type="grade" />
             <Dropdown type="class" />

@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Modal from "../components/common/modal/page";
 import Header from "../components/common/Header";
 import Link from "next/link";
-import { ScheduleCalendar } from "../components/common/calendar/schedule/page";
-import { addSchedule } from "@/apis/outList/list";
+import ScheduleCalendar from "../components/common/calendar/schedule/page";
+import { AddSchedule } from "@/apis/outList/list";
 import moment from "moment";
 
 interface ScheduleData {
@@ -19,7 +19,7 @@ const Schedule = () => {
     name: "",
     date: "",
   });
-  const { mutate: addScheduleMutate } = addSchedule();
+  const { mutate: addScheduleMutate } = AddSchedule();
 
   const handleChangeTeacher = (date: Date) => {
     setSelectedDate(date);

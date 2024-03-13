@@ -1,8 +1,8 @@
 "use client";
 import Header from "@/app/components/common/Header";
-import { ReasonList } from "@/app/components/common/list/reason/page";
+import ReasonList from "@/app/components/common/list/reason/page";
 import DoubleTab from "@/app/components/common/tab/page";
-import { getFullToday, getToday } from "@/utils/date";
+import { getFullToday } from "@/utils/date";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AlloutList, ReturnHome } from "@/apis/outList/list";

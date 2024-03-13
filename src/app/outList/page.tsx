@@ -4,12 +4,12 @@ import Header from "../components/common/Header";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DoubleTab from "../components/common/tab/page";
-import { Button } from "../components/common";
+import Button from "../components/common/Button";
 import { getFullToday } from "@/utils/date";
-import { ReturnHome } from "../components/common/list/returnHome/page";
-import { Out } from "../components/common/list/out/page";
+import ReturnHome from "../components/common/list/returnHome/page";
+import Out from "../components/common/list/out/page";
 import { useState, useEffect } from "react";
-import { ReturnHomeList, outList } from "@/apis/outList/list";
+import { OutListProp, ReturnHomeList } from "@/apis/outList/list";
 
 interface earlyreturnOK {
   id: string;
@@ -36,7 +36,7 @@ const OutList = () => {
   const [earlyreturnlist, setEarlyreturnList] = useState<earlyreturnOK[]>([]);
   const router = useRouter();
 
-  const { mutate: outListMutate } = outList();
+  const { mutate: outListMutate } = OutListProp();
   const { mutate: homeMutate } = ReturnHomeList();
 
   const onClickTab = (tab: boolean) => {
@@ -103,11 +103,10 @@ const OutList = () => {
               onClick={onClickTab}
             />
             <Button
-              children="사유보기"
               colorType="ghost"
               buttonSize="small"
               onClick={reason}
-            />
+            >사유보기</Button>
           </div>
         </div>
         <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10">

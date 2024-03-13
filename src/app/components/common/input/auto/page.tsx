@@ -16,7 +16,7 @@ interface InputProps {
   value: string;
 }
 
-export const AutoInput: React.FC<InputProps> = ({
+const AutoInput: React.FC<InputProps> = ({
   placeholder,
   width,
   onChange,
@@ -99,3 +99,5 @@ export const AutoInput: React.FC<InputProps> = ({
     </div>
   );
 };
+
+export default AutoInput

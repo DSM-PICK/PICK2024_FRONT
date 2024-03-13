@@ -11,6 +11,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
+  session: never;
 }) {
   return (
     <html lang="ko">

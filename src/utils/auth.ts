@@ -4,5 +4,7 @@ export const saveToken = (accessToken: string, refreshToken: string) => {
 };
 
 export const getToken = () => {
-  return localStorage.getItem("access_token");
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("access_token");
+  }
 };

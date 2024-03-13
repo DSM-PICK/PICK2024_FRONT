@@ -31,7 +31,7 @@ const SelectedBadges: React.FC<SelectedBadgesProps> = ({
   onRemoveBadge,
 }) => (
   <div className="flex gap-2 flex-wrap">
-    {selectedValues.map((value) => (
+    {selectedValues?.map((value) => (
       <Badge key={value} value={value} onRemove={() => onRemoveBadge(value)} />
     ))}
   </div>
