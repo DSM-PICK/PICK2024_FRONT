@@ -10,7 +10,7 @@ interface ButtonProp {
     | "solidDisabled"
     | "ghostDisabled"
     | "red";
-  children: string;
+  children: React.ReactNode;
   buttonSize:
     | "full"
     | "extraLarge"
@@ -23,7 +23,7 @@ interface ButtonProp {
   onClick: () => void;
 }
 
-export const Button: React.FC<ButtonProp> = ({
+const Button: React.FC<ButtonProp> = ({
   colorType,
   children,
   buttonSize,
@@ -84,3 +84,5 @@ export const Button: React.FC<ButtonProp> = ({
     </div>
   );
 };
+
+export default Button;

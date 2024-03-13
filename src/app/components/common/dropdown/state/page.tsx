@@ -9,7 +9,7 @@ interface StateDropProps {
   state: boolean;
 }
 
-export const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
+const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
   const defaultOptions: Record<string, string> = {
     신청: state ? "신청" : "미신청",
   };
@@ -67,3 +67,5 @@ export const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
     </div>
   );
 };
+
+export default AllmealDrop

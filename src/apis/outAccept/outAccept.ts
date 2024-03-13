@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { apiError } from "@/hook/apiError";
-import { getAuthHeader } from "../outList/list";
 import { getToken } from "@/utils/auth";
 
 interface applicationDataProp {
@@ -38,28 +36,28 @@ interface ClassProp {
   type: string;
 }
 
-export const getFloor = () => {
-  const { handleError } = apiError();
+export const useGetFloor = () => {
+  const accessToken = getToken();
   return useMutation<FloorProp, void, { type: string; floor: number }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
           `/${param.type}/floor?floor=${param.floor}`,
           {
-            headers: { ...getAuthHeader() },
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const getClass = () => {
-  const { handleError } = apiError();
+export const useGetClass = () => {
   const accessToken = getToken();
   return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
     mutationFn: async (param: ClassProp) => {
@@ -74,15 +72,13 @@ export const getClass = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const outAccept = () => {
-  const { handleError } = apiError();
+export const useOutAccept = () => {
   const accessToken = getToken();
   return useMutation<void, Error, accept>({
     mutationFn: async (param) => {
@@ -101,7 +97,6 @@ export const outAccept = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },

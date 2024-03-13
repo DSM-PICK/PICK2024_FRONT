@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Input from "../components/common/input";
-import { Button } from "../components/common";
+import Button from "../components/common/Button";
 import Picklogo from "../../assets/img/Icon/pickname.svg";
 import { useLogin } from "@/apis/login/login";
 import React, { useState } from "react";
@@ -90,11 +90,10 @@ const Login: NextPage = () => {
               </div>
             </div>
             <Button
-              children="로그인"
               colorType={`${BtnColor()}`}
               buttonSize="full"
               onClick={onClickBtn}
-            />
+            >로그인</Button>
           </div>
         </div>
         <div className=" w-100 h- rounded-xl bg-sideImg">

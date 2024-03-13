@@ -20,7 +20,7 @@ interface ClassProp {
   type: "application" | "early-return";
 }
 
-export const getClass = () => {
+export const useGetClass = () => {
   const accessToken = getToken();
   return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
     mutationFn: async (param: ClassProp) => {

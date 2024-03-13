@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Calendar } from "../components/common/calendar/page";
+import Calendar from "../components/common/calendar/page";
 import Header from "../components/common/Header";
 import Link from "next/link";
 

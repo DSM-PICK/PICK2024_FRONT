@@ -7,8 +7,7 @@ interface changeClassProp {
   prevClass: string;
   nextClass: string;
 }
-
-export const ChangeClass: React.FC<changeClassProp> = ({
+const ChangeClass: React.FC<changeClassProp> = ({
   student,
   prevClass,
   nextClass,
@@ -24,3 +23,5 @@ export const ChangeClass: React.FC<changeClassProp> = ({
     </div>
   );
 };
+
+export default ChangeClass;

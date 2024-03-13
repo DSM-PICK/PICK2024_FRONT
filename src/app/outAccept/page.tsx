@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import Link from "next/link";
 import DoubleTab from "../components/common/tab/page";
-import { Button } from "../components/common";
+import Button from "../components/common/Button";
 import { getFullToday } from "@/utils/date";
-import { AcceptList } from "../components/common/list/accept/page";
+import AcceptList from "../components/common/list/accept/page";
 import Dropdown from "../components/common/dropdown";
 import Modal from "../components/common/modal/page";
-import { getClass, outAccept } from "@/apis/outAccept/outAccept";
+import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
 import { getStudentString, setStudentNum } from "@/utils/until";
 
 interface applicationDataProp {
@@ -35,8 +35,8 @@ const OutAccept = () => {
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
   const [data, setData] = useState<applicationDataProp[]>([]);
 
-  const { mutate: outAcceptMutate } = outAccept();
-  const { mutate: getClassMutate } = getClass();
+  const { mutate: outAcceptMutate } = useOutAccept();
+  const { mutate: getClassMutate } = useGetClass();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
@@ -259,20 +259,22 @@ const OutAccept = () => {
           <div className=" flex gap-5 w-full justify-end">
             <Button
               colorType="ghost"
-              children="거절하기"
               buttonSize="medium"
               onClick={() => {
                 Refuse();
               }}
-            />
+            >
+              거절하기
+            </Button>
             <Button
               colorType="primary"
-              children="수락하기"
               buttonSize="medium"
               onClick={() => {
                 Accept();
               }}
-            />
+            >
+              수락하기
+            </Button>
           </div>
         </div>
         {refuse && (

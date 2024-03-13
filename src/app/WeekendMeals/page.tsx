@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Allmeals } from "@/app/components/common/list/Allmeals/page";
 import Link from "next/link";
 import Dropdown from "@/app/components/common/dropdown";
-import { Button } from "@/app/components/common";
 import Header from "@/app/components/common/Header";
-import { Classmeals } from "@/app/components/common/list/classmeal/page";
-import { mealCheck, notMealCheck } from "@/apis/outList/list";
+import Classmeals from "../components/common/list/classmeal/page";
+import { MealCheck, NotMealCheck } from "@/apis/outList/list";
 import { setStudentNum } from "@/utils/until";
 
 interface classmealProps {
@@ -38,8 +36,8 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
 
-  const { mutate: checkMealMutate } = mealCheck();
-  const { mutate: notCheckMealMutate } = notMealCheck();
+  const { mutate: checkMealMutate } = MealCheck();
+  const { mutate: notCheckMealMutate } = NotMealCheck();
 
   useEffect(() => {
     console.log(`외출 grade: ${selectGrade} , class: ${selectClass}`);
@@ -127,7 +125,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
                   key={index}
                   number={setStudentNum(item)}
                   name={item.name}
-                  state={item.status}
+                  state={item.status || "NO"} // status가 없는 경우 기본값 설정
                 />
               ))}
             </div>
@@ -145,7 +143,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
                   key={index}
                   number={setStudentNum(item)}
                   name={item.name}
-                  state={item.status}
+                  state={item.status || "QUIET"} // status가 없는 경우 기본값 설정
                 />
               ))}
             </div>

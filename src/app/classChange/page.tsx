@@ -6,8 +6,8 @@ import DoubleTab from "../components/common/tab/page";
 import { getFullToday } from "@/utils/date";
 import { useState } from "react";
 import Dropdown from "../components/common/dropdown";
-import { ChangeClass } from "../components/common/list/changeClass/page";
-import { ChangeClassList, getFloor } from "@/apis/outList/list";
+import ChangeClass from "../components/common/list/changeClass/page";
+import { ChangeClassList, GetFloor } from "@/apis/outList/list";
 import { getStudentString } from "@/utils/until";
 
 interface changeClass {
@@ -26,7 +26,7 @@ const OutList = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const { mutate: changelistMutate } = ChangeClassList();
-  const { mutate: changelistFloorMutate } = getFloor();
+  const { mutate: changelistFloorMutate } = GetFloor();
   const [changelist, setChangelist] = useState<changeClass[]>([]);
   const [selectedFloor, setSelectedFloor] = useState<number>(2);
 

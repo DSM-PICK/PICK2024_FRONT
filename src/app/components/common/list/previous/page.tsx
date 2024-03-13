@@ -7,7 +7,7 @@ interface previousProps {
   why: string;
 }
 
-export const PreviousList: React.FC<previousProps> = ({
+const PreviousList: React.FC<previousProps> = ({
   type,
   date,
   time,
@@ -39,3 +39,5 @@ export const PreviousList: React.FC<previousProps> = ({
     </div>
   );
 };
+
+export default PreviousList

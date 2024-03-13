@@ -1,30 +1,28 @@
 "use client";
 
 import Calendarmold from "react-calendar";
-import CalendarCss from "./style/style.css";
+import "./style/style.css";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { selfstudyGet } from "@/apis/outList/list";
-import { SelfStudyModal } from "../modal/selfStudyTeacher.tsx/page";
+import { SelfstudyGet } from "@/apis/outList/list";
+import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
 
-interface calendarProp {
+interface CalendarProps {
   onClick: (date: Date) => void;
   onChange: (date: Date) => void;
 }
 
-interface data {
+interface CalendarData {
   floor: number;
   teacher: string;
   date: string;
 }
 
-// ... (previous imports)
-
-export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
+const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
-  const [monthdata, setData] = useState<data[]>([]);
-  const { mutate: selfstudyMutate } = selfstudyGet();
+  const [monthdata, setData] = useState<CalendarData[]>([]);
+  const { mutate: selfstudyMutate } = SelfstudyGet();
 
   const handleModalCancel = () => {
     setModal(false);
@@ -70,7 +68,6 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
   return (
     <>
       <Calendarmold
-        className={CalendarCss}
         prev2Label={null}
         onClickMonth={(date) => {
           onChange(date);
@@ -128,3 +125,5 @@ export const Calendar: React.FC<calendarProp> = ({ onClick, onChange }) => {
     </>
   );
 };
+
+export default Calendar;

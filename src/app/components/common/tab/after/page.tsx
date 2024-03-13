@@ -8,7 +8,7 @@ interface TabProps {
   onClick: (tab: boolean) => void;
 }
 
-export const AfterTab: React.FC<TabProps> = ({
+const AfterTab: React.FC<TabProps> = ({
   firstChildren,
   secondChildren,
   onClick,
@@ -42,3 +42,5 @@ export const AfterTab: React.FC<TabProps> = ({
     </div>
   );
 };
+
+export default AfterTab

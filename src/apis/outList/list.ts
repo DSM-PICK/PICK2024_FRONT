@@ -1,26 +1,10 @@
-import { apiError } from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 import { getToken } from "@/utils/auth";
-import { v4 as uuidv4 } from "uuid";
-
-interface Token {
-  access_token: string;
-}
 
 interface UuidProp {
   id: string;
 }
-
-interface earlyreturnOK {
-  id: string;
-  username: string;
-  start_time: string;
-  grade: number;
-  classNum: number;
-  num: number;
-}
-
 interface applicationOK {
   id: string;
   username: string;
@@ -50,26 +34,6 @@ interface previousStudent {
   username: string;
   date: string;
   type: "APPLICATION" | "EARLY_RETURN";
-}
-
-interface ReasonAll {
-  username: string;
-  start_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
-  end_time: {
-    hour: number;
-    minute: number;
-    second: number;
-    nano: number;
-  };
-  grade: number;
-  class_num: number;
-  num: number;
-  reason: string;
 }
 
 interface todaySelfStudy {
@@ -141,15 +105,15 @@ interface afterSchool {
 }
 
 interface postTeacherProp {
-  floor: number;
-  teacher: string;
   date: string;
+  teacher: { floor: number; teacher: string };
 }
 
 interface schedulesdata {
-  date: string;
-  event_name: string;
   id: string;
+  event_name: string;
+  month: number;
+  day: number;
 }
 
 interface addSchedule {
@@ -157,7 +121,7 @@ interface addSchedule {
   date: string;
 }
 
-export const getAuthHeader = () => {
+export const GetAuthHeader = () => {
   const accessToken = getToken;
   if (!accessToken) {
     throw new Error("Access token not found");
@@ -166,7 +130,6 @@ export const getAuthHeader = () => {
 };
 
 export const AlloutList = () => {
-  const { handleError } = apiError();
   const accessToken = getToken();
   return useMutation<OutListData[], void, null>({
     mutationFn: async () => {
@@ -176,7 +139,6 @@ export const AlloutList = () => {
         });
         return response.data as any;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
@@ -184,7 +146,6 @@ export const AlloutList = () => {
 };
 
 export const ReturnHome = () => {
-  const { handleError } = apiError();
   const accessToken = getToken();
   return useMutation<ReturnHomeData[], void, null>({
     mutationFn: async () => {
@@ -196,16 +157,13 @@ export const ReturnHome = () => {
         });
         return response.data as any;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const previous = () => {
-  const { handleError } = apiError();
-
+export const Previous = () => {
   return useMutation<previousStudent[], Error, { name: string }>({
     mutationFn: async (requestParam: { name: string }) => {
       try {
@@ -220,15 +178,13 @@ export const previous = () => {
         });
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const returnSchool = () => {
-  const { handleError } = apiError();
+export const ReturnSchool = () => {
   const accessToken = getToken();
 
   return useMutation<Error, void, UuidProp>({
@@ -243,16 +199,13 @@ export const returnSchool = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const selfstudyGet = () => {
-  const { handleError } = apiError();
-
+export const SelfstudyGet = () => {
   return useMutation<data[], Error, { month: string; year: string }>({
     mutationFn: async (param) => {
       try {
@@ -267,16 +220,13 @@ export const selfstudyGet = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const dayTeacher = () => {
-  const { handleError } = apiError();
-
+export const DayTeacher = () => {
   return useMutation<todaySelfStudy[], Error, null>({
     mutationFn: async () => {
       try {
@@ -288,15 +238,13 @@ export const dayTeacher = () => {
         });
         return response?.data.sort((i: any, j: any) => i.floor - j.floor);
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const outList = () => {
-  const { handleError } = apiError();
+export const OutListProp = () => {
   const accessToken = getToken();
   return useMutation<applicationOK[], Error, null>({
     mutationFn: async () => {
@@ -308,7 +256,7 @@ export const outList = () => {
         });
         return response.data;
       } catch (error) {
-        handleError(error);
+        throw error;
       }
     },
   });
@@ -333,7 +281,6 @@ export const ReturnHomeList = () => {
 };
 
 export const ChangeClassList = () => {
-  const { handleError } = apiError();
   const accessToken = getToken();
 
   return useMutation<changeClass[], Error, { grade: number; class: number }>({
@@ -355,8 +302,7 @@ export const ChangeClassList = () => {
   });
 };
 
-export const getFloor = () => {
-  const { handleError } = apiError();
+export const GetFloor = () => {
   const accessToken = getToken();
   return useMutation<changeClass[], void, { floor: number }>({
     mutationFn: async (param) => {
@@ -371,15 +317,13 @@ export const getFloor = () => {
         );
         return response.data;
       } catch (error) {
-        handleError(error);
         throw error;
       }
     },
   });
 };
 
-export const selfStudyCheck = () => {
-  const { handleError } = apiError();
+export const SelfStudyCheck = () => {
   const accessToken = getToken();
   return useMutation<string, Error, null>({
     mutationFn: async () => {
@@ -397,7 +341,7 @@ export const selfStudyCheck = () => {
   });
 };
 
-export const mealCheck = () => {
+export const MealCheck = () => {
   const accessToken = getToken();
   return useMutation<
     mealcheckProp[],
@@ -422,7 +366,7 @@ export const mealCheck = () => {
   });
 };
 
-export const notMealCheck = () => {
+export const NotMealCheck = () => {
   const accessToken = getToken();
   return useMutation<
     notCheckMeal[],
@@ -447,9 +391,9 @@ export const notMealCheck = () => {
   });
 };
 
-export const postTeacher = () => {
+export const PostTeacher = () => {
   const accessToken = getToken();
-  return useMutation<void, Error, postTeacherProp[]>({
+  return useMutation<void, Error, postTeacherProp>({
     mutationFn: async (param) => {
       try {
         const response = await instance.post(`/self-study/register`, param, {
@@ -466,7 +410,7 @@ export const postTeacher = () => {
   });
 };
 
-export const getSchdule = () => {
+export const GetSchdule = () => {
   const accessToken = getToken();
   return useMutation<schedulesdata[], Error, { year: string; month: string }>({
     mutationFn: async (param) => {
@@ -505,7 +449,7 @@ export const AfterpostStudent = () => {
   });
 };
 
-export const mealChangeStatus = () => {
+export const MealChangeStatus = () => {
   const accessToken = getToken();
   return useMutation<void, Error, { status: "OK" | "NO"; id: string }>({
     mutationFn: async (param) => {
@@ -526,7 +470,7 @@ export const mealChangeStatus = () => {
   });
 };
 
-export const addSchedule = () => {
+export const AddSchedule = () => {
   const accessToken = getToken();
 
   return useMutation<void, Error, addSchedule>({
@@ -548,6 +492,25 @@ export const addSchedule = () => {
       } catch (error) {
         console.error("Error adding schedule:", error);
         throw error;
+      }
+    },
+  });
+};
+
+export const GetSelectDay = () => {
+  const accessToken = getToken();
+
+  return useMutation<data, Error, { date: string }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(`self-study/${param.date}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });

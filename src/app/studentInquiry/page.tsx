@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/navigation";
 import Header from "../components/common/Header";
-import { Button } from '../components/common';
+import Button from "../components/common/Button";
 
 const StudentInquiry: NextPage = () => {
   const router = useRouter();
@@ -18,10 +18,11 @@ const StudentInquiry: NextPage = () => {
         아직 개발중인 페이지입니다
         <Button
           colorType="primary"
-          children="홈으로돌아가기"
           buttonSize="extraLarge"
           onClick={onClickBtn}
-        />
+        >
+          홈으로 돌아가기
+        </Button>
       </div>
     </div>
   );

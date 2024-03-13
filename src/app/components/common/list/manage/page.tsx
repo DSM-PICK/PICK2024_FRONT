@@ -1,5 +1,5 @@
-import { ManageDrop } from "../../dropdown/manage";
-import { ManageState } from "./state/page";
+import ManageDrop from "../../manage";
+import ManageState from "./state/page";
 
 interface ManageProps {
   student: string;
@@ -7,7 +7,7 @@ interface ManageProps {
   edit: boolean;
 }
 
-export const ManageList: React.FC<ManageProps> = ({ student, state, edit }) => {
+const ManageList: React.FC<ManageProps> = ({ student, state, edit }) => {
   return (
     <div className=" w-77 h-13 gap-24 rounded-lg flex bg-white py-2 px-4 items-center justify-between">
       <div className=" text-label1">{student}</div>
@@ -21,3 +21,5 @@ export const ManageList: React.FC<ManageProps> = ({ student, state, edit }) => {
     </div>
   );
 };
+
+export default ManageList;

@@ -8,7 +8,7 @@ interface postTeacherProp {
   date: string;
 }
 
-export const postTeacher = () => {
+export const PostTeacher = () => {
   const accessToken = getToken();
   return useMutation<void, Error, postTeacherProp>({
     mutationFn: async (param) => {

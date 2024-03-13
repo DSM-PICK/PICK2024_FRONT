@@ -9,12 +9,7 @@ interface AcceptProps {
   onClick: () => void;
 }
 
-export const AcceptList: React.FC<AcceptProps> = ({
-  student,
-  time,
-  why,
-  onClick,
-}) => {
+const AcceptList: React.FC<AcceptProps> = ({ student, time, why, onClick }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -41,3 +36,5 @@ export const AcceptList: React.FC<AcceptProps> = ({
     </div>
   );
 };
+
+export default AcceptList;
