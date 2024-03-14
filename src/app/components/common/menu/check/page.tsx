@@ -1,6 +1,6 @@
 "use client";
 import { StaticImageData } from "next/image";
-import Button from "../../button/page";
+import Button from "../../Button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -61,10 +61,11 @@ const CheckPage: React.FC<CheckProps> = ({
       <Image src={img} alt="" />
       <Button
         colorType={color}
-        children={buttonChildren}
         buttonSize="extraLarge"
         onClick={() => router.push(href)}
-      />
+      >
+        {buttonChildren}
+      </Button>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 interface TabProps {
@@ -26,14 +28,14 @@ const DoubleTab: React.FC<TabProps> = ({
   return (
     <div className="flex">
       <div
-        className={`${selectTabClass(false)} rounded-l-lg`}
-        onClick={() => handleTabClick(false)}
+        className={`${selectTabClass(true)} rounded-l-lg`}
+        onClick={() => handleTabClick(true)}
       >
         {firstChildren}
       </div>
       <div
-        className={`${selectTabClass(true)} rounded-r-lg`}
-        onClick={() => handleTabClick(true)}
+        className={`${selectTabClass(false)} rounded-r-lg`}
+        onClick={() => handleTabClick(false)}
       >
         {secondChildren}
       </div>

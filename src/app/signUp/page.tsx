@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import next, { NextPage } from "next/types";
-import Image from "next/image";
-import Input from "../components/common/input/page";
+import Input from "../components/common/input";
 import Link from "next/link";
-import Button from "../components/common/button/page";
+import Button from "../components/common/Button";
 import logo from "../../assets/img/Icon/eye.svg";
 
 interface ChangeProps {
@@ -57,7 +56,7 @@ const SignUp: NextPage = () => {
                 value={data.rePassword}
               />
             </div>
-            <div className=" font-sans text-ladel2 text-neutral-50 flex gap-1">
+            <div className=" font-sans text-label2 text-neutral-50 flex gap-1">
               이미 계정이 있으신가요?
               <Link href={"/login"} className=" text-secondary-500 underline">
                 로그인
@@ -65,11 +64,10 @@ const SignUp: NextPage = () => {
             </div>
           </div>
           <Button
-            children="로그인"
             colorType="solidDisabled"
             buttonSize="full"
             onClick={() => {}}
-          />
+          >로그인</Button>
         </div>
       </div>
       <div className=" w-100 h- rounded-xl bg-sideImg">

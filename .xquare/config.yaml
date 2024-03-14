@@ -1,0 +1,7 @@
+config:
+  name: pick-web-admin
+  service_type: fe
+  port: 3000
+  domain:
+    prod: pick-admin.xquare.app
+    stag: pick-admin-stag.xquare.app
