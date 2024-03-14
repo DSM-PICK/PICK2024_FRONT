@@ -86,9 +86,9 @@ const Reason = () => {
     setSelectedTab(tab);
     if (tab) {
       setSelectedTab(tab);
-      ReturnHomeData();
-    } else {
       Outdata();
+    } else {
+      ReturnHomeData();
     }
   };
 
@@ -105,11 +105,11 @@ const Reason = () => {
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
           <Link href="/outList">외출자 목록</Link> &gt;
-          {selectedTab ? "조기 귀가 사유" : "외출자 사유"}
+          {selectedTab ? "외출자 사유" : " 조기 귀가 사유"}
         </div>
         <div className="flex justify-between">
           <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
-            {selectedTab ? "조기 귀가 사유" : "외출자 사유"}
+            {selectedTab ? "외출자 사유" : "조기 귀가 사유"}
             <div className="text-neutral-200 text-heading5">
               {getFullToday()}
             </div>
@@ -125,10 +125,11 @@ const Reason = () => {
         <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll scrollbar-hide">
           {selectedTab ? (
             <div className="flex flex-wrap gap-5 justify-between">
-              {homeData.map((item, index) => (
+              {data.map((item, index) => (
                 <ReasonList
                   key={index}
                   time={item.start_time}
+                  endTime={item.end_time}
                   student={student(item)}
                   why={item.reason}
                 />
@@ -136,11 +137,10 @@ const Reason = () => {
             </div>
           ) : (
             <div className="flex flex-wrap gap-5 justify-between">
-              {data.map((item, index) => (
+              {homeData.map((item, index) => (
                 <ReasonList
                   key={index}
                   time={item.start_time}
-                  endTime={item.end_time}
                   student={student(item)}
                   why={item.reason}
                 />

@@ -334,6 +334,7 @@ const config: Config = {
       },
       screens: {
         "3xl": "1850px",
+        mxl: "1650px",
       },
     },
   },
