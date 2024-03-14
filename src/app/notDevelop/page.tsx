@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Header from "../components/common/Header";
 import Button from "../components/common/Button";
 
-const notDevelop: NextPage = () => {
+const NotDevelop: NextPage = () => {
   const router = useRouter();
 
   const onClickBtn = () => {
@@ -28,4 +28,4 @@ const notDevelop: NextPage = () => {
   );
 };
 
-export default notDevelop;
+export default NotDevelop;
