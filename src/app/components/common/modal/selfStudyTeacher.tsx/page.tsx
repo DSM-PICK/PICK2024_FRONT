@@ -80,8 +80,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
-      <div className="bg-white rounded-xl px-24 py-13 w-155">
+    <div className=" z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
+      <div className=" bg-white rounded-xl px-24 py-13 w-155">
         <div className="flex flex-col gap-8 items-center">
           <div className="text-neutral-50 text-center">
             {heading1 && (
