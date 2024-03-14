@@ -97,23 +97,23 @@ const OutList = () => {
   };
 
   return (
-    <div className="h-dvh">
+    <div className="h-dvh min-w-fit">
       <Header />
-      <div className="flex flex-col gap-7 px-100 py-16 h-90%">
+      <div className="flex flex-col gap-7 3xl:px-100 px-80 min-w-max py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 교실 이동
         </div>
         <div className="flex justify-between">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
+          <div className="flex font-sans 3xl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
             교실 이동
-            <div className="text-neutral-200 text-heading5">
+            <div className="text-neutral-200 3xl:text-heading5 text-heading-6">
               {getFullToday()}
             </div>
           </div>
           <div className="flex items-center gap-5">
             <DoubleTab
-              firstChildren="층 별로 보기"
-              secondChildren="반 별로 보기"
+              firstChildren="반 별로 보기"
+              secondChildren="층 별로 보기"
               onClick={onClickTab}
             />
             {selectedTab ? (

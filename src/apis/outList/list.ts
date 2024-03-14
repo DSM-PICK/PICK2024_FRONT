@@ -163,7 +163,7 @@ export const ReturnHome = () => {
   });
 };
 
-export const Previous = () => {
+export const GetPreviousList = () => {
   return useMutation<previousStudent[], Error, { name: string }>({
     mutationFn: async (requestParam: { name: string }) => {
       try {
