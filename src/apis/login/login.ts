@@ -52,8 +52,8 @@ export const useLogin = () => {
   };
 };
 
-export const getTeacherName = () => {
-  return useMutation<{ name: string }, Error, void>({
+export const GetTeacherName = () => {
+  return useMutation<{ name: string }, Error, null>({
     mutationFn: async () => {
       try {
         const accessToken = getToken();

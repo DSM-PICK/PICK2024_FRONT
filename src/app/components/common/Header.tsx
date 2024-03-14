@@ -3,17 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import pick from "@/assets/img/Icon/pickname.svg";
-import { getTeacherName } from "@/apis/login/login";
+import { GetTeacherName } from "@/apis/login/login";
 
 interface name {
   name: string;
 }
 
 const Header: NextPage = ({}) => {
-  const { mutate: getNameMutate } = getTeacherName();
+  const { mutate: getNameMutate } = GetTeacherName();
   const [data, setData] = useState<name>();
-
-  const teacher = "서인석";
 
   const getName = async () => {
     try {
