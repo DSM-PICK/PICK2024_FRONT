@@ -1,4 +1,4 @@
-// SelfStudyModal.tsx
+"use client";
 import React, { useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
@@ -47,7 +47,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       await postTeacherMutate(postData, {
         onSuccess: () => {
           console.log("success");
-          onSuccess()
+          onSuccess();
         },
         onError: (error) => {
           console.log(error);
