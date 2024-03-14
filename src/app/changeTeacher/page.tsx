@@ -29,14 +29,14 @@ const ChangeTeacher = () => {
   };
 
   return (
-    <div>
+    <div className=" min-w-fit">
       <Header />
-      <div className=" flex flex-col px-100 py-12 gap-7">
+      <div className=" min-w-min flex flex-col 3xl:px-100 px-30 py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 자습 감독 선생님 변경
         </div>
         <Calendar onClick={handleChangeTeacher} onChange={() => {}} />
-        <div className=" absolute top-40 text-heading4">
+        <div className=" min-w-max absolute top-40 text-heading4">
           자습감독 선생님 변경
         </div>
       </div>

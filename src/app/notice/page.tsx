@@ -56,14 +56,16 @@ const Schedule = () => {
   };
 
   return (
-    <div>
+    <div className=" min-w-fit">
       <Header />
-      <div className="flex flex-col px-100 py-12 gap-7">
+      <div className=" min-w-max flex flex-col 3xl:px-100 px-30 py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 일정 관리
         </div>
         <ScheduleCalendar onClick={handleChangeTeacher} onChange={() => {}} />
-        <div className="absolute top-40 text-heading4">일정 관리</div>
+        <div className=" min-w-max absolute top-40 text-heading4">
+          일정 관리
+        </div>
       </div>
     </div>
   );

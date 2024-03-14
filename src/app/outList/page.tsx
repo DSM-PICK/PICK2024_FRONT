@@ -83,7 +83,7 @@ const OutList = () => {
   }, []);
 
   return (
-    <div className="h-dvh">
+    <div className="h-dvh min-w-fit">
       <Header />
       <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
         <div className=" text-neutral-200 text-sub-title3-B">
