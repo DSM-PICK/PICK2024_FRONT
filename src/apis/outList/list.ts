@@ -480,7 +480,7 @@ export const AddSchedule = () => {
     mutationFn: async (param: addSchedule) => {
       try {
         const response = await instance.post(
-          "/schedule/month",
+          "/schedule/create",
           {
             name: param.name,
             date: param.date,

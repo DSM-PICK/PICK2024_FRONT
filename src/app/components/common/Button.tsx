@@ -64,7 +64,7 @@ const Button: React.FC<ButtonProp> = ({
       case "large":
         return "w-50 h-12 text-Button-L";
       case "medium":
-        return "w-42 h-13 text-Button-M";
+        return "w-42 min-w-20 h-13 text-Button-M";
       case "small":
         return "w-38 h-12 text-Button-S";
       case "extraSmall":

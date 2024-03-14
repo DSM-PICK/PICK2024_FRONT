@@ -199,7 +199,7 @@ const OutAccept = () => {
           <Link href="/main">홈</Link> &gt; 외출 수락
         </div>
         <div className="flex justify-between">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
+          <div className="flex font-sans mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
             외출 수락
             <div className="text-neutral-200 text-heading5">
               {getFullToday()}

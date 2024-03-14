@@ -85,14 +85,14 @@ const OutList = () => {
   return (
     <div className="h-dvh">
       <Header />
-      <div className="flex flex-col gap-7 px-100 py-16 h-90%">
-        <div className="text-neutral-200 text-sub-title3-B">
+      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
+        <div className=" text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 외출자 목록
         </div>
         <div className="flex justify-between">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
+          <div className="flex font-sans  mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
             외출자 목록
-            <div className="text-neutral-200 text-heading5">
+            <div className="text-neutral-200 mxl:text-heading5 text-heading6-M">
               {getFullToday()}
             </div>
           </div>
@@ -102,11 +102,9 @@ const OutList = () => {
               secondChildren="조기귀가"
               onClick={onClickTab}
             />
-            <Button
-              colorType="ghost"
-              buttonSize="small"
-              onClick={reason}
-            >사유보기</Button>
+            <Button colorType="ghost" buttonSize="small" onClick={reason}>
+              사유보기
+            </Button>
           </div>
         </div>
         <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10">

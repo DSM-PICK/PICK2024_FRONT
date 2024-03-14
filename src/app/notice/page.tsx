@@ -64,17 +64,6 @@ const Schedule = () => {
         </div>
         <ScheduleCalendar onClick={handleChangeTeacher} onChange={() => {}} />
         <div className="absolute top-40 text-heading4">일정 관리</div>
-        {modal && (
-          <Modal
-            date={selectedDate}
-            type="addSchedule"
-            heading1="새로운 일정"
-            buttonMessage="추가"
-            onCancel={handleModalCancel}
-            onConfirm={handleModalConfirm}
-            scheduleData={scheduleData} // scheduleData를 Modal 컴포넌트로 전달
-          />
-        )}
       </div>
     </div>
   );

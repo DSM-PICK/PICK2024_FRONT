@@ -119,13 +119,12 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
               </div>
             </div>
             <div className=" overflow-scroll scrollbar-hide flex flex-col gap-3">
-              {/*컴포넌트는 만들었으나 api연결할때 오는 값보고 넣을 예정 */}
               {checkMeal?.map((item, index) => (
                 <Classmeals
                   key={index}
                   number={setStudentNum(item)}
                   name={item.name}
-                  state={item.status || "NO"} // status가 없는 경우 기본값 설정
+                  state={item.status || "NO"}
                 />
               ))}
             </div>
@@ -143,7 +142,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
                   key={index}
                   number={setStudentNum(item)}
                   name={item.name}
-                  state={item.status || "QUIET"} // status가 없는 경우 기본값 설정
+                  state={item.status || "QUIET"}
                 />
               ))}
             </div>

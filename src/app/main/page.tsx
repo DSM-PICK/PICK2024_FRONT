@@ -69,9 +69,9 @@ const Main = () => {
   }, []);
 
   return (
-    <div className="bg-primary-1200 h-full">
+    <div className="w-full h-full">
       <Header />
-      <div className=" 3xl:px-100 py-20 px-72 flex flex-col gap-17">
+      <div className="bg-primary-1200  3xl:px-100 mxl:px-72 py-20 px-44 min-w-max flex flex-col gap-17">
         <div className=" flex flex-col gap-5">
           <div className=" font-sans text-heading5 text-neutral-300">
             {today.getMonth() + 1}월 {today.getDate()}일 {getWeekDay()}요일
