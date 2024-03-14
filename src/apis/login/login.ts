@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
 import { useRouter } from "next/navigation";
+import { getToken } from "@/utils/auth";
 
 interface Login {
   admin_id: string;
@@ -41,7 +42,6 @@ export const useLogin = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("part");
-    router.push("/main");
     console.error(loginMutation.error);
   }
 
@@ -50,4 +50,18 @@ export const useLogin = () => {
     accessToken,
     refreshToken,
   };
+};
+
+export const getTeacherName = () => {
+  return useMutation<{ name: string }, Error, void>({
+    mutationFn: async () => {
+      try {
+        const accessToken = getToken();
+        const response = await instance.get(`/admin/my-name`, {});
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 };

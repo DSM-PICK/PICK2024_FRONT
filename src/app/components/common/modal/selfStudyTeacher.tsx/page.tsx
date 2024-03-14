@@ -1,4 +1,4 @@
-"use client";
+// SelfStudyModal.tsx
 import React, { useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
@@ -18,6 +18,7 @@ interface postTeacherProp {
 interface ModalProps {
   heading1?: string;
   onCancel: () => void;
+  onSuccess: () => void;
   initialDate: Date | null;
 }
 
@@ -25,10 +26,11 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   heading1,
   onCancel,
   initialDate,
+  onSuccess,
 }) => {
   const [secondData, setSecondData] = useState({ floor: 2, teacher: "" });
   const [thirdData, setThirdData] = useState({ floor: 3, teacher: "" });
-  const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" }); // 수정된 부분: fourthData
+  const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" });
 
   const { mutate: postTeacherMutate } = PostTeacher();
 
@@ -45,6 +47,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       await postTeacherMutate(postData, {
         onSuccess: () => {
           console.log("success");
+          onSuccess()
         },
         onError: (error) => {
           console.log(error);
@@ -73,7 +76,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     setThirdData({ ...thirdData, [name]: text });
   };
   const fourthhandleChange = ({ text, name }: ChangeProps) => {
-    setFourthData({ ...fourthData, [name]: text }); // 수정된 부분: setFourthData
+    setFourthData({ ...fourthData, [name]: text });
   };
 
   return (

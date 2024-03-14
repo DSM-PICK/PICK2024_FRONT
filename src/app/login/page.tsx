@@ -40,16 +40,17 @@ const Login: NextPage = () => {
         onSuccess: (res) => {
           const accessToken = res.access_token;
           const refreshToken = res.refresh_token;
-          saveToken(accessToken, refreshToken);
-
           router.push("/main");
+          saveToken(accessToken, refreshToken);
         },
         onError: (error) => {
           console.error("Login error:", error);
+          router.push("/login");
         },
       });
     } catch (error) {
       console.error("An unexpected error occurred:", error);
+        router.push("/login");
     }
   };
 
@@ -93,7 +94,9 @@ const Login: NextPage = () => {
               colorType={`${BtnColor()}`}
               buttonSize="full"
               onClick={onClickBtn}
-            >로그인</Button>
+            >
+              로그인
+            </Button>
           </div>
         </div>
         <div className=" w-100 h- rounded-xl bg-sideImg">

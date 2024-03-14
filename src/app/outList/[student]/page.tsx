@@ -3,7 +3,7 @@ import Header from "@/app/components/common/Header";
 import PreviousList from "@/app/components/common/list/previous/page";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { previous } from "@/apis/outList/list";
+//import { Previous } from "@/apis/outList/list";
 import { NextPage } from "next";
 import { useSearchParams } from "next/navigation";
 
@@ -18,43 +18,43 @@ interface PreviousData {
 
 const Previous: NextPage = () => {
   const params = useSearchParams();
-  const { mutate: preList } = previous();
+  // const { mutate: preList } = Previous();
   const [preData, setPreData] = useState<PreviousData[]>([]);
   const nameParams = params.get("name");
   const student = nameParams ? nameParams : "";
-  const preOut = async () => {
-    try {
-      const accessToken = localStorage.getItem("access_token");
-      if (!accessToken) {
-        console.error("Access token not found");
-        return;
-      }
-      const result = await preList(
-        {
-          name: student,
-        },
-        {
-          onSuccess: (data) => {
-            setPreData(data);
-          },
-          onError: (error) => {
-            console.error("에러발생", error);
-          },
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const preOut = async () => {
+  //   try {
+  //     const accessToken = localStorage.getItem("access_token");
+  //     if (!accessToken) {
+  //       console.error("Access token not found");
+  //       return;
+  //     }
+  //     const result = await preList(
+  //       {
+  //         name: student,
+  //       },
+  //       {
+  //         onSuccess: (data) => {
+  //           setPreData(data);
+  //         },
+  //         onError: (error) => {
+  //           console.error("에러발생", error);
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const Time = (data: PreviousData) => {
     if (data.end_time === null) return `${data.start_time.slice(0, 5)}`;
     return `${data.start_time.slice(0, 5)} ~ ${data.end_time.slice(0, 5)}`;
   };
 
-  useEffect(() => {
-    preOut();
-  }, []);
+  // useEffect(() => {
+  //   preOut();
+  // }, []);
 
   const listcommon =
     "flex justify-center items-center text-sub-title1-M text-neutral-50";

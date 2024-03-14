@@ -232,7 +232,7 @@ export const DayTeacher = () => {
       try {
         const accessToken = getToken();
         const response = await instance.get(
-          `/self-study/today/date=${param.date}`,
+          `/self-study/today?date=${param.date}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

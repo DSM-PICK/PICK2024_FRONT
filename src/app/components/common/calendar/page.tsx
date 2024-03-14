@@ -6,6 +6,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { SelfstudyGet } from "@/apis/outList/list";
 import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
+import { useRouter } from "next/navigation";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
@@ -24,12 +25,15 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
   const [monthdata, setData] = useState<CalendarData[]>([]);
   const { mutate: selfstudyMutate } = SelfstudyGet();
 
+  const router = useRouter();
+
   const handleModalCancel = () => {
     setModal(false);
   };
 
   const handleModalConfirm = () => {
     setModal(false);
+    router.push("/changeTeacher");
   };
 
   const studyData = async (selectDate: Date | null) => {
@@ -120,6 +124,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
           initialDate={selectDate}
           heading1="자습감독 변경"
           onCancel={handleModalCancel}
+          onSuccess={handleModalConfirm}
         />
       )}
     </>
