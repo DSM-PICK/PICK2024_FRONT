@@ -8,9 +8,10 @@ import classChange from "../../assets/img/Icon/교실이동.svg";
 import WeekendMeals from "../../assets/img/Icon/주말급식.svg";
 import classManage from "../../assets/img/Icon/학급관리.svg";
 import afterManage from "../../assets/img/Icon/방과후관리.svg";
+import notice from "../../assets/img/Icon/공지사항.svg";
 import studentInquiry from "../../assets/img/Icon/학생조회.svg";
 import changeTeacher from "../../assets/img/Icon/자습감독선생님변경.svg";
-import notice from "../../assets/img/Icon/공지사항.svg";
+import schedule from "../../assets/img/Icon/일정변경.svg";
 import outStudent from "../../assets/img/외출 일러스트.png";
 import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
@@ -108,8 +109,11 @@ const Main = () => {
               <Menu href="/changeTeacher" icon={changeTeacher}>
                 자습감독 선생님 변경
               </Menu>
-              <Menu href="/notice" icon={notice}>
+              <Menu href="/schedule" icon={schedule}>
                 일정변경
+              </Menu>
+              <Menu href="/notice" icon={notice}>
+                공지 사항
               </Menu>
             </div>
           </div>
