@@ -1,11 +1,38 @@
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import pick from "@/assets/img/Icon/pickname.svg";
+import { getTeacherName } from "@/apis/login/login";
+
+interface name {
+  name: string;
+}
 
 const Header: NextPage = ({}) => {
-  const teacher = "이기혁";
+  const { mutate: getNameMutate } = getTeacherName();
+  const [data, setData] = useState<name>();
+
+  const teacher = "서인석";
+
+  const getName = async () => {
+    try {
+      const result = await getNameMutate(null, {
+        onSuccess: (data) => {
+          setData(data);
+        },
+        onError: (error) => {
+          console.log(error.message);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getName();
+  }, []);
 
   return (
     <div className=" flex px-70 justify-between items-center bg-white py-2">
@@ -15,7 +42,7 @@ const Header: NextPage = ({}) => {
         </div>
       </Link>
       <div className=" font-sans text-heading6-M text-neutral-50">
-        {teacher} 선생님
+        {data?.name} 선생님
       </div>
     </div>
   );

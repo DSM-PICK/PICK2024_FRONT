@@ -88,13 +88,11 @@ const ScheduleCalendar = ({ onClick, onChange }: calendarProp) => {
         const formattedDate = moment(date).format("YYYY-MM-DD");
 
         if (monthdata) {
-          const dateData = monthdata.filter((item) =>
-            console.log(
+          const dateData = monthdata.filter(
+            (item) =>
               `${currentYear.toString()}-${item.month}-${item.day}` ===
-                formattedDate
-            )
+              formattedDate
           );
-
           if (dateData.length > 0) {
             return (
               <>

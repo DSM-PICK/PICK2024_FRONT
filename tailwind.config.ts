@@ -323,6 +323,7 @@ const config: Config = {
         30: "7.4rem",
         23: "5.75rem",
         25: "6.25rem",
+        "%": "20%",
       },
       borderRadius: {
         max: "3.75rem",
@@ -330,6 +331,9 @@ const config: Config = {
       },
       borderWidth: {
         1: "0.063rem",
+      },
+      screens: {
+        "3xl": "1850px",
       },
     },
   },
