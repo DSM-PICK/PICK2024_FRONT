@@ -105,9 +105,9 @@ const Modal: React.FC<ModalProps> = ({
   const formetDate = date ? moment(date).format("M월 DD일") : null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
+    <div className=" inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
       {type === "button" || type === "error" ? (
-        <div className="bg-white rounded-xl px-24 py-13 w-155">
+        <div className=" z-10 bg-white rounded-xl px-24 py-13 w-155">
           <div className="flex flex-col gap-8 items-center">
             <div className="font-sans text-heading5 text-neutral-50 text-center">
               {heading1 && <div className="max-w-none">{heading1}</div>}
