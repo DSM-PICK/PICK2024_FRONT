@@ -97,13 +97,13 @@ const Main = () => {
               <Menu href="/WeekendMeals" icon={WeekendMeals}>
                 주말급식
               </Menu>
-              <Menu href="/NotDevelop" icon={classManage}>
+              <Menu href="/notDevelop" icon={classManage}>
                 학급 관리
               </Menu>
-              <Menu href="/NotDevelop" icon={afterManage}>
+              <Menu href="/notDevelop" icon={afterManage}>
                 방과후 관리
               </Menu>
-              <Menu href="/NotDevelop" icon={studentInquiry}>
+              <Menu href="/notDevelop" icon={studentInquiry}>
                 학생 조회
               </Menu>
               <Menu href="/changeTeacher" icon={changeTeacher}>
