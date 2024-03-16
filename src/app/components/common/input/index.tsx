@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import eye from "../../../../assets/img/Icon/eye.svg";
 import eyeOff from "../../../../assets/img/Icon/eyeOff.svg";
@@ -19,6 +20,7 @@ interface InputProps {
   onChange: ({ text, name }: ChangeProps) => void;
   disabled?: boolean;
   value: string;
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -30,6 +32,7 @@ const Input: React.FC<InputProps> = ({
   disabled,
   value,
   error,
+  onKeyDown,
   name = "",
 }) => {
   const [showOpen, setShowOpen] = useState<boolean>(false);
@@ -44,7 +47,7 @@ const Input: React.FC<InputProps> = ({
     }
     `;
 
-  const inputClassName = ` h-10 px-2 border-none bg-transparent placeholder-neutral-500 
+  const inputClassName = ` h-10 w-full px-2 border-none bg-transparent placeholder-neutral-500 
     focus:outline-none rounded font-sans
     `;
 
@@ -59,6 +62,7 @@ const Input: React.FC<InputProps> = ({
           value={value}
           onChange={(e) => onChange({ text: e.target.value, name })}
           disabled={disabled}
+          onKeyDown={onKeyDown}
         />
         {type === "password" && (
           <div onClick={() => setShowOpen(!showOpen)} className="">

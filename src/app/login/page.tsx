@@ -30,6 +30,11 @@ const Login: NextPage = () => {
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
   };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onClickBtn();
+    }
+  };
 
   const { mutate: loginMutate } = useLogin();
   const router = useRouter();
@@ -50,7 +55,7 @@ const Login: NextPage = () => {
       });
     } catch (error) {
       console.error("An unexpected error occurred:", error);
-        router.push("/login");
+      router.push("/login");
     }
   };
 
@@ -76,6 +81,7 @@ const Login: NextPage = () => {
                 placeholder="아이디"
                 onChange={handleChange}
                 value={data.admin_id}
+                onKeyDown={handleKeyDown}
                 name="admin_id"
               />
               <div className="flex flex-col gap-6">
@@ -85,6 +91,7 @@ const Login: NextPage = () => {
                   label="비밀번호"
                   placeholder="비밀번호"
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   name="password"
                   value={data.password}
                 />
