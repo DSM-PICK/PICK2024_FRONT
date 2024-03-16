@@ -20,7 +20,7 @@ interface InputProps {
   onChange: ({ text, name }: ChangeProps) => void;
   disabled?: boolean;
   value: string;
-  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
