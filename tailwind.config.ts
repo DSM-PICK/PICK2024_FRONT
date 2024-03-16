@@ -313,6 +313,7 @@ const config: Config = {
         "29": "7.25rem",
         17: "4.5rem",
         13: "3.875rem",
+        600: "37.5rem",
       },
       padding: {
         sign: "6.875rem 0rem",

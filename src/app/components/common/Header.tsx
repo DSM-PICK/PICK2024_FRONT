@@ -39,7 +39,7 @@ const Header: NextPage = ({}) => {
           <Image src={pick} alt="" />
         </div>
       </Link>
-      <div className=" font-sans text-heading6-M text-neutral-50">
+      <div className=" font-sans w-fit text-heading6-M text-neutral-50">
         {data?.name} 선생님
       </div>
     </div>

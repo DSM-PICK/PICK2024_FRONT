@@ -117,6 +117,7 @@ const OutAccept = () => {
               setData(data);
               console.log("Out accept success", response);
               setAccept(false);
+              location.reload();
             },
             onError: (error) => {
               console.error("Out accept error", error);
