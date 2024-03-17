@@ -6,6 +6,8 @@ import Header from "@/app/components/common/Header";
 import Classmeals from "../components/common/list/classmeal/page";
 import { MealCheck, NotMealCheck } from "@/apis/outList/list";
 import { setStudentNum } from "@/utils/until";
+import Button from "../components/common/Button";
+import { Printexcel } from "@/apis/weekendMeal";
 
 interface classmealProps {
   grade: string;
@@ -35,6 +37,8 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   const [notCheckMeal, setNotCheckMeal] = useState<notCheckMeal[]>([]);
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
+
+  const { downloadExcel } = Printexcel();
 
   const { mutate: checkMealMutate } = MealCheck();
   const { mutate: notCheckMealMutate } = NotMealCheck();
@@ -106,6 +110,13 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
             주말 급식
           </div>
           <div className="flex items-center gap-5">
+            <Button
+              colorType="ghost"
+              buttonSize="small"
+              onClick={downloadExcel}
+            >
+              엑셀로 출력하기
+            </Button>
             <Dropdown type="grade" onChange={handleGradeChange} />
             <Dropdown type="class" onChange={handleClassChange} />
           </div>
