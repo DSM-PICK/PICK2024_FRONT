@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { PostNotice } from "@/apis/notice";
 import Button from "@/app/components/common/Button";
 import Header from "@/app/components/common/Header";
 import Input from "@/app/components/common/input";
@@ -14,39 +13,11 @@ interface ChangeProps {
   name: string;
 }
 
-const WriteNotice = () => {
+const ModifyNotice = () => {
   const nav = useRouter();
-  const { mutate: uploadNotice } = PostNotice();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
-
-  const ColorType = () => {
-    if (title === "" || content === "") {
-      return "solidDisabled";
-    } else return "primary";
-  };
-
-  const post = async () => {
-    if (ColorType() === "primary") {
-      try {
-        const result = await uploadNotice(
-          { title, content, grade: [selectedGrade] },
-          {
-            onSuccess: () => {
-              nav.push("/notice");
-              alert("공지가 등록되었습니다");
-            },
-            onError: (error) => {
-              console.log(error.message);
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   const handleTitleChange = ({ text, name }: ChangeProps) => {
     setTitle(text);
@@ -62,11 +33,11 @@ const WriteNotice = () => {
       <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
         <div className=" text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
-          <Link href="/notice">공지 사항</Link> &gt; 공지사항 작성
+          <Link href="/notice"> 공지 사항</Link> &gt; 공지수정 하기
         </div>
         <div className="flex justify-between">
           <div className="flex font-sans mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
-            공지 사항
+            공지 수정하기
           </div>
         </div>
         <div className="flex flex-col">
@@ -77,8 +48,8 @@ const WriteNotice = () => {
                   제목
                   <Input
                     type="text"
-                    onChange={handleTitleChange} // 제목 변경 이벤트 핸들러
-                    value={title} // 제목 값
+                    onChange={handleTitleChange}
+                    value={title}
                     width="full"
                     name="title"
                   />
@@ -103,8 +74,8 @@ const WriteNotice = () => {
                 value={content}
               />
             </div>
-            <Button colorType={ColorType()} buttonSize="small" onClick={post}>
-              공지 업로드
+            <Button colorType="primary" buttonSize="small" onClick={() => {}}>
+              공지 수정
             </Button>
           </div>
         </div>
@@ -113,4 +84,4 @@ const WriteNotice = () => {
   );
 };
 
-export default WriteNotice;
+export default ModifyNotice;

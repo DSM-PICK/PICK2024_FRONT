@@ -15,6 +15,7 @@ interface InputProps {
   placeholder?: string;
   width?: string;
   type: string;
+  height?: string;
   name?: string;
   error?: boolean;
   onChange: ({ text, name }: ChangeProps) => void;
@@ -28,6 +29,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   width,
   type,
+  height,
   onChange,
   disabled,
   value,
@@ -37,7 +39,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const [showOpen, setShowOpen] = useState<boolean>(false);
 
-  const containerClassName = ` font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2
+  const containerClassName = ` font-sans w-${width} h-${height} border border-neutral-900 rounded flex justify-between items-center px-2
     ${
       error
         ? "border-error-500 bg-error-900"

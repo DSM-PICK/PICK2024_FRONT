@@ -29,9 +29,9 @@ const ChangeTeacher = () => {
   };
 
   return (
-    <div className=" min-w-fit">
+    <div className="flex flex-col">
       <Header />
-      <div className=" min-w-min flex flex-col 3xl:px-100 px-30 py-12 gap-7">
+      <div className=" self-center flex flex-col py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 자습 감독 선생님 변경
         </div>
@@ -44,4 +44,4 @@ const ChangeTeacher = () => {
   );
 };
 
-export default ChangeTeacher;
+export default ChangeTeacher; 

@@ -3,15 +3,18 @@ import Link from "next/link";
 import Header from "../components/common/Header";
 import { getFullToday } from "@/utils/date";
 import Button from "../components/common/Button";
-import NoticeList from "../components/common/list/notice/page";
+import NoticeList from '../components/common/list/notice/page';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getNoticeList } from "@/apis/notice";
+import { GetNoticeList } from '@/apis/notice';
+import { Grade } from "@/utils/until";
 
 interface GetnoticeList {
   id: string;
   title: string;
   create_at: string;
+  teacher: string;
+  grade: number[];
 }
 
 const Notice = () => {
@@ -22,7 +25,7 @@ const Notice = () => {
 
   const [data, setData] = useState<GetnoticeList[]>();
 
-  const { mutate: NoticeMutate } = getNoticeList();
+  const { mutate: NoticeMutate } = GetNoticeList();
 
   const getNotice = async () => {
     try {
@@ -75,16 +78,18 @@ const Notice = () => {
             <div>작성일</div>
           </div>
         </div>
-        {data?.map((item, index) => (
-          <NoticeList
-            key={index}
-            title={item.title}
-            id={item.id}
-            createAt={item.create_at}
-            teacher="ddd 선생님"
-            grade="전학년"
-          />
-        ))}
+        <div className=" flex flex-col gap-3">
+          {data?.map((item, index) => (
+            <NoticeList
+              key={index}
+              title={item.title}
+              id={item.id}
+              createAt={item.create_at}
+              teacher={`${item.teacher} 선생님`}
+              grade={`${Grade(item.grade)}학년`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

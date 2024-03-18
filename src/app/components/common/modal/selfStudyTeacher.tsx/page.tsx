@@ -47,7 +47,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       await postTeacherMutate(postData, {
         onSuccess: () => {
           console.log("success");
-          onSuccess();
         },
         onError: (error) => {
           console.log(error);

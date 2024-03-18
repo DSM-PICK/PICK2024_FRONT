@@ -13,6 +13,7 @@ interface DetailNoticeType {
   content: string;
   create_at: string;
   teacher: string;
+  grade: number[];
 }
 
 const DetailNotice: NextPage = () => {
@@ -34,7 +35,6 @@ const DetailNotice: NextPage = () => {
         {
           onSuccess: (data) => {
             setData(data);
-            router.push("/notice");
           },
           onError: (error) => {
             console.log(`${error.message} : 에러가 발생했습니다`);
@@ -46,6 +46,10 @@ const DetailNotice: NextPage = () => {
     }
   };
 
+  const modify = () => {
+    router.push(`/notice/query?id${id}/modify`);
+  };
+
   const deleteNotice = async () => {
     try {
       const result = await delelteMutate(
@@ -54,8 +58,8 @@ const DetailNotice: NextPage = () => {
           onSuccess: () => {
             alert("공지를 삭제하였습니다");
           },
-          onError: (error) => {
-            alert(`${error.message} : 에러가 발생했습니다`);
+          onError: () => {
+            alert(`에러가 발생했습니다`);
           },
         }
       );
@@ -74,7 +78,7 @@ const DetailNotice: NextPage = () => {
       <div className="flex flex-col gap-7 px-100 py-16 h-90%">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
-          <Link href="/notice">공지 사항</Link> &gt; {data?.title}
+          <Link href="/notice"> 공지 사항</Link> &gt; {data?.title}
         </div>
         <div className="font-sans text-heading4 text-gray-900 flex justify-between">
           공지사항
@@ -82,7 +86,7 @@ const DetailNotice: NextPage = () => {
             <Button colorType="ghost" buttonSize="small" onClick={deleteNotice}>
               공지 삭제하기
             </Button>
-            <Button colorType="primary" buttonSize="small" onClick={() => {}}>
+            <Button colorType="primary" buttonSize="small" onClick={modify}>
               공지 수정하기
             </Button>
           </div>
@@ -98,10 +102,10 @@ const DetailNotice: NextPage = () => {
                 작성자
                 <div className=" text-neutral-400">{data?.teacher} 선생님</div>
               </div>
-              <div className=" flex text-Button-L">
+              <div className=" flex text-Button-L gap-2">
                 학년
                 <div className=" text-neutral-400">
-                  {/*아직 api명세엔 없음 */}
+                  {/* {`${Grade(data?.grade)}학년`} */}
                 </div>
               </div>
             </div>
