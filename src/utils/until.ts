@@ -35,3 +35,11 @@ export const setStudentNum = ({ grade, class_num, num }: studentNum) => {
 };
 
 export type outCheck = "OK" | "NO";
+
+export const Grade = (grade: number[]) => {
+  if (grade.includes(4)) {
+    return "전";
+  } else {
+    return grade.join(", ");
+  }
+};
