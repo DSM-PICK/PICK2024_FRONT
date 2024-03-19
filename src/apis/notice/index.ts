@@ -28,6 +28,7 @@ interface ModifyProp {
   id: string;
   title: string;
   content: string;
+  grade: number[];
 }
 
 export const GetNoticeList = () => {
@@ -104,17 +105,23 @@ export const PostNotice = () => {
   });
 };
 
-export const ModifyNotice = () => {
+export const ModifyNoticeData = () => {
   const accessToken = getToken();
 
-  return useMutation<ModifyProp, Error, null>({
-    mutationFn: async () => {
+  return useMutation<void, Error, ModifyProp>({
+    mutationFn: async (param: ModifyProp) => {
       try {
-        const response = await instance.patch(`/notice/modify`, null, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
+        const response = await instance.patch(
+          `/notice/modify`,
+          {
+            ...param,
           },
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
         return response.data;
       } catch (error) {

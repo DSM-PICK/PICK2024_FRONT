@@ -31,7 +31,7 @@ const TextArea: React.FC<InputProps> = ({
   disabled,
   name = "",
 }) => {
-  const containerClassName = `w-${width} h-${height} font-sans border border-neutral-900 rounded flex justify-between items-center px-2
+  const containerClassName = `w-${width} h-80 font-sans border border-neutral-900 rounded flex justify-between items-center px-2
     ${
       error
         ? "border-error-500 bg-error-900"

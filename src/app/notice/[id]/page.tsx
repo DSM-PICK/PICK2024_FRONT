@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { DeleteNoticeData, DetailNoticeData } from "@/apis/notice";
 import { useSearchParams } from "next/navigation";
 import Button from "@/app/components/common/Button";
+import { Grade } from "@/utils/until";
 
 interface DetailNoticeType {
   title: string;
@@ -28,6 +29,10 @@ const DetailNotice: NextPage = () => {
 
   const id = idParam ? idParam : "";
 
+  const modify = () => {
+    router.push(`/notice/modify/query?id=${id}`);
+  };
+
   const getData = async () => {
     try {
       const result = await DetailDataMutate(
@@ -46,16 +51,13 @@ const DetailNotice: NextPage = () => {
     }
   };
 
-  const modify = () => {
-    router.push(`/notice/query?id${id}/modify`);
-  };
-
   const deleteNotice = async () => {
     try {
       const result = await delelteMutate(
         { id: id },
         {
           onSuccess: () => {
+            router.back();
             alert("공지를 삭제하였습니다");
           },
           onError: () => {
@@ -105,7 +107,9 @@ const DetailNotice: NextPage = () => {
               <div className=" flex text-Button-L gap-2">
                 학년
                 <div className=" text-neutral-400">
-                  {/* {`${Grade(data?.grade)}학년`} */}
+                  {data?.grade.map((grade, index) => (
+                    <span key={index}>{`${Grade([grade])}학년 `}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -113,7 +117,7 @@ const DetailNotice: NextPage = () => {
               <div className=" text-heading5 text-neutral-100">
                 {data?.title}
               </div>
-              <div className=" text-heading6-M text-neutral-100">
+              <div className=" whitespace-pre-line text-heading6-M text-neutral-100">
                 {data?.content}
               </div>
             </div>
