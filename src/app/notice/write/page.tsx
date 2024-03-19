@@ -59,7 +59,7 @@ const WriteNotice = () => {
   return (
     <div>
       <Header />
-      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
+      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90dvh">
         <div className=" text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
           <Link href="/notice">공지 사항</Link> &gt; 공지사항 작성

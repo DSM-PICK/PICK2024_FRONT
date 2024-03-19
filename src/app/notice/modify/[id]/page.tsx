@@ -1,23 +1,66 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/app/components/common/Button";
 import Header from "@/app/components/common/Header";
 import Input from "@/app/components/common/input";
 import Link from "next/link";
 import SelectGrade from "@/app/components/common/dropdown/selectGrade";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TextArea from "@/app/components/common/input/textarea";
+import { DetailNoticeData, ModifyNoticeData } from "@/apis/notice";
 
 interface ChangeProps {
   text: string;
   name: string;
 }
 
+interface DetailNoticeType {
+  title: string;
+  content: string;
+  create_at: string;
+  teacher: string;
+  grade: number[];
+}
+
 const ModifyNotice = () => {
-  const nav = useRouter();
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
+  const { mutate: DetailDataMutate } = DetailNoticeData();
+  const [data, setData] = useState<DetailNoticeType>();
+  const { mutate: modifyMutate } = ModifyNoticeData();
+
+  const param = useSearchParams();
+
+  const idParam = param.get("id");
+
+  const id = idParam ? idParam : "";
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const result = await DetailDataMutate(
+        { id: id },
+        {
+          onSuccess: (data) => {
+            setData(data);
+            setTitle(data.title);
+            setContent(data.content);
+            setSelectedGrade(data.grade[0]);
+          },
+          onError: (error) => {
+            console.log(`${error.message} : 에러가 발생했습니다`);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleTitleChange = ({ text, name }: ChangeProps) => {
     setTitle(text);
@@ -27,10 +70,29 @@ const ModifyNotice = () => {
     setContent(text);
   };
 
+  const handleGradeSelect = (grade: number) => {
+    setSelectedGrade(grade);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const result = await modifyMutate({
+        id: id,
+        title: title,
+        content: content,
+        grade: selectedGrade,
+      });
+      alert("공지가 수정되었습니다");
+      router.back();
+    } catch (error) {
+      console.error("수정 중 에러 발생:", error);
+    }
+  };
+
   return (
     <div>
       <Header />
-      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
+      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90dvh">
         <div className=" text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
           <Link href="/notice"> 공지 사항</Link> &gt; 공지수정 하기
@@ -56,7 +118,7 @@ const ModifyNotice = () => {
                 </div>
                 <div>
                   학년
-                  <SelectGrade onSelect={setSelectedGrade} />
+                  <SelectGrade onSelect={handleGradeSelect} />
                 </div>
               </div>
             </div>
@@ -74,7 +136,11 @@ const ModifyNotice = () => {
                 value={content}
               />
             </div>
-            <Button colorType="primary" buttonSize="small" onClick={() => {}}>
+            <Button
+              colorType="primary"
+              buttonSize="small"
+              onClick={handleSubmit}
+            >
               공지 수정
             </Button>
           </div>
