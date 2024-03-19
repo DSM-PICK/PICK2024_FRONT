@@ -1,4 +1,5 @@
 import { Provider } from "./provide";
+import Head from "next/head";
 import "../../tailwind.config";
 import "../styles/global.css";
 
@@ -18,6 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <Head>
+        <link rel="icon" href={metadata.icons.icon} />
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+      </Head>
       <body className="">
         <Provider>{children}</Provider>
       </body>
