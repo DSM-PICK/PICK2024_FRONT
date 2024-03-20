@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 
-const BASEURL = "https://prod-server.xquare.app/dsm-pick";
+const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
 
 export const instance = axios.create({
   baseURL: BASEURL,
