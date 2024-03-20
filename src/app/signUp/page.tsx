@@ -67,14 +67,15 @@ const SignUp: NextPage = () => {
             colorType="solidDisabled"
             buttonSize="full"
             onClick={() => {}}
-          >로그인</Button>
+          >
+            로그인
+          </Button>
         </div>
       </div>
       <div className=" w-100 h- rounded-xl bg-sideImg">
         <div className=" rounded-xl py-12 px-13 h-full bg-primary-1000 backdrop-blur-sm bg-opacity-30 bg-blur-md">
           <div className="font-sans flex gap-3.5 text-heading6-M text-white">
             {logo && <img src={logo.src} width={40} height={40} />}PiCK
-            {/*임시로 아무 아이콘 넣어둠 */}
           </div>
           <div className=" text-heading1 -space-y-5">
             <div className=" text-white">Welcome</div>
