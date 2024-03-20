@@ -109,7 +109,7 @@ const Main = () => {
               <Menu href="/changeTeacher" icon={changeTeacher}>
                 자습감독 선생님 변경
               </Menu>
-              <Menu href="/schedule" icon={schedule}>
+              <Menu href="/Schedule" icon={schedule}>
                 일정변경
               </Menu>
               <Menu href="/notice" icon={notice}>
