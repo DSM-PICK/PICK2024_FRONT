@@ -64,11 +64,6 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
     setModal(false);
   };
 
-  const handleModalConfirm = () => {
-    setModal(false);
-    scheduleData(selectDate);
-  };
-
   return (
     <>
       <Calendar
@@ -122,12 +117,8 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
       />
       {modal && (
         <PostSchedule
-          date={selectDate}
-          type="addSchedule"
-          heading1="새로운 일정"
-          buttonMessage="추가"
+          initialDate={selectDate ? selectDate.toString() : ""}
           onCancel={handleModalCancel}
-          onConfirm={handleModalConfirm}
         />
       )}
     </>
