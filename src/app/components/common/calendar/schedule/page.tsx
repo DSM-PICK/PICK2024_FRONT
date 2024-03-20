@@ -5,6 +5,8 @@ import "../style/style.css";
 import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/outList/list";
 import Modal from "../../modal/page";
+import ScheduleFix from "./fix";
+import PostSchedule from "../../modal/schdule/page";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
@@ -15,7 +17,7 @@ interface Schedule {
   id: string;
   event_name: string;
   month: number;
-  day: number; // day 필드를 문자열로 변경
+  day: number;
 }
 
 const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
@@ -64,7 +66,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
 
   const handleModalConfirm = () => {
     setModal(false);
-    scheduleData(selectDate); // 모달에서 일정이 추가되었으므로 스케줄 데이터를 다시 불러옴
+    scheduleData(selectDate);
   };
 
   return (
@@ -101,12 +103,15 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
                   {dateData.map((item, index) => (
                     <div
                       key={index}
-                      className="bg-white flex px-2 py-1 shadow-md rounded gap-2 w-full"
+                      className="bg-white flex justify-between px-2 py-1 shadow-md rounded w-full"
                     >
-                      <div className="h-auto rounded w-0.5 bg-primary-200"></div>
-                      <div className="text-black text-Button-ES">
-                        {item.event_name}
+                      <div className=" flex gap-2">
+                        <div className="h-auto rounded w-0.5 bg-primary-200"></div>
+                        <div className="text-black text-Button-ES">
+                          {item.event_name}
+                        </div>
                       </div>
+                      <ScheduleFix />
                     </div>
                   ))}
                 </>
@@ -116,7 +121,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         }}
       />
       {modal && (
-        <Modal
+        <PostSchedule
           date={selectDate}
           type="addSchedule"
           heading1="새로운 일정"

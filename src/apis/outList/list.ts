@@ -117,7 +117,7 @@ interface schedulesdata {
 }
 
 interface addSchedule {
-  name: string;
+  eventName: string;
   date: string;
 }
 
@@ -482,8 +482,8 @@ export const AddSchedule = () => {
         const response = await instance.post(
           "/schedule/create",
           {
-            name: param.name,
-            date: param.date,
+            eventName: param.eventName,
+            date: "2024-05-25",
           },
           {
             headers: {
