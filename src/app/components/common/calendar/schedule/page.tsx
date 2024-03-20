@@ -4,7 +4,9 @@ import moment from "moment";
 import "../style/style.css";
 import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/outList/list";
-import PostSchedule from "../../modal/schedule/page";
+import Modal from "../../modal/page";
+import ScheduleFix from "./fix";
+import PostSchedule from "../../modal/schdule/page";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
@@ -96,12 +98,15 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
                   {dateData.map((item, index) => (
                     <div
                       key={index}
-                      className="bg-white flex px-2 py-1 shadow-md rounded gap-2 w-full"
+                      className="bg-white flex justify-between px-2 py-1 shadow-md rounded w-full"
                     >
-                      <div className="h-auto rounded w-0.5 bg-primary-200"></div>
-                      <div className="text-black text-Button-ES">
-                        {item.event_name}
+                      <div className=" flex gap-2">
+                        <div className="h-auto rounded w-0.5 bg-primary-200"></div>
+                        <div className="text-black text-Button-ES">
+                          {item.event_name}
+                        </div>
                       </div>
+                      <ScheduleFix />
                     </div>
                   ))}
                 </>

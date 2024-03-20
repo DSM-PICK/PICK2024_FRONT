@@ -26,7 +26,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   heading1,
   onCancel,
   initialDate,
-  onSuccess,
 }) => {
   const [secondData, setSecondData] = useState({ floor: 2, teacher: "" });
   const [thirdData, setThirdData] = useState({ floor: 3, teacher: "" });

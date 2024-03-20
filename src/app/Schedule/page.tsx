@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Modal from "../components/common/modal/page";
 import Header from "../components/common/Header";
 import Link from "next/link";
 import ScheduleCalendar from "../components/common/calendar/schedule/page";
@@ -21,10 +20,6 @@ const Schedule = () => {
   });
   const { mutate: addScheduleMutate } = AddSchedule();
 
-  const handleChangeTeacher = (date: Date) => {
-    setSelectedDate(date);
-    setModal(true);
-  };
 
   const handleModalCancel = () => {
     setModal(false);
@@ -62,7 +57,7 @@ const Schedule = () => {
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 일정 관리
         </div>
-        <ScheduleCalendar onClick={handleChangeTeacher} onChange={() => {}} />
+        <ScheduleCalendar onClick={()=>{}} onChange={() => {}} />
         <div className=" min-w-max absolute top-40 text-heading4">
           일정 관리
         </div>
