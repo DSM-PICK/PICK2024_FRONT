@@ -4,7 +4,7 @@ import moment from "moment";
 import "../style/style.css";
 import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/outList/list";
-import Modal from "../../modal/page";
+import PostSchedule from "../../modal/schedule/page";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
@@ -15,7 +15,7 @@ interface Schedule {
   id: string;
   event_name: string;
   month: number;
-  day: number; // day 필드를 문자열로 변경
+  day: number;
 }
 
 const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
@@ -60,11 +60,6 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
 
   const handleModalCancel = () => {
     setModal(false);
-  };
-
-  const handleModalConfirm = () => {
-    setModal(false);
-    scheduleData(selectDate); // 모달에서 일정이 추가되었으므로 스케줄 데이터를 다시 불러옴
   };
 
   return (
@@ -116,13 +111,9 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         }}
       />
       {modal && (
-        <Modal
-          date={selectDate}
-          type="addSchedule"
-          heading1="새로운 일정"
-          buttonMessage="추가"
+        <PostSchedule
+          initialDate={selectDate ? selectDate.toString() : ""}
           onCancel={handleModalCancel}
-          onConfirm={handleModalConfirm}
         />
       )}
     </>

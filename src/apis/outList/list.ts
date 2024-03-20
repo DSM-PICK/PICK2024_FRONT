@@ -117,8 +117,8 @@ interface schedulesdata {
 }
 
 interface addSchedule {
-  name: string;
-  date: string;
+  event_name: string;
+  date: string | null;
 }
 
 export const GetAuthHeader = () => {
@@ -482,7 +482,7 @@ export const AddSchedule = () => {
         const response = await instance.post(
           "/schedule/create",
           {
-            name: param.name,
+            event_name: param.event_name,
             date: param.date,
           },
           {

@@ -8,7 +8,7 @@ import { AddSchedule } from "@/apis/outList/list";
 import moment from "moment";
 
 interface ScheduleData {
-  name: string;
+  event_name: string;
   date: string;
 }
 
@@ -16,7 +16,7 @@ const Schedule = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
-    name: "",
+    event_name: "",
     date: "",
   });
   const { mutate: addScheduleMutate } = AddSchedule();
@@ -37,7 +37,7 @@ const Schedule = () => {
   const handleModalConfirm = async () => {
     try {
       const newScheduleData: ScheduleData = {
-        name: "",
+        event_name: "",
         date: formetDate || "",
       };
       setScheduleData(newScheduleData);
@@ -56,9 +56,9 @@ const Schedule = () => {
   };
 
   return (
-    <div className=" min-w-fit">
+    <div className="flex flex-col ">
       <Header />
-      <div className=" min-w-max flex flex-col 3xl:px-100 px-30 py-12 gap-7">
+      <div className="self-center flex flex-col py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 일정 관리
         </div>
