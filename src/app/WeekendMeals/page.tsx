@@ -17,7 +17,7 @@ interface classmealProps {
 interface mealcheckProp {
   id: string;
   name: string;
-  status: "OK" | "NO"; //신청 상태. OK->신청, NO->신청X(필요없다)
+  status: "OK" | "NO";
   grade: number;
   class_num: number;
   num: number;
@@ -44,7 +44,6 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   const { mutate: notCheckMealMutate } = NotMealCheck();
 
   useEffect(() => {
-    console.log(`외출 grade: ${selectGrade} , class: ${selectClass}`);
     checkMealList();
     notCheckMealList();
   }, [selectGrade, selectClass]);
@@ -97,9 +96,9 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   };
 
   return (
-    <div className="h-dvh">
+    <div className="h-dvh flex flex-col">
       <Header />
-      <div className="flex flex-col gap-7 px-100 py-16 h-90%">
+      <div className=" self-center flex flex-col gap-7 w-3/5 py-16 h-90dvh">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt;
           <Link href="/WeekendMeals"> 주말 급식 신청 현황</Link> &gt;
@@ -121,8 +120,8 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
             <Dropdown type="class" onChange={handleClassChange} />
           </div>
         </div>
-        <div className="w-auto h-full flex py-8 pl-8 bg-primary-1200 rounded-xl gap-28">
-          <div className=" flex flex-col gap-9">
+        <div className="w-auto h-140 flex py-8 pl-8 bg-primary-1200 rounded-xl gap-28 justify-evenly">
+          <div className=" flex flex-col gap-9 w-1/2">
             <div className=" flex flex-col gap-1">
               <div className=" text-heading6-M text-gray-900">응답자</div>
               <div className=" text-caption1 text-neutral-300">
@@ -140,7 +139,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
               ))}
             </div>
           </div>
-          <div className=" flex flex-col gap-9">
+          <div className=" flex flex-col gap-9 w-1/2">
             <div className=" flex flex-col gap-1">
               <div className=" text-heading6-M text-gray-900">미응답자</div>
               <div className=" text-caption1 text-neutral-300">
@@ -150,6 +149,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
             <div className=" overflow-scroll scrollbar-hide flex flex-col gap-3 h-full">
               {notCheckMeal?.map((item, index) => (
                 <Classmeals
+                  id={item.id}
                   key={index}
                   number={setStudentNum(item)}
                   name={item.name}
