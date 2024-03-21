@@ -283,6 +283,7 @@ const config: Config = {
       },
       width: {
         "155": "38.75rem",
+
         "120": "30rem",
         "100": "34.563rem",
         "92": "27.375rem",
@@ -299,6 +300,7 @@ const config: Config = {
         "25": "6.25rem",
       },
       height: {
+        "140": "36.625rem",
         "13": "3.25rem",
         "7.5": "1.875rem",
         "": "53.75rem",

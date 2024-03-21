@@ -1,20 +1,54 @@
-"use client";
-
-import React, { useState } from "react";
+import { ChangeState } from "@/apis/weekendMeal";
+import { stat } from "fs";
+import React, { useState, useRef, useEffect } from "react";
 
 interface StateDropProps {
   state: "OK" | "NO" | "QUIET";
+  id?: string;
 }
 
- const ClassmealDrop: React.FC<StateDropProps> = ({ state }) => {
+const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
   const defaultOptions: Record<string, string> = {
     신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
   };
-
+  const { mutate: ChangeMealMutate } = ChangeState();
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [selectedOption, setSelectedOption] = useState<string>(
-    defaultOptions[defaultOptions]
+    defaultOptions[state]
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+
+  const Change = async () => {
+    const tem = selectedOption === "미신청" ? "NO" : "OK";
+    try {
+      await ChangeMealMutate(
+        { status: tem, userId: id || "" },
+        {
+          onSuccess: () => {
+            location.reload();
+            alert("신청이 변경되었습니다");
+          },
+          onError: (error) => {
+            alert(`${error.message} : 에러가 발생하였습니다`);
+          },
+        }
+      );
+    } catch (error) {
+      alert(`상태변경중 에러가 발생했습니다`);
+      console.log(error);
+    }
+  };
+
+  const change = () => {
+    switch (state) {
+      case "OK":
+        return `신청`;
+      case "NO":
+        return `미신청`;
+      case "QUIET":
+        return `미응답`;
+    }
+  };
 
   const toggleDropdown = () => {
     if (state === "QUIET") {
@@ -25,6 +59,7 @@ interface StateDropProps {
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsDropdownVisible(false);
+    Change();
   };
 
   const dropStyle = () => {
@@ -40,10 +75,25 @@ interface StateDropProps {
 
   const commonStyle = "py-4 px-2 rounded hover:bg-primary-200 hover:text-white";
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative w-24">
+    <div className="relative w-24" ref={dropdownRef}>
       <div className={dropStyle()} onClick={toggleDropdown}>
-        {selectedOption}
+        {change()}
       </div>
       {state === "QUIET" && isDropdownVisible && (
         <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
@@ -65,4 +115,4 @@ interface StateDropProps {
   );
 };
 
-export default ClassmealDrop
+export default ClassmealDrop;

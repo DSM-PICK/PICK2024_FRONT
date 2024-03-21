@@ -2,6 +2,11 @@ import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 import { getToken } from "@/utils/auth";
 
+interface ChangeStateParams {
+  status: "OK" | "NO";
+  userId: string;
+}
+
 export const Printexcel = () => {
   const accessToken = getToken();
 
@@ -28,4 +33,25 @@ export const Printexcel = () => {
   };
 
   return { downloadExcel };
+};
+
+export const ChangeState = () => {
+  const accessToken = getToken();
+
+  return useMutation<void, Error, ChangeStateParams>({
+    mutationFn: async (params) => {
+      try {
+        const response = await instance.patch(
+          `weekend-meal/status?userId=${params.userId}&status=${params.status}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
 };
