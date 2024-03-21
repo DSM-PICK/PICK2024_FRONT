@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import nonearrow from "@/assets/img/Icon/chevron-right.svg";
-import clickarrow from "@/assets/img/Icon/downarrow.svg";
 
 interface StateDropProps {
   state: boolean;
@@ -68,4 +66,4 @@ const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
   );
 };
 
-export default AllmealDrop
+export default AllmealDrop;
