@@ -1,5 +1,5 @@
+"use client";
 import { ChangeState } from "@/apis/weekendMeal";
-import { stat } from "fs";
 import React, { useState, useRef, useEffect } from "react";
 
 interface StateDropProps {
