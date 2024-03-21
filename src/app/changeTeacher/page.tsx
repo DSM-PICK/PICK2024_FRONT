@@ -20,14 +20,6 @@ const ChangeTeacher = () => {
     setModal(true);
   };
 
-  const handleModalCancel = () => {
-    setModal(false);
-  };
-
-  const handleModalConfirm = () => {
-    setModal(false);
-  };
-
   return (
     <div className="flex flex-col">
       <Header />
@@ -44,4 +36,4 @@ const ChangeTeacher = () => {
   );
 };
 
-export default ChangeTeacher; 
+export default ChangeTeacher;
