@@ -13,7 +13,7 @@ export interface ChangeProps {
 interface ModalProps {
   heading1?: string;
   onCancel: () => void;
-  initialDate: string ;
+  initialDate: string;
 }
 
 interface ScheduleData {
@@ -21,11 +21,7 @@ interface ScheduleData {
   date: string | null;
 }
 
-const PostSchedule: React.FC<ModalProps> = ({
-  heading1,
-  onCancel,
-  initialDate,
-}) => {
+const PostSchedule: React.FC<ModalProps> = ({ onCancel, initialDate }) => {
   const formattedDate = initialDate
     ? moment(initialDate).format("YYYY-MM-DD")
     : null;
@@ -35,10 +31,6 @@ const PostSchedule: React.FC<ModalProps> = ({
     date: formattedDate,
   });
   const { mutate: addScheduleMutate } = AddSchedule();
-
-  const handleChangeDate = (date: Date) => {
-    setSelectedDate(date);
-  };
 
   const handleModalCancel = () => {
     onCancel();
@@ -53,6 +45,7 @@ const PostSchedule: React.FC<ModalProps> = ({
       setScheduleData(newScheduleData);
       await addScheduleMutate(newScheduleData, {
         onSuccess: () => {
+          location.reload();
           alert("일정이 추가되었습니다");
         },
         onError: (error) => {
