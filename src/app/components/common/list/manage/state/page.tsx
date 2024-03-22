@@ -1,5 +1,6 @@
+"use client";
 interface ManageStateProps {
-  state: "출석" | "현체" | "귀가" | "취업" | "자퇴";
+  state: string;
 }
 
 const ManageState: React.FC<ManageStateProps> = ({ state }) => {
@@ -24,4 +25,4 @@ const ManageState: React.FC<ManageStateProps> = ({ state }) => {
   );
 };
 
-export default ManageState
+export default ManageState;
