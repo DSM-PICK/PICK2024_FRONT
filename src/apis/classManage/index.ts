@@ -16,7 +16,7 @@ interface queryData {
   class_num: number;
 }
 
-export const getStudentData = () => {
+export const GetStudentData = () => {
   const accessToken = getToken();
 
   return useMutation<studentData[], Error, queryData>({

@@ -6,7 +6,7 @@ import Header from "../components/common/Header";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
 import ManageList from "../components/common/list/manage/page";
-import { getStudentData } from "@/apis/classManage";
+import { GetStudentData } from "@/apis/classManage";
 import { getStudentString, setStudentNum } from "@/utils/until";
 
 enum ManageState {
@@ -32,7 +32,7 @@ const ClassManage: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData[]>();
-  const { mutate: getStudentDataMutate } = getStudentData();
+  const { mutate: getStudentDataMutate } = GetStudentData();
 
   const get = async () => {
     try {
