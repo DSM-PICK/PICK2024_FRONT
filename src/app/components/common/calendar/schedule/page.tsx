@@ -5,7 +5,7 @@ import "../style/style.css";
 import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/outList/list";
 import ScheduleFix from "./fix";
-import PostSchedule from "../../modal/Schedule/page";
+import PostSchedule from "../../modal/schedule/page";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
