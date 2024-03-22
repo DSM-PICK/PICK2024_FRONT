@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import ClassmealDrop from "../../dropdown/state/class/page";
 

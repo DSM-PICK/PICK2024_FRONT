@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
 
 interface ManageDropProps {
-  state: "출석" | "현체" | "귀가" | "취업" | "자퇴";
+  state: string;
   third?: boolean;
 }
 
@@ -43,7 +43,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const stateStyle = "";
 
   const IconColor = () => {
-    return <CaretDown color={state === "출석" ? "#475467" : "white"} />;
+    return <CaretDown color={state === "ATTENDANCE" ? "#475467" : "white"} />;
   };
 
   const commonStyle =

@@ -4,7 +4,6 @@ import moment from "moment";
 import "../style/style.css";
 import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/outList/list";
-import Modal from "../../modal/page";
 import ScheduleFix from "./fix";
 import PostSchedule from "../../modal/Schedule/page";
 

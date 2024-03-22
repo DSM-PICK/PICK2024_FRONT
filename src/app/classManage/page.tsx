@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import Modal from "../components/common/modal/page";
-import react, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
-import { getFullToday } from "@/utils/date";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
 import ManageList from "../components/common/list/manage/page";
-import React from "react";
+import { getStudentData } from "@/apis/classManage";
+import { getStudentString, setStudentNum } from "@/utils/until";
 
 enum ManageState {
   취업 = "취업",
@@ -17,46 +17,62 @@ enum ManageState {
   귀가 = "귀가",
 }
 
-type ManageProps = {
-  student: string[];
-  state: ManageState[];
-  edit: boolean;
-};
+interface StudentData {
+  userId: string;
+  name: string;
+  grade: number;
+  classNum: number;
+  num: number;
+  status: string;
+}
 
 const ClassManage: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
+  const [selectedGrade, setSelectedGrade] = useState<number>(1);
+  const [selectedClass, setSelectedClass] = useState<number>(1);
+  const [data, setData] = useState<StudentData[]>();
+  const { mutate: getStudentDataMutate } = getStudentData();
+
+  const get = async () => {
+    try {
+      const result = await getStudentDataMutate(
+        { grade: selectedGrade, class_num: selectedClass },
+        {
+          onSuccess: (data) => {
+            setData(data);
+          },
+          onError: (error) => {
+            alert(`${error.message} : 에러가 발생되었습니다`);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    get();
+  }, [selectedGrade, selectedClass]);
+
+  const handleGradeChange = (selectedOption: number) => {
+    setSelectedGrade(selectedOption);
+  };
+
+  const handleClassChange = (selectedOption: number) => {
+    setSelectedClass(selectedOption);
+  };
 
   const onClickEdit = () => {
     setEdit(true);
   };
-
-  console.log(setEdit);
 
   const onClickSave = () => {
     setModal(true);
     setEdit(false);
   };
 
-  const datalist: ManageProps = {
-    student: [
-      "1410 박현아",
-      "1410 박수현",
-      "1410 강해민",
-      "1410 육기준",
-      "1410 김도경",
-      "1410 조영준",
-    ],
-    state: [
-      ManageState.취업,
-      ManageState.자퇴,
-      ManageState.귀가,
-      ManageState.출석,
-      ManageState.현체,
-      ManageState.출석,
-    ],
-    edit,
-  };
   const handleModalConfirm = () => {
     setModal(false);
   };
@@ -65,10 +81,29 @@ const ClassManage: React.FC = () => {
     setModal(false);
   };
 
+  const changeStatusName = (item: string) => {
+    switch (item) {
+      case "ATTENDANCE":
+        return "출석";
+      case "GO_OUT":
+        return "외출";
+      case "EMPLOYMENT":
+        return "취업";
+      case "DISALLOWED":
+        return "무단";
+      case "NOT_COMEBACK":
+        return "미복귀";
+      case "DROPOUT":
+        return "자퇴";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div className=" h-dvh">
+    <div className=" h-dvh flex flex-col">
       <Header />
-      <div className=" h-90% flex flex-col px-100 py-12 gap-7">
+      <div className=" h-90dvl self-center w-3/5  flex flex-col py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 학급 관리
         </div>
@@ -89,30 +124,30 @@ const ClassManage: React.FC = () => {
               <Button
                 colorType="ghost"
                 buttonSize="small"
-                onClick={onClickSave}
+                onClick={onClickEdit}
               >
-                상태 저장하기
+                상태 수정하기
               </Button>
             )}
-            <Dropdown type="grade" />
-            <Dropdown type="class" />
+            <Dropdown type="grade" onChange={handleGradeChange} />
+            <Dropdown type="class" onChange={handleClassChange} />
           </div>
         </div>
-        <div className="w-full content-start rounded-xl bg-primary-1200 h-90% px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
+        <div className="w-auto content-start rounded-xl bg-primary-1200 h-140 px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
           {edit
-            ? datalist.student.map((student, index) => (
+            ? data?.map((item, index) => (
                 <ManageList
                   key={index}
-                  student={student}
-                  state={datalist.state[index]}
+                  student={`${setStudentNum(item)} ${item.name}`}
+                  state={changeStatusName(item.status)}
                   edit={false}
                 />
               ))
-            : datalist.student.map((student, index) => (
+            : data?.map((item, index) => (
                 <ManageList
                   key={index}
-                  student={student}
-                  state={datalist.state[index]}
+                  student={`${setStudentNum(item)} ${item.name}`}
+                  state={changeStatusName(item.status)}
                   edit={true}
                 />
               ))}
@@ -120,7 +155,7 @@ const ClassManage: React.FC = () => {
         {modal && (
           <Modal
             type="button"
-            heading1={`${datalist.student[0]}외 ${datalist.state.length}명의`}
+            heading1={`${data?.length || 0} 명의`}
             heading2="변경된 상태를 저장하시겠습니까?"
             buttonMessage="확인"
             onCancel={handleModalCancel}
