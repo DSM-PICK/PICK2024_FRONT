@@ -16,7 +16,7 @@ interface PreviousData {
   type: "APPLICATION" | "EARLY_RETURN";
 }
 
-const Previous: NextPage = () => {
+const Previouss: NextPage = () => {
   const params = useSearchParams();
   const { mutate: preList } = GetPreviousList();
   const [preData, setPreData] = useState<PreviousData[]>([]);
@@ -93,4 +93,4 @@ const Previous: NextPage = () => {
   );
 };
 
-export default Previous;
+export default Previouss;

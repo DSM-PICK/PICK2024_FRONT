@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
@@ -28,10 +26,26 @@ const Dropdown: React.FC<DropProps> = ({
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleOptionClick = (option: any) => {
     if (onChange) {
@@ -98,7 +112,7 @@ const Dropdown: React.FC<DropProps> = ({
       : [];
 
   return (
-    <div className="relative w-38">
+    <div className="relative w-38" ref={dropdownRef}>
       <div
         className="group border py-4 px-6 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-between"
         onClick={toggleDropdown}
