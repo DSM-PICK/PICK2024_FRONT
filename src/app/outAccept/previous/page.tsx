@@ -3,8 +3,20 @@ import Header from "@/app/components/common/Header";
 import Dropdown from "@/app/components/common/dropdown";
 import PreviousList from "@/app/components/common/list/before";
 import Link from "next/link";
+import { useState } from "react";
 
 const Previous = () => {
+  const [selectedGrade, setSelectedGrade] = useState<number>(1);
+  const [selectedClass, setSelectedClass] = useState<number>(1);
+
+  const handleGradeChange = (selectedOption: number) => {
+    setSelectedGrade(selectedOption);
+  };
+
+  const handleClassChange = (selectedOption: number) => {
+    setSelectedClass(selectedOption);
+  };
+
   return (
     <div className="flex flex-col">
       <Header />
@@ -18,8 +30,8 @@ const Previous = () => {
             외출 기록 보기
           </div>
           <div className=" flex items-center gap-3">
-            <Dropdown type="grade" />
-            <Dropdown type="class" />
+            <Dropdown type="grade" onChange={handleGradeChange} />
+            <Dropdown type="class" onChange={handleClassChange} />
           </div>
         </div>
         <div className="w-full gap-4 rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll scrollbar-hide ">

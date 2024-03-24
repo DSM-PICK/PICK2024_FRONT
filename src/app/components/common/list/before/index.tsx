@@ -19,7 +19,7 @@ const PreviousList = () => {
           alt=""
         />
       </div>
-      {/* <BeforeList /> */}
+      <BeforeList />
     </>
   );
 };

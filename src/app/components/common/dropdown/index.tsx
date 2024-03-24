@@ -15,12 +15,14 @@ interface DropProps {
   type: "floor" | "grade" | "class" | "club";
   reqOption?: "application" | "early-return";
   onChange?: (selectedOption: number, type: string) => void;
+  isOpen?: boolean;
 }
 
 const Dropdown: React.FC<DropProps> = ({
   type,
   reqOption = "application",
   onChange,
+  isOpen,
 }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
