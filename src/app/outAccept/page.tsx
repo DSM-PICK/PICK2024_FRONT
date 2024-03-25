@@ -229,7 +229,7 @@ const OutAccept = () => {
             )}
           </div>
         </div>
-        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 flex flex-col justify-between items-start">
+        <div className="w-auto rounded-xl overflow-y-scroll scrollbar-hide bg-primary-1200 h-full px-10 py-10 flex flex-col justify-between items-start">
           <div className=" gap-5 flex flex-col">
             <DoubleTab
               firstChildren="외출"
