@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
+import { ChangeState } from "@/apis/weekendMeal";
 
 interface ManageDropProps {
   state: string;
@@ -19,6 +20,7 @@ interface StateStyles {
 const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const { mutate: changeStatusMutate } = ChangeState();
 
   let defaultOptions: Record<string, string> = {
     출석: "출석",
@@ -39,8 +41,6 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   if (!third) {
     delete defaultOptions.취업;
   }
-
-  const stateStyle = "";
 
   const IconColor = () => {
     return <CaretDown color={state === "ATTENDANCE" ? "#475467" : "white"} />;
@@ -66,7 +66,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
 
   return (
     <div
-      className={`group relative rounded-lg py-2 px-3 ${stateStyle} flex gap-1 items-center cursor-pointer`}
+      className={`group relative rounded-lg py-2 px-3 ${stateStyles} flex gap-1 items-center cursor-pointer`}
       onClick={toggleDropdown}
     >
       <div>{selectedOption}</div>

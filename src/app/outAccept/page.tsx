@@ -195,7 +195,7 @@ const OutAccept = () => {
   };
 
   const previous = () => {
-    router.push("/previous");
+    router.push("/outAccept/previous");
   };
 
   return (

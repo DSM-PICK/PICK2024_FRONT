@@ -7,7 +7,8 @@ import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
 import ManageList from "../components/common/list/manage/page";
 import { GetStudentData } from "@/apis/classManage";
-import { getStudentString, setStudentNum } from "@/utils/until";
+import { setStudentNum } from "@/utils/until";
+import { ChangeStatus } from "@/apis/classManage";
 
 enum ManageState {
   취업 = "취업",
@@ -17,13 +18,18 @@ enum ManageState {
   귀가 = "귀가",
 }
 
-interface StudentData {
-  userId: string;
+interface Student {
+  user_id: string;
   name: string;
   grade: number;
-  classNum: number;
+  class_num: number;
   num: number;
   status: string;
+}
+
+interface StudentData {
+  teacher: string;
+  students: Student[];
 }
 
 const ClassManage: React.FC = () => {
@@ -31,8 +37,9 @@ const ClassManage: React.FC = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
-  const [data, setData] = useState<StudentData[]>();
+  const [data, setData] = useState<StudentData>();
   const { mutate: getStudentDataMutate } = GetStudentData();
+  const { mutate: changestatusMutate } = ChangeStatus();
 
   const get = async () => {
     try {
@@ -44,6 +51,25 @@ const ClassManage: React.FC = () => {
           },
           onError: (error) => {
             alert(`${error.message} : 에러가 발생되었습니다`);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Change = async () => {
+    try {
+      const result = await changestatusMutate(
+        { status: "OK", id: "rewoifjvigoervji" },
+        {
+          onSuccess: () => {
+            location.reload();
+            alert("변경되었습니다");
+          },
+          onError: (error) => {
+            console.log(error.message);
           },
         }
       );
@@ -69,6 +95,7 @@ const ClassManage: React.FC = () => {
   };
 
   const onClickSave = () => {
+    Change();
     setModal(true);
     setEdit(false);
   };
@@ -81,8 +108,8 @@ const ClassManage: React.FC = () => {
     setModal(false);
   };
 
-  const changeStatusName = (item: string) => {
-    switch (item) {
+  const changeStatusName = (status: string) => {
+    switch (status) {
       case "ATTENDANCE":
         return "출석";
       case "GO_OUT":
@@ -101,15 +128,18 @@ const ClassManage: React.FC = () => {
   };
 
   return (
-    <div className=" h-dvh flex flex-col">
+    <div className="h-dvh flex flex-col">
       <Header />
-      <div className=" h-90dvl self-center w-3/5  flex flex-col py-12 gap-7">
+      <div className="h-90dvl self-center w-3/5 flex flex-col py-12 gap-7">
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 학급 관리
         </div>
         <div className="flex justify-between">
           <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
-            <div className="text-neutral-200 text-heading5">1학년 1반</div>
+            {selectedGrade}학년 {selectedClass}반
+            <div className="text-neutral-200 text-heading5">
+              담임 {data?.teacher}선생님
+            </div>
           </div>
           <div className="flex items-center gap-5">
             {edit ? (
@@ -134,28 +164,29 @@ const ClassManage: React.FC = () => {
           </div>
         </div>
         <div className="w-auto content-start rounded-xl bg-primary-1200 h-140 px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
-          {edit
-            ? data?.map((item, index) => (
-                <ManageList
-                  key={index}
-                  student={`${setStudentNum(item)} ${item.name}`}
-                  state={changeStatusName(item.status)}
-                  edit={false}
-                />
-              ))
-            : data?.map((item, index) => (
-                <ManageList
-                  key={index}
-                  student={`${setStudentNum(item)} ${item.name}`}
-                  state={changeStatusName(item.status)}
-                  edit={true}
-                />
-              ))}
+          {edit &&
+            data?.students.map((student, index) => (
+              <ManageList
+                key={index}
+                student={`${setStudentNum(student)} ${student.name}`}
+                state={changeStatusName(student.status)}
+                edit={false}
+              />
+            ))}
+          {!edit &&
+            data?.students.map((student, index) => (
+              <ManageList
+                key={index}
+                student={`${setStudentNum(student)} ${student.name}`}
+                state={changeStatusName(student.status)}
+                edit={true}
+              />
+            ))}
         </div>
         {modal && (
           <Modal
             type="button"
-            heading1={`${data?.length || 0} 명의`}
+            heading1={`${data?.students.length || 0} 명의`}
             heading2="변경된 상태를 저장하시겠습니까?"
             buttonMessage="확인"
             onCancel={handleModalCancel}

@@ -36,12 +36,10 @@ const Header: NextPage = ({}) => {
   return (
     <div className=" flex px-70 justify-between items-center bg-white py-2">
       <Link href={"/main"}>
-        <div className=" font-sans text-heading4 text-primary-300">
-          <Image src={pick} alt="" />
-        </div>
+        <Image src={pick} alt="" width={96} height={52} />
       </Link>
-      <div className=" font-sans w-fit text-heading6-M text-neutral-50">
-        {data?.name} 선생님
+      <div className="flex font-sans text-nowrap w-36 text-heading6-M text-neutral-50">
+        {data?.name}선생님
       </div>
     </div>
   );
