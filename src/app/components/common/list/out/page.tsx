@@ -16,23 +16,18 @@ const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
   const router = useRouter();
   const { mutate: returnSchoolMutate } = ReturnSchool();
 
-  const preOut = () => {
-    router.push(`/outList/query?name=${student}`);
-  };
-
   const returnStudent = () => {
     setModal(true);
   };
 
-  const exid = id;
-
   const confirmReturn = async () => {
     try {
       const result = await returnSchoolMutate(
-        { id: exid },
+        { id: id },
         {
           onSuccess: () => {
             console.log("성공");
+            location.reload();
             alert("복귀에 성공하셨습니다");
           },
           onError: () => {
@@ -61,10 +56,7 @@ const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
             {returnTime} 복귀예정
           </div>
         </div>
-        <div className="flex gap-2 w-42">
-          <Button colorType="ghost" buttonSize="extraSmall" onClick={preOut}>
-            이전외출
-          </Button>
+        <div className="flex gap-2 w-20">
           <Button
             colorType="primary"
             buttonSize="extraSmall"

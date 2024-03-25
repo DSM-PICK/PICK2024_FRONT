@@ -10,6 +10,7 @@ import ReturnHome from "../components/common/list/returnHome/page";
 import Out from "../components/common/list/out/page";
 import { useState, useEffect } from "react";
 import { OutListProp, ReturnHomeList } from "@/apis/outList/list";
+import { getStudentString, setStudentNum } from "@/utils/until";
 
 interface earlyreturnOK {
   id: string;
@@ -83,9 +84,9 @@ const OutList = () => {
   }, []);
 
   return (
-    <div className="h-dvh min-w-fit">
+    <div className="h-dvh flex flex-col">
       <Header />
-      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
+      <div className=" self-center flex flex-col w-3/5 gap-7 py-16 h-90dvh">
         <div className=" text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 외출자 목록
         </div>
@@ -107,7 +108,7 @@ const OutList = () => {
             </Button>
           </div>
         </div>
-        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10">
+        <div className="w-full overflow-y-scroll scrollbar-hide rounded-xl bg-primary-1200 h-full px-10 py-10">
           {selectedTab ? (
             <div className="flex flex-wrap gap-5 justify-between">
               {applicationList?.map((data, index) => (
@@ -115,14 +116,14 @@ const OutList = () => {
                   id={data.id}
                   key={index}
                   returnTime={data.end_time}
-                  student={data.username}
+                  student={getStudentString(data)}
                 />
               ))}
             </div>
           ) : (
             <div className="flex flex-wrap gap-5 justify-between">
               {earlyreturnlist?.map((data, index) => (
-                <ReturnHome key={index} student={data.username} />
+                <ReturnHome key={index} student={getStudentString(data)} />
               ))}
             </div>
           )}
