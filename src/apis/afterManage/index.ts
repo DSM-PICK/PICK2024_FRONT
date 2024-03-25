@@ -9,7 +9,7 @@ interface Type {
   name: string;
 }
 
-export const after = () => {
+export const After = () => {
   const accessToken = getToken();
 
   return useMutation<null, Error, Type>({
