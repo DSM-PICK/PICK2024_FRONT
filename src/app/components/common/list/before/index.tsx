@@ -5,7 +5,6 @@ import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
 import { GetPreviousList } from "@/apis/previousList";
 import BeforeList from "./list";
-import { getStudentString, setStudentNum } from "@/utils/until";
 
 interface getProp {
   id: string;
@@ -26,7 +25,7 @@ interface Type {
 const PreviousList: React.FC<getProp> = ({ id, userName }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const { mutate: getPrevious } = GetPreviousList();
-  const [data, setData] = useState<Type[]>([]);
+  const [data, setData] = useState<Type>();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = async () => {
@@ -78,21 +77,27 @@ const PreviousList: React.FC<getProp> = ({ id, userName }) => {
         </div>
         {isDropdownVisible && (
           <div
-            className="absolute bg-white border rounded-lg w-full text-Button-S z-20 h-56 justify-center items-center flex overflow-y-scroll scrollbar-hide"
+            className="absolute bg-white border rounded-lg w-full text-Button-S z-20 h-56 flex-col items-center flex overflow-y-scroll scrollbar-hide"
             ref={dropdownRef}
           >
-            {data &&
-              data?.application_story?.map((story, index) => (
+            {data && data.application_story.length > 0 ? (
+              data.application_story.map((item, index) => (
                 <BeforeList
                   key={index}
-                  title={story.reason}
-                  date={story.date}
-                  startTime={story.start_time}
-                  endTime={story.end_time}
-                  type={story.type}
+                  title={item.reason}
+                  date={item.date}
+                  startTime={item.start_time}
+                  endTime={item.end_time}
+                  type={item.type}
                 />
-              ))}
-            <div className=" text-heading6-M">이전 외출 기록이 없습니다</div>
+              ))
+            ) : (
+              <div className=" flex justify-center items-center w-full h-full">
+                <div className="text-heading6-M ">
+                  이전 외출 기록이 없습니다
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

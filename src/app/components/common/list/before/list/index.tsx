@@ -38,7 +38,7 @@ const BeforeList: React.FC<Prop> = ({
   };
 
   return (
-    <div className=" h-56 flex justify-between whitespace-nowrap w-full px-4 bg-white absolute rounded-lg top-2">
+    <div className="flex justify-between whitespace-nowrap w-full px-4 bg-white rounded-lg top-2">
       <div className=" flex justify-between w-full items-center h-fit py-1">
         <div className="">
           <div className=" text-label2">{title}</div>
