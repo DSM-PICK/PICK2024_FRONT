@@ -114,10 +114,11 @@ const OutAccept = () => {
           },
           {
             onSuccess: (response) => {
+              location.reload();
+              alert("외출이 수락되었습니다");
               setData(data);
               console.log("Out accept success", response);
               setAccept(false);
-              location.reload();
             },
             onError: (error) => {
               console.error("Out accept error", error);
@@ -145,6 +146,8 @@ const OutAccept = () => {
           {
             onSuccess: (response) => {
               setData(data);
+              alert("외출이 거절되었습니다");
+              location.reload();
               console.log("Out accept success", response);
               setRefuse(false);
             },
