@@ -1,7 +1,7 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Modal from "../components/common/modal/page";
-import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
@@ -9,14 +9,6 @@ import ManageList from "../components/common/list/manage/page";
 import { GetStudentData } from "@/apis/classManage";
 import { setStudentNum } from "@/utils/until";
 import { ChangeStatus } from "@/apis/classManage";
-
-enum ManageState {
-  취업 = "취업",
-  자퇴 = "자퇴",
-  출석 = "출석",
-  현체 = "현체",
-  귀가 = "귀가",
-}
 
 interface Student {
   user_id: string;
@@ -32,12 +24,20 @@ interface StudentData {
   students: Student[];
 }
 
+interface ChangeStatusData {
+  id: string;
+  status: string;
+}
+
 const ClassManage: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
+  const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
+    []
+  );
   const { mutate: getStudentDataMutate } = GetStudentData();
   const { mutate: changestatusMutate } = ChangeStatus();
 
@@ -61,18 +61,15 @@ const ClassManage: React.FC = () => {
 
   const Change = async () => {
     try {
-      const result = await changestatusMutate(
-        { status: "OK", id: "rewoifjvigoervji" },
-        {
-          onSuccess: () => {
-            location.reload();
-            alert("변경되었습니다");
-          },
-          onError: (error) => {
-            console.log(error.message);
-          },
-        }
-      );
+      const result = await changestatusMutate(modifiedStudents, {
+        onSuccess: () => {
+          location.reload();
+        },
+        onError: (error) => {
+          alert(error.name);
+          console.log(error.message);
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -95,13 +92,15 @@ const ClassManage: React.FC = () => {
   };
 
   const onClickSave = () => {
-    Change();
     setModal(true);
     setEdit(false);
   };
 
   const handleModalConfirm = () => {
     setModal(false);
+    if (data && data.students) {
+      Change();
+    }
   };
 
   const handleModalCancel = () => {
@@ -112,19 +111,24 @@ const ClassManage: React.FC = () => {
     switch (status) {
       case "ATTENDANCE":
         return "출석";
-      case "GO_OUT":
-        return "외출";
+      case "PICNIC":
+        return "현체";
       case "EMPLOYMENT":
         return "취업";
-      case "DISALLOWED":
-        return "무단";
-      case "NOT_COMEBACK":
-        return "미복귀";
+      case "GO_HOME":
+        return "귀가";
       case "DROPOUT":
         return "자퇴";
       default:
         return "";
     }
+  };
+
+  const handleStatusChange = (id: string, status: string) => {
+    setModifiedStudents((prevModifiedStudents) => [
+      ...prevModifiedStudents,
+      { id, status },
+    ]);
   };
 
   return (
@@ -171,6 +175,9 @@ const ClassManage: React.FC = () => {
                 student={`${setStudentNum(student)} ${student.name}`}
                 state={changeStatusName(student.status)}
                 edit={false}
+                onChange={(status) =>
+                  handleStatusChange(student.user_id, status)
+                }
               />
             ))}
           {!edit &&
@@ -180,13 +187,16 @@ const ClassManage: React.FC = () => {
                 student={`${setStudentNum(student)} ${student.name}`}
                 state={changeStatusName(student.status)}
                 edit={true}
+                onChange={(status) =>
+                  handleStatusChange(student.user_id, status)
+                }
               />
             ))}
         </div>
         {modal && (
           <Modal
             type="button"
-            heading1={`${data?.students.length || 0} 명의`}
+            heading1={`외 ${modifiedStudents.length - 1} 명의`}
             heading2="변경된 상태를 저장하시겠습니까?"
             buttonMessage="확인"
             onCancel={handleModalCancel}

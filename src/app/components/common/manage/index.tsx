@@ -7,6 +7,7 @@ import { ChangeState } from "@/apis/weekendMeal";
 interface ManageDropProps {
   state: string;
   third?: boolean;
+  onChange: (option: string) => void;
 }
 
 interface StateStyles {
@@ -17,7 +18,7 @@ interface StateStyles {
   취업: string;
 }
 
-const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
+const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
   const { mutate: changeStatusMutate } = ChangeState();
@@ -43,7 +44,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   }
 
   const IconColor = () => {
-    return <CaretDown color={state === "ATTENDANCE" ? "#475467" : "white"} />;
+    return <CaretDown color={state === "ATTENDANCE" ? "white" : "#475467"} />;
   };
 
   const commonStyle =
@@ -56,6 +57,24 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third }) => {
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsDropdownVisible(false);
+    onChange(optionRename(option));
+  };
+
+  const optionRename = (option: string) => {
+    switch (option) {
+      case "출석":
+        return `ATTENDANCE`;
+      case "귀가":
+        return `GO_HOME`;
+      case "취업":
+        return "EMPLOYMENT";
+      case "현체":
+        return "PICNIC";
+      case "자퇴":
+        return "DROPOUT";
+      default:
+        return "";
+    }
   };
 
   const dropdownOptions = Object.keys(defaultOptions);
