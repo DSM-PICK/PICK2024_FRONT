@@ -1,13 +1,15 @@
 "use client";
+import { BackGround } from "../components/common/background";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Modal from "../components/common/modal/page";
+import Header from "../components/common/Header";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
 import ManageList from "../components/common/list/manage/page";
 import { GetStudentData } from "@/apis/classManage";
 import { setStudentNum } from "@/utils/until";
 import { ChangeStatus } from "@/apis/classManage";
-import { BackGround } from "../components/common/background";
 
 interface Student {
   user_id: string;
@@ -28,7 +30,7 @@ interface ChangeStatusData {
   status: string;
 }
 
-const ClassManage: React.FC = () => {
+const Test = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
@@ -186,4 +188,4 @@ const ClassManage: React.FC = () => {
   );
 };
 
-export default ClassManage;
+export default Test;

@@ -18,7 +18,7 @@ const ManageList: React.FC<ManageProps> = ({
   onChange,
 }) => {
   return (
-    <div className=" w-77 h-13 rounded-lg flex bg-white py-2 px-4 items-center justify-between">
+    <div className=" w-29% h-13 rounded-lg flex bg-white py-2 px-4 items-center justify-between">
       <div className=" text-label1 whitespace-nowrap">{student}</div>
       <div>
         {edit ? (

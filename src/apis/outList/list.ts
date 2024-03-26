@@ -150,7 +150,7 @@ export const ReturnHome = () => {
   return useMutation<ReturnHomeData[], void, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get("/early-return/reason/all", {
+        const response = await instance.get("/early-return/reason/ok-all", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
