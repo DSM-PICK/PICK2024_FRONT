@@ -2,16 +2,23 @@ import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 import { getToken } from "@/utils/auth";
 
-interface studentData {
+interface Student {
+  user_id: string;
+  name: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  status: string;
+}
+
+interface ChangeStatusData {
+  id: string;
+  status: string;
+}
+
+interface StudentData {
   teacher: string;
-  students: {
-    userId: string;
-    name: string;
-    grade: number;
-    classNum: number;
-    num: number;
-    status: string;
-  };
+  students: Student[];
 }
 
 interface queryData {
@@ -27,7 +34,7 @@ interface ChangeStatus {
 export const GetStudentData = () => {
   const accessToken = getToken();
 
-  return useMutation<studentData[], Error, queryData>({
+  return useMutation<StudentData, Error, queryData>({
     mutationFn: async (param: queryData) => {
       try {
         const response = await instance.get(
@@ -50,21 +57,14 @@ export const GetStudentData = () => {
 export const ChangeStatus = () => {
   const accessToken = getToken();
 
-  return useMutation<void, Error, ChangeStatus>({
-    mutationFn: async (param: ChangeStatus) => {
+  return useMutation<void, Error, ChangeStatusData[]>({
+    mutationFn: async (params: ChangeStatusData[]) => {
       try {
-        const response = await instance.patch(
-          "/status/change",
-          {
-            status: param.status,
-            id: param.id,
+        const response = await instance.patch("/status/change", params, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        });
       } catch (error) {
         console.log(error);
       }
