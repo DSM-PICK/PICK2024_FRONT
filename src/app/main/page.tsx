@@ -157,7 +157,7 @@ const Main = () => {
           <div className="flex justify-between ">
             <div className=" bg-white rounded-tl-max rounded-lg">
               <CheckPage
-                href="outAccept"
+                href="outList"
                 img={outStudent}
                 number={data?.out}
                 buttonChildren="외출 중인 학생 보기"
@@ -167,7 +167,7 @@ const Main = () => {
             </div>
             <div className=" bg-white rounded-tr-max rounded-lg">
               <CheckPage
-                href="/outList"
+                href="outAccept"
                 img={apply}
                 number={data?.request}
                 buttonChildren="외출 수락하러 가기"
