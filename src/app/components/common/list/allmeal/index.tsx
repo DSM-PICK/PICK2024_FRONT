@@ -5,7 +5,7 @@ import AllmealDrop from "../../dropdown/state/page";
 interface allmealsProps {
   number: string;
   name: string;
-  state: boolean;
+  state: "OK" | "NO" | "QUIET";
 }
 
 export const Allmeals: React.FC<allmealsProps> = ({ number, name, state }) => {
