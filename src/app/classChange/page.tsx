@@ -46,7 +46,6 @@ const OutList = () => {
   };
 
   useEffect(() => {
-    console.log(`grade: ${selectedGrade} class: ${selectedClass}`);
     changeClassData();
   }, [selectedGrade, selectedClass]);
 

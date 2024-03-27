@@ -1,190 +1,74 @@
 "use client";
-import { BackGround } from "../components/common/background";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Modal from "../components/common/modal/page";
-import Header from "../components/common/Header";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
-import ManageList from "../components/common/list/manage/page";
-import { GetStudentData } from "@/apis/classManage";
+import Allmeals from "../components/common/list/Allmeals/page";
+import { GetAllStudentMeal } from "@/apis/weekendMeal";
 import { setStudentNum } from "@/utils/until";
-import { ChangeStatus } from "@/apis/classManage";
+import TopBack from "../components/common/background/top";
 
-interface Student {
-  user_id: string;
+interface StudentStatus {
+  id: string;
   name: string;
+  status: "OK" | "NO";
   grade: number;
   class_num: number;
   num: number;
-  status: string;
-}
-
-interface StudentData {
-  teacher: string;
-  students: Student[];
-}
-
-interface ChangeStatusData {
-  id: string;
-  status: string;
 }
 
 const Test = () => {
-  const [modal, setModal] = useState<boolean>(false);
-  const [edit, setEdit] = useState<boolean>(false);
-  const [selectedGrade, setSelectedGrade] = useState<number>(1);
-  const [selectedClass, setSelectedClass] = useState<number>(1);
-  const [data, setData] = useState<StudentData>();
-  const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
-    []
-  );
-  const { mutate: getStudentDataMutate } = GetStudentData();
-  const { mutate: changestatusMutate } = ChangeStatus();
-
-  const get = async () => {
-    try {
-      const result = await getStudentDataMutate(
-        { grade: selectedGrade, class_num: selectedClass },
-        {
-          onSuccess: (data) => {
-            setData(data);
-          },
-          onError: (error) => {
-            alert(`${error.message} : 에러가 발생되었습니다`);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const Change = async () => {
-    try {
-      const result = await changestatusMutate(modifiedStudents, {
-        onSuccess: () => {
-          location.reload();
-        },
-        onError: (error) => {
-          alert(error.name);
-          console.log(error.message);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const [data, setData] = useState<StudentStatus[]>([]);
   useEffect(() => {
-    get();
-  }, [selectedGrade, selectedClass]);
-
-  const handleGradeChange = (selectedOption: number) => {
-    setSelectedGrade(selectedOption);
-  };
-
-  const handleClassChange = (selectedOption: number) => {
-    setSelectedClass(selectedOption);
-  };
-
-  const onClickEdit = () => {
-    setEdit(true);
-  };
-
-  const onClickSave = () => {
-    setModal(true);
-    setEdit(false);
-  };
-
-  const handleModalConfirm = () => {
-    setModal(false);
-    if (data && data.students) {
-      Change();
-    }
-  };
-
-  const handleModalCancel = () => {
-    setModal(false);
-  };
-
-  const changeStatusName = (status: string) => {
-    switch (status) {
-      case "ATTENDANCE":
-        return "출석";
-      case "PICNIC":
-        return "현체";
-      case "EMPLOYMENT":
-        return "취업";
-      case "GO_HOME":
-        return "귀가";
-      case "DROPOUT":
-        return "자퇴";
-      default:
-        return "";
-    }
-  };
-
-  const handleStatusChange = (id: string, status: string) => {
-    setModifiedStudents((prevModifiedStudents) => [
-      ...prevModifiedStudents,
-      { id, status },
-    ]);
-  };
+    const fetchData = async () => {
+      try {
+        const result = await GetAllStudentMeal();
+        if (Array.isArray(result)) {
+          setData(result);
+        }
+      } catch (error) {
+        alert(`에러 발생`);
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <BackGround
-      subTitle={`${selectedGrade}학년 ${selectedClass}반`}
-      secondTitle={`담임 ${data?.teacher}선생님`}
-      linkChildren="학급 관리"
+    <TopBack
+      subTitle={`주말 급식 신청 현황`}
+      secondTitle={``}
+      linkChildren="주말 급식 신청 현황"
       DropChildren={
         <>
-          {" "}
-          {edit ? (
-            <Button colorType="ghost" buttonSize="small" onClick={onClickSave}>
-              상태 저장하기
-            </Button>
-          ) : (
-            <Button colorType="ghost" buttonSize="small" onClick={onClickEdit}>
-              상태 수정하기
-            </Button>
-          )}
-          <Dropdown type="grade" onChange={handleGradeChange} />
-          <Dropdown type="class" onChange={handleClassChange} />
+          <Button
+            colorType="ghost"
+            children="엑셀로 출력하기"
+            onClick={() => {}}
+            buttonSize="small"
+          />
+          <Dropdown type="grade" />
+          <Dropdown type="class" />
         </>
       }
     >
-      {edit &&
-        data?.students.map((student, index) => (
-          <ManageList
+      <div className="flex w-full pr-44 justify-between pl-30">
+        <div className="flex gap-36">
+          <div>학번</div>
+          <div>이름</div>
+        </div>
+        <div>신청 상태</div>
+      </div>
+      <div className=" w-full h-140 flex flex-col gap-4 overflow-y-scroll scrollbar-hide">
+        {data?.map((item, index) => (
+          <Allmeals
             key={index}
-            student={`${setStudentNum(student)} ${student.name}`}
-            state={changeStatusName(student.status)}
-            edit={false}
-            onChange={(status) => handleStatusChange(student.user_id, status)}
+            state={item.status}
+            name={item.name}
+            number={setStudentNum(item)}
           />
         ))}
-      {!edit &&
-        data?.students.map((student, index) => (
-          <ManageList
-            key={index}
-            student={`${setStudentNum(student)} ${student.name}`}
-            state={changeStatusName(student.status)}
-            edit={true}
-            onChange={(status) => handleStatusChange(student.user_id, status)}
-          />
-        ))}
-      {modal && (
-        <Modal
-          type="button"
-          heading1={`외 ${modifiedStudents.length - 1} 명의`}
-          heading2="변경된 상태를 저장하시겠습니까?"
-          buttonMessage="확인"
-          onCancel={handleModalCancel}
-          onConfirm={handleModalConfirm}
-        />
-      )}
-    </BackGround>
+      </div>
+    </TopBack>
   );
 };
 

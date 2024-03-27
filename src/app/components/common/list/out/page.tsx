@@ -26,7 +26,6 @@ const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
         { id: id },
         {
           onSuccess: () => {
-            console.log("성공");
             location.reload();
             alert("복귀에 성공하셨습니다");
           },

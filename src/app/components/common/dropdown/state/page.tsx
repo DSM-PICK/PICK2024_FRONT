@@ -1,19 +1,23 @@
 "use client";
 
+import Down from "@/assets/img/Icon/downarrow.svg";
 import Image from "next/image";
 import React, { useState } from "react";
+import arrow from "@/assets/img/Icon/chevron-right.svg";
 
 interface StateDropProps {
-  state: boolean;
+  state: "OK" | "NO" | "QUIET";
 }
 
 const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
   const defaultOptions: Record<string, string> = {
-    신청: state ? "신청" : "미신청",
+    OK: "신청",
+    NO: "미신청",
+    QUIET: "미응답",
   };
 
   const [selectedOption, setSelectedOption] = useState<string>(
-    defaultOptions["신청"]
+    defaultOptions[state]
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
@@ -35,16 +39,11 @@ const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
         onClick={toggleDropdown}
       >
         {selectedOption}
-        <Image
-          src={
-            isDropdownVisible
-              ? "@/assets/img/Icon/clickarrow.svg"
-              : "@/assets/img/Icon/nonearrow.svg"
-          }
-          alt="arrow"
-          width={20}
-          height={20}
-        />
+        {isDropdownVisible ? (
+          <Image src={Down} alt="" />
+        ) : (
+          <Image src={arrow} alt="" />
+        )}
       </div>
       {isDropdownVisible && (
         <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
