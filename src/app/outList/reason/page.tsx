@@ -41,12 +41,10 @@ const Reason = () => {
   const { mutate: returnHomeMutate } = ReturnHome();
 
   const Outdata = async () => {
-    console.log(data);
     try {
       const result = await outMutate(null, {
         onSuccess: (data) => {
           setData(data);
-          console.log("OutData: Success");
         },
         onError: (error) => {
           console.error("OutData: Error", error);
@@ -65,9 +63,6 @@ const Reason = () => {
   const ReturnHomeData = async () => {
     try {
       const result = await returnHomeMutate(null, {
-        onSuccess: () => {
-          console.log("성공");
-        },
         onError: (error) => {
           console.error(error);
         },

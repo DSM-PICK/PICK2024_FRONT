@@ -45,7 +45,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       };
       await postTeacherMutate(postData, {
         onSuccess: () => {
-          console.log("success");
+          location.reload();
+          alert("등록에 성공하였습니다");
         },
         onError: (error) => {
           console.log(error);

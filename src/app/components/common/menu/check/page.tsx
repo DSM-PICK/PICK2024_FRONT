@@ -10,6 +10,7 @@ interface CheckProps {
   color: "primary" | "secondary" | "tertiary";
   contentChildren: string;
   href: string;
+  number?: number;
 }
 
 const CheckPage: React.FC<CheckProps> = ({
@@ -18,6 +19,7 @@ const CheckPage: React.FC<CheckProps> = ({
   buttonChildren,
   color,
   contentChildren,
+  number,
 }) => {
   const router = useRouter();
 
@@ -28,7 +30,7 @@ const CheckPage: React.FC<CheckProps> = ({
           <div className=" text-center">
             {contentChildren}
             학생은 <br /> 총
-            <span className="text-primary-500"> {/*api*/ 4}명</span>
+            <span className="text-primary-500"> {number}명</span>
             입니다.
           </div>
         );
@@ -36,14 +38,16 @@ const CheckPage: React.FC<CheckProps> = ({
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생은 총
-            <span className="text-secondary-500"> {/*api*/ 4}명</span>입니다.
+            <span className="text-secondary-500"> {number}명</span>
+            입니다.
           </div>
         );
       case "tertiary":
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생수는 총
-            <span className="text-tertiary-500"> {/*api*/ 4}명</span>입니다.
+            <span className="text-tertiary-500"> {number}명</span>
+            입니다.
           </div>
         );
       default:

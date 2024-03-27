@@ -1,22 +1,13 @@
 "use client";
-import Link from "next/link";
-import Modal from "../components/common/modal/page";
 import React, { useEffect, useState } from "react";
-import Header from "../components/common/Header";
+import Modal from "../components/common/modal/page";
 import Dropdown from "../components/common/dropdown";
 import Button from "../components/common/Button";
 import ManageList from "../components/common/list/manage/page";
 import { GetStudentData } from "@/apis/classManage";
 import { setStudentNum } from "@/utils/until";
 import { ChangeStatus } from "@/apis/classManage";
-
-enum ManageState {
-  취업 = "취업",
-  자퇴 = "자퇴",
-  출석 = "출석",
-  현체 = "현체",
-  귀가 = "귀가",
-}
+import { BackGround } from "../components/common/background";
 
 interface Student {
   user_id: string;
@@ -32,12 +23,20 @@ interface StudentData {
   students: Student[];
 }
 
+interface ChangeStatusData {
+  id: string;
+  status: string;
+}
+
 const ClassManage: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
+  const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
+    []
+  );
   const { mutate: getStudentDataMutate } = GetStudentData();
   const { mutate: changestatusMutate } = ChangeStatus();
 
@@ -61,18 +60,15 @@ const ClassManage: React.FC = () => {
 
   const Change = async () => {
     try {
-      const result = await changestatusMutate(
-        { status: "OK", id: "rewoifjvigoervji" },
-        {
-          onSuccess: () => {
-            location.reload();
-            alert("변경되었습니다");
-          },
-          onError: (error) => {
-            console.log(error.message);
-          },
-        }
-      );
+      const result = await changestatusMutate(modifiedStudents, {
+        onSuccess: () => {
+          location.reload();
+        },
+        onError: (error) => {
+          alert(error.name);
+          console.log(error.message);
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -95,13 +91,15 @@ const ClassManage: React.FC = () => {
   };
 
   const onClickSave = () => {
-    Change();
     setModal(true);
     setEdit(false);
   };
 
   const handleModalConfirm = () => {
     setModal(false);
+    if (data && data.students) {
+      Change();
+    }
   };
 
   const handleModalCancel = () => {
@@ -112,14 +110,12 @@ const ClassManage: React.FC = () => {
     switch (status) {
       case "ATTENDANCE":
         return "출석";
-      case "GO_OUT":
-        return "외출";
+      case "PICNIC":
+        return "현체";
       case "EMPLOYMENT":
         return "취업";
-      case "DISALLOWED":
-        return "무단";
-      case "NOT_COMEBACK":
-        return "미복귀";
+      case "GO_HOME":
+        return "귀가";
       case "DROPOUT":
         return "자퇴";
       default:
@@ -127,74 +123,66 @@ const ClassManage: React.FC = () => {
     }
   };
 
+  const handleStatusChange = (id: string, status: string) => {
+    setModifiedStudents((prevModifiedStudents) => [
+      ...prevModifiedStudents,
+      { id, status },
+    ]);
+  };
+
   return (
-    <div className="h-dvh flex flex-col">
-      <Header />
-      <div className="h-90dvl self-center w-3/5 flex flex-col py-12 gap-7">
-        <div className="text-neutral-200 text-sub-title3-B">
-          <Link href="/main">홈</Link> &gt; 학급 관리
-        </div>
-        <div className="flex justify-between">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
-            {selectedGrade}학년 {selectedClass}반
-            <div className="text-neutral-200 text-heading5">
-              담임 {data?.teacher}선생님
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            {edit ? (
-              <Button
-                colorType="ghost"
-                buttonSize="small"
-                onClick={onClickSave}
-              >
-                상태 저장하기
-              </Button>
-            ) : (
-              <Button
-                colorType="ghost"
-                buttonSize="small"
-                onClick={onClickEdit}
-              >
-                상태 수정하기
-              </Button>
-            )}
-            <Dropdown type="grade" onChange={handleGradeChange} />
-            <Dropdown type="class" onChange={handleClassChange} />
-          </div>
-        </div>
-        <div className="w-auto content-start rounded-xl bg-primary-1200 h-140 px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
-          {edit &&
-            data?.students.map((student, index) => (
-              <ManageList
-                key={index}
-                student={`${setStudentNum(student)} ${student.name}`}
-                state={changeStatusName(student.status)}
-                edit={false}
-              />
-            ))}
-          {!edit &&
-            data?.students.map((student, index) => (
-              <ManageList
-                key={index}
-                student={`${setStudentNum(student)} ${student.name}`}
-                state={changeStatusName(student.status)}
-                edit={true}
-              />
-            ))}
-        </div>
-        {modal && (
-          <Modal
-            type="button"
-            heading1={`${data?.students.length || 0} 명의`}
-            heading2="변경된 상태를 저장하시겠습니까?"
-            buttonMessage="확인"
-            onCancel={handleModalCancel}
-            onConfirm={handleModalConfirm}
+    <BackGround
+      subTitle={`${selectedGrade}학년 ${selectedClass}반`}
+      secondTitle={`담임 ${data?.teacher}선생님`}
+      linkChildren="학급 관리"
+      DropChildren={
+        <>
+          {" "}
+          {edit ? (
+            <Button colorType="ghost" buttonSize="small" onClick={onClickSave}>
+              상태 저장하기
+            </Button>
+          ) : (
+            <Button colorType="ghost" buttonSize="small" onClick={onClickEdit}>
+              상태 수정하기
+            </Button>
+          )}
+          <Dropdown type="grade" onChange={handleGradeChange} />
+          <Dropdown type="class" onChange={handleClassChange} />
+        </>
+      }
+    >
+      {edit &&
+        data?.students.map((student, index) => (
+          <ManageList
+            key={index}
+            student={`${setStudentNum(student)} ${student.name}`}
+            state={changeStatusName(student.status)}
+            edit={false}
+            onChange={(status) => handleStatusChange(student.user_id, status)}
           />
-        )}
-      </div>
-    </div>
+        ))}
+      {!edit &&
+        data?.students.map((student, index) => (
+          <ManageList
+            key={index}
+            student={`${setStudentNum(student)} ${student.name}`}
+            state={changeStatusName(student.status)}
+            edit={true}
+            onChange={(status) => handleStatusChange(student.user_id, status)}
+          />
+        ))}
+      {modal && (
+        <Modal
+          type="button"
+          heading1={`외 ${modifiedStudents.length - 1} 명의`}
+          heading2="변경된 상태를 저장하시겠습니까?"
+          buttonMessage="확인"
+          onCancel={handleModalCancel}
+          onConfirm={handleModalConfirm}
+        />
+      )}
+    </BackGround>
   );
 };
 

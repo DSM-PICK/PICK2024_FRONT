@@ -150,7 +150,7 @@ export const ReturnHome = () => {
   return useMutation<ReturnHomeData[], void, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get("/early-return/reason/all", {
+        const response = await instance.get("/early-return/reason/ok-all", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -189,7 +189,6 @@ export const ReturnSchool = () => {
 
   return useMutation<Error, void, UuidProp>({
     mutationFn: async (param: UuidProp) => {
-      console.log(param.id);
       try {
         const response = await instance.patch(
           `/application/change/${param.id}`,

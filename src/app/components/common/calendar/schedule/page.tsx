@@ -38,9 +38,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         },
         {
           onSuccess: (data) => {
-            console.log("success");
             setMonthData(data);
-            console.log(data);
           },
           onError: (error) => {
             console.log(error);
@@ -54,7 +52,6 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
 
   useEffect(() => {
     const currentDate = new Date();
-    console.log(currentDate);
 
     scheduleData(currentDate);
   }, []);

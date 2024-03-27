@@ -18,19 +18,43 @@ import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import { DayTeacher, SelfStudyCheck } from "@/apis/outList/list";
+import { GetStudentNum } from "@/apis/main";
 
 interface todaySelfStudy {
   floor: number;
   teacher_name: string;
 }
 
+interface Type {
+  out: number;
+  request: number;
+  class_move: number;
+}
+
 const Main = () => {
   const today = new Date();
   const [selfStudy, setSelfStudy] = useState<todaySelfStudy[]>([]);
   const [selfStudyChack, setSelfStudyChack] = useState<string>();
+  const [data, setData] = useState<Type>();
+  const { mutate: CountNum } = GetStudentNum();
 
   const { mutate: todayCheck } = DayTeacher();
   const { mutate: selfChackMutate } = SelfStudyCheck();
+
+  const cnt = async () => {
+    try {
+      await CountNum(null, {
+        onSuccess: (data) => {
+          setData(data);
+        },
+        onError: (error) => {
+          console.log(error.name);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const Check = async () => {
     try {
@@ -67,6 +91,7 @@ const Main = () => {
   useEffect(() => {
     Check();
     selfCheck();
+    cnt();
   }, []);
 
   return (
@@ -132,18 +157,20 @@ const Main = () => {
           <div className="flex justify-between ">
             <div className=" bg-white rounded-tl-max rounded-lg">
               <CheckPage
-                href="outAccept"
+                href="outList"
                 img={outStudent}
-                buttonChildren="외출 수락하러 가기"
+                number={data?.out}
+                buttonChildren="외출 중인 학생 보기"
                 color="primary"
                 contentChildren="현재 외출중인 "
               />
             </div>
             <div className=" bg-white rounded-tr-max rounded-lg">
               <CheckPage
-                href="/outList"
+                href="outAccept"
                 img={apply}
-                buttonChildren="출결 상태 확인하기"
+                number={data?.request}
+                buttonChildren="외출 수락하러 가기"
                 color="secondary"
                 contentChildren="현재 외출/조기 귀가 신청 "
               />
@@ -152,6 +179,7 @@ const Main = () => {
               <CheckPage
                 href="classChange"
                 img={changeStudent}
+                number={data?.class_move}
                 buttonChildren="교실 이동 학생 목록 보기"
                 color="tertiary"
                 contentChildren="현재 교실 이동한 "

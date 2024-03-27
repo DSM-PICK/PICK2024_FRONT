@@ -39,7 +39,6 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
   const studyData = async (selectDate: Date | null) => {
     const formattedDate = moment(selectDate).format("MMMM");
     const currentYear = new Date().getFullYear();
-    console.log(formattedDate);
     try {
       const result = await selfstudyMutate(
         {
@@ -48,9 +47,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         },
         {
           onSuccess: (data) => {
-            console.log("success");
             setData(data);
-            console.log(data);
           },
           onError: (error) => {
             console.log(error);
@@ -64,7 +61,6 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
 
   useEffect(() => {
     const currentDate = new Date();
-    console.log(currentDate);
 
     studyData(currentDate);
   }, []);
@@ -96,7 +92,6 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
             const dateData = monthdata
               .filter((item) => item.date === formattedDate)
               .sort((i, j) => {
-                console.log(i, j);
                 return i.floor - j.floor;
               });
             if (dateData.length > 0) {
