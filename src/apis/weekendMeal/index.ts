@@ -55,3 +55,19 @@ export const ChangeState = () => {
     },
   });
 };
+
+export const GetAllStudentMeal = async () => {
+  const accessToken = getToken();
+
+  try {
+    const response = await instance.get(`weekend-meal/hey`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
