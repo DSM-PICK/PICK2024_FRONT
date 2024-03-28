@@ -3,11 +3,12 @@ import Link from "next/link";
 import Header from "../components/common/Header";
 import { getFullToday } from "@/utils/date";
 import Button from "../components/common/Button";
-import NoticeList from '../components/common/list/notice/page';
+import NoticeList from "../components/common/list/notice/page";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GetNoticeList } from '@/apis/notice';
+import { GetNoticeList } from "@/apis/notice";
 import { Grade } from "@/utils/until";
+import TopBack from "../components/common/background/top";
 
 interface GetnoticeList {
   id: string;
@@ -47,29 +48,17 @@ const Notice = () => {
   }, []);
 
   return (
-    <div className="h-dvh min-w-fit">
-      <Header />
-      <div className="flex flex-col gap-7 min-w-max mxl:px-100 px-64 py-16 h-90%">
-        <div className=" text-neutral-200 text-sub-title3-B">
-          <Link href="/main">홈</Link> &gt; 공지 사항
-        </div>
-        <div className="flex justify-between">
-          <div className="flex font-sans  mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
-            공지 사항
-            <div className="text-neutral-200 mxl:text-heading5 text-heading6-M">
-              {getFullToday()}
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <Button
-              colorType="primary"
-              buttonSize="small"
-              onClick={writeNotice}
-            >
-              공지 작성하기
-            </Button>
-          </div>
-        </div>
+    <>
+      <TopBack
+        linkChildren="공지 사항"
+        subTitle="공지 사항"
+        DropChildren={
+          <Button colorType="primary" buttonSize="small" onClick={writeNotice}>
+            공지 작성하기
+          </Button>
+        }
+        secondTitle={getFullToday()}
+      >
         <div className=" flex text-sub-title2-M px-14 justify-between">
           <div className=" text-sub-title2-M">제목</div>
           <div className=" flex gap-20">
@@ -90,8 +79,8 @@ const Notice = () => {
             />
           ))}
         </div>
-      </div>
-    </div>
+      </TopBack>
+    </>
   );
 };
 
