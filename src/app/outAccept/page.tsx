@@ -1,15 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
-import Button from "../components/common/Button";
-import { BackGround } from "../components/common/background";
-import Dropdown from "../components/common/dropdown";
-import { useEffect, useState } from "react";
-import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
-import Modal from "../components/common/modal/page";
-import { getStudentString } from "@/utils/until";
-import AcceptList from "../components/common/list/accept/page";
+import React, { useEffect, useState } from "react";
+import Header from "../components/common/Header";
+import Link from "next/link";
 import DoubleTab from "../components/common/tab/page";
+import Button from "../components/common/Button";
 import { getFullToday } from "@/utils/date";
+import AcceptList from "../components/common/list/accept/page";
+import Dropdown from "../components/common/dropdown";
+import Modal from "../components/common/modal/page";
+import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
+import { getStudentString, setStudentNum } from "@/utils/until";
+import { useRouter } from "next/navigation";
 
 interface applicationDataProp {
   class_num: number;
@@ -25,20 +26,46 @@ interface applicationDataProp {
 
 const OutAccept = () => {
   const router = useRouter();
+  const [selectedTab, setSelectedTab] = useState<boolean>(true);
+  const [refuse, setRefuse] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
-  const [selectedTab, setSelectedTab] = useState<boolean>(true);
-  const [data, setData] = useState<applicationDataProp[]>([]);
-  const [refuse, setRefuse] = useState<boolean>(false);
+  const [outSelectedGrade, setOutSelectedGrade] = useState<number>();
+  const [outSelectedClass, setOutSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const [data, setData] = useState<applicationDataProp[]>([]);
 
   const { mutate: outAcceptMutate } = useOutAccept();
   const { mutate: getClassMutate } = useGetClass();
 
-  const previous = () => {
-    router.push("/outAccept/previous");
+  const onClickTab = (tab: boolean) => {
+    setSelectedTab(tab);
+
+    if (tab) {
+      handleGradeChange(1);
+      handleClassChange(1);
+    } else {
+      handleGradeChange(1);
+      handleClassChange(1);
+    }
+  };
+
+  useEffect(() => {
+    AcceptDataList();
+  }, [outSelectedClass, outSelectedGrade]);
+
+  useEffect(() => {
+    AcceptDataList();
+  }, [selectedGrade, selectedClass]);
+
+  const handleGradeChange = (selectedOption: number) => {
+    setSelectedGrade(selectedOption);
+  };
+
+  const handleClassChange = (selectedOption: number) => {
+    setSelectedClass(selectedOption);
   };
 
   const AcceptDataList = async () => {
@@ -54,6 +81,7 @@ const OutAccept = () => {
           {
             onSuccess: (data) => {
               setData(data);
+              console.log(data);
             },
             onError: (error) => {
               console.log(error);
@@ -64,18 +92,6 @@ const OutAccept = () => {
     } catch (error) {
       console.error("Out accept error", error);
     }
-  };
-
-  useEffect(() => {
-    AcceptDataList();
-  }, [selectedGrade, selectedClass]);
-
-  const handleGradeChange = (selectedOption: number) => {
-    setSelectedGrade(selectedOption);
-  };
-
-  const handleClassChange = (selectedOption: number) => {
-    setSelectedClass(selectedOption);
   };
 
   const Accept = async () => {
@@ -98,10 +114,10 @@ const OutAccept = () => {
           },
           {
             onSuccess: (response) => {
-              location.reload();
-              alert("외출이 수락되었습니다");
               setData(data);
+              console.log("Out accept success", response);
               setAccept(false);
+              location.reload();
             },
             onError: (error) => {
               console.error("Out accept error", error);
@@ -129,8 +145,6 @@ const OutAccept = () => {
           {
             onSuccess: (response) => {
               setData(data);
-              alert("외출이 거절되었습니다");
-              location.reload();
               console.log("Out accept success", response);
               setRefuse(false);
             },
@@ -180,123 +194,137 @@ const OutAccept = () => {
     }
   };
 
+  const previous = () => {
+    router.push("/outAccept/previous");
+  };
+
   return (
-    <BackGround
-      linkChildren="외출 수락"
-      subTitle="외출 수락"
-      secondTitle={getFullToday()}
-      DropChildren={
-        <>
-          <Button colorType="ghost" buttonSize="small" onClick={previous}>
-            외출 기록보기
-          </Button>
-          {selectedTab ? (
-            <>
-              <Dropdown type="grade" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
-            </>
-          ) : (
-            <>
-              <Dropdown type="grade" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
-            </>
-          )}
-        </>
-      }
-    >
-      <div className=" gap-5 flex flex-col">
-        <DoubleTab
-          firstChildren="외출"
-          secondChildren="조기귀가"
-          onClick={() => {}}
-        />
-        {selectedTab ? (
-          <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
-              <AcceptList
-                onClick={() =>
-                  handleAcceptListClick(dataItem.id, dataItem.username)
-                }
-                key={index}
-                time={`${dataItem.start_time}`}
-                student={getStudentString(dataItem)}
-                why={`${dataItem.reason}`}
-              />
-            ))}
+    <div className="h-dvh min-w-fit">
+      <Header />
+      <div className="flex flex-col gap-7 p-80 py-16 h-90%  min-w-max 3xl:px-100">
+        <div className="text-neutral-200 text-sub-title3-B">
+          <Link href="/main">홈</Link> &gt; 외출 수락
+        </div>
+        <div className="flex justify-between">
+          <div className="flex font-sans mxl:text-heading4 text-heading5 text-gray-900 gap-4 items-center">
+            외출 수락
+            <div className="text-neutral-200 mxl:text-heading5 text-heading6-M">
+              {getFullToday()}
+            </div>
           </div>
-        ) : (
-          <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
-              <AcceptList
-                onClick={() =>
-                  handleAcceptListClick(dataItem.id, dataItem.username)
-                }
-                key={index}
-                time={dataItem.start_time}
-                student={`${getStudentString(dataItem)}`}
-                why={dataItem.reason}
-              />
-            ))}
+          <div className="flex items-center gap-5">
+            <Button colorType="ghost" buttonSize="small" onClick={previous}>
+              외출 기록보기
+            </Button>
+            {selectedTab ? (
+              <>
+                <Dropdown type="grade" onChange={handleGradeChange} />
+                <Dropdown type="class" onChange={handleClassChange} />
+              </>
+            ) : (
+              <>
+                <Dropdown type="grade" onChange={handleGradeChange} />
+                <Dropdown type="class" onChange={handleClassChange} />
+              </>
+            )}
           </div>
+        </div>
+        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 flex flex-col justify-between items-start">
+          <div className=" gap-5 flex flex-col">
+            <DoubleTab
+              firstChildren="외출"
+              secondChildren="조기귀가"
+              onClick={onClickTab}
+            />
+            {selectedTab ? (
+              <div className="flex flex-wrap gap-5 justify-between">
+                {data.map((dataItem, index) => (
+                  <AcceptList
+                    onClick={() =>
+                      handleAcceptListClick(dataItem.id, dataItem.username)
+                    }
+                    key={index}
+                    time={`${dataItem.start_time}`}
+                    student={getStudentString(dataItem)}
+                    why={`${dataItem.reason}`}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-5 justify-between">
+                {data.map((dataItem, index) => (
+                  <AcceptList
+                    onClick={() =>
+                      handleAcceptListClick(dataItem.id, dataItem.username)
+                    }
+                    key={index}
+                    time={dataItem.start_time}
+                    student={`${getStudentString(dataItem)}`}
+                    why={dataItem.reason}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className=" flex gap-5 w-full justify-end">
+            <Button
+              colorType="ghost"
+              buttonSize="medium"
+              onClick={() => {
+                Refuse();
+              }}
+            >
+              거절하기
+            </Button>
+            <Button
+              colorType="primary"
+              buttonSize="medium"
+              onClick={() => {
+                Accept();
+              }}
+            >
+              수락하기
+            </Button>
+          </div>
+        </div>
+        {refuse && (
+          <Modal
+            heading1={`${
+              selectedStudentName.length > 1
+                ? `${selectedStudentName[0]} 학생 외 ${
+                    selectedStudentName.length - 1
+                  }명`
+                : selectedStudentName.length === 1
+                ? `${selectedStudentName[0]} 학생`
+                : ""
+            }`}
+            heading2={`외출을 거절하시겠습니까?`}
+            type="error"
+            buttonMessage="거절"
+            onCancel={closeModal}
+            onConfirm={confirmReturn}
+          />
+        )}
+        {accept && (
+          <Modal
+            heading1={`${
+              selectedStudentName.length > 1
+                ? `${selectedStudentName[0]} 학생 외 ${
+                    selectedStudentName.length - 1
+                  }명`
+                : selectedStudentName.length === 1
+                ? `${selectedStudentName[0]} 학생`
+                : ""
+            }`}
+            heading2={`외출을 수락하시겠습니까?`}
+            type="button"
+            buttonMessage="수락"
+            onCancel={AcceptrCancel}
+            onConfirm={Acceptconfirm}
+          />
         )}
       </div>
-      <div className=" flex gap-5 w-full justify-end">
-        <Button
-          colorType="ghost"
-          buttonSize="medium"
-          onClick={() => {
-            Refuse();
-          }}
-        >
-          거절하기
-        </Button>
-        <Button
-          colorType="primary"
-          buttonSize="medium"
-          onClick={() => {
-            Accept();
-          }}
-        >
-          수락하기
-        </Button>
-      </div>
-      {refuse && (
-        <Modal
-          heading1={`${
-            selectedStudentName.length > 1
-              ? `${selectedStudentName[0]} 학생 외 ${
-                  selectedStudentName.length - 1
-                }명`
-              : selectedStudentName.length === 1
-              ? `${selectedStudentName[0]} 학생`
-              : ""
-          }`}
-          heading2={`외출을 거절하시겠습니까?`}
-          type="error"
-          buttonMessage="거절"
-          onCancel={closeModal}
-          onConfirm={confirmReturn}
-        />
-      )}
-      {accept && (
-        <Modal
-          heading1={`${
-            selectedStudentName.length > 1
-              ? `${selectedStudentName[0]} 학생 외 ${
-                  selectedStudentName.length - 1
-                }명`
-              : selectedStudentName.length === 1
-              ? `${selectedStudentName[0]} 학생`
-              : ""
-          }`}
-          heading2={`외출을 수락하시겠습니까?`}
-          type="button"
-          buttonMessage="수락"
-          onCancel={AcceptrCancel}
-          onConfirm={Acceptconfirm}
-        />
-      )}
-    </BackGround>
+    </div>
   );
 };
 

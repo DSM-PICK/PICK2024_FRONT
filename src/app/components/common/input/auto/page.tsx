@@ -30,13 +30,7 @@ const AutoInput: React.FC<InputProps> = ({
 
   const containerClassName = `font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
-  const data = [
-    "1101 ㅂ각",
-    "1102 ㅇㅇㅇ",
-    "1103 ㅇㅇㅇ",
-    "1104 ooo",
-    "1105 ㄹㄹㄹ",
-  ];
+  const [data, setData] = useState<string[]>([]);
 
   const inputClassName =
     "h-10 px-2 border-none bg-transparent placeholder-neutral-500 focus:outline-none rounded font-sans";
@@ -100,4 +94,4 @@ const AutoInput: React.FC<InputProps> = ({
   );
 };
 
-export default AutoInput
+export default AutoInput;
