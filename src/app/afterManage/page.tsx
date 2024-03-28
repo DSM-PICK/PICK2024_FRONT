@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import Dropdown from "../components/common/dropdown";
 import AfterCheck from "../components/common/list/after/page";
@@ -8,12 +8,41 @@ import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
+import { GetAfterStudent } from "@/apis/afterManage";
+
+interface changeClass {
+  id: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  name: string;
+  status1: string;
+  status2: string;
+  status3: string;
+}
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [change, setChange] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
   const [saveModal, setSaveModal] = useState<boolean>(false);
+  const { mutate: getafterMutate } = GetAfterStudent();
+  const [datalist, setDatalist] = useState<changeClass[]>();
+
+  const get = async () => {
+    try {
+      const resule = await getafterMutate(null, {
+        onSuccess: (data) => {
+          setDatalist(data);
+        },
+        onError: (error) => {
+          console.log(error.name);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onClickEdit = () => {
     setEdit(true);
@@ -48,8 +77,6 @@ const AfterManage = () => {
     setSaveModal(false);
   };
 
-  const commonStyle = " bg-white text-label1 rounded-lg py-3 px-10";
-
   const threeStyle = " bg-white text-label1 rounded-lg py-3 px-25";
 
   const router = useRouter();
@@ -58,27 +85,9 @@ const AfterManage = () => {
     router.push("/main");
   };
 
-  const [datalist, setDatalist] = useState({
-    name: [
-      "1410 박현아",
-      "1410 박수현",
-      "1410 강해민",
-      "1410 육기준",
-      "1410 김도경",
-      "1410 조영준",
-    ],
-    state: ["취업", "자퇴", "출석", "현체", "귀가", "출석"],
-    id: ["", "", "", "", "", ""],
-  });
-
-  const handleDelete = (index: number) => {
-    setDatalist((prevList) => {
-      const updatedList = { ...prevList };
-      updatedList.name.splice(index, 1);
-      updatedList.state.splice(index, 1);
-      return updatedList;
-    });
-  };
+  useEffect(() => {
+    get();
+  }, []);
 
   return (
     <BackGround
@@ -169,45 +178,38 @@ const AfterManage = () => {
                   </div>
                 </div>
                 <div className=" flex gap-13">
-                  <div className=" flex flex-col gap-6">
-                    {datalist.name.map((name, index) => (
+                  <div className=" flex flex-col gap-6 w-27%">
+                    {datalist?.map((item, index) => (
                       <div
                         className="flex w-max bg-white py-4 px-6 rounded-lg text-label1"
                         key={index}
                       >
-                        {name}
+                        {item.name}
                       </div>
                     ))}
                   </div>
                   <div className=" flex gap-x-11 gap-y-6 flex-wrap content-start">
                     {edit ? (
                       <>
-                        <AfterCheck state="현체" day={3} edit={true} />
-                        <AfterCheck state="무단" day={3} edit={true} />
-                        <AfterCheck state="이동" day={3} edit={true} />
-                        <AfterCheck state="현체" day={3} edit={true} />
-                        <AfterCheck state="무단" day={3} edit={true} />
-                        <AfterCheck state="이동" day={3} edit={true} />
+                        {/* {datalist?.map((item, index) => {
+                          <AfterCheck state={"무단"} key={index} day={3} />;
+                        })} */}
+                        {datalist?.map((item, index) => {
+                          <AfterCheck state={"무단"} key={index} day={3} />;
+                        })}
                       </>
                     ) : (
-                      <>
-                        <AfterCheck state="현체" day={3} />
-                        <AfterCheck state="무단" day={3} />
-                        <AfterCheck state="이동" day={3} />
-                        <AfterCheck state="현체" day={3} />
-                        <AfterCheck state="무단" day={3} />
-                        <AfterCheck state="이동" day={3} />
-                      </>
+                      <></>
                     )}
                   </div>
                 </div>
               </div>
             ) : (
-              <div className=" flex gap-8 flex-col">
+              <div className=" flex gap-8 flex-col w-full">
                 <div className=" text-heading5 text-primary-100">창조실</div>
-                <div className=" flex gap-x-13 gap-y-5 flex-wrap">
-                  {datalist.name.map((name, index) => (
-                    <AfterDelete student={name} key={index} id="dddfmkadkkkl" />
+                <div className=" flex gap-x-13 gap-y-5 flex-wrap w-full">
+                  {datalist?.map((item, index) => (
+                    <AfterDelete student={item.name} key={index} id={item.id} />
                   ))}
                 </div>
               </div>
@@ -224,7 +226,7 @@ const AfterManage = () => {
             {saveModal && (
               <Modal
                 type="button"
-                heading1={`${datalist.name.length}외 1명의`}
+                heading1={`${datalist?.length}외 1명의`}
                 heading2="변경된 상태를 저장하시겠습니까?"
                 buttonMessage="확인"
                 onCancel={handleSaveModalCancel}
