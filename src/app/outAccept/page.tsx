@@ -9,7 +9,7 @@ import AcceptList from "../components/common/list/accept/page";
 import Dropdown from "../components/common/dropdown";
 import Modal from "../components/common/modal/page";
 import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
-import { getStudentString, setStudentNum } from "@/utils/until";
+import { getStudentString } from "@/utils/until";
 import { useRouter } from "next/navigation";
 
 interface applicationDataProp {

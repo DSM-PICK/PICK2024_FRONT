@@ -5,7 +5,7 @@ import { getFullToday } from "@/utils/date";
 import { useState } from "react";
 import Dropdown from "../components/common/dropdown";
 import ChangeClass from "../components/common/list/changeClass/page";
-import { ChangeClassList, GetFloor } from "@/apis/outList/list";
+import { ChangeClassList, GetFloor } from "@/apis/changeClass";
 import { getStudentString } from "@/utils/until";
 import { BackGround } from "../components/common/background";
 

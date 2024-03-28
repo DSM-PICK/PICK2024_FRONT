@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
 import Input from "../../input";
-import { PostTeacher } from "@/apis/outList/list";
+import { PostTeacher } from "@/apis/changeTeacher";
 
 export interface ChangeProps {
   text: string;

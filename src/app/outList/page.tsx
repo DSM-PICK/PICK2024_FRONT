@@ -8,7 +8,7 @@ import ReturnHome from "../components/common/list/returnHome/page";
 import Out from "../components/common/list/out/page";
 import { useState, useEffect } from "react";
 import { OutListProp, ReturnHomeList } from "@/apis/outList/list";
-import { getStudentString, setStudentNum } from "@/utils/until";
+import { getStudentString } from "@/utils/until";
 import { BackGround } from "../components/common/background";
 
 interface earlyreturnOK {

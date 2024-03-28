@@ -8,6 +8,11 @@ interface TypeProp {
   class_move: number;
 }
 
+interface todaySelfStudy {
+  floor: number;
+  teacher_name: string;
+}
+
 export const GetStudentNum = () => {
   const accessToken = getToken();
 
@@ -23,6 +28,45 @@ export const GetStudentNum = () => {
       } catch (error) {
         console.log(error);
         throw error;
+      }
+    },
+  });
+};
+
+export const DayTeacher = () => {
+  return useMutation<todaySelfStudy[], Error, { date: string }>({
+    mutationFn: async (param) => {
+      try {
+        const accessToken = getToken();
+        const response = await instance.get(
+          `/self-study/today?date=${param.date}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        return response?.data.sort((i: any, j: any) => i.floor - j.floor);
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
+};
+
+export const SelfStudyCheck = () => {
+  const accessToken = getToken();
+  return useMutation<string, Error, null>({
+    mutationFn: async () => {
+      try {
+        const response = await instance.get(`/self-study/admin`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });

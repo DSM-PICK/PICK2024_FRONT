@@ -1,6 +1,4 @@
 "use client";
-import Link from "next/link";
-import Header from "../components/common/Header";
 import { getFullToday } from "@/utils/date";
 import Button from "../components/common/Button";
 import NoticeList from "../components/common/list/notice/page";

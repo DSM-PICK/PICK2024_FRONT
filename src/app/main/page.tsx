@@ -17,7 +17,7 @@ import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
 import changeStudent from "../../assets/img/교실 일러스트.png";
 import { getFullToday, getWeekDay } from "@/utils/date";
-import { DayTeacher, SelfStudyCheck } from "@/apis/outList/list";
+import { DayTeacher, SelfStudyCheck } from "@/apis/main";
 import { GetStudentNum } from "@/apis/main";
 
 interface todaySelfStudy {
