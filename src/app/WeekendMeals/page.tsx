@@ -19,6 +19,7 @@ interface StudentStatus {
 const AllWeekendMeal = () => {
   const router = useRouter();
   const [data, setData] = useState<StudentStatus[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
