@@ -80,7 +80,7 @@ const ModifyNotice = () => {
         id: id,
         title: title,
         content: content,
-        grade: selectedGrade,
+        grade: [selectedGrade],
       });
       alert("공지가 수정되었습니다");
       router.back();
