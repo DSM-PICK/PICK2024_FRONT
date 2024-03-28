@@ -137,7 +137,6 @@ const ClassManage: React.FC = () => {
       linkChildren="학급 관리"
       DropChildren={
         <>
-          {" "}
           {edit ? (
             <Button colorType="ghost" buttonSize="small" onClick={onClickSave}>
               상태 저장하기
@@ -147,8 +146,10 @@ const ClassManage: React.FC = () => {
               상태 수정하기
             </Button>
           )}
-          <Dropdown type="grade" onChange={handleGradeChange} />
-          <Dropdown type="class" onChange={handleClassChange} />
+          <div className=" flex gap-5">
+            <Dropdown type="grade" onChange={handleGradeChange} />
+            <Dropdown type="class" onChange={handleClassChange} />
+          </div>
         </>
       }
     >

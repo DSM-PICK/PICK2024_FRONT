@@ -1,6 +1,7 @@
 "use client";
 import { GetStudentData } from "@/apis/classManage";
 import Header from "@/app/components/common/Header";
+import { BackGround } from "@/app/components/common/background";
 import Dropdown from "@/app/components/common/dropdown";
 import PreviousList from "@/app/components/common/list/before";
 import { getStudentString, setStudentNum } from "@/utils/until";
@@ -58,34 +59,30 @@ const Previous = () => {
   };
 
   return (
-    <div className="h-dvh flex flex-col">
-      <Header />
-      <div className=" self-center flex flex-col gap-7 py-16 h-90dvh w-3/5">
-        <div className="text-neutral-200 text-sub-title3-B text-nowrap">
-          <Link href="/main">홈</Link> &gt;
+    <BackGround
+      secondTitle={`${selectedGrade}학년 ${selectedClass}반`}
+      subTitle="외출 기록 보기"
+      DropChildren={
+        <>
+          <Dropdown type="grade" onChange={handleGradeChange} />
+          <Dropdown type="class" onChange={handleClassChange} />
+        </>
+      }
+      linkChildren={
+        <>
           <Link href="/outAccept"> 외출 수락</Link> &gt; 외출 기록 보기
-        </div>
-        <div className=" flex justify-between items-center gap-3 flex-wrap">
-          <div className=" text-nowrap flex justify-center items-center font-sans text-heading4 text-gray-900">
-            외출 기록 보기
-          </div>
-          <div className=" flex items-center gap-3">
-            <Dropdown type="grade" onChange={handleGradeChange} />
-            <Dropdown type="class" onChange={handleClassChange} />
-          </div>
-        </div>
-        <div className="w-auto content-start rounded-xl bg-primary-1200 h-140 px-10 py-10 overflow-y-scroll scrollbar-hide flex flex-wrap gap-x-16 gap-y-5">
-          {data &&
-            data.students.map((item, index) => (
-              <PreviousList
-                id={item.user_id}
-                key={index}
-                userName={`${setStudentNum(item)} ${item.name}`}
-              />
-            ))}
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    >
+      {data &&
+        data.students.map((item, index) => (
+          <PreviousList
+            id={item.user_id}
+            key={index}
+            userName={`${setStudentNum(item)} ${item.name}`}
+          />
+        ))}
+    </BackGround>
   );
 };
 
