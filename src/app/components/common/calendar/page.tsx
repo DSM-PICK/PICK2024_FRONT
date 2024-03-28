@@ -4,7 +4,7 @@ import Calendarmold from "react-calendar";
 import "./style/style.css";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { SelfstudyGet } from "@/apis/outList/list";
+import { SelfstudyGet } from "@/apis/changeTeacher";
 import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
 import { useRouter } from "next/navigation";
 

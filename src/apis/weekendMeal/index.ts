@@ -7,6 +7,24 @@ interface ChangeStateParams {
   userId: string;
 }
 
+interface mealcheckProp {
+  id: string;
+  name: string;
+  status: "OK" | "NO";
+  grade: number;
+  class_num: number;
+  num: number;
+}
+
+interface notCheckMeal {
+  id: string;
+  name: string;
+  status: "QUIET";
+  grade: number;
+  class_num: number;
+  num: number;
+}
+
 export const Printexcel = () => {
   const accessToken = getToken();
 
@@ -70,4 +88,54 @@ export const GetAllStudentMeal = async () => {
     console.log(error);
     throw error;
   }
+};
+
+export const MealCheck = () => {
+  const accessToken = getToken();
+  return useMutation<
+    mealcheckProp[],
+    Error,
+    { grade: number; classNum: number }
+  >({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `/weekend-meal/all?grade=${param.grade}&class_num=${param.classNum}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const NotMealCheck = () => {
+  const accessToken = getToken();
+  return useMutation<
+    notCheckMeal[],
+    Error,
+    { grade: number; classNum: number }
+  >({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.classNum}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 };

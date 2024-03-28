@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "@/app/components/common/dropdown";
 import Classmeals from "../../components/common/list/classmeal/page";
-import { MealCheck, NotMealCheck } from "@/apis/outList/list";
+import { MealCheck, NotMealCheck } from "@/apis/weekendMeal";
 import { setStudentNum } from "@/utils/until";
 import Button from "../../components/common/Button";
 import { Printexcel } from "@/apis/weekendMeal";

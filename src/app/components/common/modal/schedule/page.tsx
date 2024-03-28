@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
 import Input from "../../input";
-import { AddSchedule } from "@/apis/outList/list";
+import { AddSchedule } from "@/apis/schedule";
 
 export interface ChangeProps {
   text: string;
