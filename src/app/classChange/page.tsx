@@ -106,14 +106,16 @@ const OutList = () => {
             secondChildren="층 별로 보기"
             onClick={onClickTab}
           />
-          {selectedTab ? (
-            <>
-              <Dropdown type="grade" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
-            </>
-          ) : (
-            <Dropdown type="floor" onChange={handleFloorChange} />
-          )}
+          <div className=" flex gap-5">
+            {selectedTab ? (
+              <>
+                <Dropdown type="grade" onChange={handleGradeChange} />
+                <Dropdown type="class" onChange={handleClassChange} />
+              </>
+            ) : (
+              <Dropdown type="floor" onChange={handleFloorChange} />
+            )}
+          </div>
         </>
       }
     >

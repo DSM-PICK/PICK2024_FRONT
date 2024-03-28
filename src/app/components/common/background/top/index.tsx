@@ -24,12 +24,14 @@ const TopBack: React.FC<Prop> = ({
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; {linkChildren}
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-6">
           <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
             {subTitle}
             <div className="text-neutral-200 text-heading5">{secondTitle}</div>
           </div>
-          <div className="flex items-center gap-5">{DropChildren}</div>
+          <div className="flex items-center gap-5 flex-wrap justify-end">
+            {DropChildren}
+          </div>
         </div>
         {children}
       </div>

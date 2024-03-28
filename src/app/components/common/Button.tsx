@@ -59,7 +59,7 @@ const Button: React.FC<ButtonProp> = ({
   const getSizeClass = () => {
     switch (buttonSize) {
       case "full":
-        return " w-92 h-12 text-Button-M";
+        return " w-full h-12 text-Button-M";
       case "extraLarge":
         return "w-76 h-11 text-Button-S";
       case "large":
