@@ -13,6 +13,17 @@ interface Id {
   id: string;
 }
 
+interface AfterStudent {
+  id: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  name: string;
+  status1: string;
+  status2: string;
+  status3: string;
+}
+
 export const After = () => {
   const accessToken = getToken();
 
@@ -60,6 +71,25 @@ export const AfterStudentDelete = () => {
       } catch (error) {
         console.log(error);
         throw new Error("Failed to delete student.");
+      }
+    },
+  });
+};
+
+export const GetAfterStudent = () => {
+  const accessToken = getToken();
+
+  return useMutation<AfterStudent[], Error, null>({
+    mutationFn: async () => {
+      try {
+        const response = await instance.get(`/after/all`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });
