@@ -10,7 +10,7 @@ interface MenuProp {
 }
 
 const Menu: React.FC<MenuProp> = ({ icon, children, href }) => {
-  const childrenCount = React.Children.count(children); // 자식 요소의 개수를 센다
+  const childrenCount = React.Children.count(children);
   const childrenStyle = ` ${
     childrenCount < 7
       ? "text-sub-title1-M w-25 flex justify-center items-center"

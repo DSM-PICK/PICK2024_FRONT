@@ -59,7 +59,7 @@ export const AfterStudentDelete = () => {
         });
       } catch (error) {
         console.log(error);
-        throw new Error("Failed to delete student."); // Propagate the error
+        throw new Error("Failed to delete student.");
       }
     },
   });
