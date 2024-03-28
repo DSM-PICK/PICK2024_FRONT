@@ -77,8 +77,8 @@ const WriteNotice = () => {
                   제목
                   <Input
                     type="text"
-                    onChange={handleTitleChange} // 제목 변경 이벤트 핸들러
-                    value={title} // 제목 값
+                    onChange={handleTitleChange} 
+                    value={title}
                     width="full"
                     name="title"
                   />

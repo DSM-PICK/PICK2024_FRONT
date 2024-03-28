@@ -8,7 +8,7 @@ interface ManageProps {
   student: string;
   state: string;
   edit: boolean;
-  onChange: (option: string) => void; // onChange 함수를 props로 받음
+  onChange: (option: string) => void; 
 }
 
 const ManageList: React.FC<ManageProps> = ({
@@ -24,7 +24,7 @@ const ManageList: React.FC<ManageProps> = ({
         {edit ? (
           <ManageState state={state} />
         ) : (
-          <ManageDrop state={state} third onChange={onChange} /> // onChange 함수를 전달
+          <ManageDrop state={state} third onChange={onChange} />
         )}
       </div>
     </div>

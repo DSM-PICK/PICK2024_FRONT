@@ -7,7 +7,7 @@ interface GradeOption {
 }
 
 interface SelectGradeProps {
-  onSelect: (grade: number) => void; // Change the type here
+  onSelect: (grade: number) => void;
 }
 
 const SelectGrade: React.FC<SelectGradeProps> = ({ onSelect }) => {
