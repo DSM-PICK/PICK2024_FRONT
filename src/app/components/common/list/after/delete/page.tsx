@@ -25,7 +25,7 @@ const AfterDelete: React.FC<AfterdeleteProps> = ({ student, id }) => {
   const onDelete = async () => {
     try {
       await DeleteMutate(
-        { id: id },
+        { id },
         {
           onSuccess() {
             alert("삭제되었습니다");

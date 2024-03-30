@@ -61,8 +61,8 @@ const PreviousList: React.FC<getProp> = ({ id, userName }) => {
   }, []);
 
   return (
-    <div className="flex h-13">
-      <div className="relative h-5">
+    <div className="flex h-13 w-29%">
+      <div className="relative h-5 w-full">
         <div
           className="group w-77 whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white"
           onClick={toggleDropdown}

@@ -197,6 +197,8 @@ const OutAccept = () => {
     router.push("/outAccept/previous");
   };
 
+  const ChangeText = () => {};
+
   return (
     <BackGround
       linkChildren="외출 수락"
