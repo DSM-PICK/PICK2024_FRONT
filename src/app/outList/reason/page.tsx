@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AlloutList, ReturnHome } from "@/apis/outList/list";
 import { getStudentString } from "@/utils/until";
+import { BackGround } from "@/app/components/common/background";
 
 interface OutListData {
   id: string;
@@ -94,57 +95,45 @@ const Reason = () => {
   }, []);
 
   return (
-    <div className="h-dvh">
-      <Header />
-      <div className="flex flex-col gap-7 px-100 py-16 h-90%">
-        <div className="text-neutral-200 text-sub-title3-B">
-          <Link href="/main">홈</Link> &gt;
-          <Link href="/outList">외출자 목록</Link> &gt;
-          {selectedTab ? "외출자 사유" : " 조기 귀가 사유"}
-        </div>
-        <div className="flex justify-between">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
-            {selectedTab ? "외출자 사유" : "조기 귀가 사유"}
-            <div className="text-neutral-200 text-heading5">
-              {getFullToday()}
-            </div>
-          </div>
-          <div className="flex items-center">
-            <DoubleTab
-              firstChildren="외출"
-              secondChildren="조기귀가"
-              onClick={onClickTab}
+    <BackGround
+      linkChildren={`외출자 목록 > ${
+        selectedTab ? "외출자 사유" : " 조기 귀가 사유"
+      } `}
+      subTitle={selectedTab ? "외출자 사유" : " 조기 귀가 사유"}
+      secondTitle={getFullToday()}
+      DropChildren={
+        <DoubleTab
+          firstChildren="외출"
+          secondChildren="조기귀가"
+          onClick={onClickTab}
+        />
+      }
+    >
+      {selectedTab ? (
+        <div className="flex flex-wrap gap-5 justify-between">
+          {data.map((item, index) => (
+            <ReasonList
+              key={index}
+              time={item.start_time}
+              endTime={item.end_time}
+              student={student(item)}
+              why={item.reason}
             />
-          </div>
+          ))}
         </div>
-        <div className="w-auto rounded-xl bg-primary-1200 h-full px-10 py-10 overflow-y-scroll scrollbar-hide">
-          {selectedTab ? (
-            <div className="flex flex-wrap gap-5 justify-between">
-              {data.map((item, index) => (
-                <ReasonList
-                  key={index}
-                  time={item.start_time}
-                  endTime={item.end_time}
-                  student={student(item)}
-                  why={item.reason}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-wrap gap-5 justify-between">
-              {homeData.map((item, index) => (
-                <ReasonList
-                  key={index}
-                  time={item.start_time}
-                  student={student(item)}
-                  why={item.reason}
-                />
-              ))}
-            </div>
-          )}
+      ) : (
+        <div className="flex flex-wrap gap-5 justify-between">
+          {homeData.map((item, index) => (
+            <ReasonList
+              key={index}
+              time={item.start_time}
+              student={student(item)}
+              why={item.reason}
+            />
+          ))}
         </div>
-      </div>
-    </div>
+      )}
+    </BackGround>
   );
 };
 

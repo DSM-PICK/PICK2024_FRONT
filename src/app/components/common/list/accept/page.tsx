@@ -19,7 +19,7 @@ const AcceptList: React.FC<AcceptProps> = ({ student, time, why, onClick }) => {
 
   return (
     <div
-      className={`flex w-80 flex-col px-3 py-3 rounded-lg group h-13 gap-2 active:bg-primary-800 ${
+      className={`flex w-80 flex-col px-3 py-3 rounded-lg group h-fit gap-2 active:bg-primary-800 ${
         isActive
           ? "bg-primary-900 h-auto"
           : " bg-white hover:h-auto hover:bg-primary-900 h-13"
