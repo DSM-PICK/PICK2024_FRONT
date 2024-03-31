@@ -17,7 +17,7 @@ const ReasonList: React.FC<ReasonListProps> = ({
   const MAX_WHY_LENGTH = 69;
 
   let whyDisplay = why;
-  if (why.length > MAX_WHY_LENGTH) {
+  if (why?.length > MAX_WHY_LENGTH) {
     whyDisplay = why.substring(0, MAX_WHY_LENGTH) + "...";
   }
 
