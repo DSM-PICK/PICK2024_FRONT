@@ -25,25 +25,15 @@ interface AfterStudent {
 }
 
 export const After = () => {
-  const accessToken = getToken();
-
   return useMutation<null, Error, Type>({
     mutationFn: async (param: Type) => {
       try {
-        const response = await instance.post(
-          "after",
-          {
-            grade: param.grade,
-            class_num: param.classNum,
-            num: param.num,
-            name: param.name,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await instance.post("after", {
+          grade: param.grade,
+          class_num: param.classNum,
+          num: param.num,
+          name: param.name,
+        });
 
         return response.data;
       } catch (error) {
@@ -55,17 +45,12 @@ export const After = () => {
 };
 
 export const AfterStudentDelete = () => {
-  const accessToken = getToken();
-
   return useMutation<void, Error, { id: string }>({
     mutationFn: async ({ id }) => {
       try {
         const response = await instance.delete(`/after/delete`, {
           data: {
             id,
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
           },
         });
       } catch (error) {
@@ -77,16 +62,10 @@ export const AfterStudentDelete = () => {
 };
 
 export const GetAfterStudent = () => {
-  const accessToken = getToken();
-
   return useMutation<AfterStudent[], Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get(`/after/all`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`/after/all`, {});
         return response.data;
       } catch (error) {
         console.log(error);

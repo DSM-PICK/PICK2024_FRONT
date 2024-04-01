@@ -32,18 +32,11 @@ interface ChangeStatus {
 }
 
 export const GetStudentData = () => {
-  const accessToken = getToken();
-
   return useMutation<StudentData, Error, queryData>({
     mutationFn: async (param: queryData) => {
       try {
         const response = await instance.get(
-          `/status/grade?grade=${param.grade}&class_num=${param.class_num}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `/status/grade?grade=${param.grade}&class_num=${param.class_num}`
         );
         return response.data;
       } catch (error) {
@@ -55,16 +48,10 @@ export const GetStudentData = () => {
 };
 
 export const ChangeStatus = () => {
-  const accessToken = getToken();
-
   return useMutation<void, Error, ChangeStatusData[]>({
     mutationFn: async (params: ChangeStatusData[]) => {
       try {
-        const response = await instance.patch("/status/change", params, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.patch("/status/change", params, {});
       } catch (error) {
         console.log(error);
       }

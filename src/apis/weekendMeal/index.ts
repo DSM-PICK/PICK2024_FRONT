@@ -26,14 +26,9 @@ interface notCheckMeal {
 }
 
 export const Printexcel = () => {
-  const accessToken = getToken();
-
   const downloadExcel = async () => {
     try {
       const response = await instance.get("/weekend-meal/excel", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
         responseType: "blob",
       });
 
@@ -54,18 +49,11 @@ export const Printexcel = () => {
 };
 
 export const ChangeState = () => {
-  const accessToken = getToken();
-
   return useMutation<void, Error, ChangeStateParams>({
     mutationFn: async (params) => {
       try {
         const response = await instance.patch(
-          `weekend-meal/status?userId=${params.userId}&status=${params.status}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `weekend-meal/status?userId=${params.userId}&status=${params.status}`
         );
       } catch (error) {
         throw error;
@@ -75,14 +63,8 @@ export const ChangeState = () => {
 };
 
 export const GetAllStudentMeal = async () => {
-  const accessToken = getToken();
-
   try {
-    const response = await instance.get(`weekend-meal/hey`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await instance.get(`weekend-meal/hey`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -91,7 +73,6 @@ export const GetAllStudentMeal = async () => {
 };
 
 export const MealCheck = () => {
-  const accessToken = getToken();
   return useMutation<
     mealcheckProp[],
     Error,
@@ -100,12 +81,7 @@ export const MealCheck = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/weekend-meal/all?grade=${param.grade}&class_num=${param.classNum}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `/weekend-meal/all?grade=${param.grade}&class_num=${param.classNum}`
         );
         return response.data;
       } catch (error) {
@@ -116,7 +92,6 @@ export const MealCheck = () => {
 };
 
 export const NotMealCheck = () => {
-  const accessToken = getToken();
   return useMutation<
     notCheckMeal[],
     Error,
@@ -125,12 +100,7 @@ export const NotMealCheck = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.classNum}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.classNum}`
         );
         return response.data;
       } catch (error) {

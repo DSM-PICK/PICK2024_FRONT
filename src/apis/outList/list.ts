@@ -63,13 +63,10 @@ interface earlyReturnHome {
 }
 
 export const AlloutList = () => {
-  const accessToken = getToken();
   return useMutation<OutListData[], void, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get("/application/reason/all", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const response = await instance.get("/application/reason/all");
         return response.data as any;
       } catch (error) {
         throw error;
@@ -79,15 +76,10 @@ export const AlloutList = () => {
 };
 
 export const ReturnHome = () => {
-  const accessToken = getToken();
   return useMutation<ReturnHomeData[], void, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get("/early-return/reason/ok-all", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get("/early-return/reason/ok-all");
         return response.data as any;
       } catch (error) {
         throw error;
@@ -100,13 +92,9 @@ export const GetPreviousList = () => {
   return useMutation<previousStudent[], Error, { name: string }>({
     mutationFn: async (requestParam: { name: string }) => {
       try {
-        const accessToken = getToken();
         const response = await instance.get(`/story/query`, {
           params: {
             name: requestParam.name,
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
           },
         });
         return response.data;
@@ -118,16 +106,11 @@ export const GetPreviousList = () => {
 };
 
 export const ReturnSchool = () => {
-  const accessToken = getToken();
-
   return useMutation<Error, void, UuidProp>({
     mutationFn: async (param: UuidProp) => {
       try {
         const response = await instance.patch(
-          `/application/change/${param.id}`,
-          {
-            headers: `Bearer ${accessToken}`,
-          }
+          `/application/change/${param.id}`
         );
         return response.data;
       } catch (error) {
@@ -138,15 +121,10 @@ export const ReturnSchool = () => {
 };
 
 export const OutListProp = () => {
-  const accessToken = getToken();
   return useMutation<applicationOK[], Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get(`application/non-return`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`application/non-return`, {});
         return response.data;
       } catch (error) {
         throw error;
@@ -156,15 +134,10 @@ export const OutListProp = () => {
 };
 
 export const ReturnHomeList = () => {
-  const accessToken = getToken();
   return useMutation<earlyReturnHome[], Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get(`early-return/ok`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`early-return/ok`, {});
         return response.data;
       } catch (error) {
         console.log(error);
@@ -174,16 +147,10 @@ export const ReturnHomeList = () => {
 };
 
 export const GetSelectDay = () => {
-  const accessToken = getToken();
-
   return useMutation<data, Error, { date: string }>({
     mutationFn: async (param) => {
       try {
-        const response = await instance.get(`self-study/${param.date}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`self-study/${param.date}`, {});
         return response.data;
       } catch (error) {
         console.log(error);

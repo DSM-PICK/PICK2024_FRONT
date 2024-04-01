@@ -32,14 +32,10 @@ interface ModifyProp {
 }
 
 export const GetNoticeList = () => {
-  const accessToken = getToken();
   return useMutation<Getnotice[], Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get("/notice/simple", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
         });
         return response.data;
       } catch (error) {
@@ -50,14 +46,10 @@ export const GetNoticeList = () => {
 };
 
 export const DetailNoticeData = () => {
-  const accessToken = getToken();
   return useMutation<DetailNoticeType, Error, { id: string }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(`/notice/${param.id}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
         });
         return response.data;
       } catch (error) {
@@ -68,15 +60,10 @@ export const DetailNoticeData = () => {
 };
 
 export const DeleteNoticeData = () => {
-  const accessToken = getToken();
   return useMutation<void, Error, { id: string }>({
     mutationFn: async (param) => {
       try {
-        const response = await instance.delete(`/notice/delete/${param.id}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.delete(`/notice/delete/${param.id}`);
         return response.data;
       } catch (error) {
         throw error;
@@ -86,7 +73,6 @@ export const DeleteNoticeData = () => {
 };
 
 export const PostNotice = () => {
-  const accessToken = getToken();
 
   return useMutation<void, Error, post>({
     mutationFn: async (param: post) => {
@@ -94,11 +80,6 @@ export const PostNotice = () => {
         `/notice/create`,
         {
           ...param,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
         }
       );
     },
@@ -106,7 +87,6 @@ export const PostNotice = () => {
 };
 
 export const ModifyNoticeData = () => {
-  const accessToken = getToken();
 
   return useMutation<void, Error, ModifyProp>({
     mutationFn: async (param: ModifyProp) => {
@@ -115,12 +95,8 @@ export const ModifyNoticeData = () => {
           `/notice/modify`,
           {
             ...param,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
           }
+
         );
 
         return response.data;
