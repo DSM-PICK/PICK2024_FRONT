@@ -30,7 +30,11 @@ const AcceptList: React.FC<AcceptProps> = ({ student, time, why, onClick }) => {
         <div className="text-label1">{student}</div>
         <div className="text-neutral-400">{time}</div>
       </div>
-      <div className={`${isActive ? "flex" : "hidden"} group-hover:flex`}>
+      <div
+        className={`${
+          isActive ? "flex h-full" : "hidden"
+        } group-hover:flex h-full`}
+      >
         {why}
       </div>
     </div>
