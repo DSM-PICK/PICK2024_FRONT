@@ -37,17 +37,11 @@ interface ClassProp {
 }
 
 export const useGetFloor = () => {
-  const accessToken = getToken();
   return useMutation<FloorProp, void, { type: string; floor: number }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/${param.type}/floor?floor=${param.floor}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `/${param.type}/floor?floor=${param.floor}`
         );
         return response.data;
       } catch (error) {
@@ -58,17 +52,11 @@ export const useGetFloor = () => {
 };
 
 export const useGetClass = () => {
-  const accessToken = getToken();
   return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
     mutationFn: async (param: ClassProp) => {
       try {
         const response = await instance.get(
-          `${param.type}/grade?grade=${param.grade}&class_num=${param.class}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `${param.type}/grade?grade=${param.grade}&class_num=${param.class}`
         );
         return response.data;
       } catch (error) {
@@ -79,22 +67,13 @@ export const useGetClass = () => {
 };
 
 export const useOutAccept = () => {
-  const accessToken = getToken();
   return useMutation<void, Error, accept>({
     mutationFn: async (param) => {
       try {
-        const response = await instance.patch(
-          `${param.type}/status`,
-          {
-            status: param.status,
-            ids: param.ids,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await instance.patch(`${param.type}/status`, {
+          status: param.status,
+          ids: param.ids,
+        });
         return response.data;
       } catch (error) {
         throw error;

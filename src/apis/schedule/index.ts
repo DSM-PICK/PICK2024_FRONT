@@ -15,23 +15,13 @@ interface schedulesdata {
 }
 
 export const AddSchedule = () => {
-  const accessToken = getToken();
-
   return useMutation<void, Error, addSchedule>({
     mutationFn: async (param: addSchedule) => {
       try {
-        const response = await instance.post(
-          "/schedule/create",
-          {
-            event_name: param.event_name,
-            date: param.date,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await instance.post("/schedule/create", {
+          event_name: param.event_name,
+          date: param.date,
+        });
         return response.data;
       } catch (error) {
         console.error("Error adding schedule:", error);
@@ -42,17 +32,11 @@ export const AddSchedule = () => {
 };
 
 export const GetSchdule = () => {
-  const accessToken = getToken();
   return useMutation<schedulesdata[], Error, { year: string; month: string }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/schedule/month?year=${param.year}&month=${param.month}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          `/schedule/month?year=${param.year}&month=${param.month}`
         );
         return response.data;
       } catch (error) {

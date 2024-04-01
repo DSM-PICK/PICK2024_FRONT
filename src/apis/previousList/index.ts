@@ -18,14 +18,10 @@ interface id {
 }
 
 export const GetPreviousList = () => {
-  const accessToken = getToken();
-
   return useMutation<Type, void, { id: string }>({
     mutationFn: async (param: id) => {
       try {
-        const response = await instance.get(`story/query/${param.id}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const response = await instance.get(`story/query/${param.id}`);
         return response.data;
       } catch (error) {
         throw error;

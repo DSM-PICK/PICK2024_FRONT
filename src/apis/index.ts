@@ -1,10 +1,15 @@
+import { getToken } from "@/utils/auth";
 import axios, { AxiosError } from "axios";
 
 const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
+const accessToken = localStorage.getItem("access_token");
 
 export const instance = axios.create({
   baseURL: BASEURL,
   timeout: 10000,
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
 });
 
 export const refreshInstance = axios.create({
@@ -14,7 +19,6 @@ export const refreshInstance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

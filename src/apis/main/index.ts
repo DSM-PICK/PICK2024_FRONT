@@ -14,16 +14,10 @@ interface todaySelfStudy {
 }
 
 export const GetStudentNum = () => {
-  const accessToken = getToken();
-
   return useMutation<TypeProp, Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get(`application/status`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`application/status`, {});
         return response.data;
       } catch (error) {
         console.log(error);
@@ -37,14 +31,9 @@ export const DayTeacher = () => {
   return useMutation<todaySelfStudy[], Error, { date: string }>({
     mutationFn: async (param) => {
       try {
-        const accessToken = getToken();
         const response = await instance.get(
           `/self-study/today?date=${param.date}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          {}
         );
         return response?.data.sort((i: any, j: any) => i.floor - j.floor);
       } catch (error) {
@@ -55,15 +44,10 @@ export const DayTeacher = () => {
 };
 
 export const SelfStudyCheck = () => {
-  const accessToken = getToken();
   return useMutation<string, Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get(`/self-study/admin`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await instance.get(`/self-study/admin`, {});
         return response.data;
       } catch (error) {
         console.log(error);

@@ -14,17 +14,12 @@ interface changeClass {
 }
 
 export const GetFloor = () => {
-  const accessToken = getToken();
   return useMutation<changeClass[], void, { floor: number }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
           `/class-room/floor?floor=${param.floor}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+      
         );
         return response.data;
       } catch (error) {
@@ -35,18 +30,12 @@ export const GetFloor = () => {
 };
 
 export const ChangeClassList = () => {
-  const accessToken = getToken();
 
   return useMutation<changeClass[], Error, { grade: number; class: number }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
           `/class-room/grade?grade=${param.grade}&classNum=${param.class}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
         );
         return response.data;
       } catch (error) {
