@@ -78,6 +78,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     setFourthData({ ...fourthData, [name]: text });
   };
 
+
+
   return (
     <div className=" z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
       <div className=" bg-white rounded-xl px-24 py-13 w-155">

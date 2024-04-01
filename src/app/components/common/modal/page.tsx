@@ -189,10 +189,10 @@ const Modal: React.FC<ModalProps> = ({
                   <div className="text-heading6-M flex gap-2">
                     <div className=" text-purple-400">창조실</div> 인원추가
                   </div>
-                  <div className="">
+                  <div className=" w-full">
                     <AutoInput
                       placeholder="학번과 이름을 입력하세요"
-                      width="92"
+                      width="full"
                       onChange={AutohandleChange}
                       value={addstudent.student}
                       name="student"
