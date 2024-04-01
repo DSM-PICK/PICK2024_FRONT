@@ -18,18 +18,20 @@ const TopBack: React.FC<Prop> = ({
   children,
 }) => {
   return (
-    <div className=" whitespace-nowrap h-dvh flex flex-col">
+    <div className=" h-dvh flex flex-col">
       <Header />
       <div className="flex flex-col gap-7 p-8 py-12 self-center w-3/5 h-90dvh">
-        <div className="text-neutral-200 text-sub-title3-B">
+        <div className=" whitespace-nowrap text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; {linkChildren}
         </div>
-        <div className="flex justify-between items-end gap-6">
-          <div className="flex font-sans text-heading4 text-gray-900 gap-4 items-center">
+        <div className=" whitespace-nowrap flex justify-between items-end gap-6">
+          <div className=" whitespace-nowrap flex font-sans text-heading4 text-gray-900 gap-4 items-center">
             {subTitle}
-            <div className="text-neutral-200 text-heading5">{secondTitle}</div>
+            <div className=" whitespace-nowrap text-neutral-200 text-heading5">
+              {secondTitle}
+            </div>
           </div>
-          <div className="flex items-center gap-5 flex-wrap justify-end">
+          <div className=" whitespace-nowrap flex items-center gap-5 flex-wrap justify-end">
             {DropChildren}
           </div>
         </div>
