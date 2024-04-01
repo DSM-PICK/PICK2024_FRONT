@@ -35,32 +35,11 @@ const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
   return (
     <div className="relative w-38">
       <div
-        className="group border bg-white py-2 px-3 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-between"
+        className=" border bg-white py-2 px-3 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-between"
         onClick={toggleDropdown}
       >
         {selectedOption}
-        {isDropdownVisible ? (
-          <Image src={Down} alt="" />
-        ) : (
-          <Image src={arrow} alt="" />
-        )}
       </div>
-      {isDropdownVisible && (
-        <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
-          <div
-            onClick={() => handleOptionClick("신청")}
-            className={commonStyle}
-          >
-            신청
-          </div>
-          <div
-            onClick={() => handleOptionClick("미신청")}
-            className={commonStyle}
-          >
-            미신청
-          </div>
-        </div>
-      )}
     </div>
   );
 };
