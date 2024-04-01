@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
 import { useRouter } from "next/navigation";
-import { getToken } from "@/utils/auth";
 
 interface Login {
   admin_id: string;
@@ -56,8 +55,7 @@ export const GetTeacherName = () => {
   return useMutation<{ name: string }, Error, null>({
     mutationFn: async () => {
       try {
-        const accessToken = getToken();
-        const response = await instance.get(`/admin/my-name`, {});
+        const response = await instance.get(`/admin/my-name`);
         return response.data;
       } catch (error) {
         console.log(error);
