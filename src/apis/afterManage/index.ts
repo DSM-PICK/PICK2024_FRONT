@@ -24,6 +24,13 @@ interface AfterStudent {
   status3: string;
 }
 
+interface Students {
+  name: string;
+  grade: number;
+  class_num: number;
+  num: number;
+}
+
 export const After = () => {
   return useMutation<null, Error, Type>({
     mutationFn: async (param: Type) => {
@@ -66,6 +73,21 @@ export const GetAfterStudent = () => {
     mutationFn: async () => {
       try {
         const response = await instance.get(`/after/all`, {});
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const GetStudentData = () => {
+  const accessToken = getToken();
+
+  return useMutation<Students[], Error, null>({
+    mutationFn: async () => {
+      try {
+        const response = await instance.get(`/user/all`);
         return response.data;
       } catch (error) {
         console.log(error);
