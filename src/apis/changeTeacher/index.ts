@@ -17,8 +17,7 @@ export const PostTeacher = () => {
   return useMutation<void, Error, postTeacherProp>({
     mutationFn: async (param) => {
       try {
-        const response = await instance.post(`/self-study/register`, param, {
-        });
+        const response = await instance.post(`/self-study/register`, param, {});
         return response.data;
       } catch (error) {
         console.log(error);
@@ -33,8 +32,21 @@ export const SelfstudyGet = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/self-study/month?month=${param.month}&year=${param.year}`,
+          `/self-study/month?month=${param.month}&year=${param.year}`
         );
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
+};
+
+export const GetAllTeacher = () => {
+  return useMutation<[string], Error, null>({
+    mutationFn: async () => {
+      try {
+        const response = await instance.get(`admin/all`);
         return response.data;
       } catch (error) {
         throw error;

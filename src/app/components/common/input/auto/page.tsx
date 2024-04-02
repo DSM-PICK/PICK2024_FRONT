@@ -1,8 +1,9 @@
-'use client'
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import SelectedBadges from "./badge/page";
 import { GetStudentData } from "@/apis/afterManage";
 import { setStudentNum } from "@/utils/until";
+import { GetAllTeacher } from "@/apis/changeTeacher";
 
 interface ChangeProps {
   text: string;
@@ -15,6 +16,7 @@ interface InputProps {
   name?: string;
   onChange: ({ text, name }: ChangeProps) => void;
   value: string;
+  type: "student" | "teacher";
 }
 
 interface StudentType {
@@ -30,39 +32,65 @@ const AutoInput: React.FC<InputProps> = ({
   onChange,
   value,
   name = "",
+  type,
 }) => {
   const [isAutoCompleteVisible, setIsAutoCompleteVisible] =
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { mutate: GetStudentMutate } = GetStudentData();
+  const { mutate: GetTeacerMutate } = GetAllTeacher();
+  const [teacherData, setTeacherData] = useState<[string]>();
 
   const containerClassName = `font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
   const [data, setData] = useState<StudentType[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await GetStudentMutate(null, {
-          onSuccess: (data) => {
-            setData(data);
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const Teacher = async () => {
+    try {
+      const result = await GetTeacerMutate(null, {
+        onSuccess: (data) => {
+          setTeacherData(data);
+        },
+        onError: (error) => {
+          alert(error.name);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    fetchData();
+  const fetchData = async () => {
+    try {
+      const result = await GetStudentMutate(null, {
+        onSuccess: (data) => {
+          setData(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (type === "student") {
+      fetchData();
+    } else if (type === "teacher") {
+      Teacher();
+    }
   }, []);
 
   useEffect(() => {
-    const students = data?.map((item) => `${setStudentNum(item)} ${item.name}`);
-    setStudent(students);
+    if (type === "student") {
+      const students = data?.map(
+        (item) => `${setStudentNum(item)} ${item.name}`
+      );
+      setStudent(students);
+    }
   }, [data]);
 
   const [student, setStudent] = useState<string[]>([]);
@@ -71,17 +99,26 @@ const AutoInput: React.FC<InputProps> = ({
     "h-10 px-2 border-none bg-transparent placeholder-neutral-500 focus:outline-none rounded font-sans w-full";
 
   const handleInputChange = (inputText: string) => {
-    const filtered = student?.filter((item) =>
-      item.toLowerCase().includes(inputText.toLowerCase())
-    );
-    setFilteredData(filtered?.map((item) => item) || []);
-    setIsAutoCompleteVisible(true);
+    if (type === "student") {
+      const filtered = student?.filter((item) =>
+        item.toLowerCase().includes(inputText.toLowerCase())
+      );
+      setFilteredData(filtered?.map((item) => item) || []);
+      setIsAutoCompleteVisible(true);
 
-    onChange({ text: inputText, name });
+      onChange({ text: inputText, name });
+    } else if (type === "teacher") {
+      const filtered = teacherData?.filter((item) =>
+        item.toLowerCase().includes(inputText.toLowerCase())
+      );
+      setFilteredData(filtered?.map((item) => item) || []);
+      setIsAutoCompleteVisible(true);
+
+      onChange({ text: inputText, name });
+    }
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -91,7 +128,8 @@ const AutoInput: React.FC<InputProps> = ({
       ) {
         setIsAutoCompleteVisible(false);
       }
-    }; document.addEventListener("mousedown", handleClickOutside);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -108,7 +146,19 @@ const AutoInput: React.FC<InputProps> = ({
     setSelectedValues((prevValues) => prevValues.filter((v) => v !== value));
   };
 
-  
+  const renderAutoComplete = () => (
+    <div className="absolute top-full left-0 bg-white border rounded-lg w-full text-Button-S z-20 h-64 overflow-y-scroll">
+      {filteredData.map((option) => (
+        <div
+          key={option}
+          onClick={() => handleSelectOption(option)}
+          className="flex py-2 px-3 hover:bg-primary-200 hover:text-white cursor-pointer"
+        >
+          {option}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-3" ref={dropdownRef}>
@@ -123,30 +173,20 @@ const AutoInput: React.FC<InputProps> = ({
             onChange={(e) => handleInputChange(e.target.value)}
           />
         </div>
-        {isAutoCompleteVisible && (
-          <div className="absolute top-full left-0 bg-white border rounded-lg w-full text-Button-S z-20 h-64 overflow-y-scroll">
-            {filteredData.map((option) => (
-              <div
-                key={option}
-                onClick={() => handleSelectOption(option)}
-                className="flex py-2 px-3 hover:bg-primary-200 hover:text-white cursor-pointer"
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-        )}
+        {isAutoCompleteVisible && renderAutoComplete()}
       </div>
       <div className="flex gap-3">
-        <SelectedBadges
-          selectedValues={selectedValues}
-          onRemoveBadge={handleRemoveBadge}
-        />
+        {type === "teacher" ? (
+          <></>
+        ) : (
+          <SelectedBadges
+            selectedValues={selectedValues}
+            onRemoveBadge={handleRemoveBadge}
+          />
+        )}
       </div>
     </div>
   );
 };
-
-
 
 export default AutoInput;
