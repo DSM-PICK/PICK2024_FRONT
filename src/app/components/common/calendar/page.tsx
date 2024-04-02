@@ -40,7 +40,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
     const formattedDate = moment(selectDate).format("MMMM");
     const currentYear = new Date().getFullYear();
     try {
-      const result = await selfstudyMutate(
+      await selfstudyMutate(
         {
           month: formattedDate,
           year: currentYear.toString(),
@@ -92,7 +92,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
             const dateData = monthdata
               .filter((item) => item.date === formattedDate)
               .sort((i, j) => {
-                return i.floor - j.floor;
+                return j.floor - i.floor;
               });
             if (dateData.length > 0) {
               return (
