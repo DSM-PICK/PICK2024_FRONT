@@ -97,13 +97,10 @@ const Main = () => {
   return (
     <div className="w-full h-full">
       <Header />
-      <div className="bg-primary-1200  3xl:px-100 mxl:px-72 py-20 px-44 min-w-max flex flex-col gap-17">
+      <div className="bg-primary-1200  3xl:px-100 mxl:px-72 py-20 px-44 min-w-max flex flex-col gap-8">
         <div className=" flex flex-col gap-5">
           <div className=" font-sans text-heading5 text-neutral-300">
             {today.getMonth() + 1}월 {today.getDate()}일 {getWeekDay()}요일
-          </div>
-          <div className=" gap-3 text-neutral-50 flex text-heading4">
-            {selfStudyChack}
           </div>
         </div>
         <div className=" flex flex-col gap-16">
@@ -129,7 +126,7 @@ const Main = () => {
                 방과후 관리
               </Menu>
               <Menu href="/changeTeacher" icon={changeTeacher}>
-                자습감독 선생님 변경
+                감독 변경
               </Menu>
               <Menu href="/Schedule" icon={schedule}>
                 일정변경
