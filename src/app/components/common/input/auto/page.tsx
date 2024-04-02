@@ -147,6 +147,4 @@ const AutoInput: React.FC<InputProps> = ({
   );
 };
 
-
-
 export default AutoInput;
