@@ -82,13 +82,25 @@ export const GetAfterStudent = () => {
 };
 
 export const GetStudentData = () => {
-  const accessToken = getToken();
-
   return useMutation<Students[], Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get(`/user/all`);
         return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const PostStudent = () => {
+  return useMutation<void, Error, { student_num: string }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.post(`/after`, {
+          student_num: param.student_num,
+        });
       } catch (error) {
         console.log(error);
       }

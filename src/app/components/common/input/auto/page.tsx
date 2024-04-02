@@ -108,6 +108,8 @@ const AutoInput: React.FC<InputProps> = ({
     setSelectedValues((prevValues) => prevValues.filter((v) => v !== value));
   };
 
+  
+
   return (
     <div className="flex flex-col gap-3" ref={dropdownRef}>
       <div className="flex flex-col items-start relative">
@@ -144,5 +146,7 @@ const AutoInput: React.FC<InputProps> = ({
     </div>
   );
 };
+
+
 
 export default AutoInput;
