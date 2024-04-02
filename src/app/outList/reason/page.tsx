@@ -51,11 +51,6 @@ const Reason = () => {
           console.error("OutData: Error", error);
         },
       });
-      if (result !== undefined && Array.isArray(result)) {
-        setData(result);
-      } else {
-        console.error("Invalid result received:", result);
-      }
     } catch (error) {
       console.error("OutData: Catch Error", error);
     }
@@ -64,15 +59,13 @@ const Reason = () => {
   const ReturnHomeData = async () => {
     try {
       const result = await returnHomeMutate(null, {
+        onSuccess: (data) => {
+          setHomeData(data);
+        },
         onError: (error) => {
           console.error(error);
         },
       });
-      if (result !== undefined && Array.isArray(result)) {
-        setHomeData(result);
-      } else {
-        console.error("Invalid result received:", result);
-      }
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +84,7 @@ const Reason = () => {
   const student = (item: any) => getStudentString(item);
 
   useEffect(() => {
-    ReturnHomeData();
+    Outdata();
   }, []);
 
   return (
