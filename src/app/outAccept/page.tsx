@@ -116,7 +116,6 @@ const OutAccept = () => {
           {
             onSuccess: (response) => {
               setData(data);
-              console.log("Out accept success", response);
               setAccept(false);
               location.reload();
             },

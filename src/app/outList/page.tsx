@@ -16,7 +16,7 @@ interface earlyreturnOK {
   username: string;
   start_time: string;
   grade: number;
-  classNum: number;
+  class_num: number;
   num: number;
 }
 
@@ -26,7 +26,7 @@ interface applicationOK {
   start_time: string;
   end_time: string;
   grade: number;
-  classNum: number;
+  class_num: number;
   num: number;
 }
 
