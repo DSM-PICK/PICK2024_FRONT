@@ -13,7 +13,7 @@ const ChangeClass: React.FC<changeClassProp> = ({
   nextClass,
 }) => {
   return (
-    <div className=" rounded-lg w-120 justify-between flex bg-white gap-32 px-6 py-5">
+    <div className=" whitespace-nowrap rounded-lg justify-between flex bg-white gap-10 w-max px-6 py-5">
       <div className=" text-Button-L text-neutral-50">{student}</div>
       <div className=" flex gap-4 text-Button-L text-neutral-50">
         {prevClass}

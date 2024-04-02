@@ -25,12 +25,12 @@ export const getStudentString = ({
   num,
   username,
 }: Student) => {
-  const change = num.toString().length === 1 ? `0${num}` : `${num}`;
+  const change = num.toString().length === 1 ? `0${num}` : { num };
   return `${grade}${class_num}${change} ${username}`;
 };
 
 export const setStudentNum = ({ grade, class_num, num }: studentNum) => {
-  const change = num.toString().length === 1 ? `0${num}` : `${num}`;
+  const change = num.toString().length === 1 ? `0${num}` : { num };
   return `${grade}${class_num}${change}`;
 };
 

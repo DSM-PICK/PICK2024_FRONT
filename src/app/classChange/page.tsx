@@ -25,6 +25,7 @@ const OutList = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const { mutate: changelistMutate } = ChangeClassList();
+  const [floorData, setFloorData] = useState<changeClass[]>([]);
   const { mutate: changelistFloorMutate } = GetFloor();
   const [changelist, setChangelist] = useState<changeClass[]>([]);
   const [selectedFloor, setSelectedFloor] = useState<number>(2);
@@ -64,7 +65,7 @@ const OutList = () => {
           { floor: selectedFloor },
           {
             onSuccess: (data) => {
-              setChangelist(data);
+              setFloorData(data);
             },
             onError: (error) => {
               console.log(error);
@@ -84,6 +85,7 @@ const OutList = () => {
           { grade: selectedGrade, class: selectedClass },
           {
             onSuccess: (data) => {
+              console.log(data);
               setChangelist(data);
             },
           }
@@ -106,7 +108,7 @@ const OutList = () => {
             secondChildren="층 별로 보기"
             onClick={onClickTab}
           />
-          <div className=" flex gap-5">
+          <div className="flex gap-5">
             {selectedTab ? (
               <>
                 <Dropdown type="grade" onChange={handleGradeChange} />
@@ -119,15 +121,24 @@ const OutList = () => {
         </>
       }
     >
-      <div className="flex flex-wrap gap-5 justify-between">
-        {changelist?.map((item, index) => (
-          <ChangeClass
-            key={index}
-            prevClass={`${item.grade}-${item.class_num}`}
-            nextClass={item.classroom_name}
-            student={getStudentString(item)}
-          />
-        ))}
+      <div className="flex flex-wrap gap-5 justify-between w-full">
+        {selectedTab
+          ? changelist?.map((item, index) => (
+              <ChangeClass
+                key={index}
+                prevClass={`${item.grade}-${item.class_num}`}
+                nextClass={item.classroom_name}
+                student={getStudentString(item)}
+              />
+            ))
+          : floorData?.map((item, index) => (
+              <ChangeClass
+                key={index}
+                prevClass={`${item.grade}-${item.class_num}`}
+                nextClass={item.classroom_name}
+                student={getStudentString(item)}
+              />
+            ))}
       </div>
     </BackGround>
   );
