@@ -61,7 +61,7 @@ const OutList = () => {
   const ChangeClassDataFloor = async () => {
     try {
       if (selectedFloor) {
-        const response = await changelistFloorMutate(
+        await changelistFloorMutate(
           { floor: selectedFloor },
           {
             onSuccess: (data) => {
@@ -81,7 +81,7 @@ const OutList = () => {
   const changeClassData = async () => {
     try {
       if (selectedClass && selectedGrade) {
-        const response = await changelistMutate(
+        await changelistMutate(
           { grade: selectedGrade, class: selectedClass },
           {
             onSuccess: (data) => {

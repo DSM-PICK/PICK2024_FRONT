@@ -80,7 +80,7 @@ const PostSchedule: React.FC<ModalProps> = ({ onCancel, initialDate }) => {
             value={scheduleData.event_name}
             name="event_name"
             placeholder="일정 제목"
-            width="92"
+            width="full"
           />
         </div>
         <div className="flex gap-6">
