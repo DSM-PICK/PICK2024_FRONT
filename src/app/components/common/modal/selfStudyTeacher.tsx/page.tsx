@@ -4,6 +4,7 @@ import moment from "moment";
 import Button from "../../Button";
 import Input from "../../input";
 import { PostTeacher } from "@/apis/changeTeacher";
+import AutoInput from "../../input/auto/page";
 
 export interface ChangeProps {
   text: string;
@@ -78,8 +79,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     setFourthData({ ...fourthData, [name]: text });
   };
 
-
-
   return (
     <div className=" z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
       <div className=" bg-white rounded-xl px-24 py-13 w-155">
@@ -94,32 +93,29 @@ const SelfStudyModal: React.FC<ModalProps> = ({
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-4">
-            <Input
-              type="text"
-              label="2층 자습감독"
+          <div className="flex flex-col gap-4 w-full">
+            <AutoInput
+              type="teacher"
               onChange={SecondhandleChange}
               value={secondData.teacher}
               placeholder="선생님 이름을 입력해주세요."
-              width="92"
+              width="full"
               name="teacher"
             />
-            <Input
-              type="text"
-              label="3층 자습감독"
+            <AutoInput
+              type="teacher"
               onChange={thirdhandleChange}
               value={thirdData.teacher}
               placeholder="선생님 이름을 입력해주세요."
-              width="92"
+              width="full"
               name="teacher"
             />
-            <Input
-              type="text"
-              label="4층 자습감독"
+            <AutoInput
+              type="teacher"
               onChange={fourthhandleChange}
               value={fourthData.teacher}
               placeholder="선생님 이름을 입력해주세요."
-              width="92"
+              width="full"
               name="teacher"
             />
           </div>
