@@ -122,9 +122,6 @@ const Main = () => {
               <Menu href="/WeekendMeals" icon={WeekendMeals}>
                 주말급식
               </Menu>
-              {/* <Menu href="/classManage" icon={classManage}>
-                학급 관리
-              </Menu> */}
               <Menu href="/afterManage" icon={afterManage}>
                 방과후 관리
               </Menu>
