@@ -125,7 +125,7 @@ const Main = () => {
               <Menu href="/classManage" icon={classManage}>
                 학급 관리
               </Menu>
-              <Menu href="/notDevelop" icon={afterManage}>
+              <Menu href="/afterManage" icon={afterManage}>
                 방과후 관리
               </Menu>
               <Menu href="/notDevelop" icon={studentInquiry}>
