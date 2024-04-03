@@ -191,6 +191,7 @@ const Modal: React.FC<ModalProps> = ({
                   </div>
                   <div className=" w-full">
                     <AutoInput
+                      type="student"
                       placeholder="학번과 이름을 입력하세요"
                       width="full"
                       onChange={AutohandleChange}

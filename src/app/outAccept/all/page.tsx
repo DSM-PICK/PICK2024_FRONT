@@ -1,29 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import DoubleTab from "../components/common/tab/page";
-import Button from "../components/common/Button";
+import DoubleTab from "@/app/components/common/tab/page";
+import Button from "@/app/components/common/Button";
 import { getFullToday } from "@/utils/date";
-import AcceptList from "../components/common/list/accept/page";
-import Dropdown from "../components/common/dropdown";
-import Modal from "../components/common/modal/page";
+import AcceptList from "@/app/components/common/list/accept/page";
+import Dropdown from "@/app/components/common/dropdown";
+import Modal from "@/app/components/common/modal/page";
 import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
 import { getStudentString } from "@/utils/until";
 import { useRouter } from "next/navigation";
-import { BackGround } from "../components/common/background";
+import { BackGround } from "@/app/components/common/background";
+import { AllOutList } from "@/apis/outAccept/All";
 
 interface applicationDataProp {
-  class_num: number;
-  end_time: string;
-  grade: number;
   id: string;
-  num: number;
+  user_id: string;
   reason: string;
   start_time: string;
-  user_id: string;
+  end_time: string;
   username: string;
+  grade: number;
+  class_num: number;
+  num: number;
 }
 
-const OutAccept = () => {
+const AllOutAccept = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [refuse, setRefuse] = useState<boolean>(false);
@@ -37,7 +38,7 @@ const OutAccept = () => {
   const [data, setData] = useState<applicationDataProp[]>([]);
 
   const { mutate: outAcceptMutate } = useOutAccept();
-  const { mutate: getClassMutate } = useGetClass();
+  const { mutate: AllOutListMutate } = AllOutList();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
@@ -70,12 +71,9 @@ const OutAccept = () => {
   const AcceptDataList = async () => {
     try {
       if (selectedGrade && selectedClass) {
-        const reqOption = selectedTab ? "application" : "early-return";
-        const response = await getClassMutate(
+        await AllOutListMutate(
           {
-            type: reqOption,
-            grade: selectedGrade,
-            class: selectedClass,
+            status: "QUIET",
           },
           {
             onSuccess: (data) => {
@@ -112,7 +110,7 @@ const OutAccept = () => {
             ids: selectedStudents,
           },
           {
-            onSuccess: (response) => {
+            onSuccess: () => {
               setData(data);
               setAccept(false);
               location.reload();
@@ -189,34 +187,12 @@ const OutAccept = () => {
       ]);
     }
   };
-
-  const previous = () => {
-    router.push("/outAccept/previous");
-  };
-
   return (
     <BackGround
       linkChildren="외출 수락"
       subTitle="외출 수락"
       secondTitle={getFullToday()}
-      DropChildren={
-        <>
-          <Button colorType="ghost" buttonSize="small" onClick={previous}>
-            외출 기록보기
-          </Button>
-          {selectedTab ? (
-            <div className=" flex gap-5">
-              <Dropdown type="grade" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
-            </div>
-          ) : (
-            <div className=" flex gap-5">
-              <Dropdown type="grade" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
-            </div>
-          )}
-        </>
-      }
+      DropChildren={<></>}
     >
       <div className=" gap-5 flex flex-col">
         <DoubleTab
@@ -226,7 +202,7 @@ const OutAccept = () => {
         />
         {selectedTab ? (
           <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
+            {data?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
                   handleAcceptListClick(dataItem.id, dataItem.username)
@@ -240,7 +216,7 @@ const OutAccept = () => {
           </div>
         ) : (
           <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
+            {data?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
                   handleAcceptListClick(dataItem.id, dataItem.username)
@@ -315,4 +291,4 @@ const OutAccept = () => {
   );
 };
 
-export default OutAccept;
+export default AllOutAccept;
