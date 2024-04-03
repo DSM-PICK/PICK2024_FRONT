@@ -3,12 +3,14 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
-import { GetPreviousList } from "@/apis/previousList";
+import { GetPreviousList, Outcnt } from "@/apis/previousList";
 import BeforeList from "./list";
 
 interface getProp {
   id: string;
   userName: string;
+  outCnt: number;
+  returnHomeCnt: number;
 }
 
 interface Type {
@@ -22,7 +24,12 @@ interface Type {
   }[];
 }
 
-const PreviousList: React.FC<getProp> = ({ id, userName }) => {
+const PreviousList: React.FC<getProp> = ({
+  id,
+  userName,
+  outCnt,
+  returnHomeCnt,
+}) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const { mutate: getPrevious } = GetPreviousList();
   const [data, setData] = useState<Type>();
@@ -67,7 +74,7 @@ const PreviousList: React.FC<getProp> = ({ id, userName }) => {
           className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white"
           onClick={toggleDropdown}
         >
-          {userName}
+          {userName} 외:{outCnt} 조:{returnHomeCnt}
           <Image
             src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
             alt="arrow"
