@@ -25,7 +25,6 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
         { status: tem, userId: id || "" },
         {
           onSuccess: () => {
-            location.reload();
             alert("신청이 변경되었습니다");
           },
           onError: (error) => {
