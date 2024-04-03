@@ -13,6 +13,16 @@ interface Type {
   }[];
 }
 
+interface GetCntType {
+  id: string;
+  name: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  application_cnt: number;
+  early_return_cnt: number;
+}
+
 interface id {
   id: string;
 }
@@ -28,4 +38,21 @@ export const GetPreviousList = () => {
       }
     },
   });
+};
+
+export const Outcnt = () => {
+  return useMutation<GetCntType[], Error, { grade: number; class_num: number }>(
+    {
+      mutationFn: async (param) => {
+        try {
+          const response = await instance.get(
+            `story/grade?grade=${param.grade}&class_num=${param.class_num}`
+          );
+          return response.data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }
+  );
 };

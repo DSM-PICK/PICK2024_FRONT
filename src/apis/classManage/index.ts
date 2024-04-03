@@ -40,7 +40,6 @@ export const GetStudentData = () => {
         );
         return response.data;
       } catch (error) {
-        console.error("Error adding schedule:", error);
         throw error;
       }
     },
