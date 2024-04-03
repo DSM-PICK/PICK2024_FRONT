@@ -4,11 +4,9 @@ import DoubleTab from "@/app/components/common/tab/page";
 import Button from "@/app/components/common/Button";
 import { getFullToday } from "@/utils/date";
 import AcceptList from "@/app/components/common/list/accept/page";
-import Dropdown from "@/app/components/common/dropdown";
 import Modal from "@/app/components/common/modal/page";
-import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
+import { useOutAccept } from "@/apis/outAccept/outAccept";
 import { getStudentString } from "@/utils/until";
-import { useRouter } from "next/navigation";
 import { BackGround } from "@/app/components/common/background";
 import { AllEalryList, AllOutList } from "@/apis/outAccept/All";
 
@@ -25,13 +23,10 @@ interface applicationDataProp {
 }
 
 const AllOutAccept = () => {
-  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [refuse, setRefuse] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
-  const [outSelectedGrade, setOutSelectedGrade] = useState<number>();
-  const [outSelectedClass, setOutSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
