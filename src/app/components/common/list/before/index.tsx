@@ -70,7 +70,7 @@ const PreviousList: React.FC<getProp> = ({
 
   return (
     <div className="flex h-fit w-29%">
-      <div className="relative h-5 w-full">
+      <div className="relative w-full">
         <div
           className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white"
           onClick={toggleDropdown}
