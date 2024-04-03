@@ -4,7 +4,7 @@ import { getToken } from "@/utils/auth";
 
 interface postTeacherProp {
   date: string;
-  teacher: { floor: number; teacher: string };
+  teacher: { floor: number; teacher: string }[];
 }
 
 interface data {
