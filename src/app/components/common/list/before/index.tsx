@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
-import { GetPreviousList, Outcnt } from "@/apis/previousList";
+import { GetPreviousList } from "@/apis/previousList";
 import BeforeList from "./list";
 import OutBedge from "./badge";
 
@@ -113,7 +113,7 @@ const PreviousList: React.FC<getProp> = ({
               ))
             ) : (
               <div className=" flex justify-center items-center w-full h-full">
-                <div className="text-heading6-M ">
+                <div className=" text-sub-title3-M">
                   이전 외출 기록이 없습니다
                 </div>
               </div>
