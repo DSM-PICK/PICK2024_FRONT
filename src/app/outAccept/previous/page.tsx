@@ -76,8 +76,8 @@ const Previous = () => {
           <PreviousList
             id={item.id}
             key={index}
-            outCnt={item.application_cnt}
-            returnHomeCnt={item.early_return_cnt}
+            APPLICATION={item.application_cnt}
+            EARLY_RETURN={item.early_return_cnt}
             userName={`${setStudentNum(item)} ${item.name}`}
           />
         ))}

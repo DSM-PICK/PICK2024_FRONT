@@ -1,6 +1,8 @@
 "use client";
 
+import { ChangeOut } from "@/utils/until";
 import React from "react";
+import OutBedge from "../badge";
 
 interface Prop {
   title: string;
@@ -17,24 +19,8 @@ const BeforeList: React.FC<Prop> = ({
   type,
   date,
 }) => {
-  const Change = () => {
-    if (type === "APPLICATION") {
-      return "외출";
-    } else if (type === "EARLY_RETURN") {
-      return "조기귀가";
-    }
-  };
-
   const TimeSet = () => {
     return `${date} ${startTime}~${endTime}`;
-  };
-
-  const typeStyle = () => {
-    if (type === "APPLICATION") {
-      return ` bg-primary-600`;
-    } else if (type === "EARLY_RETURN") {
-      return `bg-secondary-600`;
-    }
   };
 
   return (
@@ -48,11 +34,7 @@ const BeforeList: React.FC<Prop> = ({
             {TimeSet()}
           </div>
         </div>
-        <div
-          className={`${typeStyle()} text-white rounded text-label2 px-1 items-center justify-center h-6 flex`}
-        >
-          {Change()}
-        </div>
+        <OutBedge type={type} />
       </div>
     </div>
   );
