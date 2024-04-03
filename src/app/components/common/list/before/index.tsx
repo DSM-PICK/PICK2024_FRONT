@@ -5,12 +5,13 @@ import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
 import { GetPreviousList, Outcnt } from "@/apis/previousList";
 import BeforeList from "./list";
+import OutBedge from "./badge";
 
 interface getProp {
   id: string;
   userName: string;
-  outCnt: number;
-  returnHomeCnt: number;
+  APPLICATION: number;
+  EARLY_RETURN: number;
 }
 
 interface Type {
@@ -27,8 +28,8 @@ interface Type {
 const PreviousList: React.FC<getProp> = ({
   id,
   userName,
-  outCnt,
-  returnHomeCnt,
+  APPLICATION,
+  EARLY_RETURN,
 }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const { mutate: getPrevious } = GetPreviousList();
@@ -68,13 +69,25 @@ const PreviousList: React.FC<getProp> = ({
   }, []);
 
   return (
-    <div className="flex h-13 w-29%">
+    <div className="flex h-fit w-29%">
       <div className="relative h-5 w-full">
         <div
           className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white"
           onClick={toggleDropdown}
         >
-          {userName} 외:{outCnt} 조:{returnHomeCnt}
+          <div className=" flex flex-col text-label1 gap-3">
+            <div>{userName}</div>
+            <div className=" flex items-center gap-3">
+              <div className=" flex gap-2 items-center">
+                <OutBedge type="APPLICATION" />
+                <div className=" flex text-label2">{APPLICATION}회</div>
+              </div>
+              <div className=" flex gap-2 items-center">
+                <OutBedge type="EARLY_RETURN" />
+                <div className=" flex text-label2">{EARLY_RETURN}회</div>
+              </div>
+            </div>
+          </div>
           <Image
             src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
             alt="arrow"
