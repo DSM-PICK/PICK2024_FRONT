@@ -10,7 +10,7 @@ import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
 import { getStudentString } from "@/utils/until";
 import { useRouter } from "next/navigation";
 import { BackGround } from "@/app/components/common/background";
-import { AllOutList } from "@/apis/outAccept/All";
+import { AllEalryList, AllOutList } from "@/apis/outAccept/All";
 
 interface applicationDataProp {
   id: string;
@@ -39,55 +39,55 @@ const AllOutAccept = () => {
 
   const { mutate: outAcceptMutate } = useOutAccept();
   const { mutate: AllOutListMutate } = AllOutList();
+  const { mutate: AllEalryMutate } = AllEalryList();
+
+  useEffect(() => {
+    AcceptDataList();
+  }, []);
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
-
-    if (tab) {
-      handleGradeChange(1);
-      handleClassChange(1);
-    } else {
-      handleGradeChange(1);
-      handleClassChange(1);
-    }
   };
 
   useEffect(() => {
-    AcceptDataList();
-  }, [outSelectedClass, outSelectedGrade]);
-
-  useEffect(() => {
-    AcceptDataList();
-  }, [selectedGrade, selectedClass]);
-
-  const handleGradeChange = (selectedOption: number) => {
-    setSelectedGrade(selectedOption);
-  };
-
-  const handleClassChange = (selectedOption: number) => {
-    setSelectedClass(selectedOption);
-  };
+    selectedTab ? AcceptDataList() : ealryReturn();
+  }, [selectedTab]);
 
   const AcceptDataList = async () => {
     try {
-      if (selectedGrade && selectedClass) {
-        await AllOutListMutate(
-          {
-            status: "QUIET",
+      await AllOutListMutate(
+        {
+          status: "QUIET",
+        },
+        {
+          onSuccess: (data) => {
+            setData(data);
           },
-          {
-            onSuccess: (data) => {
-              setData(data);
-              console.log(data);
-            },
-            onError: (error) => {
-              console.log(error);
-            },
-          }
-        );
-      }
+          onError: (error) => {
+            console.log(error);
+          },
+        }
+      );
     } catch (error) {
       console.error("Out accept error", error);
+    }
+  };
+
+  const ealryReturn = async () => {
+    try {
+      await AllEalryMutate(
+        { status: "QUIET" },
+        {
+          onSuccess: (data) => {
+            setData(data);
+          },
+          onError: (error) => {
+            alert(error.name);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 

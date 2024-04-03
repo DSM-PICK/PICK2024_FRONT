@@ -27,3 +27,18 @@ export const AllOutList = () => {
     },
   });
 };
+
+export const AllEalryList = () => {
+  return useMutation<AllOutType[], Error, { status: "OK" | "QUIET" }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `early-return/all?status=${param.status}`
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
