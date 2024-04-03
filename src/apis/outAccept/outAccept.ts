@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { getToken } from "@/utils/auth";
 
 interface applicationDataProp {
   class_num: number;
