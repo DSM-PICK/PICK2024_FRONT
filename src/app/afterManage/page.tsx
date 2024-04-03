@@ -8,7 +8,8 @@ import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
-import { GetAfterStudent, PostStudent } from "@/apis/afterManage";
+import { GetAfterStudent } from "@/apis/afterManage";
+// import {postStudent} from "@/apis/afterManage";
 
 interface changeClass {
   id: string;
@@ -27,7 +28,7 @@ const AfterManage = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: getafterMutate } = GetAfterStudent();
-  const { mutate: postStudents } = PostStudent();
+  // const { mutate: postStudents } = PostStudent();
   const [datalist, setDatalist] = useState<changeClass[]>();
 
   const get = async () => {
@@ -61,19 +62,21 @@ const AfterManage = () => {
   const onClickAdd = () => {
     setModal(true);
   };
-  let data: { student_num: string };
+
+  const handleModalCancel = async () => {
+    setModal(false);
+  };
+
+  const [data, setData] = useState<string[]>([]);
 
   //추가 시에 data에 들어있던 학생들을 post 해 주기
-  const handleModalCancel = async () => {
+  const handleModalConfirm = async () => {
     try {
-      const result = await postStudents(data);
+      // const result = await postStudents({  });
       setModal(false);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleModalConfirm = () => {
     setModal(false);
   };
 
@@ -92,10 +95,6 @@ const AfterManage = () => {
   const onClickBtn = () => {
     router.push("/main");
   };
-
-  useEffect(() => {
-    get();
-  }, []);
 
   return (
     <BackGround
