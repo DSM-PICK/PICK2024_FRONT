@@ -68,8 +68,10 @@ const AfterManage = () => {
     setModal(false);
   };
   const [data, setData] = useState<string[]>(() => {
-    const localData = localStorage.getItem("students");
+    if(typeof window !== "undefined") { const localData = localStorage.getItem("students")
+
     return localData ? JSON.parse(localData) : [];
+  };
   });
 
   const handleModalConfirm = async () => {
