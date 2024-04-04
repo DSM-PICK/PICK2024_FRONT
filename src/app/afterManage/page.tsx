@@ -30,6 +30,7 @@ const AfterManage = () => {
   const { mutate: getafterMutate } = GetAfterStudent();
   const { mutate: postStudents } = PostStudent();
   const [datalist, setDatalist] = useState<changeClass[]>();
+  const router = useRouter();
 
   const get = async () => {
     try {
@@ -80,8 +81,6 @@ const AfterManage = () => {
 
     const dataFormChange = () => {};
 
-    //추가 시에 data에 들어있던 학생들을 post 해 주기
-
     const handleSaveModalCancel = () => {
       setSaveModal(false);
     };
@@ -92,8 +91,6 @@ const AfterManage = () => {
 
     const threeStyle = " bg-white text-label1 rounded-lg py-3 px-25";
     
-    const router = useRouter();
-
     const onClickBtn = () => {
       router.push("/main");
     };
