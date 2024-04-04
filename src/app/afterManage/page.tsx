@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
 import { GetAfterStudent } from "@/apis/afterManage";
 import { PostStudent } from "@/apis/afterManage";
-import { Result } from "postcss";
 
 interface changeClass {
   id: string;
@@ -63,7 +62,6 @@ const AfterManage = () => {
   const onClickAdd = () => {
     setModal(true);
   };
-  let data: { student_num: string };
 
   //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalCancel = async () => {
@@ -75,7 +73,6 @@ const AfterManage = () => {
     return localData ? JSON.parse(localData) : [];
   });
 
-  // const [data, setData] = useState<string[]>([]);
 
   //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalConfirm = async () => {
@@ -91,10 +88,6 @@ const AfterManage = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleModalConfirm = () => {
-    setModal(false);
   };
 
   const handleSaveModalCancel = () => {
