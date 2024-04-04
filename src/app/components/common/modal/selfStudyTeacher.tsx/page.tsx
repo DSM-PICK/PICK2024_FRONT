@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
-import Input from "../../input";
-import { PostTeacher } from "@/apis/changeTeacher";
+import { PostTeacher, SelectTeacher } from "@/apis/changeTeacher";
 import AutoInput from "../../input/auto/page";
 
 export interface ChangeProps {
@@ -23,6 +22,13 @@ interface ModalProps {
   initialDate: Date | null;
 }
 
+interface data {
+  floor: number;
+  teacher: string;
+  date: string;
+}
+[];
+
 const SelfStudyModal: React.FC<ModalProps> = ({
   heading1,
   onCancel,
@@ -31,8 +37,32 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   const [secondData, setSecondData] = useState({ floor: 2, teacher: "" });
   const [thirdData, setThirdData] = useState({ floor: 3, teacher: "" });
   const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" });
+  const [data, setData] = useState<data[]>([]);
 
   const { mutate: postTeacherMutate } = PostTeacher();
+  const { mutate: SelectSelfListMutate } = SelectTeacher();
+
+  const select = async () => {
+    try {
+      SelectSelfListMutate(
+        { date: moment(initialDate).format("YYYY-MM-DD") },
+        {
+          onSuccess: (data) => {
+            setData(data);
+          },
+          onError: (error) => {
+            alert(error.name);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    select();
+  }, []);
 
   const submitTeachers = async () => {
     try {
@@ -79,6 +109,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     setFourthData({ ...fourthData, [name]: text });
   };
 
+  console.log(data);
+
   return (
     <div className=" z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
       <div className=" bg-white rounded-xl px-24 py-13 w-155">
@@ -94,33 +126,38 @@ const SelfStudyModal: React.FC<ModalProps> = ({
             )}
           </div>
           <div className="flex flex-col gap-4 w-full">
-            <AutoInput
-              type="teacher"
-              onChange={SecondhandleChange}
-              value={secondData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
-              width="full"
-              name="teacher"
-            />
-            <AutoInput
-              type="teacher"
-              onChange={thirdhandleChange}
-              value={thirdData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
-              width="full"
-              name="teacher"
-            />
-            <AutoInput
-              type="teacher"
-              onChange={fourthhandleChange}
-              value={fourthData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
-              width="full"
-              name="teacher"
-            />
+            {data.map((item, index) => (
+              <>
+                <AutoInput
+                  type="teacher"
+                  onChange={SecondhandleChange}
+                  value={secondData.teacher || item.teacher}
+                  placeholder="선생님 이름을 입력해주세요."
+                  width="full"
+                  name="teacher"
+                />
+                <AutoInput
+                  type="teacher"
+                  onChange={thirdhandleChange}
+                  value={thirdData.teacher || item.teacher}
+                  placeholder="선생님 이름을 입력해주세요."
+                  width="full"
+                  name="teacher"
+                />
+                <AutoInput
+                  type="teacher"
+                  onChange={fourthhandleChange}
+                  value={fourthData.teacher || item.teacher}
+                  placeholder="선생님 이름을 입력해주세요."
+                  width="full"
+                  name="teacher"
+                />
+              </>
+            ))}
           </div>
-          {renderButtons()}
         </div>
+
+        {renderButtons()}
       </div>
     </div>
   );
