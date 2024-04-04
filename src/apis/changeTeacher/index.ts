@@ -54,3 +54,18 @@ export const GetAllTeacher = () => {
     },
   });
 };
+
+export const SelectTeacher = () => {
+  return useMutation<data[], Error, { date: string }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `self-study/date?date=${param.date}`
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
