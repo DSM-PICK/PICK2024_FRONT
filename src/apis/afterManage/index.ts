@@ -93,14 +93,11 @@ export const GetStudentData = () => {
   });
 };
 
-
 export const PostStudent = () => {
-  return useMutation<void, Error, string[]>({
+  return useMutation<void, Error, { student_num: string }[]>({
     mutationFn: async (param) => {
       try {
-        await instance.post(`/after`, {
-          studentNum: param,
-        });
+        await instance.post(`/after`, param);
       } catch (error) {
         console.log(error);
       }
