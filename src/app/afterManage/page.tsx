@@ -9,7 +9,8 @@ import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
 import { GetAfterStudent } from "@/apis/afterManage";
-// import {postStudent} from "@/apis/afterManage";
+import { PostStudent } from "@/apis/afterManage";
+
 
 interface changeClass {
   id: string;
@@ -67,17 +68,29 @@ const AfterManage = () => {
     setModal(false);
   };
 
-  const [data, setData] = useState<string[]>([]);
+
+  const handleModalConfirm = async () => {
+    try {
+  const [data, setData] = useState<string[]>(() => {
+    const localData = localStorage.getItem("students");
+    return localData ? JSON.parse(localData) : [];
+  });
+
 
   //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalConfirm = async () => {
+    setData(() => {
+      const localData = localStorage.getItem("students");
+      return localData ? JSON.parse(localData) : [];
+    });
     try {
-      // const result = await postStudents({  });
+      if (data) {
+        await postStudents(data);
+      }
       setModal(false);
     } catch (error) {
       console.log(error);
     }
-    setModal(false);
   };
 
   const handleSaveModalCancel = () => {
@@ -110,7 +123,7 @@ const AfterManage = () => {
       DropChildren={
         <>
           {change ? (
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 flex-wrap justify-end">
               {edit ? (
                 <Button
                   colorType="ghost"
@@ -128,8 +141,10 @@ const AfterManage = () => {
                   출결 체크하기
                 </Button>
               )}
-              <Dropdown type="floor" />
-              <Dropdown type="club" />
+              <div className=" flex gap-2">
+                <Dropdown type="floor" />
+                <Dropdown type="club" />
+              </div>
             </div>
           ) : (
             <div className=" flex gap-4">

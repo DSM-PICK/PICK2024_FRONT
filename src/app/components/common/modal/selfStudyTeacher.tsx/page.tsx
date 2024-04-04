@@ -1,9 +1,7 @@
-"use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
-import Input from "../../input";
-import { PostTeacher } from "@/apis/changeTeacher";
+import { PostTeacher, SelectTeacher } from "@/apis/changeTeacher";
 import AutoInput from "../../input/auto/page";
 
 export interface ChangeProps {
@@ -23,6 +21,12 @@ interface ModalProps {
   initialDate: Date | null;
 }
 
+interface DataItem {
+  floor: number;
+  teacher: string;
+  date: string;
+}
+
 const SelfStudyModal: React.FC<ModalProps> = ({
   heading1,
   onCancel,
@@ -31,8 +35,34 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   const [secondData, setSecondData] = useState({ floor: 2, teacher: "" });
   const [thirdData, setThirdData] = useState({ floor: 3, teacher: "" });
   const [fourthData, setFourthData] = useState({ floor: 4, teacher: "" });
+  const [data, setData] = useState<DataItem[]>([]);
+  const [teachers, setTeachers] = useState<string[]>([]);
 
   const { mutate: postTeacherMutate } = PostTeacher();
+  const { mutate: SelectSelfListMutate } = SelectTeacher();
+
+  const select = async () => {
+    try {
+      const result = await SelectSelfListMutate(
+        {
+          date: moment(initialDate).format("YYYY-MM-DD"),
+        },
+        {
+          onSuccess: (data) => {
+            setData(data);
+            setTeachers(data.map((item) => item.teacher));
+            console.log(teachers[0]);
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    select();
+  }, []);
 
   const submitTeachers = async () => {
     try {
@@ -44,17 +74,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
           { floor: fourthData.floor, teacher: fourthData.teacher },
         ],
       };
-      await postTeacherMutate(postData, {
-        onSuccess: () => {
-          location.reload();
-          alert("등록에 성공하였습니다");
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
+
+      await postTeacherMutate(postData);
+      location.reload();
+      alert("등록에 성공하였습니다");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -72,16 +97,18 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   const SecondhandleChange = ({ text, name }: ChangeProps) => {
     setSecondData({ ...secondData, [name]: text });
   };
+
   const thirdhandleChange = ({ text, name }: ChangeProps) => {
     setThirdData({ ...thirdData, [name]: text });
   };
+
   const fourthhandleChange = ({ text, name }: ChangeProps) => {
     setFourthData({ ...fourthData, [name]: text });
   };
 
   return (
-    <div className=" z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
-      <div className=" bg-white rounded-xl px-24 py-13 w-155">
+    <div className="z-10 fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-30">
+      <div className="bg-white rounded-xl px-24 py-13 w-155">
         <div className="flex flex-col gap-8 items-center">
           <div className="text-neutral-50 text-center">
             {heading1 && (
@@ -97,24 +124,24 @@ const SelfStudyModal: React.FC<ModalProps> = ({
             <AutoInput
               type="teacher"
               onChange={SecondhandleChange}
-              value={secondData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
+              value={secondData.teacher || teachers[0]}
+              placeholder="2층 자습감독"
               width="full"
               name="teacher"
             />
             <AutoInput
               type="teacher"
               onChange={thirdhandleChange}
-              value={thirdData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
+              value={thirdData.teacher || teachers[1]}
+              placeholder="3층 잣"
               width="full"
               name="teacher"
             />
             <AutoInput
               type="teacher"
               onChange={fourthhandleChange}
-              value={fourthData.teacher}
-              placeholder="선생님 이름을 입력해주세요."
+              value={fourthData.teacher || teachers[2]}
+              placeholder="4층 자습"
               width="full"
               name="teacher"
             />

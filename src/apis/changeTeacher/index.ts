@@ -4,7 +4,7 @@ import { getToken } from "@/utils/auth";
 
 interface postTeacherProp {
   date: string;
-  teacher: { floor: number; teacher: string };
+  teacher: { floor: number; teacher: string }[];
 }
 
 interface data {
@@ -43,13 +43,28 @@ export const SelfstudyGet = () => {
 };
 
 export const GetAllTeacher = () => {
-  return useMutation<[string], Error, null>({
+  return useMutation<string, Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get(`admin/all`);
         return response.data;
       } catch (error) {
         throw error;
+      }
+    },
+  });
+};
+
+export const SelectTeacher = () => {
+  return useMutation<data[], Error, { date: string }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `self-study/date?date=${param.date}`
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
       }
     },
   });

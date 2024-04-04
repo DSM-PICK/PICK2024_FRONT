@@ -43,3 +43,11 @@ export const Grade = (grade: number[]) => {
     return grade.join(", ");
   }
 };
+
+export const ChangeOut = (type: "APPLICATION" | "EARLY_RETURN") => {
+  if (type === "APPLICATION") {
+    return "외출";
+  } else if (type === "EARLY_RETURN") {
+    return "조기귀가";
+  }
+};
