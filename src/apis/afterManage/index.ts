@@ -93,6 +93,7 @@ export const GetStudentData = () => {
   });
 };
 
+
 export const PostStudent = () => {
   return useMutation<void, Error, string[]>({
     mutationFn: async (param) => {
