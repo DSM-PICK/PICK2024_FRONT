@@ -55,6 +55,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectGrade(selectedOption);
+    // localStorage.getItem()
   };
 
   const handleClassChange = (selectedOption: number) => {

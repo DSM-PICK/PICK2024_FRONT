@@ -23,7 +23,9 @@ const Dropdown: React.FC<DropProps> = ({
   isOpen,
 }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
-  const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
+  const [selectedClassOption, setSelectedClassOption] = useState<
+    number | string
+  >(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -85,6 +87,7 @@ const Dropdown: React.FC<DropProps> = ({
     { value: 1, label: "1학년" },
     { value: 2, label: "2학년" },
     { value: 3, label: "3학년" },
+    { value: 5, label: "전체" },
   ];
 
   const classOptions = [
@@ -92,6 +95,7 @@ const Dropdown: React.FC<DropProps> = ({
     { value: 2, label: "2반" },
     { value: 3, label: "3반" },
     { value: 4, label: "4반" },
+    { value: 5, label: "전체" },
   ];
 
   const clubOptions = [
@@ -118,9 +122,13 @@ const Dropdown: React.FC<DropProps> = ({
         onClick={toggleDropdown}
       >
         {type === "grade"
-          ? `${selectedGradeOption}학년`
+          ? selectedGradeOption === 5
+            ? `전체`
+            : `${selectedGradeOption}학년`
           : type === "class"
-          ? `${selectedClassOption}반`
+          ? selectedClassOption == 5
+            ? `전체`
+            : `${selectedClassOption}반`
           : `${selectedFloorOption}층`}
         <Image
           src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
