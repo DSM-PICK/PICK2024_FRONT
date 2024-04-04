@@ -27,8 +27,8 @@ interface StudentType {
 }
 
 interface AutoInputProps extends InputProps {
-  selectedValues: string[];
-  onRemoveBadge: (value: string) => void;
+  selectedValues?: string[];
+  onRemoveBadge?: (value: string) => void;
 }
 
 export const PostSelectedValues: React.FC<AutoInputProps> = ({

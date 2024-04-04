@@ -1,5 +1,4 @@
 "use client";
-import { instance } from "@/apis";
 import { ChangeState } from "@/apis/weekendMeal";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -19,14 +18,13 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
-  const Change = async () => {
-    const tem = selectedOption === "미신청" ? "NO" : "OK";
+  const Change = async (option:string) => {
+    const tem = option === "미신청" ? "NO" : "OK";
     try {
       await ChangeMealMutate(
         { status: tem, userId: id || "" },
         {
           onSuccess: () => {
-            location.reload();
             alert("신청이 변경되었습니다");
           },
           onError: (error) => {
@@ -58,9 +56,8 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
     setIsDropdownVisible(false);
-    Change();
+    Change(option);
   };
 
   const dropStyle = () => {
