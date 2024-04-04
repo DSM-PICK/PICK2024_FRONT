@@ -61,6 +61,11 @@ const AutoInput: React.FC<InputProps> = ({
     }
   };
 
+  useEffect(() => {//값 보내주기
+    localStorage.setItem("students", JSON.stringify(selectedValues));
+    // console.log(localStorage.getItem("students"));
+  }, [selectedValues]);
+
   const fetchData = async () => {
     try {
       const result = await GetStudentMutate(null, {
