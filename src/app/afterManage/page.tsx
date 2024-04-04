@@ -111,7 +111,7 @@ const AfterManage = () => {
       DropChildren={
         <>
           {change ? (
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 flex-wrap justify-end">
               {edit ? (
                 <Button
                   colorType="ghost"
@@ -129,8 +129,10 @@ const AfterManage = () => {
                   출결 체크하기
                 </Button>
               )}
-              <Dropdown type="floor" />
-              <Dropdown type="club" />
+              <div className=" flex gap-2">
+                <Dropdown type="floor" />
+                <Dropdown type="club" />
+              </div>
             </div>
           ) : (
             <div className=" flex gap-4">
