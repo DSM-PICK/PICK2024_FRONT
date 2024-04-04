@@ -11,6 +11,7 @@ import { BackGround } from "../components/common/background";
 import { GetAfterStudent } from "@/apis/afterManage";
 import { PostStudent } from "@/apis/afterManage";
 
+
 interface changeClass {
   id: string;
   grade: number;
@@ -28,7 +29,7 @@ const AfterManage = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: getafterMutate } = GetAfterStudent();
-  const { mutate: postStudents } = PostStudent();
+  // const { mutate: postStudents } = PostStudent();
   const [datalist, setDatalist] = useState<changeClass[]>();
 
   const get = async () => {
@@ -63,11 +64,13 @@ const AfterManage = () => {
     setModal(true);
   };
 
-  //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalCancel = async () => {
     setModal(false);
   };
 
+
+  const handleModalConfirm = async () => {
+    try {
   const [data, setData] = useState<string[]>(() => {
     const localData = localStorage.getItem("students");
     return localData ? JSON.parse(localData) : [];
@@ -105,10 +108,6 @@ const AfterManage = () => {
   const onClickBtn = () => {
     router.push("/main");
   };
-
-  useEffect(() => {
-    get();
-  }, []);
 
   return (
     <BackGround

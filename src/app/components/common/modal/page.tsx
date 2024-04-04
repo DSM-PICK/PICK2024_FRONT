@@ -197,6 +197,8 @@ const Modal: React.FC<ModalProps> = ({
                       onChange={AutohandleChange}
                       value={addstudent.student}
                       name="student"
+                      selectedValues={[]}
+                      onRemoveBadge={() => {}}
                     />
                   </div>
                   {renderButtons()}

@@ -26,7 +26,19 @@ interface StudentType {
   num: number;
 }
 
-const AutoInput: React.FC<InputProps> = ({
+interface AutoInputProps extends InputProps {
+  selectedValues: string[];
+  onRemoveBadge: (value: string) => void;
+}
+
+export const PostSelectedValues: React.FC<AutoInputProps> = ({
+  selectedValues,
+}) => {
+  console.log(selectedValues);
+  return selectedValues;
+};
+
+const AutoInput: React.FC<AutoInputProps> = ({
   placeholder,
   width,
   onChange,
@@ -37,7 +49,7 @@ const AutoInput: React.FC<InputProps> = ({
   const [isAutoCompleteVisible, setIsAutoCompleteVisible] =
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]); //
   const { mutate: GetStudentMutate } = GetStudentData();
   const { mutate: GetTeacerMutate } = GetAllTeacher();
   const [teacherData, setTeacherData] = useState<[string]>();
@@ -152,7 +164,7 @@ const AutoInput: React.FC<InputProps> = ({
   };
 
   const renderAutoComplete = () => (
-    <div className="absolute top-full left-0 bg-white border rounded-lg w-full text-Button-S z-20 h-64 overflow-y-scroll">
+    <div className="absolute top-full left-0 bg-white border rounded-lg w-full text-Button-S z-20 h-auto max-h-64 overflow-y-scroll">
       {filteredData.map((option) => (
         <div
           key={option}
