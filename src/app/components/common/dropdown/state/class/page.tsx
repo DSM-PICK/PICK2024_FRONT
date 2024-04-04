@@ -1,4 +1,5 @@
 "use client";
+import { instance } from "@/apis";
 import { ChangeState } from "@/apis/weekendMeal";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -25,6 +26,7 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
         { status: tem, userId: id || "" },
         {
           onSuccess: () => {
+            location.reload();
             alert("신청이 변경되었습니다");
           },
           onError: (error) => {

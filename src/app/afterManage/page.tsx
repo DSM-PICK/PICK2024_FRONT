@@ -8,7 +8,9 @@ import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
-import { GetAfterStudent, PostStudent } from "@/apis/afterManage";
+import { GetAfterStudent } from "@/apis/afterManage";
+import { PostStudent } from "@/apis/afterManage";
+import { Result } from "postcss";
 
 interface changeClass {
   id: string;
@@ -65,8 +67,26 @@ const AfterManage = () => {
 
   //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalCancel = async () => {
+    setModal(false);
+  };
+
+  const [data, setData] = useState<string[]>(() => {
+    const localData = localStorage.getItem("students");
+    return localData ? JSON.parse(localData) : [];
+  });
+
+  // const [data, setData] = useState<string[]>([]);
+
+  //추가 시에 data에 들어있던 학생들을 post 해 주기
+  const handleModalConfirm = async () => {
+    setData(() => {
+      const localData = localStorage.getItem("students");
+      return localData ? JSON.parse(localData) : [];
+    });
     try {
-      const result = await postStudents(data);
+      if (data) {
+        await postStudents(data);
+      }
       setModal(false);
     } catch (error) {
       console.log(error);
