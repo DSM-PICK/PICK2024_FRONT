@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
@@ -121,30 +122,39 @@ const SelfStudyModal: React.FC<ModalProps> = ({
             )}
           </div>
           <div className="flex flex-col gap-4 w-full">
-            <AutoInput
-              type="teacher"
-              onChange={SecondhandleChange}
-              value={secondData.teacher || teachers[0]}
-              placeholder="2층 자습감독"
-              width="full"
-              name="teacher"
-            />
-            <AutoInput
-              type="teacher"
-              onChange={thirdhandleChange}
-              value={thirdData.teacher || teachers[1]}
-              placeholder="3층 잣"
-              width="full"
-              name="teacher"
-            />
-            <AutoInput
-              type="teacher"
-              onChange={fourthhandleChange}
-              value={fourthData.teacher || teachers[2]}
-              placeholder="4층 자습"
-              width="full"
-              name="teacher"
-            />
+            <div className=" flex flex-col">
+              <div>2층 자습감독</div>
+              <AutoInput
+                type="teacher"
+                onChange={SecondhandleChange}
+                value={secondData.teacher || teachers[0]}
+                placeholder="2층 자습감독"
+                width="full"
+                name="teacher"
+              />
+            </div>
+            <div className=" flex flex-col">
+              <div>3층 자습감독</div>
+              <AutoInput
+                type="teacher"
+                onChange={thirdhandleChange}
+                value={thirdData.teacher || teachers[1]}
+                placeholder="3층 자습감독"
+                width="full"
+                name="teacher"
+              />
+            </div>
+            <div className=" flex flex-col">
+              <div>4층 자습감독</div>
+              <AutoInput
+                type="teacher"
+                onChange={fourthhandleChange}
+                value={fourthData.teacher || teachers[2]}
+                placeholder="4층 자습감독"
+                width="full"
+                name="teacher"
+              />
+            </div>
           </div>
           {renderButtons()}
         </div>
