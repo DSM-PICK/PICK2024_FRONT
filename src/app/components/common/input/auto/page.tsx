@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import SelectedBadges from "./badge/page";
-import { GetStudentData } from "@/apis/afterManage";
+import { ALLStudent } from "@/apis/afterManage";
 import { setStudentNum } from "@/utils/until";
 import { GetAllTeacher } from "@/apis/changeTeacher";
 
@@ -49,10 +49,10 @@ const AutoInput: React.FC<AutoInputProps> = ({
   const [isAutoCompleteVisible, setIsAutoCompleteVisible] =
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]); //
-  const { mutate: GetStudentMutate } = GetStudentData();
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const { mutate: GetStudentMutate } = ALLStudent();
   const { mutate: GetTeacerMutate } = GetAllTeacher();
-  const [teacherData, setTeacherData] = useState<[string]>();
+  const [teacherData, setTeacherData] = useState<string[]>();
 
   const containerClassName = `font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
@@ -60,7 +60,7 @@ const AutoInput: React.FC<AutoInputProps> = ({
 
   const Teacher = async () => {
     try {
-      const result = await GetTeacerMutate(null, {
+      await GetTeacerMutate(null, {
         onSuccess: (data) => {
           setTeacherData(data);
         },
@@ -73,14 +73,13 @@ const AutoInput: React.FC<AutoInputProps> = ({
     }
   };
 
-  useEffect(() => {//값 보내주기
+  useEffect(() => {
     localStorage.setItem("students", JSON.stringify(selectedValues));
-    // console.log(localStorage.getItem("students"));
   }, [selectedValues]);
 
   const fetchData = async () => {
     try {
-      const result = await GetStudentMutate(null, {
+      await GetStudentMutate(null, {
         onSuccess: (data) => {
           setData(data);
         },
@@ -168,7 +167,10 @@ const AutoInput: React.FC<AutoInputProps> = ({
       {filteredData.map((option) => (
         <div
           key={option}
-          onClick={() => handleSelectOption(option)}
+          onClick={() => {
+            handleSelectOption(option);
+            handleInputChange("");
+          }}
           className="flex py-2 px-3 hover:bg-primary-200 hover:text-white cursor-pointer"
         >
           {option}

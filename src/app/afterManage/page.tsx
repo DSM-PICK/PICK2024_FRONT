@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import Dropdown from "../components/common/dropdown";
 import AfterCheck from "../components/common/list/after/page";
@@ -89,7 +89,7 @@ const AfterManage = () => {
         student_num: studentNum,
       };
     });
-    
+
     console.log(data);
     try {
       await postStudents(updatedData);
@@ -98,18 +98,6 @@ const AfterManage = () => {
       console.log(error);
     }
   };
-
-  // const dataFormChange = () => {
-  //   const updatedData = data.map((item) => {
-  //     const [studentNum] = item.split(" ");
-  //     return {
-  //       student_num: studentNum,
-  //     };
-  //   });
-  //   console.log(updatedData);
-
-  //   setData(updatedData);
-  // };
 
   const handleSaveModalCancel = () => {
     setSaveModal(false);
@@ -124,6 +112,10 @@ const AfterManage = () => {
   const onClickBtn = () => {
     router.push("/main");
   };
+
+  useEffect(() => {
+    get();
+  }, []);
 
   return (
     <BackGround

@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 interface Type {
   grade: number;
-  classNum: number;
+  class_num: number;
   num: number;
   name: string;
 }
@@ -36,7 +36,7 @@ export const After = () => {
       try {
         const response = await instance.post("after", {
           grade: param.grade,
-          class_num: param.classNum,
+          class_num: param.class_num,
           num: param.num,
           name: param.name,
         });
@@ -98,6 +98,19 @@ export const PostStudent = () => {
     mutationFn: async (param) => {
       try {
         await instance.post(`/after`, param);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const ALLStudent = () => {
+  return useMutation<Type[], Error, null>({
+    mutationFn: async () => {
+      try {
+        const result = await instance.get(`/after/search`);
+        return result.data;
       } catch (error) {
         console.log(error);
       }

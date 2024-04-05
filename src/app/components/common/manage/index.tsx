@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
 import { ChangeState } from "@/apis/weekendMeal";
 
@@ -22,6 +22,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
   const { mutate: changeStatusMutate } = ChangeState();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   let defaultOptions: Record<string, string> = {
     출석: "출석",
@@ -83,10 +84,27 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
     setSelectedOption(defaultOptions[state]);
   }, [state]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
       className={`group relative rounded-lg py-2 px-3 ${stateStyles} flex gap-1 items-center cursor-pointer`}
       onClick={toggleDropdown}
+      ref={dropdownRef}
     >
       <div>{selectedOption}</div>
       <div className="w-4 h-4">{IconColor()}</div>
