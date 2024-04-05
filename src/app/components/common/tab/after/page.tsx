@@ -5,7 +5,7 @@ import { useState } from "react";
 interface TabProps {
   firstChildren: string;
   secondChildren: string;
-  onClick: (tab: boolean) => void;
+  onClick: (tab: string) => void;
 }
 
 const AfterTab: React.FC<TabProps> = ({
@@ -13,14 +13,14 @@ const AfterTab: React.FC<TabProps> = ({
   secondChildren,
   onClick,
 }) => {
-  const [selectedTab, setSelectedTab] = useState<boolean>(true);
+  const [selectedTab, setSelectedTab] = useState<string>(`${secondChildren}`);
 
-  const selectTabClass = (tab: boolean) =>
+  const selectTabClass = (tab: string) =>
     selectedTab === tab
       ? "font-sans rounded-60 text-heading6-M text-white bg-primary-500  py-3 flex items-center justify-center select-none"
       : "font-sans text-heading6-M bg-white  py-3 flex items-center justify-center select-none";
 
-  const handleTabClick = (tab: boolean) => {
+  const handleTabClick = (tab: string) => {
     setSelectedTab(tab);
     onClick(tab);
   };
@@ -28,14 +28,22 @@ const AfterTab: React.FC<TabProps> = ({
   return (
     <div className="flex">
       <div
-        className={`${selectTabClass(false)} w-38`}
-        onClick={() => handleTabClick(false)}
+        className={`${selectTabClass(`${firstChildren}`)} w-38`}
+        onClick={() =>
+          selectedTab !== `${firstChildren}`
+            ? handleTabClick(`${firstChildren}`)
+            : null
+        }
       >
         {firstChildren}
       </div>
       <div
-        className={`${selectTabClass(true)} w-32`}
-        onClick={() => handleTabClick(true)}
+        className={`${selectTabClass(`${secondChildren}`)} w-32`}
+        onClick={() =>
+          selectedTab !== secondChildren
+            ? handleTabClick(`${secondChildren}`)
+            : null
+        }
       >
         {secondChildren}
       </div>
@@ -43,4 +51,4 @@ const AfterTab: React.FC<TabProps> = ({
   );
 };
 
-export default AfterTab
+export default AfterTab;
