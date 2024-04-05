@@ -63,7 +63,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
           },
         ],
       };
-      await ChangeMutate(ChangeData);
+      await ChangeMutate(ChangeData, {
+        onSuccess: () => {
+          location.reload();
+          alert("자습감독이 수정되었습니다");
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -79,7 +84,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
           onSuccess: (data) => {
             setData(data);
             setTeachers(data.map((item) => item.teacher));
-            console.log(teachers[0]);
           },
         }
       );
@@ -107,7 +111,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
         ],
       };
 
-      await postTeacherMutate(postData);
+      await postTeacherMutate(postData, {
+        onSuccess: () => {
+          location.reload();
+          alert("자습감독이 등록되었습니다");
+        },
+      });
     } catch (error) {
       console.error(error);
     }
