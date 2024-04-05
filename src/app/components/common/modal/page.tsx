@@ -51,7 +51,6 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const [teacherData, setTeacherData] = useState<string[]>(teachers || []);
   const [inputValue, setInputValue] = useState("");
-  const [selfStudyTeacher, setSelfStudyTeacher] = useState<selfStudyPost[]>([]);
 
   const [addstudent, setAddstudent] = useState({
     student: "",
@@ -197,8 +196,6 @@ const Modal: React.FC<ModalProps> = ({
                       onChange={AutohandleChange}
                       value={addstudent.student}
                       name="student"
-                      selectedValues={[]}
-                      onRemoveBadge={() => {}}
                     />
                   </div>
                   {renderButtons()}
