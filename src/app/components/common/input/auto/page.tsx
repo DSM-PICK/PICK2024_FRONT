@@ -49,7 +49,7 @@ const AutoInput: React.FC<AutoInputProps> = ({
   const [isAutoCompleteVisible, setIsAutoCompleteVisible] =
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]); //
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { mutate: GetStudentMutate } = GetStudentData();
   const { mutate: GetTeacerMutate } = GetAllTeacher();
   const [teacherData, setTeacherData] = useState<[string]>();
@@ -60,7 +60,7 @@ const AutoInput: React.FC<AutoInputProps> = ({
 
   const Teacher = async () => {
     try {
-      const result = await GetTeacerMutate(null, {
+      await GetTeacerMutate(null, {
         onSuccess: (data) => {
           setTeacherData(data);
         },
@@ -73,9 +73,8 @@ const AutoInput: React.FC<AutoInputProps> = ({
     }
   };
 
-  useEffect(() => {//값 보내주기
+  useEffect(() => {
     localStorage.setItem("students", JSON.stringify(selectedValues));
-    // console.log(localStorage.getItem("students"));
   }, [selectedValues]);
 
   const fetchData = async () => {
@@ -168,7 +167,10 @@ const AutoInput: React.FC<AutoInputProps> = ({
       {filteredData.map((option) => (
         <div
           key={option}
-          onClick={() => handleSelectOption(option)}
+          onClick={() => {
+            handleSelectOption(option);
+            handleInputChange("");
+          }}
           className="flex py-2 px-3 hover:bg-primary-200 hover:text-white cursor-pointer"
         >
           {option}
