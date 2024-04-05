@@ -27,8 +27,8 @@ interface StudentType {
 }
 
 interface AutoInputProps extends InputProps {
-  selectedValues: string[];
-  onRemoveBadge: (value: string) => void;
+  selectedValues?: string[];
+  onRemoveBadge?: (value: string) => void;
 }
 
 export const PostSelectedValues: React.FC<AutoInputProps> = ({
@@ -72,6 +72,11 @@ const AutoInput: React.FC<AutoInputProps> = ({
       console.log(error);
     }
   };
+
+  useEffect(() => {//값 보내주기
+    localStorage.setItem("students", JSON.stringify(selectedValues));
+    // console.log(localStorage.getItem("students"));
+  }, [selectedValues]);
 
   const fetchData = async () => {
     try {

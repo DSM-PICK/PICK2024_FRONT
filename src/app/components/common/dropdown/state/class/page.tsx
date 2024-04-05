@@ -18,8 +18,8 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
   );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
-  const Change = async () => {
-    const tem = selectedOption === "미신청" ? "NO" : "OK";
+  const Change = async (option:string) => {
+    const tem = option === "미신청" ? "NO" : "OK";
     try {
       await ChangeMealMutate(
         { status: tem, userId: id || "" },
@@ -56,9 +56,8 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
     setIsDropdownVisible(false);
-    Change();
+    Change(option);
   };
 
   const dropStyle = () => {

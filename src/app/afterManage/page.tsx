@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../components/common/Button";
 import Dropdown from "../components/common/dropdown";
 import AfterCheck from "../components/common/list/after/page";
@@ -9,7 +9,7 @@ import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
 import { GetAfterStudent } from "@/apis/afterManage";
-// import {postStudent} from "@/apis/afterManage";
+import { PostStudent } from "@/apis/afterManage";
 
 interface changeClass {
   id: string;
@@ -28,8 +28,9 @@ const AfterManage = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: getafterMutate } = GetAfterStudent();
-  // const { mutate: postStudents } = PostStudent();
+  const { mutate: postStudents } = PostStudent();
   const [datalist, setDatalist] = useState<changeClass[]>();
+  const router = useRouter();
 
   const get = async () => {
     try {
@@ -66,19 +67,49 @@ const AfterManage = () => {
   const handleModalCancel = async () => {
     setModal(false);
   };
+  const [data, setData] = useState<string[]>(() => {
+    if (typeof window !== "undefined") {
+      const localData = localStorage.getItem("students");
+      return localData ? JSON.parse(localData) : [];
+    }
+  });
 
-  const [data, setData] = useState<string[]>([]);
-
-  //추가 시에 data에 들어있던 학생들을 post 해 주기
   const handleModalConfirm = async () => {
+    setData(() => {
+      if (typeof window !== "undefined") {
+        const localData = localStorage.getItem("students");
+        return localData ? JSON.parse(localData) : [];
+      }
+      return [];
+    });
+
+    const updatedData = data.map((item) => {
+      const [studentNum] = item.split(" ");
+      return {
+        student_num: studentNum,
+      };
+    });
+    
+    console.log(data);
     try {
-      // const result = await postStudents({  });
+      await postStudents(updatedData);
       setModal(false);
     } catch (error) {
       console.log(error);
     }
-    setModal(false);
   };
+
+  // const dataFormChange = () => {
+  //   const updatedData = data.map((item) => {
+  //     const [studentNum] = item.split(" ");
+  //     return {
+  //       student_num: studentNum,
+  //     };
+  //   });
+  //   console.log(updatedData);
+
+  //   setData(updatedData);
+  // };
 
   const handleSaveModalCancel = () => {
     setSaveModal(false);
@@ -89,8 +120,6 @@ const AfterManage = () => {
   };
 
   const threeStyle = " bg-white text-label1 rounded-lg py-3 px-25";
-
-  const router = useRouter();
 
   const onClickBtn = () => {
     router.push("/main");

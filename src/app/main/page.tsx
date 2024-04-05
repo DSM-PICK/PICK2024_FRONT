@@ -9,7 +9,6 @@ import WeekendMeals from "../../assets/img/Icon/주말급식.svg";
 import classManage from "../../assets/img/Icon/학급관리.svg";
 import afterManage from "../../assets/img/Icon/방과후관리.svg";
 import notice from "../../assets/img/Icon/공지사항.svg";
-import studentInquiry from "../../assets/img/Icon/학생조회.svg";
 import changeTeacher from "../../assets/img/Icon/자습감독선생님변경.svg";
 import schedule from "../../assets/img/Icon/일정변경.svg";
 import outStudent from "../../assets/img/외출 일러스트.png";
@@ -121,6 +120,9 @@ const Main = () => {
               </Menu>
               <Menu href="/classManage" icon={classManage}>
                 학급 관리
+              </Menu>
+              <Menu href="/selfStudyCheck" icon={notice}>
+                출결
               </Menu>
               <Menu href="/afterManage" icon={afterManage}>
                 방과후 관리
