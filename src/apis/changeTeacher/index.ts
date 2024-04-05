@@ -41,7 +41,7 @@ export const SelfstudyGet = () => {
 };
 
 export const GetAllTeacher = () => {
-  return useMutation<string, Error, null>({
+  return useMutation<string[], Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get(`admin/all`);
