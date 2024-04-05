@@ -122,7 +122,7 @@ const Main = () => {
                 학급 관리
               </Menu>
               <Menu href="/selfStudyCheck" icon={notice}>
-                출결
+                출석 체크
               </Menu>
               <Menu href="/afterManage" icon={afterManage}>
                 방과후 관리
