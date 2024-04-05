@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
-import { PostTeacher, SelectTeacher } from "@/apis/changeTeacher";
+import {
+  ChangeTeachers,
+  PostTeacher,
+  SelectTeacher,
+} from "@/apis/changeTeacher";
 import AutoInput from "../../input/auto/page";
 
 export interface ChangeProps {
@@ -40,11 +44,39 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   const [teachers, setTeachers] = useState<string[]>([]);
 
   const { mutate: postTeacherMutate } = PostTeacher();
+  const { mutate: ChangeMutate } = ChangeTeachers();
   const { mutate: SelectSelfListMutate } = SelectTeacher();
+
+  const Change = async () => {
+    try {
+      const ChangeData: postTeacherProp = {
+        date: moment(initialDate).format("YYYY-MM-DD"),
+        teacher: [
+          {
+            floor: secondData.floor,
+            teacher: secondData.teacher || teachers[0],
+          },
+          { floor: thirdData.floor, teacher: thirdData.teacher || teachers[1] },
+          {
+            floor: fourthData.floor,
+            teacher: fourthData.teacher || teachers[2],
+          },
+        ],
+      };
+      await ChangeMutate(ChangeData, {
+        onSuccess: () => {
+          location.reload();
+          alert("자습감독이 수정되었습니다");
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const select = async () => {
     try {
-      const result = await SelectSelfListMutate(
+      await SelectSelfListMutate(
         {
           date: moment(initialDate).format("YYYY-MM-DD"),
         },
@@ -52,7 +84,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
           onSuccess: (data) => {
             setData(data);
             setTeachers(data.map((item) => item.teacher));
-            console.log(teachers[0]);
           },
         }
       );
@@ -65,6 +96,10 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     select();
   }, []);
 
+  const Post = () => {
+    teachers.length === 0 ? submitTeachers() : Change();
+  };
+
   const submitTeachers = async () => {
     try {
       const postData: postTeacherProp = {
@@ -76,9 +111,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
         ],
       };
 
-      await postTeacherMutate(postData);
-      location.reload();
-      alert("등록에 성공하였습니다");
+      await postTeacherMutate(postData, {
+        onSuccess: () => {
+          location.reload();
+          alert("자습감독이 등록되었습니다");
+        },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -89,7 +127,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       <Button colorType="ghost" buttonSize="large" onClick={onCancel}>
         취소
       </Button>
-      <Button colorType="primary" buttonSize="large" onClick={submitTeachers}>
+      <Button colorType="primary" buttonSize="large" onClick={Post}>
         확인
       </Button>
     </div>

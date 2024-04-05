@@ -28,6 +28,7 @@ const AfterDelete: React.FC<AfterdeleteProps> = ({ student, id }) => {
         { id },
         {
           onSuccess() {
+            location.reload();
             alert("삭제되었습니다");
           },
           onError(error) {

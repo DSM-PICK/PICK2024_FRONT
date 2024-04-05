@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import SelectedBadges from "./badge/page";
-import { GetStudentData } from "@/apis/afterManage";
+import { ALLStudent } from "@/apis/afterManage";
 import { setStudentNum } from "@/utils/until";
 import { GetAllTeacher } from "@/apis/changeTeacher";
 
@@ -50,9 +50,9 @@ const AutoInput: React.FC<AutoInputProps> = ({
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const { mutate: GetStudentMutate } = GetStudentData();
+  const { mutate: GetStudentMutate } = ALLStudent();
   const { mutate: GetTeacerMutate } = GetAllTeacher();
-  const [teacherData, setTeacherData] = useState<[string]>();
+  const [teacherData, setTeacherData] = useState<string[]>();
 
   const containerClassName = `font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
@@ -79,7 +79,7 @@ const AutoInput: React.FC<AutoInputProps> = ({
 
   const fetchData = async () => {
     try {
-      const result = await GetStudentMutate(null, {
+      await GetStudentMutate(null, {
         onSuccess: (data) => {
           setData(data);
         },
