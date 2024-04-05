@@ -89,7 +89,7 @@ const AfterManage = () => {
         student_num: studentNum,
       };
     });
-    
+
     console.log(data);
     try {
       await postStudents(updatedData);
@@ -98,18 +98,6 @@ const AfterManage = () => {
       console.log(error);
     }
   };
-
-  // const dataFormChange = () => {
-  //   const updatedData = data.map((item) => {
-  //     const [studentNum] = item.split(" ");
-  //     return {
-  //       student_num: studentNum,
-  //     };
-  //   });
-  //   console.log(updatedData);
-
-  //   setData(updatedData);
-  // };
 
   const handleSaveModalCancel = () => {
     setSaveModal(false);
