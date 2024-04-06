@@ -14,6 +14,7 @@ import schedule from "../../assets/img/Icon/일정변경.svg";
 import outStudent from "../../assets/img/외출 일러스트.png";
 import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.png";
+import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.png";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import { DayTeacher, SelfStudyCheck } from "@/apis/main";
@@ -121,7 +122,7 @@ const Main = () => {
               <Menu href="/classManage" icon={classManage}>
                 학급 관리
               </Menu>
-              <Menu href="/selfStudyCheck" icon={notice}>
+              <Menu href="/selfStudyCheck" icon={SelfCheck}>
                 출석 체크
               </Menu>
               <Menu href="/afterManage" icon={afterManage}>

@@ -34,6 +34,8 @@ const ClassManage: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
   const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
     []
   );
@@ -123,11 +125,27 @@ const ClassManage: React.FC = () => {
     }
   };
 
-  const handleStatusChange = (id: string, status: string) => {
-    setModifiedStudents((prevModifiedStudents) => [
-      ...prevModifiedStudents,
-      { id, status },
-    ]);
+  const handleAcceptListClick = (id: string, status: string, name: string) => {
+    const isStudentSelected = selectedStudents.includes(id);
+    if (isStudentSelected) {
+      setSelectedStudents((prevSelectedStudents) =>
+        prevSelectedStudents.filter((selectedStudent) => selectedStudent !== id)
+      );
+      setSelectedStudentName((prevSelectedStudentName) =>
+        prevSelectedStudentName.filter(
+          (selectedStudentName) => selectedStudentName !== name
+        )
+      );
+    } else {
+      setSelectedStudents((prevSelectedStudents) => [
+        ...prevSelectedStudents,
+        id,
+      ]);
+      setSelectedStudentName((prevSelectedStudentName) => [
+        ...prevSelectedStudentName,
+        name,
+      ]);
+    }
   };
 
   return (
@@ -160,7 +178,9 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={false}
-            onChange={(status) => handleStatusChange(student.user_id, status)}
+            onChange={(status) =>
+              handleAcceptListClick(student.user_id, status, student.name)
+            }
           />
         ))}
       {!edit &&
@@ -170,13 +190,23 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={true}
-            onChange={(status) => handleStatusChange(student.user_id, status)}
+            onChange={(status) =>
+              handleAcceptListClick(student.user_id, status, student.name)
+            }
           />
         ))}
       {modal && (
         <Modal
           type="button"
-          heading1={`외 ${modifiedStudents.length - 1} 명의`}
+          heading1={`${
+            selectedStudentName.length > 1
+              ? `${selectedStudentName[0]} 학생 외 ${
+                  selectedStudentName.length - 1
+                }명`
+              : selectedStudentName.length === 1
+              ? `${selectedStudentName[0]} 학생`
+              : ""
+          }`}
           heading2="변경된 상태를 저장하시겠습니까?"
           buttonMessage="확인"
           onCancel={handleModalCancel}
