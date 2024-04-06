@@ -2,14 +2,14 @@
 import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import Dropdown from "../components/common/dropdown";
-import AfterCheck from "../components/common/list/after/page";
 import AfterTab from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
-import { GetAfterStudent } from "@/apis/afterManage";
+import { FixStatus, GetAfterStudent } from "@/apis/afterManage";
 import { PostStudent } from "@/apis/afterManage";
+import CheckList from "../components/common/list/after/check/page";
 
 interface changeClass {
   id: string;
@@ -22,6 +22,11 @@ interface changeClass {
   status3: string;
 }
 
+interface ChangeStatus {
+  id: string;
+  status_list: string[];
+}
+
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [change, setChange] = useState<boolean>(false);
@@ -31,10 +36,36 @@ const AfterManage = () => {
   const { mutate: postStudents } = PostStudent();
   const [datalist, setDatalist] = useState<changeClass[]>();
   const router = useRouter();
+  const { mutate: ChangeStatus } = FixStatus();
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+
+  const handleAcceptListClick = (id: string, name: string) => {
+    const selectedIndex = selectedStudents.indexOf(id);
+
+    const isSelected = selectedIndex !== -1;
+    if (isSelected) {
+      setSelectedStudents((prevSelectedStudents) =>
+        prevSelectedStudents.filter((studentId) => studentId !== id)
+      );
+      setSelectedStudentName((prevSelectedStudentName) =>
+        prevSelectedStudentName.filter((studentName) => studentName !== name)
+      );
+    } else {
+      setSelectedStudents((prevSelectedStudents) => [
+        ...prevSelectedStudents,
+        id,
+      ]);
+      setSelectedStudentName((prevSelectedStudentName) => [
+        ...prevSelectedStudentName,
+        name,
+      ]);
+    }
+  };
 
   const get = async () => {
     try {
-      const resule = await getafterMutate(null, {
+      await getafterMutate(null, {
         onSuccess: (data) => {
           setDatalist(data);
         },
@@ -66,7 +97,12 @@ const AfterManage = () => {
 
   const handleModalCancel = async () => {
     setModal(false);
+    if (typeof window !== "undefined") {
+      const localData = localStorage.removeItem("students");
+      return localData;
+    }
   };
+
   const [data, setData] = useState<string[]>(() => {
     if (typeof window !== "undefined") {
       const localData = localStorage.getItem("students");
@@ -99,21 +135,61 @@ const AfterManage = () => {
     }
   };
 
+  const handleSaveModalConfirm = async () => {
+    const updatedData: ChangeStatus[] = [];
+    datalist?.forEach((item) => {
+      const localData = localStorage.getItem(item.id);
+      console.log(localData);
+      if (localData) {
+        const parsedData = JSON.parse(localData);
+        console.log(parsedData);
+        const studentData = {
+          id: item.id,
+          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+        };
+        updatedData.push(studentData);
+      }
+    });
+
+    try {
+      await ChangeStatus(updatedData, {
+        onSuccess: () => {
+          location.reload();
+        },
+        onError: (error) => {
+          alert(error.name);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setSaveModal(false);
+  };
+
   const handleSaveModalCancel = () => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.includes("-")) {
+        localStorage.removeItem(key);
+      }
+    });
     setSaveModal(false);
   };
 
-  const handleSaveModalConfirm = () => {
-    setSaveModal(false);
-  };
-
-  const threeStyle = " bg-white text-label1 rounded-lg py-3 px-25";
+  const threeStyle =
+    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-1/3";
 
   const onClickBtn = () => {
     router.push("/main");
   };
 
   useEffect(() => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.includes("-")) {
+        localStorage.removeItem(key);
+      }
+    });
     get();
   }, []);
 
@@ -196,19 +272,19 @@ const AfterManage = () => {
         ) : (
           <>
             {edit ? (
-              <div className=" flex flex-col gap-8">
+              <div className=" flex flex-col gap-8 w-full">
                 <div className=" flex gap-20">
                   <div className=" text-heading5 justify-center flex text-primary-100 w-29">
                     창조실
                   </div>
-                  <div className="flex gap-11">
+                  <div className="flex gap-11 w-full">
                     <div className={threeStyle}>8교시</div>
                     <div className={threeStyle}>9교시</div>
                     <div className={threeStyle}>10교시</div>
                   </div>
                 </div>
-                <div className=" flex gap-13">
-                  <div className=" flex flex-col gap-6 w-27%">
+                <div className=" flex gap-20">
+                  <div className=" flex flex-col gap-6">
                     {datalist?.map((item, index) => (
                       <div
                         className="flex w-max bg-white py-4 px-6 rounded-lg text-label1"
@@ -218,14 +294,21 @@ const AfterManage = () => {
                       </div>
                     ))}
                   </div>
-                  <div className=" flex gap-x-11 gap-y-6 flex-wrap content-start">
+                  <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
                     {edit ? (
                       <>
-                        {/* {datalist?.map((item, index) => {
-                          <AfterCheck state={"무단"} key={index} day={3} />;
-                        })} */}
                         {datalist?.map((item, index) => {
-                          <AfterCheck state={"무단"} key={index} day={3} />;
+                          return (
+                            <CheckList
+                              id={item.id}
+                              state1={item.status1}
+                              state2={item.status2}
+                              state3={item.status3}
+                              onClick={() =>
+                                handleAcceptListClick(item.id, item.name)
+                              }
+                            />
+                          );
                         })}
                       </>
                     ) : (
@@ -256,7 +339,15 @@ const AfterManage = () => {
             {saveModal && (
               <Modal
                 type="button"
-                heading1={`${datalist?.length}외 1명의`}
+                heading1={`${
+                  selectedStudentName.length > 1
+                    ? `${selectedStudentName[0]} 학생 외 ${
+                        selectedStudentName.length - 1
+                      }명`
+                    : selectedStudentName.length === 1
+                    ? `${selectedStudentName[0]} 학생`
+                    : ""
+                }`}
                 heading2="변경된 상태를 저장하시겠습니까?"
                 buttonMessage="확인"
                 onCancel={handleSaveModalCancel}
