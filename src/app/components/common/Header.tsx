@@ -33,9 +33,17 @@ const Header: NextPage = ({}) => {
     getName();
   }, []);
 
+  const [easterCounter, setEasterCounter] = useState<number>(0);
+  const [easterUrl, setEasetUrl] = useState<string>("/main");
+
+  const easterEgg = () => {
+    setEasterCounter(easterCounter + 1);
+    if (easterCounter > 10) setEasetUrl("https://vidkidz.tistory.com/155");
+  };
+
   return (
     <div className=" flex px-70 justify-between items-center bg-white py-2">
-      <Link href={"/main"}>
+      <Link href={easterUrl} onClick={easterEgg}>
         <Image src={pick} alt="" width={96} height={52} />
       </Link>
       <div className="flex font-sans text-nowrap w-36 text-heading6-M text-neutral-50">
