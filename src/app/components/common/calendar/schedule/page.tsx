@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import { GetSchdule } from "@/apis/schedule";
 import ScheduleFix from "./fix";
 import PostSchedule from "../../modal/schedule/page";
+import "moment/locale/en-gb";
 
 interface CalendarProps {
   onClick: (date: Date) => void;
@@ -26,6 +27,8 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
   const { mutate: scheduleMutate } = GetSchdule();
 
   const currentYear = new Date().getFullYear();
+
+  moment.locale("en");
 
   const scheduleData = async (selectDate: Date | null) => {
     const formattedDate = moment(selectDate).format("MMMM");
@@ -78,7 +81,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         next2Label={null}
         calendarType="gregory"
         formatDay={(locale, date) =>
-          date.toLocaleString("en", { day: "2-digit" })
+          date.toLocaleString("en", { day: "numeric" })
         }
         tileContent={({ date }) => {
           const formattedDate = moment(date).format("M-D");
