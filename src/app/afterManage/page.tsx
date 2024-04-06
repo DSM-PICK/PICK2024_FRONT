@@ -300,6 +300,7 @@ const AfterManage = () => {
                         {datalist?.map((item, index) => {
                           return (
                             <CheckList
+                              key={index}
                               id={item.id}
                               state1={item.status1}
                               state2={item.status2}
