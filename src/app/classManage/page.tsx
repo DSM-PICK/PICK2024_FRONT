@@ -24,8 +24,8 @@ interface StudentData {
 }
 
 interface ChangeStatusData {
-  id: string;
-  status: string;
+  user_id: string;
+  status_type: string;
 }
 
 const ClassManage: React.FC = () => {
@@ -62,9 +62,9 @@ const ClassManage: React.FC = () => {
 
   const Change = async () => {
     try {
-      const result = await changestatusMutate(modifiedStudents, {
+      await changestatusMutate(modifiedStudents, {
         onSuccess: () => {
-          location.reload();
+          // location.reload();
         },
         onError: (error) => {
           alert(error.name);
@@ -125,11 +125,21 @@ const ClassManage: React.FC = () => {
     }
   };
 
-  const handleAcceptListClick = (id: string, status: string, name: string) => {
-    const isStudentSelected = selectedStudents.includes(id);
+  const handleAcceptListClick = (
+    user_id: string,
+    status_type: string,
+    name: string
+  ) => {
+    setModifiedStudents((prevModifiedStudents) => [
+      ...prevModifiedStudents,
+      { user_id, status_type },
+    ]);
+    const isStudentSelected = selectedStudents.includes(user_id);
     if (isStudentSelected) {
       setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((selectedStudent) => selectedStudent !== id)
+        prevSelectedStudents.filter(
+          (selectedStudent) => selectedStudent !== user_id
+        )
       );
       setSelectedStudentName((prevSelectedStudentName) =>
         prevSelectedStudentName.filter(
@@ -139,7 +149,7 @@ const ClassManage: React.FC = () => {
     } else {
       setSelectedStudents((prevSelectedStudents) => [
         ...prevSelectedStudents,
-        id,
+        user_id,
       ]);
       setSelectedStudentName((prevSelectedStudentName) => [
         ...prevSelectedStudentName,
