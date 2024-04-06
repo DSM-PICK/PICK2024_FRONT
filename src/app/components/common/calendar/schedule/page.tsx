@@ -78,7 +78,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
         next2Label={null}
         calendarType="gregory"
         formatDay={(locale, date) =>
-          date.toLocaleString("en", { day: "numeric" })
+          date.toLocaleString("ko", { day: "numeric" })
         }
         tileContent={({ date }) => {
           const formattedDate = moment(date).format("M-D");
