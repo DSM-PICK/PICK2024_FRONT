@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
-import { ChangeState } from "@/apis/weekendMeal";
 
 interface ManageDropProps {
   state: string;
@@ -21,7 +20,6 @@ interface StateStyles {
 const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const { mutate: changeStatusMutate } = ChangeState();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   let defaultOptions: Record<string, string> = {

@@ -8,8 +8,9 @@ interface Type {
   name: string;
 }
 
-interface Id {
+interface ChangeStatus {
   id: string;
+  status_list: string[];
 }
 
 interface AfterStudent {
@@ -111,6 +112,18 @@ export const ALLStudent = () => {
       try {
         const result = await instance.get(`/after/search`);
         return result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const FixStatus = () => {
+  return useMutation<void, Error, ChangeStatus[]>({
+    mutationFn: async (param) => {
+      try {
+        await instance.patch(`/after/change`, param);
       } catch (error) {
         console.log(error);
       }
