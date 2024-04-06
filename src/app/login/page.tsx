@@ -1,6 +1,6 @@
 "use client";
 import { NextPage } from "next";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient } from "react-query";
 import Input from "../components/common/input";
 import Button from "../components/common/Button";
 import Picklogo from "../../assets/img/Icon/pickname.svg";
