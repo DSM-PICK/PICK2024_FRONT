@@ -35,10 +35,22 @@ const Header: NextPage = ({}) => {
 
   const [easterCounter, setEasterCounter] = useState<number>(0);
   const [easterUrl, setEasetUrl] = useState<string>("/main");
+  const instagram = [
+    "park._hyun.a",
+    "07_.chan",
+    "nimeahgnak",
+    "dud_wns_13",
+    "yook_gijun",
+    "s__hyyeon",
+    "rudeh.2926",
+    "yusungsk",
+  ];
 
   const easterEgg = () => {
     setEasterCounter(easterCounter + 1);
-    if (easterCounter > 10) setEasetUrl("https://vidkidz.tistory.com/155");
+    const randomNumber = Math.floor(Math.random() * instagram.length);
+    if (easterCounter > 10)
+      setEasetUrl(`https://www.instagram.com/${instagram[randomNumber]}/`);
   };
 
   return (
