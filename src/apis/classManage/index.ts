@@ -12,8 +12,8 @@ interface Student {
 }
 
 interface ChangeStatusData {
-  id: string;
-  status: string;
+  user_id: string;
+  status_type: string;
 }
 
 interface StudentData {
@@ -50,7 +50,7 @@ export const ChangeStatus = () => {
   return useMutation<void, Error, ChangeStatusData[]>({
     mutationFn: async (params: ChangeStatusData[]) => {
       try {
-        const response = await instance.patch("/status/change", params, {});
+        const response = await instance.patch("/status/change", params);
       } catch (error) {
         console.log(error);
       }
