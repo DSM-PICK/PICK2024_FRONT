@@ -51,7 +51,11 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   useEffect(() => {
     checkMealList();
     notCheckMealList();
-  }, [selectGrade, selectClass, notCheckMeal]);
+  }, [selectGrade, selectClass]);
+
+  // useEffect(() => {
+  //   notCheckMealList();
+  // }, [notCheckMeal]);
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectGrade(selectedOption);

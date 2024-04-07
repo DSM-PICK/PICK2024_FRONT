@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/app/components/common/Header";
 import ReasonList from "@/app/components/common/list/reason/page";
 import DoubleTab from "@/app/components/common/tab/page";
 import { getFullToday } from "@/utils/date";
@@ -89,9 +88,12 @@ const Reason = () => {
 
   return (
     <BackGround
-      linkChildren={`외출자 목록 > ${
-        selectedTab ? "외출자 사유" : " 조기 귀가 사유"
-      } `}
+      linkChildren={
+        <>
+          <Link href={"/outList"}>외출자 목록 </Link>
+          &gt; {selectedTab ? "외출자 사유" : "조기 귀가 사유"}
+        </>
+      }
       subTitle={selectedTab ? "외출자 사유" : " 조기 귀가 사유"}
       secondTitle={getFullToday()}
       DropChildren={
