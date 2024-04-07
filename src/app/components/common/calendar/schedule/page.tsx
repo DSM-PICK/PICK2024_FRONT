@@ -105,7 +105,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
                           {item.event_name}
                         </div>
                       </div>
-                      <ScheduleFix />
+                      <ScheduleFix id={item.id} />
                     </div>
                   ))}
                 </>

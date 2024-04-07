@@ -35,8 +35,7 @@ export const GetNoticeList = () => {
   return useMutation<Getnotice[], Error, null>({
     mutationFn: async () => {
       try {
-        const response = await instance.get("/notice/simple", {
-        });
+        const response = await instance.get("/notice/simple", {});
         return response.data;
       } catch (error) {
         throw error;
@@ -49,8 +48,7 @@ export const DetailNoticeData = () => {
   return useMutation<DetailNoticeType, Error, { id: string }>({
     mutationFn: async (param) => {
       try {
-        const response = await instance.get(`/notice/${param.id}`, {
-        });
+        const response = await instance.get(`/notice/${param.id}`, {});
         return response.data;
       } catch (error) {
         throw error;
@@ -73,36 +71,39 @@ export const DeleteNoticeData = () => {
 };
 
 export const PostNotice = () => {
-
   return useMutation<void, Error, post>({
     mutationFn: async (param: post) => {
-      const response = await instance.post(
-        `/notice/create`,
-        {
-          ...param,
-        }
-      );
+      const response = await instance.post(`/notice/create`, {
+        ...param,
+      });
     },
   });
 };
 
 export const ModifyNoticeData = () => {
-
   return useMutation<void, Error, ModifyProp>({
     mutationFn: async (param: ModifyProp) => {
       try {
-        const response = await instance.patch(
-          `/notice/modify`,
-          {
-            ...param,
-          }
-
-        );
+        const response = await instance.patch(`/notice/modify`, {
+          ...param,
+        });
 
         return response.data;
       } catch (error) {
         console.log(error);
         throw error;
+      }
+    },
+  });
+};
+
+export const Delete = () => {
+  return useMutation<void, Error, { noticeId: string }>({
+    mutationFn: async (param) => {
+      try {
+        await instance.delete(`/notice/delete/${param.noticeId}`);
+      } catch (error) {
+        console.log(error);
       }
     },
   });
