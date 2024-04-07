@@ -1,12 +1,36 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { Delete } from "@/apis/notice";
+import React, { useState, useRef, useEffect } from "react";
 
-const ScheduleFix = () => {
+interface id {
+  id: string;
+}
+
+const ScheduleFix: React.FC<id> = ({ id }) => {
   const [isOptionsVisible, setOptionsVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { mutate: DeleteMutate } = Delete();
 
   const toggleOptions = () => {
     setOptionsVisible(!isOptionsVisible);
+  };
+
+  const deleteNotice = async () => {
+    try {
+      await DeleteMutate(
+        { noticeId: id },
+        {
+          onSuccess: () => {
+            alert("공지가 삭제되었습니다");
+          },
+          onError: (error) => {
+            alert(error.name);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -34,8 +58,10 @@ const ScheduleFix = () => {
       </div>
       {isOptionsVisible && (
         <div className="bg-white rounded w-16 shadow-lg text-caption3 absolute right-0 text-nowrap">
-          <div className=" flex p-1">수정하기</div>
-          <div className="flex p-1">삭제하기</div>
+          <div className=" flex cursor-pointer p-1">수정하기</div>
+          <div className="flex p-1" onClick={deleteNotice}>
+            삭제하기
+          </div>
         </div>
       )}
     </div>
