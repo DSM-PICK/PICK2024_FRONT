@@ -171,8 +171,8 @@ const AutoInput: React.FC<AutoInputProps> = ({
             handleSelectOption(option);
             if (type === "student") {
               handleInputChange("");
-              setIsAutoCompleteVisible(false);
             }
+            setIsAutoCompleteVisible(false);
           }}
           className="flex py-2 px-3 hover:bg-primary-200 hover:text-white cursor-pointer"
         >
