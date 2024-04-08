@@ -111,13 +111,6 @@ const AfterManage = () => {
   });
 
   const handleModalConfirm = async () => {
-    setData(() => {
-      if (typeof window !== "undefined") {
-        const localData = localStorage.getItem("students");
-        return localData ? JSON.parse(localData) : [];
-      }
-    });
-
     const updatedData = data.map((item) => {
       const [studentNum] = item.split(" ");
       return {
@@ -126,16 +119,23 @@ const AfterManage = () => {
     });
 
     console.log(data);
-    try {
-      await postStudents(updatedData, {
-        onSuccess: () => {
-          alert("추가되었습니다");
-          location.reload();
-        },
-      });
-      setModal(false);
-    } catch (error) {
-      console.log(error);
+
+    if (updatedData.length === 0) {
+      location.reload();
+      alert("존재하지 않는 값이 있습니다.");
+    }
+    if (updatedData.length !== 0) {
+      try {
+        await postStudents(updatedData, {
+          onSuccess: () => {
+            alert("추가되었습니다");
+            location.reload();
+          },
+        });
+        setModal(false);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
