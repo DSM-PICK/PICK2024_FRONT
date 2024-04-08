@@ -1,6 +1,5 @@
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
-import { getToken } from "@/utils/auth";
 
 interface Getnotice {
   id: string;
@@ -101,7 +100,7 @@ export const Delete = () => {
   return useMutation<void, Error, { noticeId: string }>({
     mutationFn: async (param) => {
       try {
-        await instance.delete(`/notice/delete/${param.noticeId}`);
+        await instance.delete(`/schedule/delete/${param.noticeId}`);
       } catch (error) {
         console.log(error);
       }
