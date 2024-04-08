@@ -88,6 +88,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     { value: 2, label: "2반" },
     { value: 3, label: "3반" },
     { value: 4, label: "4반" },
+    { value: 5, label: "전체" },
   ];
 
   const clubOptions = [

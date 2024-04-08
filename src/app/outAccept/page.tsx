@@ -50,11 +50,21 @@ const OutAccept = () => {
   }, [selectedGrade, selectedClass]);
 
   const handleGradeChange = (selectedOption: number) => {
-    setSelectedGrade(selectedOption);
+    if (selectedOption === 5) {
+      setSelectedGrade(5);
+      setSelectedClass(5);
+    } else {
+      setSelectedGrade(selectedOption);
+    }
   };
 
   const handleClassChange = (selectedOption: number) => {
-    setSelectedClass(selectedOption);
+    if (selectedOption === 5) {
+      setSelectedGrade(5);
+      setSelectedClass(5);
+    } else {
+      setSelectedClass(selectedOption);
+    }
   };
 
   const AcceptDataList = async () => {
