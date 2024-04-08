@@ -3,24 +3,153 @@ import { useRouter } from "next/navigation";
 import Button from "../components/common/Button";
 import { BackGround } from "../components/common/background";
 import Dropdown from "../components/common/dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
+import CheckList from "../components/common/list/after/check/page";
+import Modal from "../components/common/modal/page";
+
+interface ClassCheck {
+  id: string;
+  username: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  status6: string;
+  status7: string;
+  status8: string;
+  status9: string;
+  status10: string;
+}
+
+interface ChangeStatus {
+  user_id: string;
+  status_list: string[];
+}
 
 const SelfStudyCheck = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [edit, setEdit] = useState<boolean>(false);
+  const [data, setData] = useState<ClassCheck[]>([]);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const router = useRouter();
+  const { mutate: ChangeMutate } = CheckStatus();
+  const { mutate: CheckMutate } = ClassStudentCheck();
+  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
+  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
 
-  const Change = () => {};
+  const handleSaveModalConfirm = async () => {
+    const updatedData: ChangeStatus[] = [];
+    data?.forEach((item) => {
+      const localData = localStorage.getItem(item.id);
+      if (localData) {
+        const parsedData = JSON.parse(localData);
+        const studentData = {
+          user_id: item.id,
+          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+        };
+        updatedData.push(studentData);
+      }
+    });
+
+    try {
+      await ChangeMutate(updatedData, {
+        onSuccess: () => {
+          // location.reload();
+        },
+        onError: (error) => {
+          alert(error.name);
+        },
+      });
+
+      // 로컬 스토리지에 수정된 정보 반영
+      updatedData.forEach((item) => {
+        localStorage.setItem(item.user_id, JSON.stringify(item.status_list));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setSaveModal(false);
+  };
+
+  const handleSaveModalCancel = () => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.includes("-")) {
+        localStorage.removeItem(key);
+      }
+    });
+    setSaveModal(false);
+  };
+
+  const Check = async () => {
+    try {
+      await CheckMutate(
+        {
+          grade: selectedGrade,
+          class: selectedClass,
+        },
+        {
+          onSuccess: (data) => {
+            setData(data);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onClickEdit = () => {
     setEdit(true);
   };
 
+  useEffect(() => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.includes("-")) {
+        localStorage.removeItem(key);
+      }
+    });
+    Check();
+  }, []);
+
   const onClickSave = () => {
     setSaveModal(true);
     setEdit(false);
+  };
+
+  useEffect(() => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.includes("-")) {
+        localStorage.removeItem(key);
+      }
+    });
+    Check();
+  }, [selectedClass, selectedGrade]);
+
+  const handleAcceptListClick = (id: string, name: string) => {
+    const selectedIndex = selectedStudents.indexOf(id);
+
+    const isSelected = selectedIndex !== -1;
+    if (isSelected) {
+      setSelectedStudents((prevSelectedStudents) =>
+        prevSelectedStudents.filter((studentId) => studentId !== id)
+      );
+      setSelectedStudentName((prevSelectedStudentName) =>
+        prevSelectedStudentName.filter((studentName) => studentName !== name)
+      );
+    } else {
+      setSelectedStudents((prevSelectedStudents) => [
+        ...prevSelectedStudents,
+        id,
+      ]);
+      setSelectedStudentName((prevSelectedStudentName) => [
+        ...prevSelectedStudentName,
+        name,
+      ]);
+    }
   };
 
   const handleGradeChange = (selectedOption: number) => {
@@ -30,6 +159,9 @@ const SelfStudyCheck = () => {
   const handleClassChange = (selectedOption: number) => {
     setSelectedClass(selectedOption);
   };
+
+  const threeStyle =
+    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-1/3";
 
   return (
     <BackGround
@@ -54,7 +186,86 @@ const SelfStudyCheck = () => {
         </div>
       }
     >
-      d
+      <div className=" flex flex-col gap-8 w-full">
+        <div className=" flex gap-20">
+          <div className=" text-heading5 justify-center flex text-primary-100 w-29">
+            {selectedGrade}-{selectedClass}
+          </div>
+          <div className="flex gap-11 w-full">
+            <div className={threeStyle}>8교시</div>
+            <div className={threeStyle}>9교시</div>
+            <div className={threeStyle}>10교시</div>
+          </div>
+        </div>
+        <div className=" flex gap-20">
+          <div className=" flex flex-col gap-6">
+            {data?.map((item, index) => (
+              <div
+                className="flex  w-24 bg-white justify-center items-center h-14 rounded-lg text-label1"
+                key={index}
+              >
+                {item.username}
+              </div>
+            ))}
+          </div>
+          <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
+            {edit ? (
+              <>
+                {data?.map((item, index) => {
+                  return (
+                    <CheckList
+                      key={index}
+                      id={item.id}
+                      state1={item.status8}
+                      state2={item.status9}
+                      state3={item.status10}
+                      onClick={() =>
+                        handleAcceptListClick(item.id, item.username)
+                      }
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                {data?.map((item, index) => {
+                  return (
+                    <CheckList
+                      key={index}
+                      id={item.id}
+                      state1={item.status8}
+                      state2={item.status9}
+                      state3={item.status10}
+                      onClick={() =>
+                        handleAcceptListClick(item.id, item.username)
+                      }
+                      type="NO"
+                    />
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+      {saveModal && (
+        <Modal
+          type="button"
+          heading1={`${
+            selectedStudentName.length > 1
+              ? `${selectedStudentName[0]} 학생 외 ${
+                  selectedStudentName.length - 1
+                }명`
+              : selectedStudentName.length === 1
+              ? `${selectedStudentName[0]} 학생`
+              : ""
+          }`}
+          heading2="변경된 상태를 저장하시겠습니까?"
+          buttonMessage="확인"
+          onCancel={handleSaveModalCancel}
+          onConfirm={handleSaveModalConfirm}
+        />
+      )}
     </BackGround>
   );
 };
