@@ -83,7 +83,9 @@ const SelfStudyModal: React.FC<ModalProps> = ({
         {
           onSuccess: (data) => {
             setData(data);
-            setTeachers(data.map((item) => item.teacher));
+            setTeachers(
+              data.sort((a, b) => a.floor - b.floor).map((item) => item.teacher)
+            );
           },
         }
       );
