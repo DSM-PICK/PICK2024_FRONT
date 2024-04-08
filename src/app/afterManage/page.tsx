@@ -120,22 +120,16 @@ const AfterManage = () => {
 
     console.log(data);
 
-    if (updatedData.length === 0) {
-      location.reload();
-      alert("존재하지 않는 값이 있습니다.");
-    }
-    if (updatedData.length !== 0) {
-      try {
-        await postStudents(updatedData, {
-          onSuccess: () => {
-            alert("추가되었습니다");
-            location.reload();
-          },
-        });
-        setModal(false);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      await postStudents(updatedData, {
+        onSuccess: () => {
+          alert("추가되었습니다");
+          location.reload();
+        },
+      });
+      setModal(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
