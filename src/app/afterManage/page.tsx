@@ -128,7 +128,12 @@ const AfterManage = () => {
 
     console.log(data);
     try {
-      await postStudents(updatedData);
+      await postStudents(updatedData, {
+        onSuccess: () => {
+          alert("추가되었습니다");
+          location.reload();
+        },
+      });
       setModal(false);
     } catch (error) {
       console.log(error);
