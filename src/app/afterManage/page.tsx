@@ -116,7 +116,6 @@ const AfterManage = () => {
         const localData = localStorage.getItem("students");
         return localData ? JSON.parse(localData) : [];
       }
-      return [];
     });
 
     const updatedData = data.map((item) => {
@@ -144,10 +143,8 @@ const AfterManage = () => {
     const updatedData: ChangeStatus[] = [];
     datalist?.forEach((item) => {
       const localData = localStorage.getItem(item.id);
-      console.log(localData);
       if (localData) {
         const parsedData = JSON.parse(localData);
-        console.log(parsedData);
         const studentData = {
           id: item.id,
           status_list: [parsedData[0], parsedData[1], parsedData[2]],
