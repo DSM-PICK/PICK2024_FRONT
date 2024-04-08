@@ -29,8 +29,6 @@ const OutAccept = () => {
   const [refuse, setRefuse] = useState<boolean>(false);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
-  const [outSelectedGrade, setOutSelectedGrade] = useState<number>();
-  const [outSelectedClass, setOutSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
@@ -41,19 +39,11 @@ const OutAccept = () => {
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
-
-    if (tab) {
-      handleGradeChange(1);
-      handleClassChange(1);
-    } else {
-      handleGradeChange(1);
-      handleClassChange(1);
-    }
   };
 
   useEffect(() => {
     AcceptDataList();
-  }, [outSelectedClass, outSelectedGrade]);
+  }, [selectedTab]);
 
   useEffect(() => {
     AcceptDataList();
@@ -71,7 +61,7 @@ const OutAccept = () => {
     try {
       if (selectedGrade && selectedClass) {
         const reqOption = selectedTab ? "application" : "early-return";
-        const response = await getClassMutate(
+        await getClassMutate(
           {
             type: reqOption,
             grade: selectedGrade,
