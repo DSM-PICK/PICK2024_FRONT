@@ -134,6 +134,7 @@ const ClassManage: React.FC = () => {
       ...prevModifiedStudents,
       { user_id, status_type },
     ]);
+
     const isStudentSelected = selectedStudents.includes(user_id);
     if (isStudentSelected) {
       setSelectedStudents((prevSelectedStudents) =>

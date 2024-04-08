@@ -289,7 +289,7 @@ const AfterManage = () => {
                   <div className=" flex flex-col gap-6">
                     {datalist?.map((item, index) => (
                       <div
-                        className="flex w-max bg-white py-4 px-6 rounded-lg text-label1"
+                        className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
                         key={index}
                       >
                         {item.name}

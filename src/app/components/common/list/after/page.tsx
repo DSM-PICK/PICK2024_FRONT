@@ -5,9 +5,10 @@ import { CaretDown } from "@/assets/img/Icon/caret-down";
 interface AfterCheckProp {
   state: string;
   onChange: (newState: string) => void;
+  type?: "NO";
 }
 
-const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange }) => {
+const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>(state);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -100,11 +101,13 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange }) => {
     >
       <div>{selectedOption}</div>
 
-      <div className="w-4 h-4">
-        <CaretDown color={ArrowColor()} />
-      </div>
+      {type === "NO" ? null : (
+        <div className="w-4 h-4">
+          <CaretDown color={ArrowColor()} />
+        </div>
+      )}
 
-      {isDropdownVisible && (
+      {isDropdownVisible && type !== "NO" && (
         <div className="absolute z-10 w-full left-0 top-16 items-center flex flex-col rounded-lg bg-white">
           <div
             className={`text-neutral-50 ${commonStyle}`}
