@@ -54,12 +54,15 @@ const SelfStudyModal: React.FC<ModalProps> = ({
         teacher: [
           {
             floor: secondData.floor,
-            teacher: secondData.teacher || teachers[0],
+            teacher: secondData.teacher || teachers[0] || "",
           },
-          { floor: thirdData.floor, teacher: thirdData.teacher || teachers[1] },
+          {
+            floor: thirdData.floor,
+            teacher: thirdData.teacher || teachers[1] || "",
+          },
           {
             floor: fourthData.floor,
-            teacher: fourthData.teacher || teachers[2],
+            teacher: fourthData.teacher || teachers[2] || "",
           },
         ],
       };
