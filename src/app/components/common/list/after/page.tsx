@@ -99,7 +99,7 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
     </div>
   ) : (
     <div
-      className={`relative h-max group p-4 bg-white rounded-lg text-label1 flex justify-between items-center ${style()} w-full`}
+      className={`relative box-border h-14 group p-4 bg-white rounded-lg text-label1 flex justify-between items-center ${style()} w-full`}
       ref={dropdownRef}
       onClick={toggleDropdown}
     >

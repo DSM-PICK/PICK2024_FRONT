@@ -64,7 +64,7 @@ const ClassManage: React.FC = () => {
     try {
       await changestatusMutate(modifiedStudents, {
         onSuccess: () => {
-          // location.reload();
+          location.reload();
         },
         onError: (error) => {
           alert(error.name);

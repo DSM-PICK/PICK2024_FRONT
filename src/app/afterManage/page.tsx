@@ -5,12 +5,12 @@ import Dropdown from "../components/common/dropdown";
 import AfterTab from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
-import { useRouter } from "next/router"; // useRouter import 수정
 import { BackGround } from "../components/common/background";
 import { FixStatus, GetAfterStudent, GetClubList } from "@/apis/afterManage";
 import { PostStudent } from "@/apis/afterManage";
 import CheckList from "../components/common/list/after/check/page";
 import { CheckStatus } from "@/apis/selfStudy";
+import { getStudentString, setStudentNum } from "@/utils/until";
 
 interface ClubList {
   id: string;
@@ -50,14 +50,14 @@ const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
   const [change, setChange] = useState<boolean>(false);
-  const [dataList, setDataList] = useState<ChangeClass[]>(); // 변수명 수정
+  const [dataList, setDataList] = useState<ChangeClass[]>();
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
-  const { mutate: getAfterMutate } = GetAfterStudent(); // 함수명 수정
+  const { mutate: getAfterMutate } = GetAfterStudent();
   const { mutate: postStudents } = PostStudent();
-  const { mutate: changeStatus } = FixStatus(); // 함수명 수정
-  const { mutate: clubMutate } = GetClubList(); // 함수명 수정
+  const { mutate: changeStatus } = FixStatus();
+  const { mutate: clubMutate } = GetClubList();
   const [clubList, setClubList] = useState<ClubList[]>([]);
   const { mutate: CheckClub } = CheckStatus();
   const [selectClub, setSelectClub] = useState<string>("PiCK");
@@ -193,14 +193,13 @@ const AfterManage = () => {
     try {
       await CheckClub(updatedData, {
         onSuccess: () => {
-          // location.reload();
+          alert("상태가 변경되었습니다");
         },
         onError: (error) => {
           alert(error.name);
         },
       });
 
-      // 로컬 스토리지에 수정된 정보 반영
       updatedData.forEach((item) => {
         localStorage.setItem(item.user_id, JSON.stringify(item.status_list));
       });
@@ -226,9 +225,8 @@ const AfterManage = () => {
 
     try {
       await changeStatus(updatedData, {
-        // 함수명 수정
         onSuccess: () => {
-          //location.reload();
+          location.reload();
         },
         onError: (error) => {
           alert(error.name);
@@ -251,7 +249,7 @@ const AfterManage = () => {
   };
 
   const threeStyle =
-    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-1/3";
+    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-29%";
 
   useEffect(() => {
     const keys = Object.keys(localStorage);
@@ -335,10 +333,10 @@ const AfterManage = () => {
         {change ? (
           <div className=" flex flex-col gap-8 w-full">
             <div className=" flex gap-20">
-              <div className=" text-heading5 justify-center flex text-primary-100 w-29">
+              <div className=" text-heading5 justify-center flex text-primary-100 w-40 whitespace-nowrap">
                 {selectClub}
               </div>
-              <div className="flex gap-11 w-full">
+              <div className="flex justify-between w-full">
                 <div className={threeStyle}>8교시</div>
                 <div className={threeStyle}>9교시</div>
                 <div className={threeStyle}>10교시</div>
@@ -348,10 +346,10 @@ const AfterManage = () => {
               <div className=" flex flex-col gap-6">
                 {clubList?.map((item, index) => (
                   <div
-                    className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
+                    className="flex w-32 bg-white h-14 items-center justify-center rounded-lg text-label1"
                     key={index}
                   >
-                    {item.username}
+                    {getStudentString(item)}
                   </div>
                 ))}
               </div>
@@ -400,7 +398,7 @@ const AfterManage = () => {
             {edit ? (
               <div className=" flex flex-col gap-8 w-full">
                 <div className=" flex gap-20">
-                  <div className=" text-heading5 justify-center flex text-primary-100 w-29">
+                  <div className=" text-heading5 justify-center flex text-primary-100 w-40">
                     창조실
                   </div>
                   <div className="flex gap-11 w-full">
@@ -413,10 +411,10 @@ const AfterManage = () => {
                   <div className=" flex flex-col gap-6">
                     {dataList?.map((item, index) => (
                       <div
-                        className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
+                        className="flex w-32 bg-white h-14 items-center justify-center rounded-lg text-label1"
                         key={index}
                       >
-                        {item.name}
+                        {setStudentNum(item)} {item.name}
                       </div>
                     ))}
                   </div>
