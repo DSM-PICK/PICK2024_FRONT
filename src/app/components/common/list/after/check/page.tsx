@@ -73,7 +73,7 @@ const CheckList: React.FC<State> = ({
           <AfterCheck
             state={Change(state2)}
             onChange={(newState) => {
-              handleChange(1, newState);
+              handleChange(0, newState);
               if (onClick) onClick();
             }}
             type="NO"
@@ -81,7 +81,7 @@ const CheckList: React.FC<State> = ({
           <AfterCheck
             state={Change(state3)}
             onChange={(newState) => {
-              handleChange(2, newState);
+              handleChange(0, newState);
               if (onClick) onClick();
             }}
             type="NO"
