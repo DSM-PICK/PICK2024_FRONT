@@ -24,6 +24,19 @@ interface AfterStudent {
   status3: string;
 }
 
+interface ClubList {
+  id: string;
+  username: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  status6: string;
+  status7: string;
+  status8: string;
+  status9: string;
+  status10: string;
+}
+
 interface Students {
   name: string;
   grade: number;
@@ -124,6 +137,21 @@ export const FixStatus = () => {
     mutationFn: async (param) => {
       try {
         await instance.patch(`/after/change`, param);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const GetClubList = () => {
+  return useMutation<ClubList[], Error, { club: string }>({
+    mutationFn: async (param) => {
+      try {
+        const response = await instance.get(
+          `/attendance/club?club=${param.club}`
+        );
+        return response.data;
       } catch (error) {
         console.log(error);
       }
