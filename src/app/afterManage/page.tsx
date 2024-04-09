@@ -5,13 +5,27 @@ import Dropdown from "../components/common/dropdown";
 import AfterTab from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router"; // useRouter import 수정
 import { BackGround } from "../components/common/background";
-import { FixStatus, GetAfterStudent } from "@/apis/afterManage";
+import { FixStatus, GetAfterStudent, GetClubList } from "@/apis/afterManage";
 import { PostStudent } from "@/apis/afterManage";
 import CheckList from "../components/common/list/after/check/page";
+import { CheckStatus } from "@/apis/selfStudy";
 
-interface changeClass {
+interface ClubList {
+  id: string;
+  username: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  status6: string;
+  status7: string;
+  status8: string;
+  status9: string;
+  status10: string;
+}
+
+interface ChangeClass {
   id: string;
   grade: number;
   class_num: number;
@@ -22,6 +36,11 @@ interface changeClass {
   status3: string;
 }
 
+interface ChangeClub {
+  user_id: string;
+  status_list: string[];
+}
+
 interface ChangeStatus {
   id: string;
   status_list: string[];
@@ -29,20 +48,22 @@ interface ChangeStatus {
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
-  const [change, setChange] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
+  const [change, setChange] = useState<boolean>(false);
+  const [dataList, setDataList] = useState<ChangeClass[]>(); // 변수명 수정
   const [saveModal, setSaveModal] = useState<boolean>(false);
-  const { mutate: getafterMutate } = GetAfterStudent();
-  const { mutate: postStudents } = PostStudent();
-  const [datalist, setDatalist] = useState<changeClass[]>();
-  const router = useRouter();
-  const { mutate: ChangeStatus } = FixStatus();
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { mutate: getAfterMutate } = GetAfterStudent(); // 함수명 수정
+  const { mutate: postStudents } = PostStudent();
+  const { mutate: changeStatus } = FixStatus(); // 함수명 수정
+  const { mutate: clubMutate } = GetClubList(); // 함수명 수정
+  const [clubList, setClubList] = useState<ClubList[]>([]);
+  const { mutate: CheckClub } = CheckStatus();
+  const [selectClub, setSelectClub] = useState<string>("PiCK");
 
   const handleAcceptListClick = (id: string, name: string) => {
     const selectedIndex = selectedStudents.indexOf(id);
-
     const isSelected = selectedIndex !== -1;
     if (isSelected) {
       setSelectedStudents((prevSelectedStudents) =>
@@ -63,11 +84,33 @@ const AfterManage = () => {
     }
   };
 
+  const getClub = async () => {
+    try {
+      await clubMutate(
+        { club: selectClub },
+        {
+          onSuccess: (data) => {
+            setClubList(data);
+          },
+          onError: (error) => {
+            alert(error.message);
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClubChange = (selectedOption: string) => {
+    setSelectClub(selectedOption);
+  };
+
   const get = async () => {
     try {
-      await getafterMutate(null, {
+      await getAfterMutate(null, {
         onSuccess: (data) => {
-          setDatalist(data);
+          setDataList(data);
         },
         onError: (error) => {
           console.log(error.name);
@@ -133,9 +176,43 @@ const AfterManage = () => {
     }
   };
 
+  const handleSaveClub = async () => {
+    const updatedData: ChangeClub[] = [];
+    clubList?.forEach((item) => {
+      const localData = localStorage.getItem(item.id);
+      if (localData) {
+        const parsedData = JSON.parse(localData);
+        const studentData = {
+          user_id: item.id,
+          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+        };
+        updatedData.push(studentData);
+      }
+    });
+
+    try {
+      await CheckClub(updatedData, {
+        onSuccess: () => {
+          // location.reload();
+        },
+        onError: (error) => {
+          alert(error.name);
+        },
+      });
+
+      // 로컬 스토리지에 수정된 정보 반영
+      updatedData.forEach((item) => {
+        localStorage.setItem(item.user_id, JSON.stringify(item.status_list));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setSaveModal(false);
+  };
+
   const handleSaveModalConfirm = async () => {
     const updatedData: ChangeStatus[] = [];
-    datalist?.forEach((item) => {
+    dataList?.forEach((item) => {
       const localData = localStorage.getItem(item.id);
       if (localData) {
         const parsedData = JSON.parse(localData);
@@ -148,9 +225,10 @@ const AfterManage = () => {
     });
 
     try {
-      await ChangeStatus(updatedData, {
+      await changeStatus(updatedData, {
+        // 함수명 수정
         onSuccess: () => {
-          location.reload();
+          //location.reload();
         },
         onError: (error) => {
           alert(error.name);
@@ -175,10 +253,6 @@ const AfterManage = () => {
   const threeStyle =
     " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-1/3";
 
-  const onClickBtn = () => {
-    router.push("/main");
-  };
-
   useEffect(() => {
     const keys = Object.keys(localStorage);
     keys.forEach((key) => {
@@ -187,7 +261,12 @@ const AfterManage = () => {
       }
     });
     get();
+    getClub();
   }, []);
+
+  useEffect(() => {
+    getClub();
+  }, [selectClub]);
 
   return (
     <BackGround
@@ -222,8 +301,7 @@ const AfterManage = () => {
                 </Button>
               )}
               <div className=" flex gap-2">
-                <Dropdown type="floor" />
-                <Dropdown type="club" />
+                <Dropdown type="club" onChange={handleClubChange} />
               </div>
             </div>
           ) : (
@@ -255,15 +333,67 @@ const AfterManage = () => {
     >
       <>
         {change ? (
-          <div className=" w-full h-full text-heading5 flex flex-col justify-center items-center gap-4">
-            아직 개발중인 페이지입니다
-            <Button
-              colorType="primary"
-              buttonSize="extraLarge"
-              onClick={onClickBtn}
-            >
-              홈으로 돌아가기
-            </Button>
+          <div className=" flex flex-col gap-8 w-full">
+            <div className=" flex gap-20">
+              <div className=" text-heading5 justify-center flex text-primary-100 w-29">
+                창조실
+              </div>
+              <div className="flex gap-11 w-full">
+                <div className={threeStyle}>8교시</div>
+                <div className={threeStyle}>9교시</div>
+                <div className={threeStyle}>10교시</div>
+              </div>
+            </div>
+            <div className=" flex gap-20">
+              <div className=" flex flex-col gap-6">
+                {clubList?.map((item, index) => (
+                  <div
+                    className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
+                    key={index}
+                  >
+                    {item.username}
+                  </div>
+                ))}
+              </div>
+              <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
+                {edit ? (
+                  <>
+                    {clubList?.map((item, index) => {
+                      return (
+                        <CheckList
+                          key={index}
+                          id={item.id}
+                          state1={item.status6}
+                          state2={item.status7}
+                          state3={item.status8}
+                          onClick={() =>
+                            handleAcceptListClick(item.id, item.username)
+                          }
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {clubList?.map((item, index) => {
+                      return (
+                        <CheckList
+                          key={index}
+                          id={item.id}
+                          state1={item.status6}
+                          state2={item.status7}
+                          state3={item.status8}
+                          onClick={() =>
+                            handleAcceptListClick(item.id, item.username)
+                          }
+                          type="NO"
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         ) : (
           <>
@@ -281,7 +411,7 @@ const AfterManage = () => {
                 </div>
                 <div className=" flex gap-20">
                   <div className=" flex flex-col gap-6">
-                    {datalist?.map((item, index) => (
+                    {dataList?.map((item, index) => (
                       <div
                         className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
                         key={index}
@@ -293,7 +423,7 @@ const AfterManage = () => {
                   <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
                     {edit ? (
                       <>
-                        {datalist?.map((item, index) => {
+                        {dataList?.map((item, index) => {
                           return (
                             <CheckList
                               key={index}
@@ -318,42 +448,60 @@ const AfterManage = () => {
               <div className=" flex gap-8 flex-col w-full">
                 <div className=" text-heading5 text-primary-100">창조실</div>
                 <div className=" flex gap-x-13 gap-y-5 flex-wrap w-full">
-                  {datalist?.map((item, index) => (
+                  {dataList?.map((item, index) => (
                     <AfterDelete student={item.name} key={index} id={item.id} />
                   ))}
                 </div>
               </div>
             )}
-            {modal && (
-              <Modal
-                type="add"
-                heading1="창조실 인원추가"
-                buttonMessage="추가"
-                onCancel={handleModalCancel}
-                onConfirm={handleModalConfirm}
-              />
-            )}
-            {saveModal && (
-              <Modal
-                type="button"
-                heading1={`${
-                  selectedStudentName.length > 1
-                    ? `${selectedStudentName[0]} 학생 외 ${
-                        selectedStudentName.length - 1
-                      }명`
-                    : selectedStudentName.length === 1
-                    ? `${selectedStudentName[0]} 학생`
-                    : ""
-                }`}
-                heading2="변경된 상태를 저장하시겠습니까?"
-                buttonMessage="확인"
-                onCancel={handleSaveModalCancel}
-                onConfirm={handleSaveModalConfirm}
-              />
-            )}
           </>
         )}
       </>
+      {modal && (
+        <Modal
+          type="add"
+          heading1="창조실 인원추가"
+          buttonMessage="추가"
+          onCancel={handleModalCancel}
+          onConfirm={handleModalConfirm}
+        />
+      )}
+      {saveModal && change && (
+        <Modal
+          type="button"
+          heading1={`${
+            selectedStudentName.length > 1
+              ? `${selectedStudentName[0]} 학생 외 ${
+                  selectedStudentName.length - 1
+                }명`
+              : selectedStudentName.length === 1
+              ? `${selectedStudentName[0]} 학생`
+              : ""
+          }`}
+          heading2="변경된 상태를 저장하시겠습니까?"
+          buttonMessage="확인"
+          onCancel={handleSaveModalCancel}
+          onConfirm={handleSaveClub}
+        />
+      )}
+      {saveModal && !change && (
+        <Modal
+          type="button"
+          heading1={`${
+            selectedStudentName.length > 1
+              ? `${selectedStudentName[0]} 학생 외 ${
+                  selectedStudentName.length - 1
+                }명`
+              : selectedStudentName.length === 1
+              ? `${selectedStudentName[0]} 학생`
+              : ""
+          }`}
+          heading2="변경된 상태를 저장하시겠습니까?"
+          buttonMessage="확인"
+          onCancel={handleSaveModalCancel}
+          onConfirm={handleSaveModalConfirm}
+        />
+      )}
     </BackGround>
   );
 };

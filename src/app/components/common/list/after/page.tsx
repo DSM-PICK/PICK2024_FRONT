@@ -14,6 +14,10 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setSelectedOption(state);
+  }, [state]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -91,7 +95,7 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
     <div
       className={`w-full h-max p-4 text-label1 text-neutral-400 rounded-lg bg-white`}
     >
-      {state}
+      {selectedOption}
     </div>
   ) : (
     <div

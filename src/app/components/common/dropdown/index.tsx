@@ -12,7 +12,7 @@ interface DropProps {
   dropDownItem?: ItemType[];
   type: "floor" | "grade" | "class" | "club";
   reqOption?: "application" | "early-return";
-  onChange?: (selectedOption: number, type: string) => void;
+  onChange?: (selectedOption: any, type: string) => void;
   isOpen?: boolean;
 }
 
@@ -20,6 +20,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
+  const [selectedClubOption, setSelectedClubOption] = useState<string>("PiCK");
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +52,8 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         setSelectedClassOption(option.value);
       } else if (type === "floor") {
         setSelectedFloorOption(option.value);
+      } else if (type === "club") {
+        setSelectedClubOption(option.value);
       }
     }
     setIsDropdownVisible(false);
@@ -92,9 +95,18 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   ];
 
   const clubOptions = [
-    { value: "픽", label: "픽" },
-    { value: "정", label: "정" },
-    { value: "등등", label: "등등" },
+    { value: "PiCK", label: "PiCK" },
+    { value: "대동여지도", label: "대동여지도" },
+    { value: "info", label: "info" },
+    { value: "은하", label: "은하" },
+    { value: "DMS", label: "DMS" },
+    { value: "Lift", label: "Lift" },
+    { value: "Log", label: "Log" },
+    { value: "Modeep", label: "Modeep" },
+    { value: "NoNamed", label: "NoNamed" },
+    { value: "TeamQSS", label: "TeamQSS" },
+    { value: "어게인", label: "어게인" },
+    { value: "자습", label: "자습" },
   ];
 
   const options =
@@ -122,7 +134,9 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
           ? selectedClassOption == 5
             ? `전체`
             : `${selectedClassOption}반`
-          : `${selectedFloorOption}층`}
+          : type === "floor"
+          ? `${selectedFloorOption}층`
+          : `${selectedClubOption}`}
         <Image
           src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
           alt="arrow"
@@ -131,7 +145,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         />
       </div>
       {isDropdownVisible && (
-        <div className="absolute bg-white border rounded-lg w-full text-Button-S z-20">
+        <div className="absolute h-auto max-h-72 overflow-y-scroll bg-white border rounded-lg w-full text-Button-S z-20">
           {generateOptions(options)}
         </div>
       )}
