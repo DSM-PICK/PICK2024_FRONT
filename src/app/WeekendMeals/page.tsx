@@ -38,6 +38,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   const [notCheckMeal, setNotCheckMeal] = useState<notCheckMeal[]>([]);
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
+  const [effect, setEffect] = useState<number>(0);
 
   const { downloadExcel } = Printexcel();
 
@@ -53,9 +54,16 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
     notCheckMealList();
   }, [selectGrade, selectClass]);
 
-  // useEffect(() => {
-  //   notCheckMealList();
-  // }, [notCheckMeal]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      notCheckMealList();
+      checkMealList();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [effect]);
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectGrade(selectedOption);
@@ -139,6 +147,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
                 number={setStudentNum(item)}
                 name={item.name}
                 state={item.status || "NO"}
+                onclick={() => {}}
               />
             ))}
           </div>
@@ -158,6 +167,9 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
                 number={setStudentNum(item)}
                 name={item.name}
                 state={item.status || "QUIET"}
+                onclick={() => {
+                  setEffect(effect + 1);
+                }}
               />
             ))}
           </div>
