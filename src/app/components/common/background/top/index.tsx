@@ -20,7 +20,7 @@ const TopBack: React.FC<Prop> = ({
   return (
     <div className=" h-dvh flex flex-col">
       <Header />
-      <div className="flex flex-col gap-7 p-8 py-12 self-center w-3/5 h-90dvh">
+      <div className=" min-w-min flex flex-col gap-7 p-8 py-12 self-center w-3/5 h-90dvh">
         <div className=" whitespace-nowrap text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; {linkChildren}
         </div>

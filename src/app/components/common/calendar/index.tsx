@@ -81,7 +81,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
           onClick(date);
         }}
         next2Label={null}
-        calendarType="US"
+        calendarType="gregory"
         formatDay={(locale, date) =>
           date.toLocaleString("en", { day: "numeric" })
         }

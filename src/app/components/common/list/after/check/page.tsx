@@ -10,6 +10,7 @@ interface State {
   state5?: string;
   id: string;
   onClick?: () => void;
+  type?: "NO";
 }
 
 const CheckList: React.FC<State> = ({
@@ -20,6 +21,7 @@ const CheckList: React.FC<State> = ({
   state5,
   id,
   onClick,
+  type,
 }) => {
   const Change = (item: string) => {
     switch (item) {
@@ -57,32 +59,60 @@ const CheckList: React.FC<State> = ({
   };
 
   return (
-    <div className="flex w-full gap-11">
-      <AfterCheck
-        state={Change(state1)}
-        onChange={(newState) => {
-          handleChange(2, newState);
-          if (onClick) onClick();
-        }}
-      />
-      <AfterCheck
-        state={Change(state2)}
-        onChange={(newState) => {
-          handleChange(1, newState);
-          if (onClick) onClick();
-        }}
-      />
-      <AfterCheck
-        state={Change(state3)}
-        onChange={(newState) => {
-          handleChange(2, newState);
-          if (onClick) onClick();
-        }}
-      />
-
-      {/* {state4 && <AfterCheck state={Change(state4)} />}
-      {state5 && <AfterCheck state={Change(state5)} />} */}
-    </div>
+    <>
+      {type === "NO" ? (
+        <div className="flex w-full gap-11">
+          <AfterCheck
+            state={Change(state1)}
+            onChange={(newState) => {
+              handleChange(0, newState);
+              if (onClick) onClick();
+            }}
+            type="NO"
+          />
+          <AfterCheck
+            state={Change(state2)}
+            onChange={(newState) => {
+              handleChange(1, newState);
+              if (onClick) onClick();
+            }}
+            type="NO"
+          />
+          <AfterCheck
+            state={Change(state3)}
+            onChange={(newState) => {
+              handleChange(2, newState);
+              if (onClick) onClick();
+            }}
+            type="NO"
+          />
+        </div>
+      ) : (
+        <div className="flex w-full gap-11">
+          <AfterCheck
+            state={Change(state1)}
+            onChange={(newState) => {
+              handleChange(0, newState);
+              if (onClick) onClick();
+            }}
+          />
+          <AfterCheck
+            state={Change(state2)}
+            onChange={(newState) => {
+              handleChange(1, newState);
+              if (onClick) onClick();
+            }}
+          />
+          <AfterCheck
+            state={Change(state3)}
+            onChange={(newState) => {
+              handleChange(2, newState);
+              if (onClick) onClick();
+            }}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

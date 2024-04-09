@@ -16,16 +16,9 @@ interface DropProps {
   isOpen?: boolean;
 }
 
-const Dropdown: React.FC<DropProps> = ({
-  type,
-  reqOption = "application",
-  onChange,
-  isOpen,
-}) => {
+const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
-  const [selectedClassOption, setSelectedClassOption] = useState<
-    number | string
-  >(1);
+  const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

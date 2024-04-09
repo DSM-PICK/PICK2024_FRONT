@@ -29,8 +29,7 @@ const CheckPage: React.FC<CheckProps> = ({
         return (
           <div className=" text-center">
             {contentChildren}
-            학생은 <br /> 총
-            <span className="text-primary-500"> {number}명</span>
+            학생은 <br /> 총<b className="text-primary-500"> {number}명</b>
             입니다.
           </div>
         );
@@ -38,7 +37,7 @@ const CheckPage: React.FC<CheckProps> = ({
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생은 총
-            <span className="text-secondary-500"> {number}명</span>
+            <b className="text-secondary-500"> {number}명</b>
             입니다.
           </div>
         );
@@ -46,7 +45,7 @@ const CheckPage: React.FC<CheckProps> = ({
         return (
           <div className=" text-center">
             {contentChildren} <br /> 학생수는 총
-            <span className="text-tertiary-500"> {number}명</span>
+            <b className="text-tertiary-500"> {number}명</b>
             입니다.
           </div>
         );

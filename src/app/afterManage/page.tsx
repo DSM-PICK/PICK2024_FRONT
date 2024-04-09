@@ -111,14 +111,6 @@ const AfterManage = () => {
   });
 
   const handleModalConfirm = async () => {
-    setData(() => {
-      if (typeof window !== "undefined") {
-        const localData = localStorage.getItem("students");
-        return localData ? JSON.parse(localData) : [];
-      }
-      return [];
-    });
-
     const updatedData = data.map((item) => {
       const [studentNum] = item.split(" ");
       return {
@@ -127,8 +119,14 @@ const AfterManage = () => {
     });
 
     console.log(data);
+
     try {
-      await postStudents(updatedData);
+      await postStudents(updatedData, {
+        onSuccess: () => {
+          alert("추가되었습니다");
+          location.reload();
+        },
+      });
       setModal(false);
     } catch (error) {
       console.log(error);
@@ -139,10 +137,8 @@ const AfterManage = () => {
     const updatedData: ChangeStatus[] = [];
     datalist?.forEach((item) => {
       const localData = localStorage.getItem(item.id);
-      console.log(localData);
       if (localData) {
         const parsedData = JSON.parse(localData);
-        console.log(parsedData);
         const studentData = {
           id: item.id,
           status_list: [parsedData[0], parsedData[1], parsedData[2]],
@@ -287,7 +283,7 @@ const AfterManage = () => {
                   <div className=" flex flex-col gap-6">
                     {datalist?.map((item, index) => (
                       <div
-                        className="flex w-max bg-white py-4 px-6 rounded-lg text-label1"
+                        className="flex w-24 bg-white h-14 items-center justify-center rounded-lg text-label1"
                         key={index}
                       >
                         {item.name}
