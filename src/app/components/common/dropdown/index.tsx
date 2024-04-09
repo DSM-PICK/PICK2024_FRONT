@@ -100,6 +100,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     { value: "info", label: "info" },
     { value: "은하", label: "은하" },
     { value: "DMS", label: "DMS" },
+    { value: "gram", label: "gram" },
     { value: "Lift", label: "Lift" },
     { value: "Log", label: "Log" },
     { value: "Modeep", label: "Modeep" },
