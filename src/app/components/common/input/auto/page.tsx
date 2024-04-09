@@ -34,7 +34,6 @@ interface AutoInputProps extends InputProps {
 export const PostSelectedValues: React.FC<AutoInputProps> = ({
   selectedValues,
 }) => {
-  console.log(selectedValues);
   return selectedValues;
 };
 
