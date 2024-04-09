@@ -42,7 +42,7 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
       case "외출":
         return "border border-primary-500 text-primary-500";
       case "이동":
-        return "border border-primary-600 text-primary-600";
+        return "border border border-tertiary-300 text-tertiary-300";
       default:
         return "";
     }
@@ -62,7 +62,7 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
       case "외출":
         return "#9650FA";
       case "이동":
-        return "#AA71FB";
+        return "#414BA2";
       case "출석":
         return "#475467";
       default:
