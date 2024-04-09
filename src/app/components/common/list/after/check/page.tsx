@@ -86,6 +86,26 @@ const CheckList: React.FC<State> = ({
             }}
             type="NO"
           />
+          {state4 && (
+            <AfterCheck
+              state={Change(state4)}
+              onChange={(newState) => {
+                handleChange(0, newState);
+                if (onClick) onClick();
+              }}
+              type="NO"
+            />
+          )}
+          {state5 && (
+            <AfterCheck
+              state={Change(state5)}
+              onChange={(newState) => {
+                handleChange(0, newState);
+                if (onClick) onClick();
+              }}
+              type="NO"
+            />
+          )}
         </div>
       ) : (
         <div className="flex w-full gap-11">
@@ -110,6 +130,24 @@ const CheckList: React.FC<State> = ({
               if (onClick) onClick();
             }}
           />
+          {state4 && (
+            <AfterCheck
+              state={Change(state4)}
+              onChange={(newState) => {
+                handleChange(3, newState);
+                if (onClick) onClick();
+              }}
+            />
+          )}
+          {state5 && (
+            <AfterCheck
+              state={Change(state5)}
+              onChange={(newState) => {
+                handleChange(4, newState);
+                if (onClick) onClick();
+              }}
+            />
+          )}
         </div>
       )}
     </>

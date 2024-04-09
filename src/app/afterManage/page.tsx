@@ -11,6 +11,7 @@ import { PostStudent } from "@/apis/afterManage";
 import CheckList from "../components/common/list/after/check/page";
 import { CheckStatus } from "@/apis/selfStudy";
 import { getStudentString, setStudentNum } from "@/utils/until";
+import { getWeekDay } from "@/utils/date";
 
 interface ClubList {
   id: string;
@@ -61,6 +62,8 @@ const AfterManage = () => {
   const [clubList, setClubList] = useState<ClubList[]>([]);
   const { mutate: CheckClub } = CheckStatus();
   const [selectClub, setSelectClub] = useState<string>("PiCK");
+
+  const day = getWeekDay();
 
   const handleAcceptListClick = (id: string, name: string) => {
     const selectedIndex = selectedStudents.indexOf(id);
@@ -184,7 +187,13 @@ const AfterManage = () => {
         const parsedData = JSON.parse(localData);
         const studentData = {
           user_id: item.id,
-          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+          status_list: [
+            parsedData[0],
+            parsedData[1],
+            parsedData[2],
+            parsedData[3] || "ATTENDANCE",
+            parsedData[4] || "ATTENDANCE",
+          ],
         };
         updatedData.push(studentData);
       }
@@ -249,7 +258,7 @@ const AfterManage = () => {
   };
 
   const threeStyle =
-    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-29%";
+    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-29% gap-11";
 
   useEffect(() => {
     const keys = Object.keys(localStorage);
@@ -336,11 +345,22 @@ const AfterManage = () => {
               <div className=" text-heading5 justify-center flex text-primary-100 w-40 whitespace-nowrap">
                 {selectClub}
               </div>
-              <div className="flex justify-between w-full">
-                <div className={threeStyle}>8교시</div>
-                <div className={threeStyle}>9교시</div>
-                <div className={threeStyle}>10교시</div>
-              </div>
+
+              {day === "금" ? (
+                <div className="flex justify-between w-full gap-11">
+                  <div className={threeStyle}>6교시</div>
+                  <div className={threeStyle}>7교시</div>
+                  <div className={threeStyle}>8교시</div>
+                  <div className={threeStyle}>9교시</div>
+                  <div className={threeStyle}>10교시</div>
+                </div>
+              ) : (
+                <div className="flex justify-between w-full">
+                  <div className={threeStyle}>8교시</div>
+                  <div className={threeStyle}>9교시</div>
+                  <div className={threeStyle}>10교시</div>
+                </div>
+              )}
             </div>
             <div className=" flex gap-20">
               <div className=" flex flex-col gap-6">
@@ -356,38 +376,73 @@ const AfterManage = () => {
               <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
                 {edit ? (
                   <>
-                    {clubList?.map((item, index) => {
-                      return (
-                        <CheckList
-                          key={index}
-                          id={item.id}
-                          state1={item.status6}
-                          state2={item.status7}
-                          state3={item.status8}
-                          onClick={() =>
-                            handleAcceptListClick(item.id, item.username)
-                          }
-                        />
-                      );
-                    })}
+                    {day === "금"
+                      ? clubList?.map((item, index) => {
+                          return (
+                            <CheckList
+                              key={index}
+                              id={item.id}
+                              state1={item.status6}
+                              state2={item.status7}
+                              state3={item.status8}
+                              state4={item.status9}
+                              state5={item.status10}
+                              onClick={() =>
+                                handleAcceptListClick(item.id, item.username)
+                              }
+                            />
+                          );
+                        })
+                      : clubList?.map((item, index) => {
+                          return (
+                            <CheckList
+                              key={index}
+                              id={item.id}
+                              state1={item.status6}
+                              state2={item.status7}
+                              state3={item.status8}
+                              onClick={() =>
+                                handleAcceptListClick(item.id, item.username)
+                              }
+                            />
+                          );
+                        })}
                   </>
                 ) : (
                   <>
-                    {clubList?.map((item, index) => {
-                      return (
-                        <CheckList
-                          key={index}
-                          id={item.id}
-                          state1={item.status6}
-                          state2={item.status7}
-                          state3={item.status8}
-                          onClick={() =>
-                            handleAcceptListClick(item.id, item.username)
-                          }
-                          type="NO"
-                        />
-                      );
-                    })}
+                    {day === "금"
+                      ? clubList?.map((item, index) => {
+                          return (
+                            <CheckList
+                              key={index}
+                              id={item.id}
+                              state1={item.status6}
+                              state2={item.status7}
+                              state3={item.status8}
+                              state4={item.status9}
+                              state5={item.status10}
+                              onClick={() =>
+                                handleAcceptListClick(item.id, item.username)
+                              }
+                              type="NO"
+                            />
+                          );
+                        })
+                      : clubList?.map((item, index) => {
+                          return (
+                            <CheckList
+                              key={index}
+                              id={item.id}
+                              state1={item.status6}
+                              state2={item.status7}
+                              state3={item.status8}
+                              onClick={() =>
+                                handleAcceptListClick(item.id, item.username)
+                              }
+                              type="NO"
+                            />
+                          );
+                        })}
                   </>
                 )}
               </div>
