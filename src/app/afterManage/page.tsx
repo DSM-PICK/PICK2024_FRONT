@@ -336,7 +336,7 @@ const AfterManage = () => {
           <div className=" flex flex-col gap-8 w-full">
             <div className=" flex gap-20">
               <div className=" text-heading5 justify-center flex text-primary-100 w-29">
-                창조실
+                {selectClub}
               </div>
               <div className="flex gap-11 w-full">
                 <div className={threeStyle}>8교시</div>
