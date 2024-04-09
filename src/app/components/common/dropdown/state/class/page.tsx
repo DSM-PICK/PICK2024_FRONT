@@ -5,29 +5,24 @@ import React, { useState, useRef, useEffect } from "react";
 interface StateDropProps {
   state: "OK" | "NO" | "QUIET";
   id?: string;
+  onclick: () => void;
 }
 
-const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
+const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
   const defaultOptions: Record<string, string> = {
     신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
   };
   const { mutate: ChangeMealMutate } = ChangeState();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [selectedOption, setSelectedOption] = useState<string>(
-    defaultOptions[state]
-  );
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
-  const Change = async (option:string) => {
+  const Change = async (option: string) => {
     const tem = option === "미신청" ? "NO" : "OK";
     try {
       await ChangeMealMutate(
         { status: tem, userId: id || "" },
         {
-          onSuccess: () => {
-            // location.reload();
-            alert("신청이 변경되었습니다");
-          },
+          onSuccess: () => {},
           onError: (error) => {
             alert(`${error.message} : 에러가 발생하였습니다`);
           },
@@ -97,13 +92,19 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id }) => {
       {state === "QUIET" && isDropdownVisible && (
         <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
           <div
-            onClick={() => handleOptionClick("신청")}
+            onClick={() => {
+              handleOptionClick("신청");
+              onclick();
+            }}
             className={commonStyle}
           >
             신청
           </div>
           <div
-            onClick={() => handleOptionClick("미신청")}
+            onClick={() => {
+              handleOptionClick("미신청");
+              onclick();
+            }}
             className={commonStyle}
           >
             미신청
