@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
 import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
+import { getStudentString } from "@/utils/until";
 
 interface ClassCheck {
   id: string;
@@ -55,14 +56,12 @@ const SelfStudyCheck = () => {
     try {
       await ChangeMutate(updatedData, {
         onSuccess: () => {
-          // location.reload();
+          location.reload();
         },
         onError: (error) => {
           alert(error.name);
         },
       });
-
-      // 로컬 스토리지에 수정된 정보 반영
       updatedData.forEach((item) => {
         localStorage.setItem(item.user_id, JSON.stringify(item.status_list));
       });
@@ -161,7 +160,7 @@ const SelfStudyCheck = () => {
   };
 
   const threeStyle =
-    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-1/3";
+    " bg-white flex justify-center items-center whitespace-nowrap text-label1 rounded-lg w-29%";
 
   return (
     <BackGround
@@ -188,10 +187,10 @@ const SelfStudyCheck = () => {
     >
       <div className=" flex flex-col gap-8 w-full">
         <div className=" flex gap-20">
-          <div className=" text-heading5 justify-center flex text-primary-100 w-29">
+          <div className=" text-heading5 justify-center flex text-primary-100 w-40">
             {selectedGrade}-{selectedClass}
           </div>
-          <div className="flex gap-11 w-full">
+          <div className="flex justify-between w-full">
             <div className={threeStyle}>8교시</div>
             <div className={threeStyle}>9교시</div>
             <div className={threeStyle}>10교시</div>
@@ -201,10 +200,10 @@ const SelfStudyCheck = () => {
           <div className=" flex flex-col gap-6">
             {data?.map((item, index) => (
               <div
-                className="flex  w-24 bg-white justify-center items-center h-14 rounded-lg text-label1"
+                className="flex w-32 bg-white justify-center items-center h-14 rounded-lg text-label1"
                 key={index}
               >
-                {item.username}
+                {getStudentString(item)}
               </div>
             ))}
           </div>
