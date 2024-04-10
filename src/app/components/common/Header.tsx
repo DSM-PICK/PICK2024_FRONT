@@ -46,11 +46,15 @@ const Header: NextPage = ({}) => {
     "yusungsk",
   ];
 
+  const easterBoolean = false;
+
   const easterEgg = () => {
-    setEasterCounter(easterCounter + 1);
-    const randomNumber = Math.floor(Math.random() * instagram.length);
-    if (easterCounter > 10)
-      setEasetUrl(`https://www.instagram.com/${instagram[randomNumber]}/`);
+    if (easterBoolean) {
+      setEasterCounter(easterCounter + 1);
+      const randomNumber = Math.floor(Math.random() * instagram.length);
+      if (easterCounter > 10)
+        setEasetUrl(`https://www.instagram.com/${instagram[randomNumber]}/`);
+    }
   };
 
   return (
