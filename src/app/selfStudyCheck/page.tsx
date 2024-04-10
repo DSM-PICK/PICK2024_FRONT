@@ -215,9 +215,9 @@ const SelfStudyCheck = () => {
                     <CheckList
                       key={index}
                       id={item.id}
-                      state1={item.status8}
-                      state2={item.status9}
-                      state3={item.status10}
+                      state1={item.status6}
+                      state2={item.status7}
+                      state3={item.status8}
                       onClick={() =>
                         handleAcceptListClick(item.id, item.username)
                       }
@@ -232,9 +232,9 @@ const SelfStudyCheck = () => {
                     <CheckList
                       key={index}
                       id={item.id}
-                      state1={item.status8}
-                      state2={item.status9}
-                      state3={item.status10}
+                      state1={item.status6}
+                      state2={item.status7}
+                      state3={item.status8}
                       onClick={() =>
                         handleAcceptListClick(item.id, item.username)
                       }
