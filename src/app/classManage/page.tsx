@@ -44,7 +44,7 @@ const ClassManage: React.FC = () => {
 
   const get = async () => {
     try {
-      const result = await getStudentDataMutate(
+      await getStudentDataMutate(
         { grade: selectedGrade, class_num: selectedClass },
         {
           onSuccess: (data) => {

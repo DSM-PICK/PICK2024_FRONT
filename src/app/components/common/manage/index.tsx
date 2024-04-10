@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { CaretDown } from "@/assets/img/Icon/caret-down";
 
@@ -10,11 +9,7 @@ interface ManageDropProps {
 }
 
 interface StateStyles {
-  출석: string;
-  귀가: string;
-  현체: string;
-  자퇴: string;
-  취업: string;
+  [key: string]: string;
 }
 
 const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
@@ -22,7 +17,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  let defaultOptions: Record<string, string> = {
+  const defaultOptions: Record<string, string> = {
     출석: "출석",
     귀가: "귀가",
     현체: "현체",
@@ -30,12 +25,32 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
     취업: "취업",
   };
 
-  let stateStyles: StateStyles = {
-    출석: "bg-neutral-900 text-button-S text-neutral-300",
-    귀가: "bg-primary-800 text-label1 text-white",
-    현체: "bg-primary-500 text-button-S text-white",
-    자퇴: "bg-error-400 text-label1 text-white",
-    취업: "bg-tertiary-500 text-button-S text-white",
+  // let stateStyles: StateStyles = {
+  //   출석: "bg-neutral-900 text-button-S text-neutral-300",
+  //   귀가: "bg-primary-800 text-label1 text-white",
+  //   현체: "bg-primary-500 text-button-S text-white",
+  //   자퇴: "bg-error-400 text-label1 text-white",
+  //   취업: "bg-tertiary-500 text-button-S text-white",
+  // };
+
+  const ChangeStyle = (option: string) => {
+    switch (option) {
+      case "출석":
+        return "bg-neutral-900 text-button-S text-neutral-300";
+      case "귀가":
+        return "bg-primary-800 text-label1 text-white";
+      case "현체":
+        return "bg-primary-500 text-button-S text-white";
+      case "자퇴":
+        return "bg-error-400 text-label1 text-white";
+      case "취업":
+        return "bg-tertiary-500 text-button-S text-white";
+    }
+  };
+
+  const arrow = (option: string) => {
+    if (option === "출석") return `#475467`;
+    return `white`;
   };
 
   if (!third) {
@@ -43,7 +58,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
   }
 
   const IconColor = () => {
-    return <CaretDown color={state === "ATTENDANCE" ? "white" : "#475467"} />;
+    return <CaretDown color={arrow(selectedOption)} />;
   };
 
   const commonStyle =
@@ -57,6 +72,7 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
     setSelectedOption(option);
     setIsDropdownVisible(false);
     onChange(optionRename(option));
+    ChangeStyle(option);
   };
 
   const optionRename = (option: string) => {
@@ -98,9 +114,15 @@ const ManageDrop: React.FC<ManageDropProps> = ({ state, third, onChange }) => {
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedOption(defaultOptions[state]);
+  }, [state]);
+
   return (
     <div
-      className={`group relative rounded-lg py-2 px-3 ${stateStyles} flex gap-1 items-center cursor-pointer`}
+      className={`group relative rounded-lg py-2 px-3  ${ChangeStyle(
+        selectedOption
+      )} flex gap-1 items-center cursor-pointer`}
       onClick={toggleDropdown}
       ref={dropdownRef}
     >
