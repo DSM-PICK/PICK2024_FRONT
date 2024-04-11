@@ -18,7 +18,7 @@ const Header: NextPage = ({}) => {
   }, []);
 
   if (teacherName === "영양사") {
-    router.push(`/WeekendMeals`);
+    router.push(`/WeekendMeals/all`);
   } else if (teacherName === "지킴이") {
     router.push(`/outList`);
   }
