@@ -19,6 +19,7 @@ import changeStudent from "../../assets/img/교실 일러스트.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import { DayTeacher, SelfStudyCheck } from "@/apis/main";
 import { GetStudentNum } from "@/apis/main";
+import { GetTeacherName } from "@/apis/login/login";
 
 interface todaySelfStudy {
   floor: number;
@@ -29,6 +30,10 @@ interface Type {
   out: number;
   request: number;
   class_move: number;
+}
+
+interface TeacherName {
+  name: string;
 }
 
 const Main = () => {
@@ -92,7 +97,26 @@ const Main = () => {
     Check();
     selfCheck();
     cnt();
+    getName();
   }, []);
+
+  const { mutate: getNameMutate } = GetTeacherName();
+
+  const getName = async () => {
+    try {
+      const result = await getNameMutate(null, {
+        onSuccess: (data) => {
+          const teacherName = data.name;
+          localStorage.setItem("name", teacherName);
+        },
+        onError: (error) => {
+          console.log(error.message);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full h-full">

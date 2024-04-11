@@ -4,37 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import pick from "@/assets/img/Icon/pickname.svg";
-import { GetTeacherName } from "@/apis/login/login";
-
-interface name {
-  name: string;
-}
+import { useRouter } from "next/navigation";
 
 const Header: NextPage = ({}) => {
-  const { mutate: getNameMutate } = GetTeacherName();
-  const [data, setData] = useState<name>();
-
-  const getName = async () => {
-    try {
-      const result = await getNameMutate(null, {
-        onSuccess: (data) => {
-          setData(data);
-        },
-        onError: (error) => {
-          console.log(error.message);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getName();
-  }, []);
-
   const [easterCounter, setEasterCounter] = useState<number>(0);
   const [easterUrl, setEasetUrl] = useState<string>("/main");
+  const [teacherName, setTeacherName] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    setTeacherName(name);
+  }, []);
+
+  if (teacherName === "영양사") {
+    router.push(`/WeekendMeals`);
+  } else if (teacherName === "지킴이") {
+    router.push(`/outList`);
+  }
+
   const instagram = [
     "park._hyun.a",
     "07_.chan",
@@ -58,15 +46,14 @@ const Header: NextPage = ({}) => {
   };
 
   return (
-    <div className=" flex px-70 justify-between items-center bg-white py-2">
+    <div className="flex px-70 justify-between items-center bg-white py-2">
       <Link href={easterUrl} onClick={easterEgg}>
         <Image src={pick} alt="" width={96} height={52} />
       </Link>
       <div className="flex font-sans text-nowrap w-36 text-heading6-M text-neutral-50">
-        {data?.name}선생님
+        {teacherName ? `${teacherName}선생님` : "선생님"}
       </div>
     </div>
   );
 };
-
 export default Header;
