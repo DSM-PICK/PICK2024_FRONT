@@ -20,6 +20,7 @@ import { getFullToday, getWeekDay } from "@/utils/date";
 import { DayTeacher, SelfStudyCheck } from "@/apis/main";
 import { GetStudentNum } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
+import { useRouter } from "next/navigation";
 
 interface todaySelfStudy {
   floor: number;
@@ -42,6 +43,8 @@ const Main = () => {
   const [selfStudyChack, setSelfStudyChack] = useState<string>();
   const [data, setData] = useState<Type>();
   const { mutate: CountNum } = GetStudentNum();
+  const [teacherName, setTeacherName] = useState<string | null>(null);
+  const router = useRouter();
 
   const { mutate: todayCheck } = DayTeacher();
   const { mutate: selfChackMutate } = SelfStudyCheck();
@@ -117,6 +120,16 @@ const Main = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    setTeacherName(name);
+  }, []);
+
+  if (teacherName === "영양사") {
+    router.push(`/WeekendMeals/all`);
+  } else if (teacherName === "지킴이") {
+    router.push(`/outList`);
+  }
 
   return (
     <div className="w-full h-full">
