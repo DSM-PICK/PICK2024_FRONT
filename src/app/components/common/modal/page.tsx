@@ -3,19 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button";
 import Input from "../input";
-
 import moment from "moment";
 import AutoInput from "../input/auto/page";
 
 interface ChangeProps {
   text: string;
   name: string;
-}
-
-interface selfStudyPost {
-  floor: number;
-  teacher: string;
-  date: string;
 }
 
 interface schedule {
