@@ -59,9 +59,9 @@ const OutAccept = () => {
   };
 
   const handleClassChange = (selectedOption: number) => {
-    if (selectedOption === 5) {
-      setSelectedGrade(5);
-      setSelectedClass(5);
+    if (selectedGrade === 5) {
+      setSelectedGrade(1);
+      setSelectedClass(selectedOption);
     } else {
       setSelectedClass(selectedOption);
     }
@@ -206,12 +206,12 @@ const OutAccept = () => {
           </Button>
           {selectedTab ? (
             <div className=" flex gap-5">
-              <Dropdown type="grade" onChange={handleGradeChange} />
+              <Dropdown type="all" onChange={handleGradeChange} />
               <Dropdown type="class" onChange={handleClassChange} />
             </div>
           ) : (
             <div className=" flex gap-5">
-              <Dropdown type="grade" onChange={handleGradeChange} />
+              <Dropdown type="all" onChange={handleGradeChange} />
               <Dropdown type="class" onChange={handleClassChange} />
             </div>
           )}
