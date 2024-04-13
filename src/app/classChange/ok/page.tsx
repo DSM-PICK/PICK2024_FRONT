@@ -86,7 +86,6 @@ const ClassChangeOk = () => {
           { grade: selectedGrade, class: selectedClass },
           {
             onSuccess: (data) => {
-              console.log(data);
               setChangelist(data);
             },
           }
