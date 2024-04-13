@@ -37,8 +37,8 @@ export const useLogin = () => {
 
   if (loginMutation.isError) {
     ("access_token");
-    cookie.delete("refresh_token");
-    cookie.delete("part");
+    cookie.remove("refresh_token");
+    cookie.remove("part");
     console.error(loginMutation.error);
   }
 
