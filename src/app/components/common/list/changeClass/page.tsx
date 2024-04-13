@@ -21,7 +21,6 @@ const ChangeClass: React.FC<ChangeClassProps> = ({
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleClick = () => {
-    console.log(isActive);
     setIsActive(!isActive);
     onClick?.();
   };

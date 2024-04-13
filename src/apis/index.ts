@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { cookie } from "@/utils/auth";
 
 const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -15,7 +16,7 @@ export const refreshInstance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = cookie.get("access_token");
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
@@ -27,7 +28,7 @@ instance.interceptors.request.use(
 
 refreshInstance.interceptors.request.use(
   (config) => {
-    const refreshToken = localStorage.getItem("refresh_token");
+    const refreshToken = cookie.get("refresh_token");
     if (refreshToken) {
       config.headers.Authorization = `Bearer ${refreshToken}`;
     }
@@ -42,7 +43,7 @@ instance.interceptors.response.use(
     if (axios.isAxiosError(error) && error.response) {
       const { status } = error.response.data;
       if (status === 401) {
-        const refreshToken = localStorage.getItem("refresh_token");
+        const refreshToken = cookie.get("refresh_token");
         if (refreshToken) {
           try {
             const res = await axios.put(
@@ -56,7 +57,7 @@ instance.interceptors.response.use(
             );
             const { data } = res.data;
             const accessToken = data.accessToken;
-            localStorage.setItem("access_token", accessToken);
+            cookie.set("access_token", accessToken);
             if (error.config) {
               error.config.headers.Authorization = `Bearer ${accessToken}`;
               return axios.request(error.config);

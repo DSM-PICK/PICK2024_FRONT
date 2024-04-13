@@ -164,8 +164,6 @@ const AfterManage = () => {
       };
     });
 
-    console.log(data);
-
     try {
       await postStudents(updatedData, {
         onSuccess: () => {

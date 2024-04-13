@@ -24,12 +24,7 @@ const Previouss: NextPage = () => {
   const student = nameParams ? nameParams : "";
   const preOut = async () => {
     try {
-      const accessToken = localStorage.getItem("access_token");
-      if (!accessToken) {
-        console.error("Access token not found");
-        return;
-      }
-      const result = await preList(
+      await preList(
         {
           name: student,
         },

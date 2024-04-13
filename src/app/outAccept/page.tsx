@@ -60,7 +60,7 @@ const OutAccept = () => {
 
   const handleClassChange = (selectedOption: number) => {
     if (selectedGrade === 5) {
-      setSelectedGrade(1);
+      alert("학년을 선택해주세요");
       setSelectedClass(selectedOption);
     } else {
       setSelectedClass(selectedOption);
@@ -80,7 +80,6 @@ const OutAccept = () => {
           {
             onSuccess: (data) => {
               setData(data);
-              console.log(data);
             },
             onError: (error) => {
               console.log(error);

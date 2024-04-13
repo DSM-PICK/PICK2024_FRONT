@@ -19,8 +19,6 @@ interface LoginType {
   password: string;
 }
 
-const queryClient = new QueryClient();
-
 const Login: NextPage = () => {
   const [data, setData] = useState<LoginType>({
     admin_id: "",
