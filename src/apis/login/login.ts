@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { useRouter } from "next/navigation";
+import { cookie } from "@/utils/auth";
 
 interface Login {
   admin_id: string;
@@ -14,8 +14,6 @@ interface Token {
 }
 
 export const useLogin = () => {
-  const router = useRouter();
-
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
@@ -38,9 +36,9 @@ export const useLogin = () => {
   });
 
   if (loginMutation.isError) {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("part");
+    ("access_token");
+    cookie.delete("refresh_token");
+    cookie.delete("part");
     console.error(loginMutation.error);
   }
 

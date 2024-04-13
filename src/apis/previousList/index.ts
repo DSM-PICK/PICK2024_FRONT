@@ -1,6 +1,5 @@
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
-import { getToken } from "@/utils/auth";
 
 interface Type {
   username: string;

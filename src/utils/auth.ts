@@ -1,10 +1,8 @@
-export const saveToken = (accessToken: string, refreshToken: string) => {
-  localStorage.setItem("access_token", accessToken);
-  localStorage.setItem("refresh_token", refreshToken);
-};
+import { Cookies } from "react-cookie";
 
-export const getToken = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("access_token");
-  }
+export const cookie = new Cookies();
+
+export const saveToken = (accessToken: string, refreshToken: string) => {
+  cookie.set("access_token", accessToken);
+  cookie.set("refresh_token", refreshToken);
 };
