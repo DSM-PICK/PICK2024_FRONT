@@ -10,7 +10,7 @@ interface ItemType {
 
 interface DropProps {
   dropDownItem?: ItemType[];
-  type: "floor" | "grade" | "class" | "club";
+  type: "floor" | "grade" | "class" | "club" | "all";
   reqOption?: "application" | "early-return";
   onChange?: (selectedOption: any, type: string) => void;
   isOpen?: boolean;
@@ -21,6 +21,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
   const [selectedClubOption, setSelectedClubOption] = useState<string>("PiCK");
+  const [selectedAllOption, setSelectedAllOption] = useState<number>(1);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -54,19 +55,19 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         setSelectedFloorOption(option.value);
       } else if (type === "club") {
         setSelectedClubOption(option.value);
+      } else if (type === "all") {
+        setSelectedAllOption(option.value);
       }
     }
     setIsDropdownVisible(false);
   };
-
-  const commonStyle = "py-5 px-3 rounded hover:bg-primary-200 hover:text-white";
 
   const generateOptions = (options: any[]) => {
     return options.map((option) => (
       <div
         key={option.value}
         onClick={() => handleOptionClick(option)}
-        className={`${commonStyle}`}
+        className="py-5 px-3 rounded hover:bg-primary-200 hover:text-white"
       >
         {option.label}
       </div>
@@ -79,11 +80,17 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     { value: 4, label: "4층" },
   ];
 
-  const gradeOptions = [
+  const AllOption = [
     { value: 1, label: "1학년" },
     { value: 2, label: "2학년" },
     { value: 3, label: "3학년" },
     { value: 5, label: "전체" },
+  ];
+
+  const gradeOptions = [
+    { value: 1, label: "1학년" },
+    { value: 2, label: "2학년" },
+    { value: 3, label: "3학년" },
   ];
 
   const classOptions = [
@@ -91,7 +98,6 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     { value: 2, label: "2반" },
     { value: 3, label: "3반" },
     { value: 4, label: "4반" },
-    { value: 5, label: "전체" },
   ];
 
   const clubOptions = [
@@ -119,6 +125,8 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
       ? classOptions
       : type === "club"
       ? clubOptions
+      : type === "all"
+      ? AllOption
       : [];
 
   return (
@@ -128,16 +136,16 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         onClick={toggleDropdown}
       >
         {type === "grade"
-          ? selectedGradeOption === 5
-            ? `전체`
-            : `${selectedGradeOption}학년`
+          ? `${selectedGradeOption}학년`
           : type === "class"
-          ? selectedClassOption == 5
-            ? `전체`
-            : `${selectedClassOption}반`
+          ? `${selectedClassOption}반`
           : type === "floor"
           ? `${selectedFloorOption}층`
-          : `${selectedClubOption}`}
+          : type === "all"
+          ? selectedAllOption === 5
+            ? `전체`
+            : `${selectedAllOption}학년`
+          : selectedClubOption}
         <Image
           src={isDropdownVisible ? `${downarrow.src}` : `${arrow.src}`}
           alt="arrow"
