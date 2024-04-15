@@ -58,7 +58,6 @@ const ScheduleFix: React.FC<id> = ({ id }) => {
       </div>
       {isOptionsVisible && (
         <div className="bg-white rounded w-16 shadow-lg text-caption3 absolute right-0 text-nowrap">
-          <div className=" flex cursor-pointer p-1">수정하기</div>
           <div className="flex p-1" onClick={deleteNotice}>
             삭제하기
           </div>
