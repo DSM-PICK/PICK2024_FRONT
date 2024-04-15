@@ -149,15 +149,10 @@ const AfterManage = () => {
     }
   };
 
-  const [data, setData] = useState<string[]>(() => {
-    if (typeof window !== "undefined") {
-      const localData = localStorage.getItem("students");
-      return localData ? JSON.parse(localData) : [];
-    }
-  });
-
   const handleModalConfirm = async () => {
-    const updatedData = data.map((item) => {
+    const localData = localStorage.getItem("students");
+    const data = localData ? JSON.parse(localData) : [];
+    const updatedData = data.map((item: string) => {
       const [studentNum] = item.split(" ");
       return {
         student_num: studentNum,
