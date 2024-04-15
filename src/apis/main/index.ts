@@ -41,16 +41,3 @@ export const DayTeacher = () => {
     },
   });
 };
-
-export const SelfStudyCheck = () => {
-  return useMutation<string, Error, null>({
-    mutationFn: async () => {
-      try {
-        const response = await instance.get(`/self-study/admin`, {});
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  });
-};

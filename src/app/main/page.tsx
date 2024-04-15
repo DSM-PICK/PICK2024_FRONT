@@ -17,7 +17,7 @@ import apply from "../../assets/img/신청 일러스트.svg";
 import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
-import { DayTeacher, SelfStudyCheck } from "@/apis/main";
+import { DayTeacher } from "@/apis/main";
 import { GetStudentNum } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
 import { useRouter } from "next/navigation";
@@ -33,21 +33,15 @@ interface Type {
   class_move: number;
 }
 
-interface TeacherName {
-  name: string;
-}
-
 const Main = () => {
   const today = new Date();
   const [selfStudy, setSelfStudy] = useState<todaySelfStudy[]>([]);
-  const [selfStudyChack, setSelfStudyChack] = useState<string>();
   const [data, setData] = useState<Type>();
   const { mutate: CountNum } = GetStudentNum();
   const [teacherName, setTeacherName] = useState<string | null>(null);
   const router = useRouter();
 
   const { mutate: todayCheck } = DayTeacher();
-  const { mutate: selfChackMutate } = SelfStudyCheck();
 
   const cnt = async () => {
     try {
@@ -84,21 +78,8 @@ const Main = () => {
     }
   };
 
-  const selfCheck = async () => {
-    try {
-      await selfChackMutate(null, {
-        onSuccess: (data) => {
-          setSelfStudyChack(data);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     Check();
-    selfCheck();
     cnt();
     getName();
   }, []);
@@ -107,7 +88,7 @@ const Main = () => {
 
   const getName = async () => {
     try {
-      const result = await getNameMutate(null, {
+      await getNameMutate(null, {
         onSuccess: (data) => {
           const teacherName = data.name;
           localStorage.setItem("name", teacherName);
