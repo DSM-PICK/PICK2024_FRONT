@@ -1,7 +1,6 @@
 import { instance } from "..";
 import { useQuery } from "@tanstack/react-query";
-import { TodaySelfStudy, TypeProp } from "./type";
-
+import { TypeProp, TodaySelfStudy } from "../type";
 export const GetStudentNum = () => {
   return useQuery<TypeProp>({
     queryKey: ["GetStudentNum"],

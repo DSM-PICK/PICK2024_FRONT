@@ -6,62 +6,34 @@ import AfterTab from "../components/common/tab/after/page";
 import Modal from "../components/common/modal/page";
 import AfterDelete from "../components/common/list/after/delete/page";
 import { BackGround } from "../components/common/background";
-import { FixStatus, GetAfterStudent, GetClubList } from "@/apis/afterManage";
-import { PostStudent } from "@/apis/afterManage";
+import {
+  FixStatus,
+  GetAfterStudent,
+  GetClubList,
+  PostStudent,
+} from "@/apis/afterManage";
 import CheckList from "../components/common/list/after/check/page";
 import { CheckStatus } from "@/apis/selfStudy";
 import { getStudentString, setStudentNum } from "@/utils/until";
 import { getWeekDay } from "@/utils/date";
-
-interface ClubList {
-  id: string;
-  username: string;
-  grade: number;
-  class_num: number;
-  num: number;
-  status6: string;
-  status7: string;
-  status8: string;
-  status9: string;
-  status10: string;
-}
-
-interface ChangeClass {
-  id: string;
-  grade: number;
-  class_num: number;
-  num: number;
-  name: string;
-  status1: string;
-  status2: string;
-  status3: string;
-}
-
-interface ChangeClub {
-  user_id: string;
-  status_list: string[];
-}
-
-interface ChangeStatus {
-  id: string;
-  status_list: string[];
-}
+import { AfterStudent, ChangeClub, ChangeStatus, ClubList } from "@/apis/type";
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
   const [change, setChange] = useState<boolean>(false);
-  const [dataList, setDataList] = useState<ChangeClass[]>();
+  const [clubList, setClubList] = useState<ClubList[]>([]);
+  const [dataList, setDataList] = useState<AfterStudent[]>();
   const [saveModal, setSaveModal] = useState<boolean>(false);
+  const [selectClub, setSelectClub] = useState<string>("PiCK");
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
-  const { mutate: getAfterMutate } = GetAfterStudent();
-  const { mutate: postStudents } = PostStudent();
-  const { mutate: changeStatus } = FixStatus();
-  const { mutate: clubMutate } = GetClubList();
-  const [clubList, setClubList] = useState<ClubList[]>([]);
+  const { data: getAfter } = GetAfterStudent();
+  const { data: getClub } = GetClubList(selectClub);
+  const { mutate: Post } = PostStudent();
+
   const { mutate: CheckClub } = CheckStatus();
-  const [selectClub, setSelectClub] = useState<string>("PiCK");
+  const { mutate: FixStatusMutate } = FixStatus();
 
   const day = getWeekDay();
 
@@ -87,42 +59,21 @@ const AfterManage = () => {
     }
   };
 
-  const getClub = async () => {
-    try {
-      await clubMutate(
-        { club: selectClub },
-        {
-          onSuccess: (data) => {
-            setClubList(data);
-          },
-          onError: (error) => {
-            alert(error.message);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (getClub) {
+      setClubList(getClub);
     }
-  };
+  }, [getClub]);
 
   const handleClubChange = (selectedOption: string) => {
     setSelectClub(selectedOption);
   };
 
-  const get = async () => {
-    try {
-      await getAfterMutate(null, {
-        onSuccess: (data) => {
-          setDataList(data);
-        },
-        onError: (error) => {
-          console.log(error.name);
-        },
-      });
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (getAfter) {
+      setDataList(getAfter);
     }
-  };
+  }, [getAfter]);
 
   const onClickEdit = () => {
     setEdit(true);
@@ -158,19 +109,9 @@ const AfterManage = () => {
         student_num: studentNum,
       };
     });
-
-    try {
-      await postStudents(updatedData, {
-        onSuccess: () => {
-          alert("추가되었습니다");
-          location.reload();
-        },
-      });
-      setModal(false);
-    } catch (error) {
-      console.log(error);
-    }
+    Post(updatedData);
   };
+  525;
 
   const handleSaveClub = async () => {
     const updatedData: ChangeClub[] = [];
@@ -201,17 +142,16 @@ const AfterManage = () => {
           alert(error.name);
         },
       });
-
+    } catch (error) {
       updatedData.forEach((item) => {
         localStorage.setItem(item.user_id, JSON.stringify(item.status_list));
       });
-    } catch (error) {
       console.log(error);
     }
     setSaveModal(false);
   };
 
-  const handleSaveModalConfirm = async () => {
+  const handleSaveModalConfirm = () => {
     const updatedData: ChangeStatus[] = [];
     dataList?.forEach((item) => {
       const localData = localStorage.getItem(item.id);
@@ -223,20 +163,8 @@ const AfterManage = () => {
         };
         updatedData.push(studentData);
       }
+      FixStatusMutate(updatedData);
     });
-
-    try {
-      await changeStatus(updatedData, {
-        onSuccess: () => {
-          location.reload();
-        },
-        onError: (error) => {
-          alert(error.name);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
     setSaveModal(false);
   };
 
@@ -260,13 +188,9 @@ const AfterManage = () => {
         localStorage.removeItem(key);
       }
     });
-    get();
-    getClub();
   }, []);
 
-  useEffect(() => {
-    getClub();
-  }, [selectClub]);
+  useEffect(() => {}, [selectClub]);
 
   return (
     <BackGround

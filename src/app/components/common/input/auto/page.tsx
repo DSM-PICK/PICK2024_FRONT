@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import SelectedBadges from "./badge/page";
-import { ALLStudent } from "@/apis/afterManage";
+import { AllStudent } from "@/apis/afterManage";
 import { setStudentNum } from "@/utils/until";
 import { GetAllTeacher } from "@/apis/changeTeacher";
+import { Type } from "@/apis/type";
 
 interface ChangeProps {
   text: string;
@@ -17,13 +18,6 @@ interface InputProps {
   onChange: ({ text, name }: ChangeProps) => void;
   value: string;
   type: "student" | "teacher";
-}
-
-interface StudentType {
-  name: string;
-  grade: number;
-  class_num: number;
-  num: number;
 }
 
 interface AutoInputProps extends InputProps {
@@ -49,13 +43,13 @@ const AutoInput: React.FC<AutoInputProps> = ({
     useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const { mutate: GetStudentMutate } = ALLStudent();
+  const { data: GetStudentMutate } = AllStudent();
   const { mutate: GetTeacerMutate } = GetAllTeacher();
   const [teacherData, setTeacherData] = useState<string[]>();
 
   const containerClassName = `font-sans w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
-  const [data, setData] = useState<StudentType[]>([]);
+  const [data, setData] = useState<Type[]>([]);
 
   const Teacher = async () => {
     try {
@@ -76,28 +70,18 @@ const AutoInput: React.FC<AutoInputProps> = ({
     localStorage.setItem("students", JSON.stringify(selectedValues));
   }, [selectedValues]);
 
-  const fetchData = async () => {
-    try {
-      await GetStudentMutate(null, {
-        onSuccess: (data) => {
-          setData(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (type === "student") {
-      fetchData();
-    } else if (type === "teacher") {
+    if (type === "teacher") {
       Teacher();
     }
   }, []);
+
+  useEffect(() => {
+    console.log(GetStudentMutate);
+    if (type === "student" && GetStudentMutate) {
+      setData(GetStudentMutate);
+    }
+  }, [GetStudentMutate]);
 
   useEffect(() => {
     if (type === "student") {

@@ -1,65 +1,17 @@
 import { instance } from "..";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Type, AfterStudent, Students, ChangeStatus, ClubList } from "../type";
 
-interface Type {
-  grade: number;
-  class_num: number;
-  num: number;
-  name: string;
-}
-
-interface ChangeStatus {
-  id: string;
-  status_list: string[];
-}
-
-interface AfterStudent {
-  id: string;
-  grade: number;
-  class_num: number;
-  num: number;
-  name: string;
-  status1: string;
-  status2: string;
-  status3: string;
-}
-
-interface ClubList {
-  id: string;
-  username: string;
-  grade: number;
-  class_num: number;
-  num: number;
-  status6: string;
-  status7: string;
-  status8: string;
-  status9: string;
-  status10: string;
-}
-
-interface Students {
-  name: string;
-  grade: number;
-  class_num: number;
-  num: number;
-}
-
-export const After = () => {
-  return useMutation<null, Error, Type>({
-    mutationFn: async (param: Type) => {
-      try {
-        const response = await instance.post("after", {
-          grade: param.grade,
-          class_num: param.class_num,
-          num: param.num,
-          name: param.name,
-        });
-
-        return response.data;
-      } catch (error) {
-        console.log(error);
-        throw new Error("Failed to perform mutation");
-      }
+export const After = (param: Type) => {
+  return useQuery({
+    queryKey: ["After"],
+    queryFn: async () => {
+      await instance.post("after", {
+        grade: param.grade,
+        class_num: param.class_num,
+        num: param.num,
+        name: param.name,
+      });
     },
   });
 };
@@ -68,7 +20,7 @@ export const AfterStudentDelete = () => {
   return useMutation<void, Error, { id: string }>({
     mutationFn: async ({ id }) => {
       try {
-        const response = await instance.delete(`/after/delete`, {
+        await instance.delete(`/after/delete`, {
           data: {
             id,
           },
@@ -82,27 +34,21 @@ export const AfterStudentDelete = () => {
 };
 
 export const GetAfterStudent = () => {
-  return useMutation<AfterStudent[], Error, null>({
-    mutationFn: async () => {
-      try {
-        const response = await instance.get(`/after/all`, {});
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
+  return useQuery<AfterStudent[]>({
+    queryKey: ["GetAfterStudent"],
+    queryFn: async () => {
+      const response = await instance.get(`/after/all`);
+      return response.data;
     },
   });
 };
 
 export const GetStudentData = () => {
-  return useMutation<Students[], Error, null>({
-    mutationFn: async () => {
-      try {
-        const response = await instance.get(`/user/all`);
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
+  return useQuery<Students[]>({
+    queryKey: ["GetStudentData"],
+    queryFn: async () => {
+      const response = await instance.get(`/user/all`);
+      return response.data;
     },
   });
 };
@@ -119,15 +65,12 @@ export const PostStudent = () => {
   });
 };
 
-export const ALLStudent = () => {
-  return useMutation<Type[], Error, null>({
-    mutationFn: async () => {
-      try {
-        const result = await instance.get(`/after/search`);
-        return result.data;
-      } catch (error) {
-        console.log(error);
-      }
+export const AllStudent = () => {
+  return useQuery<Type[]>({
+    queryKey: ["AllStudent"],
+    queryFn: async () => {
+      const response = await instance.get(`/after/search`);
+      return response.data;
     },
   });
 };
@@ -144,17 +87,12 @@ export const FixStatus = () => {
   });
 };
 
-export const GetClubList = () => {
-  return useMutation<ClubList[], Error, { club: string }>({
-    mutationFn: async (param) => {
-      try {
-        const response = await instance.get(
-          `/attendance/club?club=${param.club}`
-        );
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
+export const GetClubList = (club: string) => {
+  return useQuery<ClubList[]>({
+    queryKey: ["GetClubList", club],
+    queryFn: async () => {
+      const response = await instance.get(`/attendance/club?club=${club}`);
+      return response.data;
     },
   });
 };
