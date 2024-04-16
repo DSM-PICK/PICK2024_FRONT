@@ -49,19 +49,6 @@ export const useLogin = () => {
   };
 };
 
-// export const GetTeacherName = () => {
-//   return useMutation<{ name: string }, Error, null>({
-//     mutationFn: async () => {
-//       try {
-//         const response = await instance.get(`/admin/my-name`);
-//         return response.data;
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     },
-//   });
-// };
-
 export const GetTeacherName = () => {
   return useQuery<{ name: string }>({
     queryKey: ["GetTeacherName"],

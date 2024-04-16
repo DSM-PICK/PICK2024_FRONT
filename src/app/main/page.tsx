@@ -20,7 +20,7 @@ import { getFullToday, getWeekDay } from "@/utils/date";
 import { GetStudentNum, Test } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
 import { useRouter } from "next/navigation";
-import { TodaySelfStudy } from "@/apis/main/type";
+import { TodaySelfStudy } from "@/apis/type";
 
 interface Type {
   out: number;
