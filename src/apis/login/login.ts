@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance } from "..";
 import { cookie } from "@/utils/auth";
 
@@ -49,15 +49,25 @@ export const useLogin = () => {
   };
 };
 
+// export const GetTeacherName = () => {
+//   return useMutation<{ name: string }, Error, null>({
+//     mutationFn: async () => {
+//       try {
+//         const response = await instance.get(`/admin/my-name`);
+//         return response.data;
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     },
+//   });
+// };
+
 export const GetTeacherName = () => {
-  return useMutation<{ name: string }, Error, null>({
-    mutationFn: async () => {
-      try {
-        const response = await instance.get(`/admin/my-name`);
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
+  return useQuery<{ name: string }>({
+    queryKey: ["GetTeacherName"],
+    queryFn: async () => {
+      const response = await instance.get(`/admin/my-name`);
+      return response.data;
     },
   });
 };
