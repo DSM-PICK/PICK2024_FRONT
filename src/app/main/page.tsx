@@ -17,15 +17,10 @@ import apply from "../../assets/img/신청 일러스트.svg";
 import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
-import { DayTeacher, SelfStudyCheck } from "@/apis/main";
-import { GetStudentNum } from "@/apis/main";
+import { GetStudentNum, Test } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
 import { useRouter } from "next/navigation";
-
-interface todaySelfStudy {
-  floor: number;
-  teacher_name: string;
-}
+import { TodaySelfStudy } from "@/apis/main/type";
 
 interface Type {
   out: number;
@@ -33,93 +28,35 @@ interface Type {
   class_move: number;
 }
 
-interface TeacherName {
-  name: string;
-}
-
 const Main = () => {
   const today = new Date();
-  const [selfStudy, setSelfStudy] = useState<todaySelfStudy[]>([]);
-  const [selfStudyChack, setSelfStudyChack] = useState<string>();
+  const [selfStudy, setSelfStudy] = useState<TodaySelfStudy[]>([]);
   const [data, setData] = useState<Type>();
-  const { mutate: CountNum } = GetStudentNum();
   const [teacherName, setTeacherName] = useState<string | null>(null);
   const router = useRouter();
-
-  const { mutate: todayCheck } = DayTeacher();
-  const { mutate: selfChackMutate } = SelfStudyCheck();
-
-  const cnt = async () => {
-    try {
-      await CountNum(null, {
-        onSuccess: (data) => {
-          setData(data);
-        },
-        onError: (error) => {
-          console.log(error.name);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const Check = async () => {
-    try {
-      await todayCheck(
-        {
-          date: getFullToday(),
-        },
-        {
-          onSuccess: (data) => {
-            setSelfStudy(data);
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    } catch (error) {
-      console.log("오류 발생", error);
-    }
-  };
-
-  const selfCheck = async () => {
-    try {
-      await selfChackMutate(null, {
-        onSuccess: (data) => {
-          setSelfStudyChack(data);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data: CountNum } = GetStudentNum();
+  const { data: getName } = GetTeacherName();
+  const { data: selfStudyData } = Test(getFullToday());
 
   useEffect(() => {
-    Check();
-    selfCheck();
-    cnt();
-    getName();
-  }, []);
-
-  const { mutate: getNameMutate } = GetTeacherName();
-
-  const getName = async () => {
-    try {
-      const result = await getNameMutate(null, {
-        onSuccess: (data) => {
-          const teacherName = data.name;
-          localStorage.setItem("name", teacherName);
-        },
-        onError: (error) => {
-          console.log(error.message);
-        },
-      });
-    } catch (error) {
-      console.log(error);
+    if (selfStudyData) {
+      setSelfStudy(selfStudyData);
     }
-  };
+  }, [selfStudyData]);
+
+  useEffect(() => {
+    if (CountNum) {
+      setData(CountNum);
+    }
+  }, [CountNum]);
+
+  useEffect(() => {
+    if (getName) {
+      const teachername = getName.name;
+      localStorage.setItem("name", teachername);
+    }
+  }, [getName]);
+
   useEffect(() => {
     const name = localStorage.getItem("name");
     setTeacherName(name);
