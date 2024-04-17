@@ -15,8 +15,8 @@ export const Provider: React.FC<ProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (!accessToken) {
-      alert("로그인 후 이용해 주세요");
       router.push("/login");
+      alert("로그인 후 이용해 주세요");
     }
   }, []);
 
