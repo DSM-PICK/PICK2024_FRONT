@@ -75,12 +75,12 @@ export const MealCheck = () => {
   return useMutation<
     mealcheckProp[],
     Error,
-    { grade: number; classNum: number }
+    { grade: number; class_num: number }
   >({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/weekend-meal/all?grade=${param.grade}&class_num=${param.classNum}`
+          `/weekend-meal/all?grade=${param.grade}&class_num=${param.class_num}`
         );
         return response.data;
       } catch (error) {
@@ -94,12 +94,12 @@ export const NotMealCheck = () => {
   return useMutation<
     notCheckMeal[],
     Error,
-    { grade: number; classNum: number }
+    { grade: number; class_num: number }
   >({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.classNum}`
+          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.class_num}`
         );
         return response.data;
       } catch (error) {

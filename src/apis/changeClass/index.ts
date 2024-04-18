@@ -44,7 +44,7 @@ export const ChangeClassList = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/class-room/grade?grade=${param.grade}&classNum=${param.class}`
+          `/class-room/grade?grade=${param.grade}&class_num=${param.class}`
         );
         return response.data;
       } catch (error) {
