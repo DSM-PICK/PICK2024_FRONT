@@ -76,7 +76,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
   const checkMealList = async () => {
     try {
       await checkMealMutate(
-        { grade: selectGrade, classNum: selectClass },
+        { grade: selectGrade, class_num: selectClass },
         {
           onSuccess: (data) => {
             setCheckMeal(data);
@@ -96,7 +96,7 @@ const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
       await notCheckMealMutate(
         {
           grade: selectGrade,
-          classNum: selectClass,
+          class_num: selectClass,
         },
         {
           onSuccess: (data) => {
