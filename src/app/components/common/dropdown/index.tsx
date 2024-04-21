@@ -9,18 +9,16 @@ interface ItemType {
 }
 
 interface DropProps {
-  dropDownItem?: ItemType[];
   type: "floor" | "grade" | "class" | "club" | "all";
-  reqOption?: "application" | "early-return";
   onChange?: (selectedOption: any, type: string) => void;
-  isOpen?: boolean;
 }
 
 const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(2);
-  const [selectedClubOption, setSelectedClubOption] = useState<string>("PiCK");
+  const [selectedClubOption, setSelectedClubOption] =
+    useState<string>("세미나실 2-1(대동여지도)");
   const [selectedAllOption, setSelectedAllOption] = useState<number>(1);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,7 +52,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
       } else if (type === "floor") {
         setSelectedFloorOption(option.value);
       } else if (type === "club") {
-        setSelectedClubOption(option.value);
+        setSelectedClubOption(option.label);
       } else if (type === "all") {
         setSelectedAllOption(option.value);
       }
@@ -101,18 +99,18 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   ];
 
   const clubOptions = [
-    { value: "PiCK", label: "PiCK" },
-    { value: "대동여지도", label: "대동여지도" },
-    { value: "info", label: "info" },
-    { value: "은하", label: "은하" },
-    { value: "DMS", label: "DMS" },
-    { value: "gram", label: "gram" },
-    { value: "Lift", label: "Lift" },
-    { value: "Log", label: "Log" },
-    { value: "Modeep", label: "Modeep" },
-    { value: "NoNamed", label: "NoNamed" },
-    { value: "TeamQSS", label: "TeamQSS" },
-    { value: "어게인", label: "어게인" },
+    { value: "대동여지도", label: "세미나실 2-1(대동여지도)" },
+    { value: "DMS", label: "세미나실 2-2(DMS)" },
+    { value: "gram", label: "세미나실 2-3(gram)" },
+    { value: "Lift", label: "소개2실(Lift)" },
+    { value: "Log", label: "세미나실 3-1(Log)" },
+    { value: "은하", label: "세미나실 3-2(은하)" },
+    { value: "PiCK", label: "세미나실 3-3(PiCK)" },
+    { value: "어게인", label: "보안 1실(어게인)" },
+    { value: "info", label: "보안 2실(info)" },
+    { value: "TeamQSS", label: "세미나실 4-1(TeamQSS)" },
+    { value: "NoNamed", label: "세미나실 4-2(NoNamed)" },
+    { value: "Modeep", label: "세미나실 4-3(Modeep)" },
     { value: "자습", label: "자습" },
   ];
 
@@ -130,7 +128,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
       : [];
 
   return (
-    <div className="relative w-38" ref={dropdownRef}>
+    <div className="relative w-auto" ref={dropdownRef}>
       <div
         className="group border py-4 px-6 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-between"
         onClick={toggleDropdown}
@@ -154,7 +152,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         />
       </div>
       {isDropdownVisible && (
-        <div className="absolute h-auto max-h-72 overflow-y-scroll bg-white border rounded-lg w-full text-Button-S z-20">
+        <div className="absolute h-auto max-h-72 overflow-y-scroll bg-white border rounded-lg w-max text-Button-S z-20">
           {generateOptions(options)}
         </div>
       )}
