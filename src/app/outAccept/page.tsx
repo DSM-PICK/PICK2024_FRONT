@@ -153,7 +153,7 @@ const OutAccept = () => {
         );
       }
     } catch (error) {
-      alert("외출 수락에 실패하였습니다");
+      alert("외출 거절에 실패하였습니다");
       setRefuse(false);
     }
   };

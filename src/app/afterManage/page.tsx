@@ -25,7 +25,7 @@ const AfterManage = () => {
   const [clubList, setClubList] = useState<ClubList[]>([]);
   const [dataList, setDataList] = useState<AfterStudent[]>();
   const [saveModal, setSaveModal] = useState<boolean>(false);
-  const [selectClub, setSelectClub] = useState<string>("PiCK");
+  const [selectClub, setSelectClub] = useState<string>("대동여지도");
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
   const { data: getAfter } = GetAfterStudent();
@@ -61,6 +61,7 @@ const AfterManage = () => {
 
   useEffect(() => {
     if (getClub) {
+      setClubList([]);
       setClubList(getClub);
     }
   }, [getClub]);
@@ -71,6 +72,7 @@ const AfterManage = () => {
 
   useEffect(() => {
     if (getAfter) {
+      setDataList([]);
       setDataList(getAfter);
     }
   }, [getAfter]);
@@ -110,8 +112,8 @@ const AfterManage = () => {
       };
     });
     Post(updatedData);
+    setModal(false);
   };
-  525;
 
   const handleSaveClub = async () => {
     const updatedData: ChangeClub[] = [];
