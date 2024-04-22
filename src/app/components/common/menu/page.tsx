@@ -18,7 +18,7 @@ const Menu: React.FC<MenuProp> = ({ icon, children, href }) => {
   }`;
   return (
     <Link href={href !== undefined ? href : "main"}>
-      <div className=" flex flex-col justify-between items-center gap-3">
+      <div className=" flex flex-col justify-between items-center gap-3 whitespace-nowrap">
         <div className=" w-25 h-25 flex items-center justify-center bg-white rounded-xl">
           {icon && <img src={icon.src} />}
         </div>
