@@ -152,7 +152,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
         />
       </div>
       {isDropdownVisible && (
-        <div className="absolute h-auto max-h-72 overflow-y-scroll bg-white border rounded-lg w-max text-Button-S z-20">
+        <div className="absolute h-auto max-h-72 overflow-y-scroll bg-white border rounded-lg w-full text-Button-S z-20">
           {generateOptions(options)}
         </div>
       )}
