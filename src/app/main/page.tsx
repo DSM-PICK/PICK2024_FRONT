@@ -126,8 +126,8 @@ const Main = () => {
                 ))}
               </div>
             </div>
-            <div className="flex justify-between ">
-              <div className=" bg-white rounded-tl-max gap-2 rounded-lg">
+            <div className="flex justify-between gap-2">
+              <div className=" bg-white rounded-tl-max rounded-lg">
                 <CheckPage
                   href="outList"
                   img={outStudent}
