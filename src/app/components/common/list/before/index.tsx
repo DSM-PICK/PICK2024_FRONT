@@ -39,7 +39,7 @@ const PreviousList: React.FC<getProp> = ({
   const toggleDropdown = async () => {
     setIsDropdownVisible(!isDropdownVisible);
     try {
-      const result = await getPrevious(
+      await getPrevious(
         { id: id },
         {
           onSuccess: (data) => {
@@ -72,7 +72,7 @@ const PreviousList: React.FC<getProp> = ({
     <div className="flex h-fit w-29%">
       <div className="relative w-full">
         <div
-          className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white"
+          className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white w-max"
           onClick={toggleDropdown}
         >
           <div className=" flex flex-col text-label1 gap-3">

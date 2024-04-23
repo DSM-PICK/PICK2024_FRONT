@@ -29,6 +29,15 @@ const Previous = () => {
     fetchData();
   }, [selectedGrade, selectedClass]);
 
+  useEffect(() => {
+    const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+    const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
+    const setgrade = grade === 0 ? 1 : grade;
+    const setclass_num = class_num === 0 ? 1 : class_num;
+    setSelectedGrade(setgrade);
+    setSelectedClass(setclass_num);
+  }, []);
+
   const fetchData = async () => {
     try {
       await getStudentDataMutate(
