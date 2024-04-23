@@ -28,6 +28,13 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   };
 
   useEffect(() => {
+    const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+    const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
+    const setgrade = grade === 0 ? 1 : grade;
+    const setclass_num = class_num === 0 ? 1 : class_num;
+    setSelectedClassOption(setgrade);
+    setSelectedGradeOption(setclass_num);
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&

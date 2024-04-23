@@ -67,6 +67,15 @@ const OutAccept = () => {
     }
   };
 
+  useEffect(() => {
+    const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+    const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
+    const setgrade = grade === 0 ? 1 : grade;
+    const setclass_num = class_num === 0 ? 1 : class_num;
+    setSelectedGrade(setgrade);
+    setSelectedClass(setclass_num);
+  }, []);
+
   const AcceptDataList = async () => {
     try {
       if (selectedGrade && selectedClass) {
@@ -114,7 +123,7 @@ const OutAccept = () => {
             onSuccess: (response) => {
               setData(data);
               setAccept(false);
-              location.reload();
+              // location.reload();
             },
             onError: (error) => {
               console.error("Out accept error", error);
@@ -135,7 +144,7 @@ const OutAccept = () => {
         const reqOption = selectedTab ? "application" : "early-return";
         await outAcceptMutate(
           {
-            type: reqOption,
+            type: "string",
             status: "NO",
             ids: selectedStudents,
           },
