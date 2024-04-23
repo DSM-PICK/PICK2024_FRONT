@@ -92,7 +92,6 @@ const AfterManage = () => {
 
   const onClickAdd = () => {
     setModal(true);
-    location.reload();
   };
 
   const handleModalCancel = async () => {
