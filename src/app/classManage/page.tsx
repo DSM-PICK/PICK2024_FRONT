@@ -42,6 +42,15 @@ const ClassManage: React.FC = () => {
   const { mutate: getStudentDataMutate } = GetStudentData();
   const { mutate: changestatusMutate } = ChangeStatus();
 
+  useEffect(() => {
+    const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+    const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
+    const setgrade = grade === 0 ? 1 : grade;
+    const setclass_num = class_num === 0 ? 1 : class_num;
+    setSelectedGrade(setgrade);
+    setSelectedClass(setclass_num);
+  }, []);
+
   const get = async () => {
     try {
       await getStudentDataMutate(
