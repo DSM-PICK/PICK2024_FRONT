@@ -1,3 +1,4 @@
+import exp from "constants";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -101,6 +102,21 @@ export const Delete = () => {
     mutationFn: async (param) => {
       try {
         await instance.delete(`/schedule/delete/${param.noticeId}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+};
+
+export const Post = () => {
+  return useMutation<void, Error, { id: string; eventName: string }>({
+    mutationFn: async (param) => {
+      try {
+        await instance.post(`/schedule/modify`, {
+          id: param.id,
+          eventName: param.eventName,
+        });
       } catch (error) {
         console.log(error);
       }

@@ -26,17 +26,16 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
   const [monthData, setMonthData] = useState<Schedule[]>([]);
   const { mutate: scheduleMutate } = GetSchdule();
 
-  const currentYear = new Date().getFullYear();
-
   moment.locale("en");
 
   const scheduleData = async (selectDate: Date | null) => {
     const formattedDate = moment(selectDate).format("MMMM");
+    const formattedYear = moment(selectDate).format("YYYY");
 
     try {
       const result = await scheduleMutate(
         {
-          year: currentYear.toString(),
+          year: formattedYear,
           month: formattedDate,
         },
         {
@@ -105,7 +104,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
                           {item.event_name}
                         </div>
                       </div>
-                      <ScheduleFix id={item.id} />
+                      <ScheduleFix id={item.id} eventName={item.event_name} />
                     </div>
                   ))}
                 </>
