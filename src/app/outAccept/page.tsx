@@ -27,8 +27,8 @@ const OutAccept = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [refuse, setRefuse] = useState<boolean>(false);
-  const [selectedGrade, setSelectedGrade] = useState<number>(1);
-  const [selectedClass, setSelectedClass] = useState<number>(1);
+  const [selectedGrade, setSelectedGrade] = useState<number>();
+  const [selectedClass, setSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
