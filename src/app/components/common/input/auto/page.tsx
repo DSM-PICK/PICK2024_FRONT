@@ -77,7 +77,6 @@ const AutoInput: React.FC<AutoInputProps> = ({
   }, []);
 
   useEffect(() => {
-    console.log(GetStudentMutate);
     if (type === "student" && GetStudentMutate) {
       setData(GetStudentMutate);
     }
