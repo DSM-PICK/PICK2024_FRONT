@@ -3,11 +3,6 @@ import Image from "next/image";
 import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
 
-interface ItemType {
-  value: string | number;
-  label: string;
-}
-
 interface DropProps {
   type: "floor" | "grade" | "class" | "club" | "all";
   onChange?: (selectedOption: any, type: string) => void;
@@ -32,8 +27,11 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
     const setgrade = grade === 0 ? 1 : grade;
     const setclass_num = class_num === 0 ? 1 : class_num;
-    setSelectedClassOption(setgrade);
-    setSelectedGradeOption(setclass_num);
+    if (type === "all") {
+      setSelectedAllOption(setgrade);
+    }
+    setSelectedGradeOption(setgrade);
+    setSelectedClassOption(setclass_num);
 
     const handleClickOutside = (event: MouseEvent) => {
       if (

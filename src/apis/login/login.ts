@@ -50,7 +50,7 @@ export const useLogin = () => {
 };
 
 export const GetTeacherName = () => {
-  return useQuery<{ name: string }>({
+  return useQuery<{ name: string; grade: number; class_num: number }>({
     queryKey: ["GetTeacherName"],
     queryFn: async () => {
       const response = await instance.get(`/admin/my-name`);
