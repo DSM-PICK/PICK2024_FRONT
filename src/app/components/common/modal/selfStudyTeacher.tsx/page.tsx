@@ -86,9 +86,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
         {
           onSuccess: (data) => {
             setData(data);
-            setTeachers(
-              data.sort((a, b) => a.floor - b.floor).map((item) => item.teacher)
-            );
           },
         }
       );
@@ -96,6 +93,24 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    data.forEach((val) => {
+      console.log(val);
+      
+      switch(val.floor) {
+        case 2 :
+          setSecondData({floor:2, teacher:val.teacher})
+          break;
+        case 3 :
+          setThirdData({floor:3, teacher:val.teacher})
+          break;
+        case 4 :
+          setFourthData({floor:4, teacher:val.teacher})
+          break;
+      }
+    })
+  }, [data])
 
   useEffect(() => {
     select();
@@ -170,7 +185,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
               <AutoInput
                 type="teacher"
                 onChange={SecondhandleChange}
-                value={secondData.teacher || teachers[0]}
+                value={secondData.teacher}
                 placeholder="2층 자습감독"
                 width="full"
                 name="teacher"
@@ -181,7 +196,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
               <AutoInput
                 type="teacher"
                 onChange={thirdhandleChange}
-                value={thirdData.teacher || teachers[1]}
+                value={thirdData.teacher}
                 placeholder="3층 자습감독"
                 width="full"
                 name="teacher"
@@ -192,7 +207,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
               <AutoInput
                 type="teacher"
                 onChange={fourthhandleChange}
-                value={fourthData.teacher || teachers[2]}
+                value={fourthData.teacher}
                 placeholder="4층 자습감독"
                 width="full"
                 name="teacher"
