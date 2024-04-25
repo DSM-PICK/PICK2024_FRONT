@@ -7,8 +7,6 @@ import pick from "@/assets/img/Icon/pickname.svg";
 import { useRouter } from "next/navigation";
 
 const Header: NextPage = ({}) => {
-  const [easterCounter, setEasterCounter] = useState<number>(0);
-  const [easterUrl, setEasetUrl] = useState<string>("/main");
   const [teacherName, setTeacherName] = useState<string | null>(null);
   const router = useRouter();
 
@@ -23,31 +21,9 @@ const Header: NextPage = ({}) => {
     router.push(`/outList`);
   }
 
-  const instagram = [
-    "park._hyun.a",
-    "07_.chan",
-    "nimeahgnak",
-    "dud_wns_13",
-    "yook_gijun",
-    "s__hyyeon",
-    "rudeh.2926",
-    "yusungsk",
-  ];
-
-  const easterBoolean = false;
-
-  const easterEgg = () => {
-    if (easterBoolean) {
-      setEasterCounter(easterCounter + 1);
-      const randomNumber = Math.floor(Math.random() * instagram.length);
-      if (easterCounter > 10)
-        setEasetUrl(`https://www.instagram.com/${instagram[randomNumber]}/`);
-    }
-  };
-
   return (
     <div className="flex px-70 justify-between items-center bg-white py-2">
-      <Link href={easterUrl} onClick={easterEgg}>
+      <Link href={"/main"}>
         <Image src={pick} alt="" width={96} height={52} />
       </Link>
       <div className="flex text-nowrap w-36 text-heading6-M text-neutral-50">
