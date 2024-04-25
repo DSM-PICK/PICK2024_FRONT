@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 interface id {
   id: string;
+  eventName: string;
 }
 
 const ScheduleFix: React.FC<id> = ({ id }) => {
