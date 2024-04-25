@@ -12,7 +12,7 @@ const DetailNotice: NextPage = () => {
           <Link href="/main">홈</Link> &gt;
           <Link href="/outList">공지 사항</Link> &gt; {"아하.."}
         </div>
-        <div className="font-sans text-heading4 text-gray-900">공지사항</div>
+        <div className=" text-heading4 text-gray-900">공지사항</div>
         <div className="w-auto gap-4 rounded-xl bg-primary-1200 h-full px-10 py-10">
           <div className="flex items-end flex-col gap-4">
             <div className="flex">

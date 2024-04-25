@@ -17,8 +17,8 @@ const AfterTab: React.FC<TabProps> = ({
 
   const selectTabClass = (tab: string) =>
     selectedTab === tab
-      ? "font-sans rounded-60 text-heading6-M text-white bg-primary-500  py-3 flex items-center justify-center select-none"
-      : "font-sans text-heading6-M bg-white  py-3 flex items-center justify-center select-none";
+      ? " rounded-60 text-heading6-M text-white bg-primary-500  py-3 flex items-center justify-center select-none"
+      : " text-heading6-M bg-white  py-3 flex items-center justify-center select-none";
 
   const handleTabClick = (tab: string) => {
     setSelectedTab(tab);

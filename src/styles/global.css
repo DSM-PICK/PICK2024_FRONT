@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.font-sans {
-  font-family: "Noto Sans KR";
+@font-face {
+  font-family: NotoSansKR;
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/NotoSansKR.ttf") format("ttf");
+}
+
+body {
+  font-family: NotoSansKR;
 }

@@ -78,7 +78,7 @@ const Main = () => {
       <div className="bg-primary-1200  3xl:px-100 mxl:px-72 py-20 min-w-max flex flex-col gap-8 self-center">
         <div className=" flex flex-col self-center gap-2">
           <div className=" flex flex-col gap-5">
-            <div className=" font-sans text-heading5 text-neutral-300 ">
+            <div className="  text-heading5 text-neutral-300 ">
               {today.getMonth() + 1}월 {today.getDate()}일 {getWeekDay()}요일
             </div>
           </div>
@@ -119,7 +119,7 @@ const Main = () => {
               </div>
             </div>
             <div className=" flex flex-col gap-3">
-              <div className=" font-sans text-heading6-M">
+              <div className="  text-heading6-M">
                 오늘의 자습 감독 선생님
               </div>
               <div className=" flex justify-between bg-white w-auto  px-23 py-8 rounded-lg rounded-tr-max text-heading6-M text-neutral-100">

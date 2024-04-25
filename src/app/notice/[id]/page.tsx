@@ -82,7 +82,7 @@ const DetailNotice: NextPage = () => {
           <Link href="/main">홈</Link> &gt;
           <Link href="/notice"> 공지 사항</Link> &gt; {data?.title}
         </div>
-        <div className="font-sans text-heading4 text-gray-900 flex justify-between">
+        <div className=" text-heading4 text-gray-900 flex justify-between">
           공지사항
           <div className=" flex items-center gap-3">
             <Button colorType="ghost" buttonSize="small" onClick={deleteNotice}>

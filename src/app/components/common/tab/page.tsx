@@ -17,8 +17,8 @@ const DoubleTab: React.FC<TabProps> = ({
 
   const selectTabClass = (tab: boolean) =>
     selectedTab === tab
-      ? "font-sans text-sub-title3-B border border-primary-500 bg-primary-1000 w-38 py-3 flex items-center justify-center select-none"
-      : "font-sans text-sub-title3-B border border-neutral-300 bg-white w-38 py-3 flex items-center justify-center select-none";
+      ? " text-sub-title3-B border border-primary-500 bg-primary-1000 w-38 py-3 flex items-center justify-center select-none"
+      : " text-sub-title3-B border border-neutral-300 bg-white w-38 py-3 flex items-center justify-center select-none";
 
   const handleTabClick = (tab: boolean) => {
     setSelectedTab(tab);
