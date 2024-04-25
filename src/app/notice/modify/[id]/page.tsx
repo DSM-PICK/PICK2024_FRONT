@@ -98,7 +98,7 @@ const ModifyNotice = () => {
           <Link href="/notice"> 공지 사항</Link> &gt; 공지수정 하기
         </div>
         <div className="flex justify-between">
-          <div className="flex font-sans mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
+          <div className="flex mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
             공지 수정하기
           </div>
         </div>

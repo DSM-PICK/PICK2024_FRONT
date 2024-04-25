@@ -25,7 +25,7 @@ const TopBack: React.FC<Prop> = ({
           <Link href="/main">홈</Link> &gt; {linkChildren}
         </div>
         <div className=" whitespace-nowrap flex justify-between items-end gap-6">
-          <div className=" whitespace-nowrap flex font-sans text-heading4 text-gray-900 gap-4 items-center">
+          <div className=" whitespace-nowrap flex text-heading4 text-gray-900 gap-4 items-center">
             {subTitle}
             <div className=" whitespace-nowrap text-neutral-200 text-heading5">
               {secondTitle}

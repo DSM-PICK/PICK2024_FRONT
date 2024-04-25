@@ -65,7 +65,7 @@ const WriteNotice = () => {
           <Link href="/notice">공지 사항</Link> &gt; 공지사항 작성
         </div>
         <div className="flex justify-between">
-          <div className="flex font-sans mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
+          <div className="flex mxl:text-heading4 text-heading6-M text-gray-900 gap-4 items-center">
             공지 사항
           </div>
         </div>
@@ -77,7 +77,7 @@ const WriteNotice = () => {
                   제목
                   <Input
                     type="text"
-                    onChange={handleTitleChange} 
+                    onChange={handleTitleChange}
                     value={title}
                     width="full"
                     name="title"

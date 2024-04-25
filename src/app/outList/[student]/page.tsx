@@ -62,7 +62,7 @@ const Previouss: NextPage = () => {
           <Link href="/main">홈</Link> &gt;
           <Link href="/outList">외출자 목록</Link> &gt; {student}의 이전 외출
         </div>
-        <div className="font-sans text-heading4 text-gray-900">
+        <div className=" text-heading4 text-gray-900">
           {student}의 이전 외출
         </div>
         <div className="w-auto gap-4 rounded-xl bg-primary-1200 h-full px-10 py-10">

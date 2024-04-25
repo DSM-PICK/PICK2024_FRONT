@@ -20,7 +20,7 @@ const PreviousList: React.FC<previousProps> = ({
 
   return (
     <div className="flex gap-10">
-      <div className={`rounded-lg font-sans w-36 ${center} ${typeClass}`}>
+      <div className={`rounded-lg w-36 ${center} ${typeClass}`}>
         {type === "EARLY_RETURN" ? "조기귀가" : "외출"}
       </div>
       <div className="flex rounded-lg bg-white">

@@ -50,7 +50,7 @@ const Header: NextPage = ({}) => {
       <Link href={easterUrl} onClick={easterEgg}>
         <Image src={pick} alt="" width={96} height={52} />
       </Link>
-      <div className="flex font-sans text-nowrap w-36 text-heading6-M text-neutral-50">
+      <div className="flex text-nowrap w-36 text-heading6-M text-neutral-50">
         {teacherName ? `${teacherName}선생님` : "선생님"}
       </div>
     </div>

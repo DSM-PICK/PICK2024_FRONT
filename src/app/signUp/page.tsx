@@ -21,11 +21,9 @@ const SignUp: NextPage = () => {
     setData({ ...data, [name]: text });
   };
   return (
-    <div className=" font-sans flex justify-center items-center gap-6 bg-primary-1200 p-sign h-lvh">
+    <div className="  flex justify-center items-center gap-6 bg-primary-1200 p-sign h-lvh">
       <div className=" flex flex-col gap-10 px-44 bg-white rounded-xl h-  p-44">
-        <div className=" font-sans text-heading5 text-primary-100">
-          회원가입
-        </div>
+        <div className="  text-heading5 text-primary-100">회원가입</div>
         <div className=" flex flex-col items-center gap-29">
           <div className=" flex flex-col items-center gap-8">
             <Input
@@ -56,7 +54,7 @@ const SignUp: NextPage = () => {
                 value={data.rePassword}
               />
             </div>
-            <div className=" font-sans text-label2 text-neutral-50 flex gap-1">
+            <div className="  text-label2 text-neutral-50 flex gap-1">
               이미 계정이 있으신가요?
               <Link href={"/login"} className=" text-secondary-500 underline">
                 로그인
@@ -74,7 +72,7 @@ const SignUp: NextPage = () => {
       </div>
       <div className=" w-100 h- rounded-xl bg-sideImg">
         <div className=" rounded-xl py-12 px-13 h-full bg-primary-1000 backdrop-blur-sm bg-opacity-30 bg-blur-md">
-          <div className="font-sans flex gap-3.5 text-heading6-M text-white">
+          <div className=" flex gap-3.5 text-heading6-M text-white">
             {logo && <img src={logo.src} width={40} height={40} />}PiCK
           </div>
           <div className=" text-heading1 -space-y-5">

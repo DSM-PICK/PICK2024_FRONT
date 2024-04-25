@@ -69,9 +69,9 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div className=" font-sans flex justify-center items-center gap-6 bg-primary-1200 h-lvh p-5">
+    <div className=" flex justify-center items-center gap-6 bg-primary-1200 h-lvh p-5">
       <div className=" flex flex-col gap-10 bg-white rounded-xl h-5/6 min-w-96 w-2/5 justify-center items-center ">
-        <div className=" font-sans text-heading5 text-primary-100">로그인</div>
+        <div className=" text-heading5 text-primary-100">로그인</div>
         <div className=" flex flex-col items-center gap-29 w-8/12">
           <div className=" flex flex-col items-center gap-8 w-full">
             <div className="flex flex-col w-full">
@@ -110,7 +110,7 @@ const Login: NextPage = () => {
       </div>
       <div className=" w-100 h-5/6 rounded-xl bg-sideImg">
         <div className=" rounded-xl py-12 px-13 h-full bg-primary-1000 backdrop-blur-sm bg-opacity-30 bg-blur-md">
-          <div className="font-sans flex gap-3.5 text-heading6-M text-white w-3/5">
+          <div className=" flex gap-3.5 text-heading6-M text-white w-3/5">
             {Picklogo && <img src={Picklogo.src} width={110} height={60} />}
           </div>
           <div className=" text-heading1 -space-y-5">

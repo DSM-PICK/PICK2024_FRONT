@@ -57,9 +57,7 @@ const CheckPage: React.FC<CheckProps> = ({
   return (
     <div className="flex flex-col px-8 pt-14 pb-10 justify-center items-center gap-10">
       <div className="flex flex-wrap justify-center">
-        <div className="font-sans text-heading6-M text-neutral-50">
-          {children()}
-        </div>
+        <div className=" text-heading6-M text-neutral-50">{children()}</div>
       </div>
       <Image src={img} alt="" />
       <Button
