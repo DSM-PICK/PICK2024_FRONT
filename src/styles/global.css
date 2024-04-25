@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: NotoSansKR;
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/NotoSansKR.ttf") format("ttf");
+}
+
+body {
+  font-family: NotoSansKR;
+}

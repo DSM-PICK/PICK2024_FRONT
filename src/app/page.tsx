@@ -1,5 +1,14 @@
-import Image from "next/image";
+"use client";
+import { NextPage } from "next";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Home() {
-  return <main className=""></main>;
-}
+const Home: NextPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/login");
+  }, []);
+  return <></>;
+};
+export default Home;
