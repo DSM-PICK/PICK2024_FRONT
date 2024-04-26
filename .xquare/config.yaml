@@ -1,5 +1,5 @@
 config:
-  name: pick-web-admin
+  name: pick-admin
   service_type: fe
   port: 3000
   domain:
