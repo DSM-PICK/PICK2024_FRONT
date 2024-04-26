@@ -1,4 +1,4 @@
-import { Provider } from "./provide";
+import { Provider } from './provide';
 import Head from "next/head";
 import "../../tailwind.config";
 import "../styles/global.css";
@@ -12,7 +12,7 @@ export const metadata = {
   },
 };
 
-const NotoSans = Noto_Sans_KR({ subsets: ["latin"] });
+const NotoSans = Noto_Sans_KR({ subsets: ["latin"], weight: "400" });
 
 export default function RootLayout({
   children,
