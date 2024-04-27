@@ -101,14 +101,6 @@ const OutAccept = () => {
     }
   };
 
-  const Accept = async () => {
-    setAccept(true);
-  };
-
-  const Refuse = () => {
-    setRefuse(true);
-  };
-
   const Acceptconfirm = async () => {
     try {
       if (selectedGrade && selectedClass) {
@@ -138,13 +130,39 @@ const OutAccept = () => {
     }
   };
 
+  const acceptColor = () => {
+    if (selectedStudents.length === 0) {
+      return "solidDisabled";
+    }
+    return "primary";
+  };
+
+  const refuseColor = () => {
+    if (selectedStudents.length === 0) {
+      return "ghostDisabled";
+    }
+    return "ghost";
+  };
+
+  const Accept = () => {
+    if (selectedStudents.length === 0) {
+      alert("외출 수락 할 학생을 선택해주세요");
+    } else setAccept(true);
+  };
+
+  const Refuse = () => {
+    if (selectedStudents.length === 0) {
+      alert("외출 거절 할 학생을 선택해주세요");
+    } else setRefuse(true);
+  };
+
   const confirmReturn = async () => {
     try {
       if (selectedGrade && selectedClass) {
         const reqOption = selectedTab ? "application" : "early-return";
         await outAcceptMutate(
           {
-            type: "string",
+            type: reqOption,
             status: "NO",
             ids: selectedStudents,
           },
@@ -264,7 +282,7 @@ const OutAccept = () => {
       </div>
       <div className=" flex gap-5 w-full justify-end">
         <Button
-          colorType="ghost"
+          colorType={refuseColor()}
           buttonSize="medium"
           onClick={() => {
             Refuse();
@@ -273,7 +291,7 @@ const OutAccept = () => {
           거절하기
         </Button>
         <Button
-          colorType="primary"
+          colorType={acceptColor()}
           buttonSize="medium"
           onClick={() => {
             Accept();
