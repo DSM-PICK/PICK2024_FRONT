@@ -5,9 +5,9 @@ import Input from "../components/common/input";
 import Button from "../components/common/Button";
 import Picklogo from "../../assets/img/Icon/pickname.svg";
 import { useLogin } from "@/apis/login/login";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveToken } from "@/utils/auth";
+import { cookie, saveToken } from "@/utils/auth";
 
 interface ChangeProps {
   text: string;
@@ -61,6 +61,11 @@ const Login: NextPage = () => {
       router.push("/login");
     }
   };
+
+  useEffect(() => {
+    cookie.remove("access_token");
+    cookie.remove("refresh_token");
+  }, []);
 
   const BtnColor = () => {
     if (data.admin_id === "" || data.password === "") {
