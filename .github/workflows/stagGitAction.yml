@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build:
@@ -22,4 +22,4 @@ jobs:
           access_key: ${{ secrets.XQUAER_ACCESS_KEY }}
           github_token: ${{ secrets.PICK_WEB_ADMIN }}
           buildargs: |
-            BASE_URL=${{ secrets.BASE_URL }}
+            BASE_URL=${{ secrets.STAG_BASE_URL }}
