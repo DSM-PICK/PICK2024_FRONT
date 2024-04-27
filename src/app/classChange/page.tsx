@@ -33,12 +33,16 @@ const ClassChange = () => {
   const { mutate: AccpetMutate } = AcceptClassChange();
   const { mutate: AccpetList } = AcceptClass();
 
-  const Accept = async () => {
-    setAccept(true);
+  const Accept = () => {
+    if (selectedStudents.length === 0) {
+      alert("교실 수락 할 학생을 선택해주세요");
+    } else setAccept(true);
   };
 
   const Refuse = () => {
-    setRefuse(true);
+    if (selectedStudents.length === 0) {
+      alert("교실 거절 할 학생을 선택해주세요");
+    } else setRefuse(true);
   };
 
   const handleAcceptListClick = (id: string, name: string) => {
@@ -80,6 +84,20 @@ const ClassChange = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const acceptColor = () => {
+    if (selectedStudents.length === 0) {
+      return "solidDisabled";
+    }
+    return "primary";
+  };
+
+  const refuseColor = () => {
+    if (selectedStudents.length === 0) {
+      return "ghostDisabled";
+    }
+    return "ghost";
   };
 
   const nav = useRouter();
@@ -166,7 +184,7 @@ const ClassChange = () => {
       ))}
       <div className=" flex gap-5 w-full justify-end">
         <Button
-          colorType="ghost"
+          colorType={refuseColor()}
           buttonSize="medium"
           onClick={() => {
             Refuse();
@@ -175,7 +193,7 @@ const ClassChange = () => {
           거절하기
         </Button>
         <Button
-          colorType="primary"
+          colorType={acceptColor()}
           buttonSize="medium"
           onClick={() => {
             Accept();
