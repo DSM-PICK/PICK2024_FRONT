@@ -218,6 +218,8 @@ const SelfStudyCheck = () => {
                       state1={item.status6}
                       state2={item.status7}
                       state3={item.status8}
+                      state4={item.status9}
+                      state5={item.status10}
                       onClick={() =>
                         handleAcceptListClick(item.id, item.username)
                       }
@@ -235,6 +237,8 @@ const SelfStudyCheck = () => {
                       state1={item.status6}
                       state2={item.status7}
                       state3={item.status8}
+                      state4={item.status9}
+                      state5={item.status10}
                       onClick={() =>
                         handleAcceptListClick(item.id, item.username)
                       }

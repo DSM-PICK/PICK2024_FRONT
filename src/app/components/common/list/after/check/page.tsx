@@ -6,11 +6,13 @@ interface State {
   state1: string;
   state2: string;
   state3: string;
-  state4?: string;
-  state5?: string;
+  state4: string;
+  state5: string;
   id: string;
   onClick?: () => void;
   type?: "NO";
+  friday?: boolean;
+  createRoom?: boolean;
 }
 
 const CheckList: React.FC<State> = ({
@@ -22,6 +24,8 @@ const CheckList: React.FC<State> = ({
   id,
   onClick,
   type,
+  friday,
+  createRoom,
 }) => {
   const Change = (item: string) => {
     switch (item) {
@@ -45,8 +49,8 @@ const CheckList: React.FC<State> = ({
   const [statusList, setStatusList] = useState<string[]>([]);
 
   useEffect(() => {
-    setStatusList([state1, state2, state3]);
-  }, [state1, state2, state3]);
+    setStatusList([state1, state2, state3, state4, state5]);
+  }, [state1, state2, state3, state4, state5]);
 
   useEffect(() => {
     localStorage.setItem(id, JSON.stringify(statusList));
@@ -62,91 +66,148 @@ const CheckList: React.FC<State> = ({
     <>
       {type === "NO" ? (
         <div className="flex w-full gap-11">
-          <AfterCheck
-            state={Change(state1)}
-            onChange={(newState) => {
-              handleChange(0, newState);
-              if (onClick) onClick();
-            }}
-            type="NO"
-          />
-          <AfterCheck
-            state={Change(state2)}
-            onChange={(newState) => {
-              handleChange(0, newState);
-              if (onClick) onClick();
-            }}
-            type="NO"
-          />
-          <AfterCheck
-            state={Change(state3)}
-            onChange={(newState) => {
-              handleChange(0, newState);
-              if (onClick) onClick();
-            }}
-            type="NO"
-          />
-          {state4 && (
-            <AfterCheck
-              state={Change(state4)}
-              onChange={(newState) => {
-                handleChange(0, newState);
-                if (onClick) onClick();
-              }}
-              type="NO"
-            />
+          {friday && (
+            <>
+              <AfterCheck
+                state={Change(state1)}
+                onChange={(newState) => {
+                  handleChange(0, newState);
+                  if (onClick) onClick();
+                }}
+                type="NO"
+              />
+              <AfterCheck
+                state={Change(state2)}
+                onChange={(newState) => {
+                  handleChange(0, newState);
+                  if (onClick) onClick();
+                }}
+                type="NO"
+              />
+            </>
           )}
-          {state5 && (
-            <AfterCheck
-              state={Change(state5)}
-              onChange={(newState) => {
-                handleChange(0, newState);
-                if (onClick) onClick();
-              }}
-              type="NO"
-            />
+          {createRoom ? (
+            <>
+              <AfterCheck
+                state={Change(state3)}
+                onChange={(newState) => {
+                  handleChange(0, newState);
+                  if (onClick) onClick();
+                }}
+              />
+
+              <AfterCheck
+                state={Change(state4)}
+                onChange={(newState) => {
+                  handleChange(1, newState);
+                  if (onClick) onClick();
+                }}
+              />
+              <AfterCheck
+                state={Change(state5)}
+                onChange={(newState) => {
+                  handleChange(2, newState);
+                  if (onClick) onClick();
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <AfterCheck
+                state={Change(state3)}
+                onChange={(newState) => {
+                  handleChange(2, newState);
+                  if (onClick) onClick();
+                }}
+              />
+
+              <AfterCheck
+                state={Change(state4)}
+                onChange={(newState) => {
+                  handleChange(3, newState);
+                  if (onClick) onClick();
+                }}
+              />
+              <AfterCheck
+                state={Change(state5)}
+                onChange={(newState) => {
+                  handleChange(4, newState);
+                  if (onClick) onClick();
+                }}
+              />
+            </>
           )}
         </div>
       ) : (
         <div className="flex w-full gap-11">
-          <AfterCheck
-            state={Change(state1)}
-            onChange={(newState) => {
-              handleChange(0, newState);
-              if (onClick) onClick();
-            }}
-          />
-          <AfterCheck
-            state={Change(state2)}
-            onChange={(newState) => {
-              handleChange(1, newState);
-              if (onClick) onClick();
-            }}
-          />
-          <AfterCheck
-            state={Change(state3)}
-            onChange={(newState) => {
-              handleChange(2, newState);
-              if (onClick) onClick();
-            }}
-          />
-          {state4 && (
-            <AfterCheck
-              state={Change(state4)}
-              onChange={(newState) => {
-                handleChange(3, newState);
-                if (onClick) onClick();
-              }}
-            />
+          {friday && (
+            <>
+              <AfterCheck
+                state={Change(state1)}
+                onChange={(newState) => {
+                  handleChange(0, newState);
+                  if (onClick) onClick();
+                }}
+              />
+              <AfterCheck
+                state={Change(state2)}
+                onChange={(newState) => {
+                  handleChange(1, newState);
+                  if (onClick) onClick();
+                }}
+              />
+            </>
           )}
-          {state5 && (
-            <AfterCheck
-              state={Change(state5)}
-              onChange={(newState) => {
-                handleChange(4, newState);
-                if (onClick) onClick();
-              }}
-            />
+          {createRoom ? (
+            <>
+              <AfterCheck
+                state={Change(state3)}
+                onChange={(newState) => {
+                  handleChange(0, newState);
+                  if (onClick) onClick();
+                }}
+              />
+
+              <AfterCheck
+                state={Change(state4)}
+                onChange={(newState) => {
+                  handleChange(1, newState);
+                  if (onClick) onClick();
+                }}
+              />
+              <AfterCheck
+                state={Change(state5)}
+                onChange={(newState) => {
+                  handleChange(2, newState);
+                  if (onClick) onClick();
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <AfterCheck
+                state={Change(state3)}
+                onChange={(newState) => {
+                  handleChange(2, newState);
+                  if (onClick) onClick();
+                }}
+              />
+
+              <AfterCheck
+                state={Change(state4)}
+                onChange={(newState) => {
+                  handleChange(3, newState);
+                  if (onClick) onClick();
+                }}
+              />
+              <AfterCheck
+                state={Change(state5)}
+                onChange={(newState) => {
+                  handleChange(4, newState);
+                  if (onClick) onClick();
+                }}
+              />
+            </>
           )}
         </div>
       )}

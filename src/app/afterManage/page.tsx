@@ -165,7 +165,11 @@ const AfterManage = () => {
         };
         updatedData.push(studentData);
       }
-      FixStatusMutate(updatedData);
+      FixStatusMutate(updatedData, {
+        onSuccess: () => {
+          location.reload();
+        },
+      });
     });
     setSaveModal(false);
   };
@@ -306,6 +310,7 @@ const AfterManage = () => {
                               state3={item.status8}
                               state4={item.status9}
                               state5={item.status10}
+                              friday={true}
                               onClick={() =>
                                 handleAcceptListClick(item.id, item.username)
                               }
@@ -320,6 +325,8 @@ const AfterManage = () => {
                               state1={item.status6}
                               state2={item.status7}
                               state3={item.status8}
+                              state4={item.status9}
+                              state5={item.status10}
                               onClick={() =>
                                 handleAcceptListClick(item.id, item.username)
                               }
@@ -340,6 +347,7 @@ const AfterManage = () => {
                               state3={item.status8}
                               state4={item.status9}
                               state5={item.status10}
+                              friday={true}
                               onClick={() =>
                                 handleAcceptListClick(item.id, item.username)
                               }
@@ -355,6 +363,8 @@ const AfterManage = () => {
                               state1={item.status6}
                               state2={item.status7}
                               state3={item.status8}
+                              state4={item.status9}
+                              state5={item.status10}
                               onClick={() =>
                                 handleAcceptListClick(item.id, item.username)
                               }
@@ -400,12 +410,15 @@ const AfterManage = () => {
                             <CheckList
                               key={index}
                               id={item.id}
-                              state1={item.status1}
+                              state1={item.status3}
                               state2={item.status2}
-                              state3={item.status3}
+                              state3={item.status1}
+                              state4={item.status2}
+                              state5={item.status3}
                               onClick={() =>
                                 handleAcceptListClick(item.id, item.name)
                               }
+                              createRoom={true}
                             />
                           );
                         })}
