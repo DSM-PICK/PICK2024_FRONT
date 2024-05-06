@@ -6,7 +6,7 @@ type HandleType = {
   [key: string]: ErrorHandler | { [key: string]: ErrorHandler };
 };
 
-export const apiError = () => {
+const ApiError = () => {
   const handle400: ErrorHandler = () => {
     alert("400 잘못된 요청입니다");
   };
@@ -67,3 +67,5 @@ export const apiError = () => {
 
   return { handleError };
 };
+
+export default ApiError;

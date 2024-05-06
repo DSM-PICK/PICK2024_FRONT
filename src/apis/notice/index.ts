@@ -1,4 +1,4 @@
-import { apiError } from "@/hook/apiError";
+import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 

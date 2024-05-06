@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance } from "..";
 import { cookie } from "@/utils/auth";
-import { apiError } from "@/hook/apiError";
+import apiError from "@/hook/apiError";
 
 interface Login {
   admin_id: string;

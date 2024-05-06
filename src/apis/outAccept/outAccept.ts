@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
-import { apiError } from "@/hook/apiError";
+import apiError from "@/hook/apiError";
 
 interface applicationDataProp {
   class_num: number;

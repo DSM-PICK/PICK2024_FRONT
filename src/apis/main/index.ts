@@ -1,7 +1,7 @@
 import { instance } from "..";
 import { useQuery } from "@tanstack/react-query";
 import { TypeProp, TodaySelfStudy } from "../type";
-import { apiError } from "@/hook/apiError";
+import apiError from "@/hook/apiError";
 
 export const GetStudentNum = () => {
   const { handleError } = apiError();

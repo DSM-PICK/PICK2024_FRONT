@@ -1,7 +1,7 @@
 import { instance } from "..";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Type, AfterStudent, Students, ChangeStatus, ClubList } from "../type";
-import { apiError } from "@/hook/apiError";
+import apiError from "@/hook/apiError";
 
 export const After = (param: Type) => {
   const { handleError } = apiError();
