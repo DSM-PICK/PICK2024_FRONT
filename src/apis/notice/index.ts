@@ -1,4 +1,4 @@
-import exp from "constants";
+import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -32,55 +32,64 @@ interface ModifyProp {
 }
 
 export const GetNoticeList = () => {
+  const { handleError } = apiError();
   return useMutation<Getnotice[], Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get("/notice/simple", {});
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const DetailNoticeData = () => {
+  const { handleError } = apiError();
   return useMutation<DetailNoticeType, Error, { id: string }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.get(`/notice/${param.id}`, {});
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const DeleteNoticeData = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, { id: string }>({
     mutationFn: async (param) => {
       try {
         const response = await instance.delete(`/notice/delete/${param.id}`);
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const PostNotice = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, post>({
     mutationFn: async (param: post) => {
-      const response = await instance.post(`/notice/create`, {
-        ...param,
-      });
+      try {
+        await instance.post(`/notice/create`, {
+          ...param,
+        });
+      } catch (error) {
+        handleError(error);
+      }
     },
   });
 };
 
 export const ModifyNoticeData = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, ModifyProp>({
     mutationFn: async (param: ModifyProp) => {
       try {
@@ -90,26 +99,27 @@ export const ModifyNoticeData = () => {
 
         return response.data;
       } catch (error) {
-        console.log(error);
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const Delete = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, { noticeId: string }>({
     mutationFn: async (param) => {
       try {
         await instance.delete(`/schedule/delete/${param.noticeId}`);
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const Post = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, { id: string; eventName: string }>({
     mutationFn: async (param) => {
       try {
@@ -118,7 +128,7 @@ export const Post = () => {
           eventName: param.eventName,
         });
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });

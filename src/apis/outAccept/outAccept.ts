@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
+import apiError from "@/hook/apiError";
 
 interface applicationDataProp {
   class_num: number;
@@ -35,6 +36,7 @@ interface ClassProp {
 }
 
 export const useGetFloor = () => {
+  const { handleError } = apiError();
   return useMutation<FloorProp, void, { type: string; floor: number }>({
     mutationFn: async (param) => {
       try {
@@ -43,13 +45,14 @@ export const useGetFloor = () => {
         );
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const useGetClass = () => {
+  const { handleError } = apiError();
   return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
     mutationFn: async (param: ClassProp) => {
       try {
@@ -58,13 +61,14 @@ export const useGetClass = () => {
         );
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const useOutAccept = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, accept>({
     mutationFn: async (param) => {
       try {
@@ -74,7 +78,7 @@ export const useOutAccept = () => {
         });
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });

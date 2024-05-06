@@ -1,3 +1,4 @@
+import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -13,19 +14,20 @@ interface data {
 }
 
 export const PostTeacher = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, postTeacherProp>({
     mutationFn: async (param) => {
       try {
         await instance.post(`/self-study/register`, param);
       } catch (error) {
-        console.log(error);
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const SelfstudyGet = () => {
+  const { handleError } = apiError();
   return useMutation<data[], Error, { month: string; year: string }>({
     mutationFn: async (param) => {
       try {
@@ -34,26 +36,28 @@ export const SelfstudyGet = () => {
         );
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const GetAllTeacher = () => {
+  const { handleError } = apiError();
   return useMutation<string[], Error, null>({
     mutationFn: async () => {
       try {
         const response = await instance.get(`admin/all`);
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const SelectTeacher = () => {
+  const { handleError } = apiError();
   return useMutation<data[], Error, { date: string }>({
     mutationFn: async (param) => {
       try {
@@ -62,19 +66,20 @@ export const SelectTeacher = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const ChangeTeachers = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, postTeacherProp>({
     mutationFn: async (param) => {
       try {
         await instance.patch(`self-study/modify`, param);
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
