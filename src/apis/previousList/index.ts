@@ -1,3 +1,4 @@
+import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -27,19 +28,21 @@ interface id {
 }
 
 export const GetPreviousList = () => {
+  const { handleError } = apiError();
   return useMutation<Type, void, { id: string }>({
     mutationFn: async (param: id) => {
       try {
         const response = await instance.get(`story/query/${param.id}`);
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const Outcnt = () => {
+  const { handleError } = apiError();
   return useMutation<GetCntType[], Error, { grade: number; class_num: number }>(
     {
       mutationFn: async (param) => {
@@ -49,7 +52,7 @@ export const Outcnt = () => {
           );
           return response.data;
         } catch (error) {
-          console.log(error);
+          handleError(error);
         }
       },
     }

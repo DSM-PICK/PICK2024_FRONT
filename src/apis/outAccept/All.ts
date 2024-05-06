@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
+import apiError from "@/hook/apiError";
 
 interface AllOutType {
   id: string;
@@ -14,6 +15,7 @@ interface AllOutType {
 }
 
 export const AllOutList = () => {
+  const { handleError } = apiError();
   return useMutation<AllOutType[], Error, { status: "OK" | "QUIET" }>({
     mutationFn: async (param) => {
       try {
@@ -22,13 +24,14 @@ export const AllOutList = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const AllEalryList = () => {
+  const { handleError } = apiError();
   return useMutation<AllOutType[], Error, { status: "OK" | "QUIET" }>({
     mutationFn: async (param) => {
       try {
@@ -37,7 +40,7 @@ export const AllEalryList = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
