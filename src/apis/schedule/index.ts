@@ -1,3 +1,4 @@
+import { apiError } from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -14,6 +15,7 @@ interface schedulesdata {
 }
 
 export const AddSchedule = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, addSchedule>({
     mutationFn: async (param: addSchedule) => {
       try {
@@ -23,14 +25,14 @@ export const AddSchedule = () => {
         });
         return response.data;
       } catch (error) {
-        console.error("Error adding schedule:", error);
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const GetSchdule = () => {
+  const { handleError } = apiError();
   return useMutation<schedulesdata[], Error, { year: string; month: string }>({
     mutationFn: async (param) => {
       try {
@@ -39,7 +41,7 @@ export const GetSchdule = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });

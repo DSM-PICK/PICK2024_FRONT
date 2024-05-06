@@ -1,65 +1,69 @@
-// import { useCallback } from "react";
+import { useCallback } from "react";
 
-// type HandleType = {
-//   [error: string | number]: any;
-// };
+type ErrorHandler = () => void;
 
-// export const apiError = () => {
-//   const handle400 = () => {
-//     alert("잘못된 요청입니다");
-//   };
+type HandleType = {
+  [key: string]: ErrorHandler | { [key: string]: ErrorHandler };
+};
 
-//   const handle401 = () => {
-//     alert("인증에 실패했습니다");
-//   };
+export const apiError = () => {
+  const handle400: ErrorHandler = () => {
+    alert("400 잘못된 요청입니다");
+  };
 
-//   const handle403 = () => {
-//     alert("권한이 없습니다");
-//   };
+  const handle401: ErrorHandler = () => {
+    alert("401 인증에 실패했습니다");
+  };
 
-//   const handle404 = () => {
-//     alert("찾을 수 없습니다");
-//   };
+  const handle403: ErrorHandler = () => {
+    alert("403 권한이 없습니다");
+  };
 
-//   const handle503 = () => {
-//     alert("이건 뭐야");
-//   };
+  const handle404: ErrorHandler = () => {
+    alert("404 찾을 수 없습니다");
+  };
 
-//   const handle500 = () => {
-//     alert("관리자에게 문의주세요");
-//   };
+  const handle503: ErrorHandler = () => {
+    alert("503 : 관리자에게 문의하세요");
+  };
 
-//   const handleDefault = () => {};
+  const handle500: ErrorHandler = () => {
+    alert("500 : 관리자에게 문의주세요");
+  };
 
-//   const defaultHandlers: HandleType = {
-//     400: { default: handle400 },
-//     401: { default: handle401 },
-//     403: { default: handle403 },
-//     404: { default: handle404 },
-//     500: { default: handle500 },
-//     503: { default: handle503 },
-//     default: handleDefault,
-//   };
+  const handleDefault: ErrorHandler = () => {
+    alert("알 수 없는 오류가 발생했습니다");
+  };
 
-//   const handleError = useCallback((error: any) => {
-//     const httpStatus = error.response?.status;
-//     const errorMessage = error.data?.errorMessage;
+  const defaultHandlers: HandleType = {
+    "400": handle400,
+    "401": handle401,
+    "403": handle403,
+    "404": handle404,
+    "500": handle500,
+    "503": handle503,
+    default: handleDefault,
+  };
 
-//     const selectedHandlers = defaultHandlers;
+  const handleError = useCallback((error: any) => {
+    const httpStatus = error.response?.status;
+    const errorMessage = error.data?.errorMessage;
 
-//     if (
-//       httpStatus &&
-//       selectedHandlers[httpStatus] &&
-//       errorMessage &&
-//       selectedHandlers[httpStatus][errorMessage]
-//     ) {
-//       selectedHandlers[httpStatus][errorMessage]();
-//     } else if (httpStatus && selectedHandlers[httpStatus]) {
-//       selectedHandlers[httpStatus](error);
-//     } else {
-//       selectedHandlers.default(error);
-//     }
-//   }, []);
+    if (httpStatus) {
+      const selectedHandler: ErrorHandler | { [key: string]: ErrorHandler } =
+        defaultHandlers[httpStatus] || defaultHandlers.default;
+      const specificErrorHandler = errorMessage
+        ? (selectedHandler as { [key: string]: ErrorHandler })[errorMessage]
+        : null;
+      if (specificErrorHandler) {
+        specificErrorHandler();
+      } else {
+        (selectedHandler as ErrorHandler)();
+      }
+    } else {
+      alert(`오류가 발생했습니다: ${error.message}`);
+    }
+  }, []);
 
-//   return { handleError };
-// };
+  return { handleError };
+};

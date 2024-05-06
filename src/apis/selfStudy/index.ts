@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "..";
+import { apiError } from "@/hook/apiError";
 
 interface ClassCheck {
   id: string;
@@ -20,18 +21,20 @@ interface Change {
 }
 
 export const CheckStatus = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, Change[]>({
     mutationFn: async (param) => {
       try {
         await instance.patch(`/attendance/modify`, param);
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const ClassStudentCheck = () => {
+  const { handleError } = apiError();
   return useMutation<ClassCheck[], Error, { grade: number; class: number }>({
     mutationFn: async (param) => {
       try {
@@ -40,7 +43,7 @@ export const ClassStudentCheck = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });

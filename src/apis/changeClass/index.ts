@@ -1,3 +1,4 @@
+import { apiError } from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -25,6 +26,7 @@ interface FloorClass {
 }
 
 export const GetFloor = () => {
+  const { handleError } = apiError();
   return useMutation<changeClass[], void, { floor: number }>({
     mutationFn: async (param) => {
       try {
@@ -33,13 +35,14 @@ export const GetFloor = () => {
         );
         return response.data;
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const ChangeClassList = () => {
+  const { handleError } = apiError();
   return useMutation<changeClass[], Error, { grade: number; class: number }>({
     mutationFn: async (param) => {
       try {
@@ -48,13 +51,14 @@ export const ChangeClassList = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const AcceptClassChange = () => {
+  const { handleError } = apiError();
   return useMutation<FloorClass[], Error, { floor: number }>({
     mutationFn: async (param) => {
       try {
@@ -63,13 +67,14 @@ export const AcceptClassChange = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const AcceptClass = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, { status: string; id: string[] }>({
     mutationFn: async (param) => {
       try {
@@ -78,7 +83,7 @@ export const AcceptClass = () => {
           ids: param.id,
         });
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });

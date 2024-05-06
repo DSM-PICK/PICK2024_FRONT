@@ -1,3 +1,4 @@
+import { apiError } from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
@@ -48,30 +49,32 @@ export const Printexcel = () => {
 };
 
 export const ChangeState = () => {
+  const { handleError } = apiError();
   return useMutation<void, Error, ChangeStateParams>({
     mutationFn: async (params) => {
       try {
-        const response = await instance.patch(
+        await instance.patch(
           `weekend-meal/status?userId=${params.userId}&status=${params.status}`
         );
       } catch (error) {
-        throw error;
+        handleError(error);
       }
     },
   });
 };
 
 export const GetAllStudentMeal = async () => {
+  const { handleError } = apiError();
   try {
     const response = await instance.get(`weekend-meal/hey`);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    handleError(error);
   }
 };
 
 export const MealCheck = () => {
+  const { handleError } = apiError();
   return useMutation<
     mealcheckProp[],
     Error,
@@ -84,13 +87,14 @@ export const MealCheck = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });
 };
 
 export const NotMealCheck = () => {
+  const { handleError } = apiError();
   return useMutation<
     notCheckMeal[],
     Error,
@@ -103,7 +107,7 @@ export const NotMealCheck = () => {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        handleError(error);
       }
     },
   });

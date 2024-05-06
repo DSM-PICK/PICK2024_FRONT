@@ -17,7 +17,7 @@ import apply from "../../assets/img/신청 일러스트.svg";
 import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
-import { GetStudentNum, Test } from "@/apis/main";
+import { GetStudentNum, TodaySelfStudys } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
 import { useRouter } from "next/navigation";
 import { TodaySelfStudy } from "@/apis/type";
@@ -36,7 +36,7 @@ const Main = () => {
   const router = useRouter();
   const { data: CountNum } = GetStudentNum();
   const { data: getName } = GetTeacherName();
-  const { data: selfStudyData } = Test(getFullToday());
+  const { data: selfStudyData } = TodaySelfStudys(getFullToday());
 
   useEffect(() => {
     if (selfStudyData) {
@@ -119,9 +119,7 @@ const Main = () => {
               </div>
             </div>
             <div className=" flex flex-col gap-3">
-              <div className="  text-heading6-M">
-                오늘의 자습 감독 선생님
-              </div>
+              <div className="  text-heading6-M">오늘의 자습 감독 선생님</div>
               <div className=" flex justify-between bg-white w-auto  px-23 py-8 rounded-lg rounded-tr-max text-heading6-M text-neutral-100">
                 {selfStudy.map((item, index) => (
                   <div key={index}>
