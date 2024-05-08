@@ -115,10 +115,9 @@ const OutAccept = () => {
             onSuccess: (response) => {
               setData(data);
               setAccept(false);
-              // location.reload();
+              location.reload();
             },
             onError: (error) => {
-              console.error("Out accept error", error);
               setAccept(false);
             },
           }
@@ -169,11 +168,10 @@ const OutAccept = () => {
           {
             onSuccess: (response) => {
               setData(data);
-              console.log("Out accept success", response);
               setRefuse(false);
+              location.reload();
             },
             onError: (error) => {
-              console.error("Out accept error", error);
               setRefuse(false);
             },
           }
