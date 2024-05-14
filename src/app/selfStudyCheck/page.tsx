@@ -8,6 +8,7 @@ import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
 import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
 import { getStudentString } from "@/utils/until";
+import useAcceptListSelection from "@/hook/hook";
 
 interface ClassCheck {
   id: string;
@@ -33,11 +34,10 @@ const SelfStudyCheck = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [data, setData] = useState<ClassCheck[]>([]);
   const [saveModal, setSaveModal] = useState<boolean>(false);
-  const router = useRouter();
   const { mutate: ChangeMutate } = CheckStatus();
   const { mutate: CheckMutate } = ClassStudentCheck();
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+    useAcceptListSelection();
 
   const handleSaveModalConfirm = async () => {
     const updatedData: ChangeStatus[] = [];
@@ -127,29 +127,6 @@ const SelfStudyCheck = () => {
     });
     Check();
   }, [selectedClass, selectedGrade]);
-
-  const handleAcceptListClick = (id: string, name: string) => {
-    const selectedIndex = selectedStudents.indexOf(id);
-
-    const isSelected = selectedIndex !== -1;
-    if (isSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((studentId) => studentId !== id)
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter((studentName) => studentName !== name)
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
-  };
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectedGrade(selectedOption);

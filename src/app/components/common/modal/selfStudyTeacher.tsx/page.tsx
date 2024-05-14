@@ -95,9 +95,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    data.forEach((val) => {
-      console.log(val);
-      
+    data.forEach((val) => {      
       switch(val.floor) {
         case 2 :
           setSecondData({floor:2, teacher:val.teacher})

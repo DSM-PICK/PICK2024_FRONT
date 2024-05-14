@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import ChangeClass from "../components/common/list/changeClass/page";
 import { getStudentString } from "@/utils/until";
 import Modal from "../components/common/modal/page";
+import useAcceptListSelection from "@/hook/hook";
 
 interface FloorClass {
   id: string;
@@ -27,8 +28,8 @@ const ClassChange = () => {
   const [data, setData] = useState<FloorClass[]>([]);
   const [accept, setAccept] = useState<boolean>(false);
   const [refuse, setRefuse] = useState<boolean>(false);
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+    useAcceptListSelection();
 
   const { mutate: AccpetMutate } = AcceptClassChange();
   const { mutate: AccpetList } = AcceptClass();
@@ -43,29 +44,6 @@ const ClassChange = () => {
     if (selectedStudents.length === 0) {
       alert("교실 거절 할 학생을 선택해주세요");
     } else setRefuse(true);
-  };
-
-  const handleAcceptListClick = (id: string, name: string) => {
-    const isStudentSelected = selectedStudents.includes(id);
-    if (isStudentSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((selectedStudent) => selectedStudent !== id)
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter(
-          (selectedStudentName) => selectedStudentName !== name
-        )
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
   };
 
   const Accpet = async () => {

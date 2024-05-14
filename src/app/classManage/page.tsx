@@ -8,6 +8,7 @@ import { GetStudentData } from "@/apis/classManage";
 import { setStudentNum } from "@/utils/until";
 import { ChangeStatus } from "@/apis/classManage";
 import { BackGround } from "../components/common/background";
+import useManageListSelection from "@/hook/useManageListSelection";
 
 interface Student {
   user_id: string;
@@ -34,8 +35,8 @@ const ClassManage: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudentName, handleManageListClick } =
+    useManageListSelection();
   const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
     []
   );
@@ -134,40 +135,6 @@ const ClassManage: React.FC = () => {
     }
   };
 
-  const handleAcceptListClick = (
-    user_id: string,
-    status_type: string,
-    name: string
-  ) => {
-    setModifiedStudents((prevModifiedStudents) => [
-      ...prevModifiedStudents,
-      { user_id, status_type },
-    ]);
-
-    const isStudentSelected = selectedStudents.includes(user_id);
-    if (isStudentSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter(
-          (selectedStudent) => selectedStudent !== user_id
-        )
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter(
-          (selectedStudentName) => selectedStudentName !== name
-        )
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        user_id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
-  };
-
   return (
     <BackGround
       subTitle={`${selectedGrade}학년 ${selectedClass}반`}
@@ -198,8 +165,9 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={false}
-            onChange={(status) =>
-              handleAcceptListClick(student.user_id, status, student.name)
+            onChange={
+              (status) =>
+                handleManageListClick(student.user_id, status, student.name) // 변경된 핸들러 함수
             }
           />
         ))}
@@ -210,8 +178,9 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={true}
-            onChange={(status) =>
-              handleAcceptListClick(student.user_id, status, student.name)
+            onChange={
+              (status) =>
+                handleManageListClick(student.user_id, status, student.name) // 변경된 핸들러 함수
             }
           />
         ))}
