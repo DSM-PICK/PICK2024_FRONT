@@ -8,11 +8,7 @@ import Button from "../components/common/Button";
 import { Printexcel } from "@/apis/weekendMeal";
 import { BackGround } from "../components/common/background";
 import { useRouter } from "next/navigation";
-
-interface classmealProps {
-  grade: string;
-  classNumber: string;
-}
+import { NextPage } from "next";
 
 interface mealcheckProp {
   id: string;
@@ -32,7 +28,7 @@ interface notCheckMeal {
   num: number;
 }
 
-const WeekendMeals: React.FC<classmealProps> = ({ grade, classNumber }) => {
+const WeekendMeals: NextPage = () => {
   const router = useRouter();
   const [checkMeal, setCheckMeal] = useState<mealcheckProp[]>([]);
   const [notCheckMeal, setNotCheckMeal] = useState<notCheckMeal[]>([]);
