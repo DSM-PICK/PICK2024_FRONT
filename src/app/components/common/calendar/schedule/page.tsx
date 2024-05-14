@@ -29,7 +29,7 @@ const ScheduleCalendar = ({ onClick, onChange }: CalendarProps) => {
     const formattedYear = moment(selectDate).format("YYYY");
 
     try {
-      const result = await scheduleMutate(
+      await scheduleMutate(
         {
           year: formattedYear,
           month: formattedDate,
