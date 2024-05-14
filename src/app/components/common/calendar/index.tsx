@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 import { SelfstudyGet } from "@/apis/changeTeacher";
 import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
 import { useRouter } from "next/navigation";
-
-interface CalendarProps {
-  onClick: (date: Date) => void;
-  onChange: (date: Date) => void;
-}
+import { CalendarProps } from "@/apis/type";
 
 interface CalendarData {
   floor: number;
@@ -19,7 +15,7 @@ interface CalendarData {
   date: string;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
+const Calendar = ({ onClick, onChange }: CalendarProps) => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthdata, setData] = useState<CalendarData[]>([]);

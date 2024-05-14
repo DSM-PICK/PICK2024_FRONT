@@ -7,11 +7,7 @@ import { GetSchdule } from "@/apis/schedule";
 import ScheduleFix from "./fix";
 import PostSchedule from "../../modal/schedule/page";
 import "moment/locale/en-gb";
-
-interface CalendarPropss {
-  onClick: (date: Date) => void;
-  onChange: (date: Date) => void;
-}
+import { CalendarProps } from "@/apis/type";
 
 interface Schedule {
   id: string;
@@ -20,7 +16,7 @@ interface Schedule {
   day: number;
 }
 
-const ScheduleCalendar: React.FC<CalendarPropss> = ({ onClick, onChange }) => {
+const ScheduleCalendar = ({ onClick, onChange }: CalendarProps) => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthData, setMonthData] = useState<Schedule[]>([]);

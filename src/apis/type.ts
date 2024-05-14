@@ -56,3 +56,8 @@ export interface ChangeClub {
   user_id: string;
   status_list: string[];
 }
+
+export interface CalendarProps {
+  onClick: (date: Date) => void;
+  onChange: (date: Date) => void;
+}
