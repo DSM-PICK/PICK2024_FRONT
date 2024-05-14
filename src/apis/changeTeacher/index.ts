@@ -1,17 +1,7 @@
 import apiError from "@/hook/apiError";
 import { instance } from "..";
-import { useMutation } from "@tanstack/react-query";
-
-interface postTeacherProp {
-  date: string;
-  teacher: { floor: number; teacher: string }[];
-}
-
-interface data {
-  floor: number;
-  teacher: string;
-  date: string;
-}
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { data, postTeacherProp } from "../type";
 
 export const PostTeacher = () => {
   const { handleError } = apiError();
@@ -44,8 +34,9 @@ export const SelfstudyGet = () => {
 
 export const GetAllTeacher = () => {
   const { handleError } = apiError();
-  return useMutation<string[], Error, null>({
-    mutationFn: async () => {
+  return useQuery<string[]>({
+    queryKey: ["GetAllTeacher"],
+    queryFn: async () => {
       try {
         const response = await instance.get(`admin/all`);
         return response.data;
@@ -56,14 +47,13 @@ export const GetAllTeacher = () => {
   });
 };
 
-export const SelectTeacher = () => {
+export const SelectTeacher = (date: string) => {
   const { handleError } = apiError();
-  return useMutation<data[], Error, { date: string }>({
-    mutationFn: async (param) => {
+  return useQuery<data[]>({
+    queryKey: ["SelectTeacher", date],
+    queryFn: async () => {
       try {
-        const response = await instance.get(
-          `self-study/date?date=${param.date}`
-        );
+        const response = await instance.get(`self-study/date?date=${date}`);
         return response.data;
       } catch (error) {
         handleError(error);

@@ -21,35 +21,22 @@ const DetailNotice: NextPage = () => {
   const router = useRouter();
   const [data, setData] = useState<DetailNoticeType>();
   const param = useSearchParams();
-
-  const { mutate: DetailDataMutate } = DetailNoticeData();
-  const { mutate: delelteMutate } = DeleteNoticeData();
-
   const idParam = param.get("id");
 
   const id = idParam ? idParam : "";
+
+  const { data: DetailData } = DetailNoticeData(id);
+  const { mutate: delelteMutate } = DeleteNoticeData();
 
   const modify = () => {
     router.push(`/notice/modify/query?id=${id}`);
   };
 
-  const getData = async () => {
-    try {
-      const result = await DetailDataMutate(
-        { id: id },
-        {
-          onSuccess: (data) => {
-            setData(data);
-          },
-          onError: (error) => {
-            console.log(`${error.message} : 에러가 발생했습니다`);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (DetailData) {
+      setData(DetailData);
     }
-  };
+  }, [DetailData]);
 
   const deleteNotice = async () => {
     try {
@@ -69,10 +56,6 @@ const DetailNotice: NextPage = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <div className="flex flex-col">

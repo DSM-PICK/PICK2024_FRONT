@@ -55,7 +55,6 @@ const Calendar = () => {
 
   useEffect(() => {
     const currentDate = new Date();
-
     studyData(currentDate);
   }, []);
 

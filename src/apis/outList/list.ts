@@ -1,6 +1,6 @@
 import apiError from "@/hook/apiError";
 import { instance } from "..";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 
 interface UuidProp {
   id: string;
@@ -64,11 +64,12 @@ interface earlyReturnHome {
 
 export const AlloutList = () => {
   const { handleError } = apiError();
-  return useMutation<OutListData[], void, null>({
-    mutationFn: async () => {
+  return useQuery<OutListData[]>({
+    queryKey: ["AlloutList"],
+    queryFn: async () => {
       try {
-        const response = await instance.get("/application/reason/all");
-        return response.data as any;
+        const response = await instance.get(`/application/reason/all`);
+        return response.data;
       } catch (error) {
         handleError(error);
       }
@@ -78,11 +79,12 @@ export const AlloutList = () => {
 
 export const ReturnHome = () => {
   const { handleError } = apiError();
-  return useMutation<ReturnHomeData[], void, null>({
-    mutationFn: async () => {
+  return useQuery<ReturnHomeData[]>({
+    queryKey: ["ReturnHome"],
+    queryFn: async () => {
       try {
-        const response = await instance.get("/early-return/reason/ok-all");
-        return response.data as any;
+        const response = await instance.get(`/early-return/reason/ok-all`);
+        return response.data;
       } catch (error) {
         handleError(error);
       }
@@ -126,10 +128,11 @@ export const ReturnSchool = () => {
 
 export const OutListProp = () => {
   const { handleError } = apiError();
-  return useMutation<applicationOK[], Error, null>({
-    mutationFn: async () => {
+  return useQuery<applicationOK[]>({
+    queryKey: ["outListProp"],
+    queryFn: async () => {
       try {
-        const response = await instance.get(`application/non-return`, {});
+        const response = await instance.get(`/application/non-return`);
         return response.data;
       } catch (error) {
         handleError(error);
@@ -140,24 +143,11 @@ export const OutListProp = () => {
 
 export const ReturnHomeList = () => {
   const { handleError } = apiError();
-  return useMutation<earlyReturnHome[], Error, null>({
-    mutationFn: async () => {
+  return useQuery<earlyReturnHome[]>({
+    queryKey: ["earlyreturnHome"],
+    queryFn: async () => {
       try {
-        const response = await instance.get(`early-return/ok`, {});
-        return response.data;
-      } catch (error) {
-        handleError(error);
-      }
-    },
-  });
-};
-
-export const GetSelectDay = () => {
-  const { handleError } = apiError();
-  return useMutation<data, Error, { date: string }>({
-    mutationFn: async (param) => {
-      try {
-        const response = await instance.get(`self-study/${param.date}`, {});
+        const response = await instance.get(`early-return/ok`);
         return response.data;
       } catch (error) {
         handleError(error);

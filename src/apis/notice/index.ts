@@ -1,6 +1,6 @@
 import apiError from "@/hook/apiError";
 import { instance } from "..";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface Getnotice {
   id: string;
@@ -33,10 +33,11 @@ interface ModifyProp {
 
 export const GetNoticeList = () => {
   const { handleError } = apiError();
-  return useMutation<Getnotice[], Error, null>({
-    mutationFn: async () => {
+  return useQuery<Getnotice[]>({
+    queryKey: ["GetNotice"],
+    queryFn: async () => {
       try {
-        const response = await instance.get("/notice/simple", {});
+        const response = await instance.get(`/notice/simple`);
         return response.data;
       } catch (error) {
         handleError(error);
@@ -45,12 +46,13 @@ export const GetNoticeList = () => {
   });
 };
 
-export const DetailNoticeData = () => {
+export const DetailNoticeData = (id: string) => {
   const { handleError } = apiError();
-  return useMutation<DetailNoticeType, Error, { id: string }>({
-    mutationFn: async (param) => {
+  return useQuery<DetailNoticeType>({
+    queryKey: ["DetailNotice"],
+    queryFn: async () => {
       try {
-        const response = await instance.get(`/notice/${param.id}`, {});
+        const response = await instance.get(`/notice/${id}`);
         return response.data;
       } catch (error) {
         handleError(error);

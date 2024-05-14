@@ -57,7 +57,65 @@ export interface ChangeClub {
   status_list: string[];
 }
 
-export interface CalendarProps {
-  onClick: (date: Date) => void;
-  onChange: (date: Date) => void;
+export interface changeClass {
+  class_num: number;
+  classroom_name: string;
+  floor: number;
+  grade: number;
+  id: string;
+  num: number;
+  user_id: string;
+  username: string;
+}
+
+export interface FloorClass {
+  id: string;
+  class_num: number;
+  classroom_name: string;
+  end_period: number;
+  grade: number;
+  move: string;
+  num: number;
+  start_period: number;
+  username: string;
+}
+
+export interface postTeacherProp {
+  date: string;
+  teacher: { floor: number; teacher: string }[];
+}
+
+export interface data {
+  floor: number;
+  teacher: string;
+  date: string;
+}
+
+export interface Student {
+  user_id: string;
+  name: string;
+  grade: number;
+  class_num: number;
+  num: number;
+  status: string;
+}
+
+export interface ChangeStatusData {
+  user_id: string;
+  status_type: string;
+}
+
+export interface StudentData {
+  teacher: string;
+  students: Student[];
+}
+
+export interface queryData {
+  grade: number;
+  class_num: number;
+}
+
+export interface ChangeStatus {
+  id: string;
+  status: string;
 }
