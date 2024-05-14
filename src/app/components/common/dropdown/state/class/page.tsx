@@ -4,14 +4,11 @@ import React, { useState, useRef, useEffect } from "react";
 
 interface StateDropProps {
   state: "OK" | "NO" | "QUIET";
-  id?: string;
+  id: string;
   onclick: () => void;
 }
 
-const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
-  const defaultOptions: Record<string, string> = {
-    신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
-  };
+const ClassmealDrop = ({ state, id, onclick }: StateDropProps) => {
   const { mutate: ChangeMealMutate } = ChangeState();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);

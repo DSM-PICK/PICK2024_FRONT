@@ -25,7 +25,6 @@ const PostSchedule: React.FC<ModalProps> = ({ onCancel, initialDate }) => {
   const formattedDate = initialDate
     ? moment(initialDate).format("YYYY-MM-DD")
     : null;
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
     event_name: "",
     date: formattedDate,

@@ -7,7 +7,6 @@ import { GetSchdule } from "@/apis/schedule";
 import ScheduleFix from "./fix";
 import PostSchedule from "../../modal/schedule/page";
 import "moment/locale/en-gb";
-import { CalendarProps } from "@/apis/type";
 
 interface Schedule {
   id: string;
@@ -16,7 +15,7 @@ interface Schedule {
   day: number;
 }
 
-const ScheduleCalendar = ({ onClick, onChange }: CalendarProps) => {
+const ScheduleCalendar = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthData, setMonthData] = useState<Schedule[]>([]);
@@ -62,16 +61,12 @@ const ScheduleCalendar = ({ onClick, onChange }: CalendarProps) => {
     <>
       <Calendar
         prev2Label={null}
-        onClickMonth={(date) => {
-          onChange(date);
-        }}
         onActiveStartDateChange={({ activeStartDate }) =>
           scheduleData(activeStartDate)
         }
         onClickDay={(date) => {
           setSelectDate(date);
           setModal(true);
-          onClick(date);
         }}
         next2Label={null}
         calendarType="gregory"

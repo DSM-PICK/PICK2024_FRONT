@@ -153,6 +153,7 @@ const WeekendMeals: NextPage = () => {
                 name={item.name}
                 state={item.status || "NO"}
                 onclick={() => {}}
+                id=""
               />
             ))}
           </div>

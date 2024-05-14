@@ -10,6 +10,7 @@ import { useGetClass, useOutAccept } from "@/apis/outAccept/outAccept";
 import { getStudentString } from "@/utils/until";
 import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
+import useAcceptListSelection from "@/hook/hook";
 
 interface applicationDataProp {
   class_num: number;
@@ -30,8 +31,8 @@ const OutAccept = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>();
   const [selectedClass, setSelectedClass] = useState<number>();
   const [accept, setAccept] = useState<boolean>(false);
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+    useAcceptListSelection();
   const [data, setData] = useState<applicationDataProp[]>([]);
 
   const { mutate: outAcceptMutate } = useOutAccept();
@@ -112,12 +113,12 @@ const OutAccept = () => {
             ids: selectedStudents,
           },
           {
-            onSuccess: (response) => {
+            onSuccess: () => {
               setData(data);
               setAccept(false);
               location.reload();
             },
-            onError: (error) => {
+            onError: () => {
               setAccept(false);
             },
           }
@@ -189,29 +190,6 @@ const OutAccept = () => {
 
   const AcceptrCancel = () => {
     setAccept(false);
-  };
-
-  const handleAcceptListClick = (id: string, name: string) => {
-    const isStudentSelected = selectedStudents.includes(id);
-    if (isStudentSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((selectedStudent) => selectedStudent !== id)
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter(
-          (selectedStudentName) => selectedStudentName !== name
-        )
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
   };
 
   const previous = () => {

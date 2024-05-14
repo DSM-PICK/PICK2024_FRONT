@@ -1,5 +1,4 @@
 "use client";
-
 import Calendarmold from "react-calendar";
 import "./style/style.css";
 import moment from "moment";
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react";
 import { SelfstudyGet } from "@/apis/changeTeacher";
 import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
 import { useRouter } from "next/navigation";
-import { CalendarProps } from "@/apis/type";
 
 interface CalendarData {
   floor: number;
@@ -15,7 +13,7 @@ interface CalendarData {
   date: string;
 }
 
-const Calendar = ({ onClick, onChange }: CalendarProps) => {
+const Calendar = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthdata, setData] = useState<CalendarData[]>([]);
@@ -65,16 +63,12 @@ const Calendar = ({ onClick, onChange }: CalendarProps) => {
     <>
       <Calendarmold
         prev2Label={null}
-        onClickMonth={(date) => {
-          onChange(date);
-        }}
         onActiveStartDateChange={({ activeStartDate }) =>
           studyData(activeStartDate)
         }
         onClickDay={(date) => {
           setModal(true);
           setSelectDate(date);
-          onClick(date);
         }}
         next2Label={null}
         calendarType="gregory"

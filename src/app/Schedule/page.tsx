@@ -12,7 +12,7 @@ const Schedule = () => {
         <div className="text-neutral-200 text-sub-title3-B">
           <Link href="/main">홈</Link> &gt; 일정 관리
         </div>
-        <ScheduleCalendar onClick={() => {}} onChange={() => {}} />
+        <ScheduleCalendar />
         <div className=" min-w-max absolute top-40 text-heading4">
           일정 관리
         </div>
