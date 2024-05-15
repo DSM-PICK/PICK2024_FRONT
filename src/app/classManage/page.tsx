@@ -165,9 +165,8 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={false}
-            onChange={
-              (status) =>
-                handleManageListClick(student.user_id, status, student.name) // 변경된 핸들러 함수
+            onChange={(status) =>
+              handleManageListClick(student.user_id, status, student.name)
             }
           />
         ))}
@@ -178,9 +177,8 @@ const ClassManage: React.FC = () => {
             student={`${setStudentNum(student)} ${student.name}`}
             state={changeStatusName(student.status)}
             edit={true}
-            onChange={
-              (status) =>
-                handleManageListClick(student.user_id, status, student.name) // 변경된 핸들러 함수
+            onChange={(status) =>
+              handleManageListClick(student.user_id, status, student.name)
             }
           />
         ))}

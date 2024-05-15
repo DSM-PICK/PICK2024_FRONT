@@ -176,8 +176,6 @@ const AfterManage = () => {
     });
   }, []);
 
-  useEffect(() => {}, [selectClub]);
-
   return (
     <BackGround
       secondTitle={

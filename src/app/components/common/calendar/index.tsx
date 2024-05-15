@@ -1,4 +1,5 @@
 "use client";
+
 import Calendarmold from "react-calendar";
 import "./style/style.css";
 import moment from "moment";
@@ -55,6 +56,7 @@ const Calendar = () => {
 
   useEffect(() => {
     const currentDate = new Date();
+
     studyData(currentDate);
   }, []);
 
