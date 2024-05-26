@@ -94,6 +94,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(0, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
 
               <AfterCheck
@@ -102,6 +103,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(1, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
               <AfterCheck
                 state={Change(state5)}
@@ -109,6 +111,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(2, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
             </>
           ) : (
@@ -119,6 +122,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(2, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
 
               <AfterCheck
@@ -127,6 +131,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(3, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
               <AfterCheck
                 state={Change(state5)}
@@ -134,6 +139,7 @@ const CheckList: React.FC<State> = ({
                   handleChange(4, newState);
                   if (onClick) onClick();
                 }}
+                type="NO"
               />
             </>
           )}
