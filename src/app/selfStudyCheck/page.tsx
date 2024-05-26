@@ -1,14 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
+import useAcceptListSelection from "@/hook/hook";
+import { getStudentString } from "@/utils/until";
+import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import { BackGround } from "../components/common/background";
 import Dropdown from "../components/common/dropdown";
-import { useEffect, useState } from "react";
-import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
 import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
-import { getStudentString } from "@/utils/until";
-import useAcceptListSelection from "@/hook/hook";
 
 interface ClassCheck {
   id: string;
@@ -47,7 +46,13 @@ const SelfStudyCheck = () => {
         const parsedData = JSON.parse(localData);
         const studentData = {
           user_id: item.id,
-          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+          status_list: [
+            parsedData[0],
+            parsedData[1],
+            parsedData[2],
+            parsedData[3],
+            parsedData[4],
+          ],
         };
         updatedData.push(studentData);
       }
@@ -56,7 +61,7 @@ const SelfStudyCheck = () => {
     try {
       await ChangeMutate(updatedData, {
         onSuccess: () => {
-          location.reload();
+          //location.reload();
         },
         onError: (error) => {
           alert(error.name);
