@@ -36,51 +36,28 @@ const OutList = () => {
   const [earlyreturnlist, setEarlyreturnList] = useState<earlyreturnOK[]>([]);
   const router = useRouter();
 
-  const { mutate: outListMutate } = OutListProp();
-  const { mutate: homeMutate } = ReturnHomeList();
+  const { data: outList } = OutListProp();
+  const { data: home } = ReturnHomeList();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
-    selectedTab ? getHomeList() : getOutlist();
   };
 
   const reason = () => {
     router.push(`/outList/reason`);
   };
 
-  const getHomeList = async () => {
-    try {
-      await homeMutate(null, {
-        onSuccess: (data) => {
-          setEarlyreturnList(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (outList) {
+      setApplicationList(outList);
     }
-  };
-
-  const getOutlist = async () => {
-    try {
-      const result = await outListMutate(null, {
-        onSuccess: (data) => {
-          setApplicationList(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [outList]);
 
   useEffect(() => {
-    getOutlist();
-  }, []);
+    if (home) {
+      setEarlyreturnList(home);
+    }
+  }, [home]);
 
   return (
     <BackGround

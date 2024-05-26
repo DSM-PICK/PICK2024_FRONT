@@ -8,11 +8,6 @@ import ScheduleFix from "./fix";
 import PostSchedule from "../../modal/schedule/page";
 import "moment/locale/en-gb";
 
-interface CalendarProps {
-  onClick: (date: Date) => void;
-  onChange: (date: Date) => void;
-}
-
 interface Schedule {
   id: string;
   event_name: string;
@@ -20,7 +15,7 @@ interface Schedule {
   day: number;
 }
 
-const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
+const ScheduleCalendar = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthData, setMonthData] = useState<Schedule[]>([]);
@@ -33,7 +28,7 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
     const formattedYear = moment(selectDate).format("YYYY");
 
     try {
-      const result = await scheduleMutate(
+      await scheduleMutate(
         {
           year: formattedYear,
           month: formattedDate,
@@ -66,16 +61,12 @@ const ScheduleCalendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
     <>
       <Calendar
         prev2Label={null}
-        onClickMonth={(date) => {
-          onChange(date);
-        }}
         onActiveStartDateChange={({ activeStartDate }) =>
           scheduleData(activeStartDate)
         }
         onClickDay={(date) => {
           setSelectDate(date);
           setModal(true);
-          onClick(date);
         }}
         next2Label={null}
         calendarType="gregory"

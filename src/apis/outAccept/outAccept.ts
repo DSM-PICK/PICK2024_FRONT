@@ -35,22 +35,6 @@ interface ClassProp {
   type: string;
 }
 
-export const useGetFloor = () => {
-  const { handleError } = apiError();
-  return useMutation<FloorProp, void, { type: string; floor: number }>({
-    mutationFn: async (param) => {
-      try {
-        const response = await instance.get(
-          `/${param.type}/floor?floor=${param.floor}`
-        );
-        return response.data;
-      } catch (error) {
-        handleError(error);
-      }
-    },
-  });
-};
-
 export const useGetClass = () => {
   const { handleError } = apiError();
   return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({

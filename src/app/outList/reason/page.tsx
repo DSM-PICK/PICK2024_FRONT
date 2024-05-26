@@ -33,58 +33,29 @@ interface HomeData {
 
 const Reason = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
-  const [data, setData] = useState<OutListData[]>([]);
+  const [outData, setOutData] = useState<OutListData[]>([]);
+  const [returnHomeData, setReturnHomeData] = useState<HomeData[]>([]);
 
-  const [homeData, setHomeData] = useState<HomeData[]>([]);
+  const { data: outListData } = AlloutList();
+  const { data: returnHomeListData } = ReturnHome();
 
-  const { mutate: outMutate } = AlloutList();
-  const { mutate: returnHomeMutate } = ReturnHome();
-
-  const Outdata = async () => {
-    try {
-      const result = await outMutate(null, {
-        onSuccess: (data) => {
-          setData(data);
-        },
-        onError: (error) => {
-          console.error("OutData: Error", error);
-        },
-      });
-    } catch (error) {
-      console.error("OutData: Catch Error", error);
+  useEffect(() => {
+    if (outListData) {
+      setOutData(outListData);
     }
-  };
+  }, [outListData]);
 
-  const ReturnHomeData = async () => {
-    try {
-      const result = await returnHomeMutate(null, {
-        onSuccess: (data) => {
-          setHomeData(data);
-        },
-        onError: (error) => {
-          console.error(error);
-        },
-      });
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (returnHomeListData) {
+      setReturnHomeData(returnHomeListData);
     }
-  };
+  }, [returnHomeListData]);
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
-    if (tab) {
-      setSelectedTab(tab);
-      Outdata();
-    } else {
-      ReturnHomeData();
-    }
   };
 
   const student = (item: any) => getStudentString(item);
-
-  useEffect(() => {
-    Outdata();
-  }, []);
 
   return (
     <BackGround
@@ -104,30 +75,17 @@ const Reason = () => {
         />
       }
     >
-      {selectedTab ? (
-        <div className="flex flex-wrap gap-5 justify-between">
-          {data.map((item, index) => (
-            <ReasonList
-              key={index}
-              time={item.start_time}
-              endTime={item.end_time}
-              student={student(item)}
-              why={item.reason}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-5 justify-between">
-          {homeData.map((item, index) => (
-            <ReasonList
-              key={index}
-              time={item.start_time}
-              student={student(item)}
-              why={item.reason}
-            />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-wrap gap-5 justify-between">
+        {(selectedTab ? outData : returnHomeData).map((item, index) => (
+          <ReasonList
+            key={index}
+            time={item.start_time}
+            endTime=""
+            student={student(item)}
+            why={item.reason}
+          />
+        ))}
+      </div>
     </BackGround>
   );
 };

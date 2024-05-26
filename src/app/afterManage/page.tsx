@@ -17,6 +17,7 @@ import { CheckStatus } from "@/apis/selfStudy";
 import { getStudentString, setStudentNum } from "@/utils/until";
 import { getWeekDay } from "@/utils/date";
 import { AfterStudent, ChangeClub, ChangeStatus, ClubList } from "@/apis/type";
+import useAcceptListSelection from '@/hook/hook';
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
@@ -26,8 +27,8 @@ const AfterManage = () => {
   const [dataList, setDataList] = useState<AfterStudent[]>();
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const [selectClub, setSelectClub] = useState<string>("대동여지도");
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+  useAcceptListSelection();
   const { data: getAfter } = GetAfterStudent();
   const { data: getClub } = GetClubList(selectClub);
   const { mutate: Post } = PostStudent();
@@ -37,27 +38,6 @@ const AfterManage = () => {
 
   const day = getWeekDay();
 
-  const handleAcceptListClick = (id: string, name: string) => {
-    const selectedIndex = selectedStudents.indexOf(id);
-    const isSelected = selectedIndex !== -1;
-    if (isSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((studentId) => studentId !== id)
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter((studentName) => studentName !== name)
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
-  };
 
   useEffect(() => {
     if (getClub) {
@@ -195,8 +175,6 @@ const AfterManage = () => {
       }
     });
   }, []);
-
-  useEffect(() => {}, [selectClub]);
 
   return (
     <BackGround

@@ -44,37 +44,22 @@ const AutoInput: React.FC<AutoInputProps> = ({
   const [filteredData, setFilteredData] = useState<string[]>([]);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { data: GetStudentMutate } = AllStudent();
-  const { mutate: GetTeacerMutate } = GetAllTeacher();
+  const { data: GetTeacer } = GetAllTeacher();
   const [teacherData, setTeacherData] = useState<string[]>();
 
   const containerClassName = ` w-${width} h-auto border border-neutral-900 rounded flex justify-between items-center px-2 bg-neutral-900 hover:border-neutral-500 hover:bg-white active:border-secondary-500 caret-primary-500 focus:border-secondary-500`;
 
   const [data, setData] = useState<Type[]>([]);
 
-  const Teacher = async () => {
-    try {
-      await GetTeacerMutate(null, {
-        onSuccess: (data) => {
-          setTeacherData(data);
-        },
-        onError: (error) => {
-          alert(error.name);
-        },
-      });
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (GetTeacer) {
+      setTeacherData(GetTeacer);
     }
-  };
+  }, [GetTeacer]);
 
   useEffect(() => {
     localStorage.setItem("students", JSON.stringify(selectedValues));
   }, [selectedValues]);
-
-  useEffect(() => {
-    if (type === "teacher") {
-      Teacher();
-    }
-  }, []);
 
   useEffect(() => {
     if (type === "student" && GetStudentMutate) {

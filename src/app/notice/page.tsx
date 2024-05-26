@@ -23,27 +23,13 @@ const Notice = () => {
   };
 
   const [data, setData] = useState<GetnoticeList[]>();
-
-  const { mutate: NoticeMutate } = GetNoticeList();
-
-  const getNotice = async () => {
-    try {
-      await NoticeMutate(null, {
-        onSuccess: (data) => {
-          setData(data);
-        },
-        onError: (error) => {
-          alert(`${error.name} : 데이터를 갖고오는데 실패하였습니다`);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data: Notice } = GetNoticeList();
 
   useEffect(() => {
-    getNotice();
-  }, []);
+    if (Notice) {
+      setData(Notice);
+    }
+  }, [Notice]);
 
   return (
     <>

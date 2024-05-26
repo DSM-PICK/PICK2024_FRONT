@@ -8,18 +8,13 @@ import { SelfstudyGet } from "@/apis/changeTeacher";
 import SelfStudyModal from "../modal/selfStudyTeacher.tsx/page";
 import { useRouter } from "next/navigation";
 
-interface CalendarProps {
-  onClick: (date: Date) => void;
-  onChange: (date: Date) => void;
-}
-
 interface CalendarData {
   floor: number;
   teacher: string;
   date: string;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
+const Calendar = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [monthdata, setData] = useState<CalendarData[]>([]);
@@ -69,16 +64,12 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, onChange }) => {
     <>
       <Calendarmold
         prev2Label={null}
-        onClickMonth={(date) => {
-          onChange(date);
-        }}
         onActiveStartDateChange={({ activeStartDate }) =>
           studyData(activeStartDate)
         }
         onClickDay={(date) => {
           setModal(true);
           setSelectDate(date);
-          onClick(date);
         }}
         next2Label={null}
         calendarType="gregory"

@@ -45,7 +45,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
 
   const { mutate: postTeacherMutate } = PostTeacher();
   const { mutate: ChangeMutate } = ChangeTeachers();
-  const { mutate: SelectSelfListMutate } = SelectTeacher();
+  const date = moment(initialDate).format("YYYY-MM-DD");
+  const { data: SelectSelfList } = SelectTeacher(date);
 
   const Change = async () => {
     try {
@@ -77,44 +78,27 @@ const SelfStudyModal: React.FC<ModalProps> = ({
     }
   };
 
-  const select = async () => {
-    try {
-      await SelectSelfListMutate(
-        {
-          date: moment(initialDate).format("YYYY-MM-DD"),
-        },
-        {
-          onSuccess: (data) => {
-            setData(data);
-          },
-        }
-      );
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (SelectSelfList) {
+      setData(SelectSelfList);
     }
-  };
+  }, [SelectSelfList]);
 
   useEffect(() => {
     data.forEach((val) => {
-      console.log(val);
-      
-      switch(val.floor) {
-        case 2 :
-          setSecondData({floor:2, teacher:val.teacher})
+      switch (val.floor) {
+        case 2:
+          setSecondData({ floor: 2, teacher: val.teacher });
           break;
-        case 3 :
-          setThirdData({floor:3, teacher:val.teacher})
+        case 3:
+          setThirdData({ floor: 3, teacher: val.teacher });
           break;
-        case 4 :
-          setFourthData({floor:4, teacher:val.teacher})
+        case 4:
+          setFourthData({ floor: 4, teacher: val.teacher });
           break;
       }
-    })
-  }, [data])
-
-  useEffect(() => {
-    select();
-  }, []);
+    });
+  }, [data]);
 
   const Post = () => {
     teachers.length === 0 ? submitTeachers() : Change();

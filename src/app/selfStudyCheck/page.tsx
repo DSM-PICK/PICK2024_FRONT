@@ -1,13 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
+import useAcceptListSelection from "@/hook/hook";
+import { getStudentString } from "@/utils/until";
+import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import { BackGround } from "../components/common/background";
 import Dropdown from "../components/common/dropdown";
-import { useEffect, useState } from "react";
-import { CheckStatus, ClassStudentCheck } from "@/apis/selfStudy";
 import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
-import { getStudentString } from "@/utils/until";
 
 interface ClassCheck {
   id: string;
@@ -33,11 +33,10 @@ const SelfStudyCheck = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [data, setData] = useState<ClassCheck[]>([]);
   const [saveModal, setSaveModal] = useState<boolean>(false);
-  const router = useRouter();
   const { mutate: ChangeMutate } = CheckStatus();
   const { mutate: CheckMutate } = ClassStudentCheck();
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+    useAcceptListSelection();
 
   const handleSaveModalConfirm = async () => {
     const updatedData: ChangeStatus[] = [];
@@ -47,7 +46,13 @@ const SelfStudyCheck = () => {
         const parsedData = JSON.parse(localData);
         const studentData = {
           user_id: item.id,
-          status_list: [parsedData[0], parsedData[1], parsedData[2]],
+          status_list: [
+            parsedData[0],
+            parsedData[1],
+            parsedData[2],
+            parsedData[3],
+            parsedData[4],
+          ],
         };
         updatedData.push(studentData);
       }
@@ -127,29 +132,6 @@ const SelfStudyCheck = () => {
     });
     Check();
   }, [selectedClass, selectedGrade]);
-
-  const handleAcceptListClick = (id: string, name: string) => {
-    const selectedIndex = selectedStudents.indexOf(id);
-
-    const isSelected = selectedIndex !== -1;
-    if (isSelected) {
-      setSelectedStudents((prevSelectedStudents) =>
-        prevSelectedStudents.filter((studentId) => studentId !== id)
-      );
-      setSelectedStudentName((prevSelectedStudentName) =>
-        prevSelectedStudentName.filter((studentName) => studentName !== name)
-      );
-    } else {
-      setSelectedStudents((prevSelectedStudents) => [
-        ...prevSelectedStudents,
-        id,
-      ]);
-      setSelectedStudentName((prevSelectedStudentName) => [
-        ...prevSelectedStudentName,
-        name,
-      ]);
-    }
-  };
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectedGrade(selectedOption);

@@ -25,13 +25,6 @@ const AllmealDrop: React.FC<StateDropProps> = ({ state }) => {
     setIsDropdownVisible(!isDropdownVisible);
   };
 
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
-    setIsDropdownVisible(false);
-  };
-
-  const commonStyle = "py-5 px-3 rounded hover:bg-primary-200 hover:text-white";
-
   return (
     <div className="relative w-38">
       <div

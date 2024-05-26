@@ -3,24 +3,21 @@ import { ChangeState } from "@/apis/weekendMeal";
 import React, { useState, useRef, useEffect } from "react";
 
 interface StateDropProps {
-  state: "OK" | "NO" | "QUIET";
-  id?: string;
+  option: "신청" | "미신청" | "미응답";
+  id: string;
   onclick: () => void;
 }
 
-const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
-  const defaultOptions: Record<string, string> = {
-    신청: state === "OK" ? "신청" : state === "NO" ? "미신청" : "미응답",
-  };
+const ClassmealDrop = ({ option, id, onclick }: StateDropProps) => {
   const { mutate: ChangeMealMutate } = ChangeState();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
-  const Change = async (option: string) => {
-    const tem = option === "미신청" ? "NO" : "OK";
+  const Change = async (selectedOption: "신청" | "미신청") => {
+    const status = selectedOption === "미신청" ? "NO" : "OK";
     try {
       await ChangeMealMutate(
-        { status: tem, userId: id || "" },
+        { status, userId: id || "" },
         {
           onSuccess: () => {},
           onError: (error) => {
@@ -35,34 +32,28 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
   };
 
   const change = () => {
-    switch (state) {
-      case "OK":
-        return `신청`;
-      case "NO":
-        return `미신청`;
-      case "QUIET":
-        return `미응답`;
-    }
+    return option;
   };
 
   const toggleDropdown = () => {
-    if (state === "QUIET") {
+    if (option === "미응답") {
       setIsDropdownVisible(!isDropdownVisible);
     }
   };
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (selectedOption: "신청" | "미신청") => {
     setIsDropdownVisible(false);
-    Change(option);
+    Change(selectedOption);
+    onclick();
   };
 
   const dropStyle = () => {
-    switch (state) {
-      case "QUIET":
+    switch (option) {
+      case "미응답":
         return "group border bg-white py-1 px-3 focus:border-primary-200 rounded-lg cursor-pointer flex items-center justify-center";
-      case "NO":
+      case "미신청":
         return "bg-white py-1 border px-3 rounded-lg flex justify-center items-center border-primary-500 text-neutral-500";
-      case "OK":
+      case "신청":
         return "bg-primary-300 py-1 px-3 rounded-lg flex justify-center items-center text-white";
     }
   };
@@ -89,12 +80,11 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
       <div className={dropStyle()} onClick={toggleDropdown}>
         {change()}
       </div>
-      {state === "QUIET" && isDropdownVisible && (
+      {option === "미응답" && isDropdownVisible && (
         <div className="absolute z-10 bg-white border rounded-lg w-full text-Button-S">
           <div
             onClick={() => {
               handleOptionClick("신청");
-              onclick();
             }}
             className={commonStyle}
           >
@@ -103,7 +93,6 @@ const ClassmealDrop: React.FC<StateDropProps> = ({ state, id, onclick }) => {
           <div
             onClick={() => {
               handleOptionClick("미신청");
-              onclick();
             }}
             className={commonStyle}
           >

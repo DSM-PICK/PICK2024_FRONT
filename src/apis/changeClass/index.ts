@@ -1,29 +1,7 @@
 import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
-
-interface changeClass {
-  class_num: number;
-  classroom_name: string;
-  floor: number;
-  grade: number;
-  id: string;
-  num: number;
-  user_id: string;
-  username: string;
-}
-
-interface FloorClass {
-  id: string;
-  class_num: number;
-  classroom_name: string;
-  end_period: number;
-  grade: number;
-  move: string;
-  num: number;
-  start_period: number;
-  username: string;
-}
+import { FloorClass, changeClass } from "../type";
 
 export const GetFloor = () => {
   const { handleError } = apiError();
