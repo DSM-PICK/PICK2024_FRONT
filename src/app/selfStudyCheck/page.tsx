@@ -61,7 +61,7 @@ const SelfStudyCheck = () => {
     try {
       await ChangeMutate(updatedData, {
         onSuccess: () => {
-          //location.reload();
+          location.reload();
         },
         onError: (error) => {
           alert(error.name);
