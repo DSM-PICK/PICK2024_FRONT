@@ -248,7 +248,7 @@ const OutAccept = () => {
                   handleAcceptListClick(dataItem.id, dataItem.username)
                 }
                 key={index}
-                time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
+                time={`${dataItem.start_time} ~`}
                 student={`${getStudentString(dataItem)}`}
                 why={dataItem.reason}
               />
