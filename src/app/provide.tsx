@@ -1,7 +1,5 @@
 "use client";
-import { cookie } from "@/utils/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 interface ProviderProps {
@@ -9,17 +7,6 @@ interface ProviderProps {
 }
 
 export const Provider: React.FC<ProviderProps> = ({ children }) => {
-  const router = useRouter();
-
-  const accessToken = cookie.get("access_token");
-
-  useEffect(() => {
-    if (!accessToken) {
-      router.push("/login");
-      alert("로그인 후 이용해 주세요");
-    }
-  }, []);
-
   const queryClient = new QueryClient();
 
   return (
