@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { cookie } from "@/utils/auth";
+import { useRouter } from "next/navigation";
 
 const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -17,9 +18,7 @@ instance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
       const accessToken = cookie.get("access_token");
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
