@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance } from "..";
 import { cookie } from "@/utils/auth";
 import apiError from "@/hook/apiError";
+import axios from "axios";
 
 interface Login {
   admin_id: string;
@@ -15,13 +16,14 @@ interface Token {
 }
 
 export const useLogin = () => {
+  const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
   const loginMutation = useMutation<Token, Error, Login>({
     mutationFn: (param: Login) => {
-      return instance
-        .post<Token>("/admin/login", {
+      return axios
+        .post<Token>(`${BASEURL}/admin/login`, {
           ...param,
         })
         .then((response) => {
