@@ -1,8 +1,7 @@
 "use client";
 import { cookie } from "@/utils/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface ProviderProps {
   children: React.ReactNode;

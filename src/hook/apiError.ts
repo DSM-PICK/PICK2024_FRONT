@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 type ErrorHandler = () => void;
 
@@ -7,12 +8,14 @@ type HandleType = {
 };
 
 const ApiError = () => {
+  const router = useRouter();
+
   const handle400: ErrorHandler = () => {
     alert("400 잘못된 요청입니다");
   };
 
   const handle401: ErrorHandler = () => {
-    alert("401 인증에 실패했습니다");
+    router.push("login");
   };
 
   const handle403: ErrorHandler = () => {
