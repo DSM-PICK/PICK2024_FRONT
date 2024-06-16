@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "@/app/components/common/Button";
 import Allmeals from "@/app/components/common/list/Allmeals/page";
 import TopBack from "@/app/components/common/background/top";
@@ -18,28 +18,12 @@ interface StudentStatus {
 
 const AllWeekendMeal = () => {
   const router = useRouter();
-  const [data, setData] = useState<StudentStatus[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await GetAllStudentMeal();
-        if (Array.isArray(result)) {
-          setData(result);
-        }
-      } catch (error) {
-        alert(`에러 발생`);
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
+  const { data: studentData } = GetAllStudentMeal();
   const { downloadExcel } = Printexcel();
 
   return (
     <TopBack
-      subTitle={`주말 급식 신청 현황`}
+      subTitle="주말 급식 신청 현황"
       linkChildren="주말 급식 신청 현황 > 전체 학생"
       DropChildren={
         <>
@@ -65,8 +49,8 @@ const AllWeekendMeal = () => {
         </div>
         <div>신청 상태</div>
       </div>
-      <div className=" w-full h-140 flex flex-col gap-4 overflow-y-scroll scrollbar-hide">
-        {data?.map((item, index) => (
+      <div className="w-full h-140 flex flex-col gap-4 overflow-y-scroll scrollbar-hide">
+        {studentData?.map((item: StudentStatus, index: number) => (
           <Allmeals
             key={index}
             state={item.status}
