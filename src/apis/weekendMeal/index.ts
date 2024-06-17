@@ -63,14 +63,19 @@ export const ChangeState = () => {
   });
 };
 
-export const GetAllStudentMeal = async () => {
+export const GetAllStudentMeal = () => {
   const { handleError } = apiError();
-  try {
-    const response = await instance.get(`weekend-meal/hey`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
+  return useQuery({
+    queryKey: ["GetAllStudentMeal"],
+    queryFn: async () => {
+      try {
+        const { data } = await instance.get(`weekend-meal/hey`);
+        return data;
+      } catch (error) {
+        handleError(error);
+      }
+    },
+  });
 };
 
 export const MealCheck = () => {
