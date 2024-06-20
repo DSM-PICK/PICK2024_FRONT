@@ -165,12 +165,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
           </div>
           <div className="flex flex-col gap-4 w-full">
             <div className=" flex flex-col">
-              <div>2층 자습감독</div>
+              <div>4층 자습감독</div>
               <AutoInput
                 type="teacher"
-                onChange={SecondhandleChange}
-                value={secondData.teacher}
-                placeholder="2층 자습감독"
+                onChange={fourthhandleChange}
+                value={fourthData.teacher}
+                placeholder="4층 자습감독"
                 width="full"
                 name="teacher"
               />
@@ -187,12 +187,12 @@ const SelfStudyModal: React.FC<ModalProps> = ({
               />
             </div>
             <div className=" flex flex-col">
-              <div>4층 자습감독</div>
+              <div>2층 자습감독</div>
               <AutoInput
                 type="teacher"
-                onChange={fourthhandleChange}
-                value={fourthData.teacher}
-                placeholder="4층 자습감독"
+                onChange={SecondhandleChange}
+                value={secondData.teacher}
+                placeholder="2층 자습감독"
                 width="full"
                 name="teacher"
               />
