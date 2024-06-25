@@ -51,22 +51,6 @@ export const AcceptClassChange = () => {
   });
 };
 
-export const AllClassChange = () => {
-  const { handleError } = apiError();
-  return useMutation<FloorClass[], Error, { status: "QUIET" | "OK" }>({
-    mutationFn: async (param) => {
-      try {
-        const { data } = await instance.get(
-          `/class-room/all?status=${param.status}`
-        );
-        return data;
-      } catch (error) {
-        handleError(error);
-      }
-    },
-  });
-};
-
 export const AcceptClass = () => {
   const { handleError } = apiError();
   return useMutation<void, Error, { status: string; id: string[] }>({

@@ -5,7 +5,7 @@ import { getFullToday } from "@/utils/date";
 import { useState } from "react";
 import Dropdown from "../../components/common/dropdown";
 import ChangeClass from "../../components/common/list/changeClass/page";
-import { AllClassChange, ChangeClassList, GetFloor } from "@/apis/changeClass";
+import { ChangeClassList, GetFloor } from "@/apis/changeClass";
 import { getStudentString } from "@/utils/until";
 import { BackGround } from "../../components/common/background";
 import Link from "next/link";
@@ -32,7 +32,6 @@ const ClassChangeOk = () => {
 
   const { mutate: changelistMutate } = ChangeClassList();
   const { mutate: changelistFloorMutate } = GetFloor();
-  const { mutate: AllClassChangeList } = AllClassChange();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
@@ -59,31 +58,20 @@ const ClassChangeOk = () => {
   }, [selectedFloor]);
 
   const ChangeClassDataFloor = async () => {
-    if (selectedFloor === 5) {
-      await AllClassChangeList(
-        { status: "OK" },
+    try {
+      await changelistFloorMutate(
+        { floor: selectedFloor },
         {
           onSuccess: (data) => {
             setFloorData(data);
           },
+          onError: (error) => {
+            console.log(error);
+          },
         }
       );
-    } else {
-      try {
-        await changelistFloorMutate(
-          { floor: selectedFloor },
-          {
-            onSuccess: (data) => {
-              setFloorData(data);
-            },
-            onError: (error) => {
-              console.log(error);
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

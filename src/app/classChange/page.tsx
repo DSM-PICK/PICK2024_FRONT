@@ -1,11 +1,7 @@
 "use client";
 import { getFullToday } from "@/utils/date";
 import { BackGround } from "../components/common/background";
-import {
-  AcceptClass,
-  AcceptClassChange,
-  AllClassChange,
-} from "@/apis/changeClass";
+import { AcceptClass, AcceptClassChange } from "@/apis/changeClass";
 import Dropdown from "../components/common/dropdown";
 import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
@@ -37,7 +33,6 @@ const ClassChange = () => {
 
   const { mutate: AccpetMutate } = AcceptClassChange();
   const { mutate: AccpetList } = AcceptClass();
-  const { mutate: AllClassChangeR } = AllClassChange();
 
   const Accept = () => {
     if (selectedStudents.length === 0) {
@@ -52,31 +47,20 @@ const ClassChange = () => {
   };
 
   const Accpet = async () => {
-    if (selectedFloor === 5) {
-      await AllClassChangeR(
-        { status: "QUIET" },
+    try {
+      await AccpetMutate(
+        { floor: selectedFloor },
         {
           onSuccess: (data) => {
             setData(data);
           },
+          onError: (error) => {
+            alert(error.name);
+          },
         }
       );
-    } else {
-      try {
-        await AccpetMutate(
-          { floor: selectedFloor },
-          {
-            onSuccess: (data) => {
-              setData(data);
-            },
-            onError: (error) => {
-              alert(error.name);
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
