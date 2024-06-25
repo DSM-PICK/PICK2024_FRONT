@@ -56,9 +56,9 @@ const Main = () => {
       const teachername = getName.name;
       localStorage.setItem("name", teachername);
       const grade = getName.grade;
-      localStorage.setItem("grade", "2");
+      localStorage.setItem("grade", JSON.stringify(grade));
       const class_num = getName.class_num;
-      localStorage.setItem("class_num", "2");
+      localStorage.setItem("class_num", JSON.stringify(class_num));
     }
   }, [getName]);
 
