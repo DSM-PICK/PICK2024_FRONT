@@ -16,6 +16,7 @@ import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.svg";
 import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.svg";
+import BugIcon from "@/assets/img/Icon/bugIcon.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import { GetStudentNum, TodaySelfStudys } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
@@ -55,9 +56,9 @@ const Main = () => {
       const teachername = getName.name;
       localStorage.setItem("name", teachername);
       const grade = getName.grade;
-      localStorage.setItem("grade", JSON.stringify(grade));
+      localStorage.setItem("grade", "2");
       const class_num = getName.class_num;
-      localStorage.setItem("class_num", JSON.stringify(class_num));
+      localStorage.setItem("class_num", "2");
     }
   }, [getName]);
 
@@ -85,7 +86,7 @@ const Main = () => {
           <div className=" flex flex-col gap-16 w-fit ">
             <div className=" flex flex-col gap-4">
               <div className=" text-heading6-M">메뉴</div>
-              <div className=" flex justify-between">
+              <div className=" flex justify-between gap-1">
                 <Menu href="/outList" icon={outList}>
                   외출자 목록
                 </Menu>
@@ -115,6 +116,9 @@ const Main = () => {
                 </Menu>
                 <Menu href="/notice" icon={notice}>
                   공지 사항
+                </Menu>
+                <Menu href="/bugReport" icon={BugIcon}>
+                  버그 제보
                 </Menu>
               </div>
             </div>
