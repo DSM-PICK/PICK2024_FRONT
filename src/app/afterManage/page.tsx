@@ -17,7 +17,7 @@ import { CheckStatus } from "@/apis/selfStudy";
 import { getStudentString, setStudentNum } from "@/utils/until";
 import { getWeekDay } from "@/utils/date";
 import { AfterStudent, ChangeClub, ChangeStatus, ClubList } from "@/apis/type";
-import useAcceptListSelection from '@/hook/hook';
+import useAcceptListSelection from "@/hook/hook";
 
 const AfterManage = () => {
   const [edit, setEdit] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const AfterManage = () => {
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const [selectClub, setSelectClub] = useState<string>("대동여지도");
   const { selectedStudents, selectedStudentName, handleAcceptListClick } =
-  useAcceptListSelection();
+    useAcceptListSelection();
   const { data: getAfter } = GetAfterStudent();
   const { data: getClub } = GetClubList(selectClub);
   const { mutate: Post } = PostStudent();
@@ -37,7 +37,6 @@ const AfterManage = () => {
   const { mutate: FixStatusMutate } = FixStatus();
 
   const day = getWeekDay();
-
 
   useEffect(() => {
     if (getClub) {
@@ -91,7 +90,11 @@ const AfterManage = () => {
         student_num: studentNum,
       };
     });
-    Post(updatedData);
+    Post(updatedData, {
+      onSuccess: () => {
+        location.reload();
+      },
+    });
     setModal(false);
   };
 
