@@ -9,6 +9,7 @@ import { Printexcel } from "@/apis/weekendMeal";
 import { BackGround } from "../components/common/background";
 import { useRouter } from "next/navigation";
 import { NextPage } from "next";
+import Modal from "../components/common/modal/page";
 
 interface mealcheckProp {
   id: string;
@@ -35,8 +36,7 @@ const WeekendMeals: NextPage = () => {
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
   const [effect, setEffect] = useState<number>(0);
-
-  const { downloadExcel } = Printexcel();
+  const [modal, setModal] = useState<boolean>();
 
   const AllMeals = () => {
     router.push("/WeekendMeals/all");
@@ -44,6 +44,8 @@ const WeekendMeals: NextPage = () => {
 
   const { mutate: checkMealMutate } = MealCheck();
   const { mutate: notCheckMealMutate } = NotMealCheck();
+
+  const homeroomm = localStorage.getItem("grade");
 
   useEffect(() => {
     checkMealList();
@@ -117,6 +119,10 @@ const WeekendMeals: NextPage = () => {
     }
   };
 
+  const CheckMyStudent = () => {
+    setModal(true);
+  };
+
   return (
     <BackGround
       subTitle="주말 급식"
@@ -124,9 +130,17 @@ const WeekendMeals: NextPage = () => {
       linkChildren={`주말 급식 신청 현황 > ${selectGrade}학년 ${selectClass}반`}
       DropChildren={
         <>
-          <Button colorType="ghost" buttonSize="small" onClick={downloadExcel}>
-            엑셀로 출력하기
-          </Button>
+          {homeroomm === "0" ? (
+            <></>
+          ) : (
+            <Button
+              colorType="ghost"
+              buttonSize="small"
+              onClick={CheckMyStudent}
+            >
+              담임 확인
+            </Button>
+          )}
           <Button colorType="primary" buttonSize="small" onClick={AllMeals}>
             전체 학생 보기
           </Button>
@@ -181,6 +195,19 @@ const WeekendMeals: NextPage = () => {
           </div>
         </div>
       </div>
+      {modal && (
+        <Modal
+          onCancel={() => {
+            setModal(false);
+          }}
+          onConfirm={() => {}}
+          type="button"
+          buttonMessage="확인"
+          heading1={`${selectGrade}-${selectClass}의 주말 급식 상태를 
+         `}
+          heading2=" 영양사 선생님께 전달하시겠습니까?"
+        />
+      )}
     </BackGround>
   );
 };
