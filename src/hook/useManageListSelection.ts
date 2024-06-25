@@ -1,8 +1,14 @@
 import { useState } from "react";
 
+interface Student {
+  user_id: string;
+  name: string;
+}
+
 interface ManageListSelectionHook {
   selectedStudents: string[];
-  selectedStudentName: string[];
+  selectedStudentNames: string[];
+  modifiedStudents: { user_id: string; status_type: string }[];
   handleManageListClick: (
     user_id: string,
     status_type: string,
@@ -12,37 +18,53 @@ interface ManageListSelectionHook {
 
 const useManageListSelection = (): ManageListSelectionHook => {
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
-  const [selectedStudentName, setSelectedStudentName] = useState<string[]>([]);
+  const [selectedStudentNames, setSelectedStudentNames] = useState<string[]>(
+    []
+  );
+  const [modifiedStudents, setModifiedStudents] = useState<
+    { user_id: string; status_type: string }[]
+  >([]);
 
   const handleManageListClick = (
     user_id: string,
     status_type: string,
     name: string
   ) => {
-    setSelectedStudents((prevSelectedStudents) => {
-      const isStudentSelected = prevSelectedStudents.includes(user_id);
-      if (isStudentSelected) {
-        return prevSelectedStudents.filter(
-          (selectedStudent) => selectedStudent !== user_id
-        );
-      } else {
-        return [...prevSelectedStudents, user_id];
-      }
-    });
+    setModifiedStudents((prevModifiedStudents) => [
+      ...prevModifiedStudents,
+      { user_id, status_type },
+    ]);
 
-    setSelectedStudentName((prevSelectedStudentName) => {
-      const isStudentSelected = prevSelectedStudentName.includes(name);
-      if (isStudentSelected) {
-        return prevSelectedStudentName.filter(
+    const isStudentSelected = selectedStudents.includes(user_id);
+    if (isStudentSelected) {
+      setSelectedStudents((prevSelectedStudents) =>
+        prevSelectedStudents.filter(
+          (selectedStudent) => selectedStudent !== user_id
+        )
+      );
+      setSelectedStudentNames((prevSelectedStudentNames) =>
+        prevSelectedStudentNames.filter(
           (selectedStudentName) => selectedStudentName !== name
-        );
-      } else {
-        return [...prevSelectedStudentName, name];
-      }
-    });
+        )
+      );
+    } else {
+      setSelectedStudents((prevSelectedStudents) => [
+        ...prevSelectedStudents,
+        user_id,
+      ]);
+      setSelectedStudentNames((prevSelectedStudentNames) => [
+        ...prevSelectedStudentNames,
+        name,
+      ]);
+    }
   };
 
-  return { selectedStudents, selectedStudentName, handleManageListClick };
+  return {
+    selectedStudents,
+    selectedStudentNames,
+    modifiedStudents,
+    handleManageListClick,
+  };
 };
 
 export default useManageListSelection;
