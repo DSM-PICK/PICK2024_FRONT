@@ -58,13 +58,14 @@ export interface ChangeClub {
 }
 
 export interface changeClass {
+  id: string;
   class_num: number;
   classroom_name: string;
-  floor: number;
+  end_period: number;
   grade: number;
-  id: string;
+  move: string;
   num: number;
-  user_id: string;
+  start_period: number;
   username: string;
 }
 

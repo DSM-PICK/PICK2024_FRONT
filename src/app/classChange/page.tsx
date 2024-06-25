@@ -1,7 +1,11 @@
 "use client";
 import { getFullToday } from "@/utils/date";
 import { BackGround } from "../components/common/background";
-import { AcceptClass, AcceptClassChange } from "@/apis/changeClass";
+import {
+  AcceptClass,
+  AcceptClassChange,
+  AllClassChange,
+} from "@/apis/changeClass";
 import Dropdown from "../components/common/dropdown";
 import { useEffect, useState } from "react";
 import Button from "../components/common/Button";
@@ -24,7 +28,7 @@ interface FloorClass {
 }
 
 const ClassChange = () => {
-  const [selectedFloor, setSelectedFloor] = useState<number>(2);
+  const [selectedFloor, setSelectedFloor] = useState<number>(5);
   const [data, setData] = useState<FloorClass[]>([]);
   const [accept, setAccept] = useState<boolean>(false);
   const [refuse, setRefuse] = useState<boolean>(false);
@@ -33,6 +37,7 @@ const ClassChange = () => {
 
   const { mutate: AccpetMutate } = AcceptClassChange();
   const { mutate: AccpetList } = AcceptClass();
+  const { mutate: AllClassChangeR } = AllClassChange();
 
   const Accept = () => {
     if (selectedStudents.length === 0) {
@@ -47,20 +52,31 @@ const ClassChange = () => {
   };
 
   const Accpet = async () => {
-    try {
-      await AccpetMutate(
-        { floor: selectedFloor },
+    if (selectedFloor === 5) {
+      await AllClassChangeR(
+        { status: "QUIET" },
         {
           onSuccess: (data) => {
             setData(data);
           },
-          onError: (error) => {
-            alert(error.name);
-          },
         }
       );
-    } catch (error) {
-      console.log(error);
+    } else {
+      try {
+        await AccpetMutate(
+          { floor: selectedFloor },
+          {
+            onSuccess: (data) => {
+              setData(data);
+            },
+            onError: (error) => {
+              alert(error.name);
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
