@@ -16,6 +16,7 @@ import CheckPage from "../components/common/menu/check/page";
 import apply from "../../assets/img/신청 일러스트.svg";
 import SelfCheck from "@/assets/img/Icon/학생조회.svg";
 import changeStudent from "../../assets/img/교실 일러스트.svg";
+import BugIcon from "@/assets/img/Icon/bugIcon.svg";
 import { getFullToday, getWeekDay } from "@/utils/date";
 import { GetStudentNum, TodaySelfStudys } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
@@ -116,7 +117,7 @@ const Main = () => {
                 <Menu href="/notice" icon={notice}>
                   공지 사항
                 </Menu>
-                <Menu href="/bugReport" icon={notice}>
+                <Menu href="/bugReport" icon={BugIcon}>
                   버그 제보
                 </Menu>
               </div>
