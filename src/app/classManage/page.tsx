@@ -18,15 +18,9 @@ interface Student {
   num: number;
   status: string;
 }
-
 interface StudentData {
   teacher: string;
   students: Student[];
-}
-
-interface ChangeStatusData {
-  user_id: string;
-  status_type: string;
 }
 
 const ClassManage: React.FC = () => {
@@ -35,11 +29,12 @@ const ClassManage: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
-  const { selectedStudentName, handleManageListClick } =
-    useManageListSelection();
-  const [modifiedStudents, setModifiedStudents] = useState<ChangeStatusData[]>(
-    []
-  );
+  const {
+    selectedStudents,
+    selectedStudentNames,
+    modifiedStudents,
+    handleManageListClick,
+  } = useManageListSelection();
   const { mutate: getStudentDataMutate } = GetStudentData();
   const { mutate: changestatusMutate } = ChangeStatus();
 
@@ -151,47 +146,34 @@ const ClassManage: React.FC = () => {
               상태 수정하기
             </Button>
           )}
-          <div className=" flex gap-5">
+          <div className="flex gap-5">
             <Dropdown type="grade" onChange={handleGradeChange} />
             <Dropdown type="class" onChange={handleClassChange} />
           </div>
         </>
       }
     >
-      {edit &&
-        data?.students.map((student, index) => (
-          <ManageList
-            key={index}
-            student={`${setStudentNum(student)} ${student.name}`}
-            state={changeStatusName(student.status)}
-            edit={false}
-            onChange={(status) =>
-              handleManageListClick(student.user_id, status, student.name)
-            }
-          />
-        ))}
-      {!edit &&
-        data?.students.map((student, index) => (
-          <ManageList
-            key={index}
-            student={`${setStudentNum(student)} ${student.name}`}
-            state={changeStatusName(student.status)}
-            edit={true}
-            onChange={(status) =>
-              handleManageListClick(student.user_id, status, student.name)
-            }
-          />
-        ))}
+      {data?.students.map((student, index) => (
+        <ManageList
+          key={index}
+          student={`${setStudentNum(student)} ${student.name}`}
+          state={changeStatusName(student.status)}
+          edit={!edit}
+          onChange={(status) =>
+            handleManageListClick(student.user_id, status, student.name)
+          }
+        />
+      ))}
       {modal && (
         <Modal
           type="button"
           heading1={`${
-            selectedStudentName.length > 1
-              ? `${selectedStudentName[0]} 학생 외 ${
-                  selectedStudentName.length - 1
+            selectedStudentNames.length > 1
+              ? `${selectedStudentNames[0]} 학생 외 ${
+                  selectedStudentNames.length - 1
                 }명`
-              : selectedStudentName.length === 1
-              ? `${selectedStudentName[0]} 학생`
+              : selectedStudentNames.length === 1
+              ? `${selectedStudentNames[0]} 학생`
               : ""
           }`}
           heading2="변경된 상태를 저장하시겠습니까?"
