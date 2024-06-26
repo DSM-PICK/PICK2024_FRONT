@@ -61,16 +61,3 @@ export const SelectTeacher = (date: string) => {
     },
   });
 };
-
-export const ChangeTeachers = () => {
-  const { handleError } = apiError();
-  return useMutation<void, Error, postTeacherProp>({
-    mutationFn: async (param) => {
-      try {
-        await instance.patch(`self-study/modify`, param);
-      } catch (error) {
-        handleError(error);
-      }
-    },
-  });
-};
