@@ -2,11 +2,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Button from "../../Button";
-import {
-  ChangeTeachers,
-  PostTeacher,
-  SelectTeacher,
-} from "@/apis/changeTeacher";
+import { PostTeacher, SelectTeacher } from "@/apis/changeTeacher";
 import AutoInput from "../../input/auto/page";
 
 export interface ChangeProps {
@@ -44,39 +40,8 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   const [teachers, setTeachers] = useState<string[]>([]);
 
   const { mutate: postTeacherMutate } = PostTeacher();
-  const { mutate: ChangeMutate } = ChangeTeachers();
   const date = moment(initialDate).format("YYYY-MM-DD");
   const { data: SelectSelfList } = SelectTeacher(date);
-
-  const Change = async () => {
-    try {
-      const ChangeData: postTeacherProp = {
-        date: moment(initialDate).format("YYYY-MM-DD"),
-        teacher: [
-          {
-            floor: secondData.floor,
-            teacher: secondData.teacher || teachers[0] || "",
-          },
-          {
-            floor: thirdData.floor,
-            teacher: thirdData.teacher || teachers[1] || "",
-          },
-          {
-            floor: fourthData.floor,
-            teacher: fourthData.teacher || teachers[2] || "",
-          },
-        ],
-      };
-      await ChangeMutate(ChangeData, {
-        onSuccess: () => {
-          location.reload();
-          alert("자습감독이 수정되었습니다");
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if (SelectSelfList) {
@@ -101,7 +66,7 @@ const SelfStudyModal: React.FC<ModalProps> = ({
   }, [data]);
 
   const Post = () => {
-    teachers.length === 0 ? submitTeachers() : Change();
+    submitTeachers();
   };
 
   const submitTeachers = async () => {
@@ -118,7 +83,6 @@ const SelfStudyModal: React.FC<ModalProps> = ({
       await postTeacherMutate(postData, {
         onSuccess: () => {
           location.reload();
-          alert("자습감독이 등록되었습니다");
         },
       });
     } catch (error) {

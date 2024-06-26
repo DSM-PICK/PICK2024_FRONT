@@ -11,13 +11,14 @@ import { BackGround } from "../../components/common/background";
 import Link from "next/link";
 
 interface changeClass {
+  id: string;
   class_num: number;
   classroom_name: string;
-  floor: number;
+  end_period: number;
   grade: number;
-  id: string;
+  move: string;
   num: number;
-  user_id: string;
+  start_period: number;
   username: string;
 }
 
@@ -25,11 +26,12 @@ const ClassChangeOk = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
-  const { mutate: changelistMutate } = ChangeClassList();
   const [floorData, setFloorData] = useState<changeClass[]>([]);
-  const { mutate: changelistFloorMutate } = GetFloor();
   const [changelist, setChangelist] = useState<changeClass[]>([]);
-  const [selectedFloor, setSelectedFloor] = useState<number>(2);
+  const [selectedFloor, setSelectedFloor] = useState<number>(5);
+
+  const { mutate: changelistMutate } = ChangeClassList();
+  const { mutate: changelistFloorMutate } = GetFloor();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
@@ -55,25 +57,19 @@ const ClassChangeOk = () => {
     ChangeClassDataFloor();
   }, [selectedFloor]);
 
-  useEffect(() => {
-    changeClassData();
-  }, []);
-
   const ChangeClassDataFloor = async () => {
     try {
-      if (selectedFloor) {
-        await changelistFloorMutate(
-          { floor: selectedFloor },
-          {
-            onSuccess: (data) => {
-              setFloorData(data);
-            },
-            onError: (error) => {
-              console.log(error);
-            },
-          }
-        );
-      }
+      await changelistFloorMutate(
+        { floor: selectedFloor },
+        {
+          onSuccess: (data) => {
+            setFloorData(data);
+          },
+          onError: (error) => {
+            console.log(error);
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
