@@ -28,8 +28,8 @@ const OutAccept = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [refuse, setRefuse] = useState<boolean>(false);
-  const [selectedGrade, setSelectedGrade] = useState<number>();
-  const [selectedClass, setSelectedClass] = useState<number>();
+  const [selectedGrade, setSelectedGrade] = useState<number>(5);
+  const [selectedClass, setSelectedClass] = useState<number>(5);
   const [accept, setAccept] = useState<boolean>(false);
   const { selectedStudents, selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
@@ -71,8 +71,8 @@ const OutAccept = () => {
   useEffect(() => {
     const grade = parseInt(localStorage.getItem("grade") || "1", 10);
     const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
-    const setgrade = grade === 0 ? 1 : grade;
-    const setclass_num = class_num === 0 ? 1 : class_num;
+    const setgrade = grade === 0 ? 5 : grade;
+    const setclass_num = class_num === 0 ? 5 : class_num;
     setSelectedGrade(setgrade);
     setSelectedClass(setclass_num);
   }, []);
