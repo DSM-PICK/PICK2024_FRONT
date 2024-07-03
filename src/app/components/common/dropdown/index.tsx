@@ -118,7 +118,7 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
     { value: "Log", label: "세미나실 3-1(Log)" },
     { value: "은하", label: "세미나실 3-2(은하)" },
     { value: "PiCK", label: "세미나실 3-3(PiCK)" },
-    { value: "어게인", label: "보안 1실(어게인)" },
+    { value: "DLC", label: "보안 1실(어게인)" },
     { value: "info", label: "보안 2실(info)" },
     { value: "TeamQSS", label: "세미나실 4-1(TeamQSS)" },
     { value: "NoNamed", label: "세미나실 4-2(NoNamed)" },
