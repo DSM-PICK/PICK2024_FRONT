@@ -17,7 +17,7 @@ const ClassmealDrop = ({ option, id, onclick }: StateDropProps) => {
     const status = selectedOption === "미신청" ? "NO" : "OK";
     try {
       await ChangeMealMutate(
-        { status, userId: id || "" },
+        { status, id: id || "" },
         {
           onSuccess: () => {},
           onError: (error) => {
