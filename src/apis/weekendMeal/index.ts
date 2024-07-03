@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface ChangeStateParams {
   status: "OK" | "NO";
-  userId: string;
+  id: string;
 }
 
 interface mealcheckProp {
@@ -54,7 +54,7 @@ export const ChangeState = () => {
     mutationFn: async (params) => {
       try {
         await instance.patch(
-          `weekend-meal/status?userId=${params.userId}&status=${params.status}`
+          `/weekend-meal/status?id=${params.id}&status=${params.status}`
         );
       } catch (error) {
         handleError(error);
