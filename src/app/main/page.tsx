@@ -22,6 +22,7 @@ import { GetStudentNum, TodaySelfStudys } from "@/apis/main";
 import { GetTeacherName } from "@/apis/login/login";
 import { useRouter } from "next/navigation";
 import { TodaySelfStudy } from "@/apis/type";
+import SurveyModal from "../components/common/surveyModal";
 
 interface Type {
   out: number;
@@ -38,6 +39,7 @@ const Main = () => {
   const { data: CountNum } = GetStudentNum();
   const { data: getName } = GetTeacherName();
   const { data: selfStudyData } = TodaySelfStudys(getFullToday());
+  const [surveyModal, setSurveyModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (selfStudyData) {
@@ -72,6 +74,13 @@ const Main = () => {
   } else if (teacherName === "지킴이") {
     router.push(`/outList`);
   }
+
+  useEffect(() => {
+    const check = localStorage.getItem("survey");
+    if (check !== "OK") {
+      setSurveyModal(true);
+    }
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -168,6 +177,13 @@ const Main = () => {
         </div>
       </div>
       <div className=" bg-neutral-700 h-96"></div>
+      {surveyModal && (
+        <SurveyModal
+          onClick={() => {
+            setSurveyModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };
