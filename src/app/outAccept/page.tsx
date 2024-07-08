@@ -208,13 +208,29 @@ const OutAccept = () => {
           </Button>
           {selectedTab ? (
             <div className=" flex gap-5">
-              <Dropdown type="all" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
+              <Dropdown
+                type="all"
+                onChange={handleGradeChange}
+                homeRoom={true}
+              />
+              <Dropdown
+                type="class"
+                onChange={handleClassChange}
+                homeRoom={true}
+              />
             </div>
           ) : (
             <div className=" flex gap-5">
-              <Dropdown type="all" onChange={handleGradeChange} />
-              <Dropdown type="class" onChange={handleClassChange} />
+              <Dropdown
+                type="all"
+                onChange={handleGradeChange}
+                homeRoom={true}
+              />
+              <Dropdown
+                type="class"
+                onChange={handleClassChange}
+                homeRoom={true}
+              />
             </div>
           )}
         </>
