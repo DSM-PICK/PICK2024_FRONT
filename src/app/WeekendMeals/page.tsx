@@ -131,8 +131,16 @@ const WeekendMeals: NextPage = () => {
             전체 학생 보기
           </Button>
           <div className=" flex gap-5">
-            <Dropdown type="grade" onChange={handleGradeChange} />
-            <Dropdown type="class" onChange={handleClassChange} />
+            <Dropdown
+              type="grade"
+              onChange={handleGradeChange}
+              homeRoom={true}
+            />
+            <Dropdown
+              type="class"
+              onChange={handleClassChange}
+              homeRoom={true}
+            />
           </div>
         </>
       }

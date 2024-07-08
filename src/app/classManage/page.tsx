@@ -29,12 +29,8 @@ const ClassManage: React.FC = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [data, setData] = useState<StudentData>();
-  const {
-    selectedStudents,
-    selectedStudentNames,
-    modifiedStudents,
-    handleManageListClick,
-  } = useManageListSelection();
+  const { selectedStudentNames, modifiedStudents, handleManageListClick } =
+    useManageListSelection();
   const { mutate: getStudentDataMutate } = GetStudentData();
   const { mutate: changestatusMutate } = ChangeStatus();
 
@@ -147,8 +143,16 @@ const ClassManage: React.FC = () => {
             </Button>
           )}
           <div className="flex gap-5">
-            <Dropdown type="grade" onChange={handleGradeChange} />
-            <Dropdown type="class" onChange={handleClassChange} />
+            <Dropdown
+              type="grade"
+              onChange={handleGradeChange}
+              homeRoom={true}
+            />
+            <Dropdown
+              type="class"
+              onChange={handleClassChange}
+              homeRoom={true}
+            />
           </div>
         </>
       }

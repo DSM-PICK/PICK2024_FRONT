@@ -6,9 +6,10 @@ import downarrow from "@/assets/img/Icon/downarrow.svg";
 interface DropProps {
   type: "floor" | "grade" | "class" | "club" | "all";
   onChange?: (selectedOption: any, type: string) => void;
+  homeRoom?: boolean;
 }
 
-const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
+const Dropdown: React.FC<DropProps> = ({ type, onChange, homeRoom }) => {
   const [selectedGradeOption, setSelectedGradeOption] = useState<number>(1);
   const [selectedClassOption, setSelectedClassOption] = useState<number>(1);
   const [selectedFloorOption, setSelectedFloorOption] = useState<number>(5);
@@ -23,15 +24,17 @@ const Dropdown: React.FC<DropProps> = ({ type, onChange }) => {
   };
 
   useEffect(() => {
-    const grade = parseInt(localStorage.getItem("grade") || "1", 10);
-    const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
-    const setgrade = grade === 0 ? 1 : grade;
-    const setclass_num = class_num === 0 ? 1 : class_num;
-    if (type === "all") {
-      setSelectedAllOption(setgrade);
+    if (homeRoom) {
+      const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+      const class_num = parseInt(localStorage.getItem("class_num") || "1", 10);
+      const setgrade = grade === 0 ? 1 : grade;
+      const setclass_num = class_num === 0 ? 1 : class_num;
+      if (type === "all") {
+        setSelectedAllOption(setgrade);
+      }
+      setSelectedGradeOption(setgrade);
+      setSelectedClassOption(setclass_num);
     }
-    setSelectedGradeOption(setgrade);
-    setSelectedClassOption(setclass_num);
 
     const handleClickOutside = (event: MouseEvent) => {
       if (
