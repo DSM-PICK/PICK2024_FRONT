@@ -6,9 +6,10 @@ interface OutProps {
   student: string;
   returnTime: string;
   id: string;
+  reason: string;
 }
 
-const Out: React.FC<OutProps> = ({ student, returnTime, id }) => {
+const Out: React.FC<OutProps> = ({ student, returnTime, id, reason }) => {
   return (
     <>
       <div className="rounded-lg flex justify-between items-center bg-white py-5 px-4 w-120 border hover:border-primary-400">

@@ -13,6 +13,7 @@ interface applicationOK {
   grade: number;
   class_num: number;
   num: number;
+  reason: string;
 }
 
 interface OutListData {
@@ -126,14 +127,19 @@ export const ReturnSchool = () => {
   });
 };
 
-export const OutListProp = () => {
+export const FloorOutList = () => {
   const { handleError } = apiError();
-  return useQuery<applicationOK[]>({
-    queryKey: ["outListProp"],
-    queryFn: async () => {
+  return useMutation<
+    applicationOK[],
+    Error,
+    { floor: number; status: "QUIET" | "NO" | "OK" }
+  >({
+    mutationFn: async (param) => {
       try {
-        const response = await instance.get(`/application/non-return`);
-        return response.data;
+        const { data } = await instance.get(
+          `application/floor?floor=${param.floor}&status=${param.status}`
+        );
+        return data;
       } catch (error) {
         handleError(error);
       }

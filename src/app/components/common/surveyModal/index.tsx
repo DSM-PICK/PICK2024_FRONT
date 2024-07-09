@@ -27,15 +27,15 @@ const SurveyModal = ({ onClick }: SurveyProp) => {
             좀 더 좋은 PiCK으로 업데이트를 위해 만족도 조사를 하려고 합니다.
             <br />
             많은 참여 부탁드립니다
+            <a
+              href="https://forms.gle/fAQ9yoNTyQvdY4q59"
+              className="text-heading6-M select-none underline text-primary-400"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              만족도 조사하기
+            </a>
           </p>
-          <a
-            href="https://forms.gle/fAQ9yoNTyQvdY4q59"
-            className="text-heading6-M select-none underline text-primary-400"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            만족도 조사하기
-          </a>
         </div>
         <div className="flex items-center gap-1 mt-8 justify-end">
           <div>
