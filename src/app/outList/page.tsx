@@ -2,14 +2,14 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import DoubleTab from "../components/common/tab/page";
-import Button from "../components/common/Button";
 import { getFullToday } from "@/utils/date";
 import ReturnHome from "../components/common/list/returnHome/page";
 import Out from "../components/common/list/out/page";
 import { useState, useEffect } from "react";
-import { OutListProp, ReturnHomeList } from "@/apis/outList/list";
+import { FloorOutList, ReturnHomeList } from "@/apis/outList/list";
 import { getStudentString } from "@/utils/until";
 import { BackGround } from "../components/common/background";
+import Dropdown from "../components/common/dropdown";
 
 interface earlyreturnOK {
   id: string;
@@ -28,30 +28,42 @@ interface applicationOK {
   grade: number;
   class_num: number;
   num: number;
+  reason: string;
 }
 
 const OutList = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [applicationList, setApplicationList] = useState<applicationOK[]>([]);
   const [earlyreturnlist, setEarlyreturnList] = useState<earlyreturnOK[]>([]);
+  const [selectedFloor, setSelectedFloor] = useState<number>(5);
+
   const router = useRouter();
 
-  const { data: outList } = OutListProp();
+  const { mutate: floorList } = FloorOutList();
   const { data: home } = ReturnHomeList();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
   };
 
-  const reason = () => {
-    router.push(`/outList/reason`);
+  const handleFloorChange = (selectedOption: number) => {
+    setSelectedFloor(selectedOption);
+  };
+
+  const Get = async () => {
+    floorList(
+      { floor: selectedFloor, status: "OK" },
+      {
+        onSuccess: (data) => {
+          setApplicationList(data);
+        },
+      }
+    );
   };
 
   useEffect(() => {
-    if (outList) {
-      setApplicationList(outList);
-    }
-  }, [outList]);
+    Get();
+  }, [selectedFloor]);
 
   useEffect(() => {
     if (home) {
@@ -71,9 +83,7 @@ const OutList = () => {
             secondChildren="조기귀가"
             onClick={onClickTab}
           />
-          <Button colorType="ghost" buttonSize="small" onClick={reason}>
-            사유보기
-          </Button>
+          <Dropdown type="floor" onChange={handleFloorChange} />
         </>
       }
     >
@@ -85,6 +95,7 @@ const OutList = () => {
               key={index}
               returnTime={data.end_time}
               student={getStudentString(data)}
+              reason={data.reason}
             />
           ))}
         </div>
