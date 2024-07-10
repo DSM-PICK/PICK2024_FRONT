@@ -41,7 +41,6 @@ const PostSchedule: React.FC<ModalProps> = ({ onCancel, initialDate }) => {
         event_name: scheduleData.event_name,
         date: formattedDate,
       };
-      setScheduleData(newScheduleData);
       await addScheduleMutate(newScheduleData, {
         onSuccess: () => {
           location.reload();

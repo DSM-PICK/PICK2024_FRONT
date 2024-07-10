@@ -35,7 +35,7 @@ const SelfStudyCheck = () => {
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: ChangeMutate } = CheckStatus();
   const { mutate: CheckMutate } = ClassStudentCheck();
-  const { selectedStudents, selectedStudentName, handleAcceptListClick } =
+  const { selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
 
   const handleSaveModalConfirm = async () => {
