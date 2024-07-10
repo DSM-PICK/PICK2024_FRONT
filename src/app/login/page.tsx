@@ -1,6 +1,5 @@
 "use client";
 import { NextPage } from "next";
-import { QueryClient } from "react-query";
 import Input from "../components/common/input";
 import Button from "../components/common/Button";
 import Picklogo from "../../assets/img/Icon/pickname.svg";
@@ -28,6 +27,7 @@ const Login: NextPage = () => {
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
   };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onClickBtn();

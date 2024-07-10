@@ -30,7 +30,7 @@ const WriteNotice = () => {
   const post = async () => {
     if (ColorType() === "primary") {
       try {
-        const result = await uploadNotice(
+        await uploadNotice(
           { title, content, grade: [selectedGrade] },
           {
             onSuccess: () => {

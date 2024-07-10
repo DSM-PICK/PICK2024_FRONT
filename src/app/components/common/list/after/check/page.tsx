@@ -58,7 +58,9 @@ const CheckList: React.FC<State> = ({
 
   const handleChange = (index: number, newState: string) => {
     const newStatusList = [...statusList];
-    newStatusList[index] = newState;
+    for (let i = index; i < newStatusList.length; i++) {
+      newStatusList[index] = newState;
+    }
     setStatusList(newStatusList);
   };
 
