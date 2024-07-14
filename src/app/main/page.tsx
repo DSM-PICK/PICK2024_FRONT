@@ -147,7 +147,7 @@ const Main = () => {
                   href="outList"
                   img={outStudent}
                   number={data?.out}
-                  buttonChildren="외출 중인 학생 보기"
+                  buttonChildren="외출/조기귀가 중인 학생 보기"
                   color="primary"
                   contentChildren="현재 외출중인 "
                 />
