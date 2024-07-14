@@ -39,7 +39,7 @@ const Login: NextPage = () => {
 
   const onClickBtn = async () => {
     try {
-      const result = await loginMutate(data, {
+      await loginMutate(data, {
         onSuccess: (res) => {
           const accessToken = res.access_token;
           const refreshToken = res.refresh_token;
