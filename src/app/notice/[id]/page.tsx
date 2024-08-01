@@ -14,7 +14,6 @@ interface DetailNoticeType {
   content: string;
   create_at: string;
   teacher: string;
-  grade: number[];
 }
 
 const DetailNotice: NextPage = () => {
@@ -40,7 +39,7 @@ const DetailNotice: NextPage = () => {
 
   const deleteNotice = async () => {
     try {
-      const result = await delelteMutate(
+      await delelteMutate(
         { id: id },
         {
           onSuccess: () => {
@@ -86,14 +85,6 @@ const DetailNotice: NextPage = () => {
               <div className=" flex text-primary-200 text-Button-L gap-2 ">
                 작성자
                 <div className=" text-neutral-400">{data?.teacher} 선생님</div>
-              </div>
-              <div className=" flex text-Button-L gap-2">
-                학년
-                <div className=" text-neutral-400">
-                  {data?.grade.map((grade, index) => (
-                    <span key={index}>{`${Grade([grade])}학년 `}</span>
-                  ))}
-                </div>
               </div>
             </div>
             <div className=" flex flex-col gap-7">

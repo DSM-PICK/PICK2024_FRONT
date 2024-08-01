@@ -13,7 +13,6 @@ interface GetnoticeList {
   title: string;
   create_at: string;
   teacher: string;
-  grade: number[];
 }
 
 const Notice = () => {
@@ -46,7 +45,6 @@ const Notice = () => {
         <div className=" flex text-sub-title2-M px-14 justify-between">
           <div className=" text-sub-title2-M">제목</div>
           <div className=" flex gap-20">
-            <div>학년</div>
             <div>작성자</div>
             <div>작성일</div>
           </div>
@@ -59,7 +57,6 @@ const Notice = () => {
               id={item.id}
               createAt={item.create_at}
               teacher={`${item.teacher} 선생님`}
-              grade={`${Grade(item.grade)}학년`}
             />
           ))}
         </div>

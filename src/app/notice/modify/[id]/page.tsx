@@ -19,7 +19,6 @@ interface DetailNoticeType {
   content: string;
   create_at: string;
   teacher: string;
-  grade: number[];
 }
 
 const ModifyNotice = () => {
@@ -27,7 +26,6 @@ const ModifyNotice = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
-  const { mutate: DetailDataMutate } = DetailNoticeData();
   const [data, setData] = useState<DetailNoticeType>();
   const { mutate: modifyMutate } = ModifyNoticeData();
 
@@ -36,31 +34,13 @@ const ModifyNotice = () => {
   const idParam = param.get("id");
 
   const id = idParam ? idParam : "";
+  const { data: DetailDataMutate } = DetailNoticeData(id);
 
   useEffect(() => {
-    getData();
+    setData(data);
+    setTitle(DetailDataMutate?.title || "");
+    setContent(DetailDataMutate?.content || "");
   }, []);
-
-  const getData = async () => {
-    try {
-      const result = await DetailDataMutate(
-        { id: id },
-        {
-          onSuccess: (data) => {
-            setData(data);
-            setTitle(data.title);
-            setContent(data.content);
-            setSelectedGrade(data.grade[0]);
-          },
-          onError: (error) => {
-            console.log(`${error.message} : 에러가 발생했습니다`);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleTitleChange = ({ text, name }: ChangeProps) => {
     setTitle(text);
@@ -76,11 +56,10 @@ const ModifyNotice = () => {
 
   const handleSubmit = async () => {
     try {
-      const result = await modifyMutate({
+      await modifyMutate({
         id: id,
         title: title,
         content: content,
-        grade: [selectedGrade],
       });
       alert("공지가 수정되었습니다");
       router.back();
@@ -115,10 +94,6 @@ const ModifyNotice = () => {
                     width="full"
                     name="title"
                   />
-                </div>
-                <div>
-                  학년
-                  <SelectGrade onSelect={handleGradeSelect} />
                 </div>
               </div>
             </div>
