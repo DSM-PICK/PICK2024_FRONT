@@ -19,7 +19,6 @@ const WriteNotice = () => {
   const { mutate: uploadNotice } = PostNotice();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [selectedGrade, setSelectedGrade] = useState<number>(1);
 
   const ColorType = () => {
     if (title === "" || content === "") {
@@ -30,8 +29,8 @@ const WriteNotice = () => {
   const post = async () => {
     if (ColorType() === "primary") {
       try {
-        const result = await uploadNotice(
-          { title, content, grade: [selectedGrade] },
+        await uploadNotice(
+          { title, content },
           {
             onSuccess: () => {
               nav.push("/notice");
@@ -82,10 +81,6 @@ const WriteNotice = () => {
                     width="full"
                     name="title"
                   />
-                </div>
-                <div>
-                  학년
-                  <SelectGrade onSelect={setSelectedGrade} />
                 </div>
               </div>
             </div>

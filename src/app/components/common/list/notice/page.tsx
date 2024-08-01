@@ -6,17 +6,10 @@ interface NoticeProp {
   title: string;
   teacher: string;
   createAt: string;
-  grade: string;
   id: string;
 }
 
-const NoticeList: React.FC<NoticeProp> = ({
-  title,
-  teacher,
-  createAt,
-  grade,
-  id,
-}) => {
+const NoticeList: React.FC<NoticeProp> = ({ title, teacher, createAt, id }) => {
   const router = useRouter();
 
   const MoveDetail = () => {
@@ -31,8 +24,7 @@ const NoticeList: React.FC<NoticeProp> = ({
       <div className=" max-w-96 overflow-hidden whitespace-nowrap text-overflow-ellipsis">
         {title}
       </div>
-      <div className=" flex justify-between w-76">
-        <div>{grade}</div>
+      <div className=" flex gap-7">
         <div>{teacher}</div>
         <div>{createAt}</div>
       </div>

@@ -1,6 +1,5 @@
 "use client";
 import { NextPage } from "next";
-import { QueryClient } from "react-query";
 import Input from "../components/common/input";
 import Button from "../components/common/Button";
 import Picklogo from "../../assets/img/Icon/pickname.svg";
@@ -28,6 +27,7 @@ const Login: NextPage = () => {
   const handleChange = ({ text, name }: ChangeProps) => {
     setData({ ...data, [name]: text });
   };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       onClickBtn();
@@ -39,7 +39,7 @@ const Login: NextPage = () => {
 
   const onClickBtn = async () => {
     try {
-      const result = await loginMutate(data, {
+      await loginMutate(data, {
         onSuccess: (res) => {
           const accessToken = res.access_token;
           const refreshToken = res.refresh_token;

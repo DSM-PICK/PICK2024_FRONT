@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 import { cookie } from "@/utils/auth";
-import { useRouter } from "next/navigation";
 
 const BASEURL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -38,40 +37,30 @@ refreshInstance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError<AxiosError>) => {
+  async (error: AxiosError) => {
     if (axios.isAxiosError(error) && error.response) {
-      const { status } = error.response.data;
+      const { status } = error.response;
       if (status === 401) {
         const refreshToken = cookie.get("refresh_token");
         if (refreshToken) {
           try {
-            const res = await axios.put(
-              `${BASEURL}/refresh`,
-              {},
-              {
+            await axios
+              .put(`${BASEURL}/admin/refresh`, null, {
                 headers: {
-                  "X-Refresh-Token": `Bearer ${refreshToken}`,
+                  "X-Refresh-Token": `${refreshToken}`,
                 },
-              }
-            );
-            const { data } = res.data;
-            const accessToken = data.accessToken;
-            cookie.set("access_token", accessToken);
-            if (error.config) {
-              error.config.headers.Authorization = `Bearer ${accessToken}`;
-              return axios.request(error.config);
-            }
-          } catch {
-            throw error;
+              })
+              .then((response) => {
+                const data = response.data;
+                cookie.set("access_token", data.access_token);
+                cookie.set("refresh_token", data.refresh_token);
+              });
+          } catch (refreshError) {
+            return Promise.reject(refreshError);
           }
-        } else {
-          throw error;
         }
-      } else {
-        throw error;
       }
-    } else {
-      throw error;
     }
+    return Promise.reject(error);
   }
 );

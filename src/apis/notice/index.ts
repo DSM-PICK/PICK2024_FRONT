@@ -7,7 +7,6 @@ interface Getnotice {
   title: string;
   create_at: string;
   teacher: string;
-  grade: number[];
 }
 
 interface DetailNoticeType {
@@ -15,20 +14,17 @@ interface DetailNoticeType {
   content: string;
   create_at: string;
   teacher: string;
-  grade: number[];
 }
 
 interface post {
   title: string;
   content: string;
-  grade: number[];
 }
 
 interface ModifyProp {
   id: string;
   title: string;
   content: string;
-  grade: number[];
 }
 
 export const GetNoticeList = () => {
