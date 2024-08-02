@@ -42,22 +42,25 @@ instance.interceptors.response.use(
       const { status } = error.response;
       if (status === 401) {
         const refreshToken = cookie.get("refresh_token");
-        if (refreshToken) {
-          try {
-            await axios
-              .put(`${BASEURL}/admin/refresh`, null, {
-                headers: {
-                  "X-Refresh-Token": `${refreshToken}`,
-                },
-              })
-              .then((response) => {
-                const data = response.data;
-                cookie.set("access_token", data.access_token);
-                cookie.set("refresh_token", data.refresh_token);
-              });
-          } catch (refreshError) {
-            return Promise.reject(refreshError);
+        try {
+          await axios
+            .put(`${BASEURL}/admin/refresh`, null, {
+              headers: {
+                "X-Refresh-Token": `${refreshToken}`,
+              },
+            })
+            .then((response) => {
+              const data = response.data;
+              cookie.set("access_token", data.access_token);
+              cookie.set("refresh_token", data.refresh_token);
+            })
+            .catch(() => {
+              window.location.href = "login";
+            });
+          {
           }
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
         }
       }
     }
