@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../components/common/input";
 import TextArea from "../components/common/input/textarea";
 import BugReportImg from "@/assets/img/Icon/bugreport.svg";
@@ -8,59 +8,55 @@ import Button from "../components/common/Button";
 import TopBack from "../components/common/background/top";
 import { BugImg, BugPost } from "@/apis/bug";
 import { useRouter } from "next/navigation";
+import ImgModal from "../components/common/modal/imgModal";
 
 interface BugProp {
   title: string;
   content: string;
-  file_name: string;
+  file_name: string[];
 }
 
 const BugReport = () => {
   const router = useRouter();
 
-  const [filePreview, setFilePreview] = useState<string>("");
-  const [filename, setFilename] = useState<string>("");
+  const [image, setImage] = useState<string[]>([]);
   const [data, setData] = useState<BugProp>({
     title: "",
     content: "",
-    file_name: "",
+    file_name: [],
   });
 
   const handleContent = ({ text, name }: { text: string; name: string }) => {
-    setData({ ...data, [name]: text });
+    setData((prevData) => ({
+      ...prevData,
+      [name]: text,
+    }));
   };
+
+  const [modal, setModal] = useState<boolean>(false);
 
   const { mutate: BugImgMutate } = BugImg();
   const { mutate: BugPostMutate } = BugPost();
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.currentTarget.files?.[0];
-    if (selectedFile) {
-      setFilePreview(URL.createObjectURL(selectedFile));
-      try {
-        await BugImgMutate(
-          { file: selectedFile },
-          {
-            onSuccess: (data) => {
-              setFilename(data);
-            },
-            onError: (error) => {
-              alert(error.message);
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+  const handleImgUpload = async (images: File[]) => {
+    try {
+      const response = await BugImgMutate(
+        { file: images },
+        {
+          onSuccess: (data) => {
+            setData((prevData) => ({
+              ...prevData,
+              file_name: data,
+            }));
+          },
+        }
+      );
+
+      console.log("Uploaded:", response);
+    } catch (error) {
+      console.error("Upload failed:", error);
     }
   };
-
-  useEffect(() => {
-    setData({
-      ...data,
-      file_name: filename,
-    });
-  }, [filename]);
 
   const Bug = async () => {
     await BugPostMutate(data, {
@@ -69,9 +65,9 @@ const BugReport = () => {
         setData({
           title: "",
           content: "",
-          file_name: filename ? filename : "",
+          file_name: [],
         });
-        setFilePreview("");
+        setImage([]);
         router.push("/main");
       },
       onError: () => {
@@ -111,29 +107,35 @@ const BugReport = () => {
             width="full"
           />
         </div>
-        <div className=" mb-11">
-          {filePreview ? (
-            <img src={filePreview} alt="Bug preview" />
-          ) : (
-            <>
-              <p>버그 사진을 첨부해주세요</p>
-              <label
-                htmlFor="file-input"
-                className="cursor-pointer flex flex-col p-8 justify-center items-center w-full h-max rounded-md bg-neutral-900 text-gray-500 mb-9"
-              >
-                <img src={BugReportImg.src} alt="bug report icon" />
-                <p>사진을 첨부해주세요</p>
-              </label>
-              <input
-                id="file-input"
-                type="file"
-                className="hidden"
-                onChange={handleFileChange}
-                accept="image/*"
-              />
-            </>
-          )}
+        <div className="mb-11">
+          <>
+            <p>버그 사진을 첨부해주세요</p>
+            <label
+              htmlFor="file-input"
+              className="cursor-pointer flex flex-col p-8 justify-center items-center w-full h-max rounded-md bg-neutral-900 text-gray-500 mb-9"
+              onClick={() => {
+                setModal(true);
+              }}
+            >
+              <img src={BugReportImg.src} alt="bug report icon" />
+              <p>사진을 첨부해주세요</p>
+            </label>
+            <div
+              id="file-input"
+              className="hidden"
+              onChange={() => {
+                setModal(!modal);
+              }}
+            />
+          </>
         </div>
+        <ImgModal
+          onClick={handleImgUpload}
+          isOpen={modal}
+          onClose={() => {
+            setModal(!modal);
+          }}
+        />
       </div>
     </TopBack>
   );

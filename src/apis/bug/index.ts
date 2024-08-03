@@ -5,22 +5,23 @@ import ApiError from "@/hook/apiError";
 interface BugProp {
   title: string;
   content: string;
-  file_name: string;
+  file_name: string[];
 }
-
-const router = `/bug`;
 
 export const BugImg = () => {
   const { handleError } = ApiError();
-  return useMutation<string, Error, { file: File }>({
+  return useMutation<string[], Error, { file: File[] }>({
     mutationFn: async (param) => {
       try {
         const formData = new FormData();
-        formData.append("file", param.file);
+        param.file.forEach((file) => {
+          formData.append("file", file);
+        });
         const result = await instance.post(`/bug/upload`, formData);
         return result.data;
       } catch (error) {
         handleError(error);
+        throw error;
       }
     },
   });
@@ -32,9 +33,8 @@ export const BugPost = () => {
     mutationFn: async (param) => {
       try {
         await instance.post(`/bug/message`, {
-          title: param.title,
-          content: param.content,
-          file_name: param.file_name,
+          ...param,
+          model: "WEB",
         });
       } catch (error) {
         handleError(error);
