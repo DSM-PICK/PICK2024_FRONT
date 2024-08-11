@@ -65,6 +65,7 @@ const Login: NextPage = () => {
   useEffect(() => {
     cookie.remove("access_token");
     cookie.remove("refresh_token");
+    localStorage.clear();
   }, []);
 
   const BtnColor = () => {

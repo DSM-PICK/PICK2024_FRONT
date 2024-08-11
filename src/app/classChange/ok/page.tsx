@@ -126,7 +126,7 @@ const ClassChangeOk = () => {
           ? changelist?.map((item, index) => (
               <ChangeClass
                 key={index}
-                prevClass={`${item.grade}-${item.class_num}`}
+                prevClass={item.move}
                 nextClass={item.classroom_name}
                 student={getStudentString(item)}
               />
@@ -134,7 +134,7 @@ const ClassChangeOk = () => {
           : floorData?.map((item, index) => (
               <ChangeClass
                 key={index}
-                prevClass={`${item.grade}-${item.class_num}`}
+                prevClass={item.move}
                 nextClass={item.classroom_name}
                 student={getStudentString(item)}
               />

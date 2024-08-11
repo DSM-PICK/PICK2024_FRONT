@@ -6,19 +6,16 @@ import { getFullToday } from "@/utils/date";
 import ReturnHome from "../components/common/list/returnHome/page";
 import Out from "../components/common/list/out/page";
 import { useState, useEffect } from "react";
-import { FloorOutList, ReturnHomeList } from "@/apis/outList/list";
+import {
+  FloorOutList,
+  ReturnHomeList,
+  ReturnSchool,
+} from "@/apis/outList/list";
 import { getStudentString } from "@/utils/until";
 import { BackGround } from "../components/common/background";
 import Dropdown from "../components/common/dropdown";
-
-interface earlyreturnOK {
-  id: string;
-  username: string;
-  start_time: string;
-  grade: number;
-  class_num: number;
-  num: number;
-}
+import Button from "../components/common/Button";
+import useAcceptListSelection from "@/hook/hook";
 
 interface applicationOK {
   id: string;
@@ -34,13 +31,15 @@ interface applicationOK {
 const OutList = () => {
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
   const [applicationList, setApplicationList] = useState<applicationOK[]>([]);
-  const [earlyreturnlist, setEarlyreturnList] = useState<earlyreturnOK[]>([]);
   const [selectedFloor, setSelectedFloor] = useState<number>(5);
+  const { handleAcceptListClick, selectedStudents, selectedStudentName } =
+    useAcceptListSelection();
 
   const router = useRouter();
 
   const { mutate: floorList } = FloorOutList();
   const { data: home } = ReturnHomeList();
+  const { mutate: returnSchoolMutate } = ReturnSchool();
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
@@ -61,15 +60,18 @@ const OutList = () => {
     );
   };
 
+  const returnStudent = () => {
+    returnSchoolMutate(selectedStudents, {
+      onSuccess: () => {
+        alert(`${selectedStudentName} 복귀 처리 되었습니다`);
+        Get();
+      },
+    });
+  };
+
   useEffect(() => {
     Get();
   }, [selectedFloor]);
-
-  useEffect(() => {
-    if (home) {
-      setEarlyreturnList(home);
-    }
-  }, [home]);
 
   return (
     <BackGround
@@ -84,6 +86,13 @@ const OutList = () => {
             onClick={onClickTab}
           />
           <Dropdown type="floor" onChange={handleFloorChange} />
+          <Button
+            colorType="primary"
+            buttonSize="small"
+            onClick={returnStudent}
+          >
+            복귀
+          </Button>
         </>
       }
     >
@@ -91,6 +100,7 @@ const OutList = () => {
         <div className="flex flex-wrap gap-5 justify-between">
           {applicationList?.map((data, index) => (
             <Out
+              onClick={() => handleAcceptListClick(data.id, data.username)}
               id={data.id}
               key={index}
               returnTime={data.end_time}
@@ -101,7 +111,7 @@ const OutList = () => {
         </div>
       ) : (
         <div className="flex flex-wrap gap-5 justify-between">
-          {earlyreturnlist?.map((data, index) => (
+          {home?.map((data, index) => (
             <ReturnHome key={index} student={getStudentString(data)} />
           ))}
         </div>
