@@ -3,7 +3,7 @@ import { instance } from "..";
 import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 
 interface UuidProp {
-  id: string;
+  id: string[];
 }
 interface applicationOK {
   id: string;
@@ -113,13 +113,14 @@ export const GetPreviousList = () => {
 
 export const ReturnSchool = () => {
   const { handleError } = apiError();
-  return useMutation<Error, void, UuidProp>({
-    mutationFn: async (param: UuidProp) => {
+  return useMutation<void, void, string[]>({
+    mutationFn: async (...param) => {
       try {
-        const response = await instance.patch(
-          `/application/change/${param.id}`
-        );
-        return response.data;
+        await instance.patch(`/application/return`, ...param, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       } catch (error) {
         handleError(error);
       }
