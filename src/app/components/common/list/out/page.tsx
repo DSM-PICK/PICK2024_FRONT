@@ -7,15 +7,25 @@ interface OutProps {
   returnTime: string;
   id: string;
   reason: string;
+  onClick: () => void;
 }
 
-const Out: React.FC<OutProps> = ({ student, returnTime, id, reason }) => {
+const Out: React.FC<OutProps> = ({ student, returnTime, reason, onClick }) => {
   const [showReason, setShowReason] = useState<boolean>(false);
+  const [click, setClick] = useState<boolean>(false);
+
+  const handleClickStudent = () => {
+    setShowReason(!showReason);
+    setClick(!click);
+    onClick();
+  };
 
   return (
     <div
-      className="group rounded-lg flex flex-col justify-between bg-white py-5 px-4 w-120 border hover:border-primary-400"
-      onClick={() => setShowReason(!showReason)}
+      className={`group rounded-lg flex flex-col justify-between bg-white py-5 px-4 w-120 border ${
+        click ? "border-primary-400" : "hover:border-primary-400"
+      }`}
+      onClick={handleClickStudent}
     >
       <div className="flex items-center gap-3">
         <div className="text-Button-L">{student}</div>
@@ -24,6 +34,7 @@ const Out: React.FC<OutProps> = ({ student, returnTime, id, reason }) => {
         </div>
       </div>
       {showReason || <p className="hidden group-hover:block">{reason}</p>}
+      {click && <p>{reason}</p>}
     </div>
   );
 };
