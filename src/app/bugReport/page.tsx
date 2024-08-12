@@ -19,7 +19,6 @@ interface BugProp {
 const BugReport = () => {
   const router = useRouter();
 
-  const [image, setImage] = useState<string[]>([]);
   const [data, setData] = useState<BugProp>({
     title: "",
     content: "",
@@ -67,7 +66,6 @@ const BugReport = () => {
           content: "",
           file_name: [],
         });
-        setImage([]);
         router.push("/main");
       },
       onError: () => {

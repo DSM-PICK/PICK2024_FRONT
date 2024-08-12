@@ -108,14 +108,12 @@ const ImgModal: React.FC<ModalProps> = ({ isOpen, onClose, onClick }) => {
           </span>
           <div className="absolute left-0 top-1/2 w-full h-px bg-gray-300 transform -translate-y-1/2"></div>
         </div>
-        <div
-          ref={pasteDivRef}
+        <input
           contentEditable="true"
           onPaste={handlePaste}
           className="border border-gray-300 rounded-lg w-full p-2 mb-4"
-        >
-          이미지를 붙여넣기 해주세요.
-        </div>
+          placeholder="이미지를 붙여넣기 해주세요"
+        />
         <div className="my-4 w-full grid grid-cols-3 gap-2">
           {images.map((image, index) => (
             <div key={index} className="relative">
