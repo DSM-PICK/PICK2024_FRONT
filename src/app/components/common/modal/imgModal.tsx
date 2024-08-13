@@ -66,12 +66,10 @@ const ImgModal: React.FC<ModalProps> = ({ isOpen, onClose, onClick }) => {
 
   const onCancle = () => {
     onClose();
-    setImages([]);
   };
 
   const AddImg = () => {
     onClick(images);
-    setImages([]);
     onClose();
   };
 
