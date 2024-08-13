@@ -9,7 +9,6 @@ interface BugProp {
 }
 
 export const BugImg = () => {
-  const { handleError } = ApiError();
   return useMutation<string[], Error, { file: File[] }>({
     mutationFn: async (param) => {
       try {
@@ -17,10 +16,10 @@ export const BugImg = () => {
         param.file.forEach((file) => {
           formData.append("file", file);
         });
-        const result = await instance.post(`/bug/upload`, formData);
-        return result.data;
+        const { data } = await instance.post(`/bug/upload`, formData);
+        return data;
       } catch (error) {
-        handleError(error);
+        alert("이미지 용량이 너무 큽니다");
         throw error;
       }
     },

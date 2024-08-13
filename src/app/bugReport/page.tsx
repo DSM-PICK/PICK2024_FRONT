@@ -19,7 +19,6 @@ interface BugProp {
 const BugReport = () => {
   const router = useRouter();
 
-  const [image, setImage] = useState<string[]>([]);
   const [data, setData] = useState<BugProp>({
     title: "",
     content: "",
@@ -67,7 +66,6 @@ const BugReport = () => {
           content: "",
           file_name: [],
         });
-        setImage([]);
         router.push("/main");
       },
       onError: () => {
@@ -108,26 +106,56 @@ const BugReport = () => {
           />
         </div>
         <div className="mb-11">
-          <>
-            <p>버그 사진을 첨부해주세요</p>
-            <label
-              htmlFor="file-input"
-              className="cursor-pointer flex flex-col p-8 justify-center items-center w-full h-max rounded-md bg-neutral-900 text-gray-500 mb-9"
-              onClick={() => {
-                setModal(true);
-              }}
-            >
-              <img src={BugReportImg.src} alt="bug report icon" />
-              <p>사진을 첨부해주세요</p>
-            </label>
-            <div
-              id="file-input"
-              className="hidden"
-              onChange={() => {
-                setModal(!modal);
-              }}
-            />
-          </>
+          {data.file_name.length === 0 ? (
+            <>
+              <p>버그 사진을 첨부해주세요</p>
+              <label
+                htmlFor="file-input"
+                className="cursor-pointer flex flex-col p-8 justify-center items-center w-full h-max rounded-md bg-neutral-900 text-gray-500 mb-9"
+                onClick={() => {
+                  setModal(true);
+                }}
+              >
+                <img src={BugReportImg.src} alt="bug report icon" />
+                <p>사진을 첨부해주세요</p>
+              </label>
+              <div
+                id="file-input"
+                className="hidden"
+                onChange={() => {
+                  setModal(!modal);
+                }}
+              />
+            </>
+          ) : (
+            <div className=" flex gap-1">
+              {data.file_name.map((item, index) => (
+                <img
+                  key={index}
+                  src={`${process.env.NEXT_PUBLIC_FILE_APP}${item}`}
+                  width={200}
+                  height={200}
+                />
+              ))}
+              <label
+                htmlFor="file-input"
+                className="cursor-pointer flex flex-col p-8 justify-center items-center w-full h-max rounded-md bg-neutral-900 text-gray-500 mb-9"
+                onClick={() => {
+                  setModal(true);
+                }}
+              >
+                <img src={BugReportImg.src} alt="bug report icon" />
+                <p>사진을 첨부해주세요</p>
+              </label>
+              <div
+                id="file-input"
+                className="hidden"
+                onChange={() => {
+                  setModal(!modal);
+                }}
+              />
+            </div>
+          )}
         </div>
         <ImgModal
           onClick={handleImgUpload}
