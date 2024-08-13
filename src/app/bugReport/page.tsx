@@ -129,8 +129,9 @@ const BugReport = () => {
             </>
           ) : (
             <div className=" flex gap-1">
-              {data.file_name.map((item) => (
+              {data.file_name.map((item, index) => (
                 <img
+                  key={index}
                   src={`${process.env.NEXT_PUBLIC_FILE_APP}${item}`}
                   width={200}
                   height={200}
