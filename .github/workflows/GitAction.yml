@@ -21,5 +21,3 @@ jobs:
           environment: prod
           access_key: ${{ secrets.XQUAER_ACCESS_KEY }}
           github_token: ${{ secrets.PICK_WEB_ADMIN }}
-          buildargs: |
-            BASE_URL=${{ secrets.BASE_URL }}
