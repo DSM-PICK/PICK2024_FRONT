@@ -22,5 +22,5 @@ jobs:
           access_key: ${{ secrets.XQUAER_ACCESS_KEY }}
           github_token: ${{ secrets.PICK_WEB_ADMIN }}
           buildargs: |
-            BASE_URL=${{ secrets.STAG_BASE_URL }}
-            FILE_URL=${{ secrets.STAG_FILE_URL }}
+            NEXT_PUBLIC_API_KEY=${{ secrets.STAG_BASE_URL }}
+            NEXT_PUBLIC_FILE_APP=${{ secrets.STAG_FILE_URL }}
