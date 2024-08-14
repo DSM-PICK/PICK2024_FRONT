@@ -74,6 +74,13 @@ const BugReport = () => {
     });
   };
 
+  const handleRemoveImage = (index: number) => {
+    setData((prevData) => ({
+      ...prevData,
+      file_name: prevData.file_name.filter((_, i) => i !== index),
+    }));
+  };
+
   return (
     <TopBack
       linkChildren="버그 제보"
@@ -130,12 +137,20 @@ const BugReport = () => {
           ) : (
             <div className=" flex gap-1">
               {data.file_name.map((item, index) => (
-                <img
-                  key={index}
-                  src={`${process.env.NEXT_PUBLIC_FILE_APP}${item}`}
-                  width={200}
-                  height={200}
-                />
+                <div key={index} className="relative w-25 h-25 overflow-hidden">
+                  <img
+                    key={index}
+                    src={`${process.env.NEXT_PUBLIC_FILE_APP}${item}`}
+                    width={200}
+                    height={200}
+                  />
+                  <button
+                    onClick={() => handleRemoveImage(index)}
+                    className="absolute top-1 right-1 text-white bg-black bg-opacity-50 rounded-full px-2 py-1"
+                  >
+                    &times;
+                  </button>
+                </div>
               ))}
               <label
                 htmlFor="file-input"
