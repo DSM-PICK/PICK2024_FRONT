@@ -130,7 +130,6 @@ const SelfStudyCheck = () => {
         localStorage.removeItem(key);
       }
     });
-    Check();
   }, [selectedClass, selectedGrade]);
 
   const handleGradeChange = (selectedOption: number) => {

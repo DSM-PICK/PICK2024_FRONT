@@ -78,19 +78,16 @@ export const GetAllStudentMeal = () => {
   });
 };
 
-export const MealCheck = () => {
+export const MealCheck = (grade: number, class_num: number) => {
   const { handleError } = apiError();
-  return useMutation<
-    mealcheckProp[],
-    Error,
-    { grade: number; class_num: number }
-  >({
-    mutationFn: async (param) => {
+  return useQuery({
+    queryKey: ["MealCheck", grade, class_num],
+    queryFn: async () => {
       try {
-        const response = await instance.get(
-          `/weekend-meal/all?grade=${param.grade}&class_num=${param.class_num}`
+        const { data } = await instance.get<mealcheckProp[]>(
+          `/weekend-meal/all?grade=${grade}&class_num=${class_num}`
         );
-        return response.data;
+        return data;
       } catch (error) {
         handleError(error);
       }
@@ -98,19 +95,16 @@ export const MealCheck = () => {
   });
 };
 
-export const NotMealCheck = () => {
+export const NotMealCheck = (grade: number, class_num: number) => {
   const { handleError } = apiError();
-  return useMutation<
-    notCheckMeal[],
-    Error,
-    { grade: number; class_num: number }
-  >({
-    mutationFn: async (param) => {
+  return useQuery({
+    queryKey: ["NotMealCheck", grade, class_num],
+    queryFn: async () => {
       try {
-        const response = await instance.get(
-          `/weekend-meal/quit?grade=${param.grade}&class_num=${param.class_num}`
+        const { data } = await instance.get<notCheckMeal[]>(
+          `/weekend-meal/quit?grade=${grade}&class_num=${class_num}`
         );
-        return response.data;
+        return data;
       } catch (error) {
         handleError(error);
       }
