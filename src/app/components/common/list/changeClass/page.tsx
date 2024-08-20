@@ -36,7 +36,7 @@ const ChangeClass: React.FC<ChangeClassProps> = ({
         >
           <div className="text-Button-L text-neutral-50">{student}</div>
           <div className="flex gap-4 text-Button-L text-neutral-50">
-            <p className=" w-8">{prevClass}</p>
+            <p className=" w-28">{prevClass}</p>
             <Image src={nextArrow} alt="" />
             <p className="  w-28 flex justify-center">{nextClass}</p>
           </div>
