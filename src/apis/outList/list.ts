@@ -2,12 +2,10 @@ import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 
-interface UuidProp {
-  id: string[];
-}
 interface applicationOK {
   id: string;
   username: string;
+  user_id: string;
   start_time: string;
   end_time: string;
   grade: number;
@@ -55,7 +53,7 @@ interface ReturnHomeData {
 }
 
 interface earlyReturnHome {
-  id: string;
+  user_id: string;
   username: string;
   start_time: string;
   grade: number;

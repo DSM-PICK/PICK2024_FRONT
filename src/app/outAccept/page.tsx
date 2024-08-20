@@ -261,7 +261,7 @@ const OutAccept = () => {
             {data.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
-                  handleAcceptListClick(dataItem.id, dataItem.username)
+                  handleAcceptListClick(dataItem.user_id, dataItem.username)
                 }
                 key={index}
                 time={`${dataItem.start_time} ~`}

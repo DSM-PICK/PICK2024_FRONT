@@ -12,7 +12,7 @@ import Modal from "../components/common/modal/page";
 import useAcceptListSelection from "@/hook/hook";
 
 interface FloorClass {
-  id: string;
+  user_id: string;
   class_num: number;
   classroom_name: string;
   end_period: number;
@@ -154,7 +154,7 @@ const ClassChange = () => {
         <ChangeClass
           type="accept"
           key={index}
-          onClick={() => handleAcceptListClick(item.id, item.username)}
+          onClick={() => handleAcceptListClick(item.user_id, item.username)}
           prevClass={item.move}
           nextClass={`${item.classroom_name}`}
           student={getStudentString(item)}
