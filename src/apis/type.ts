@@ -70,7 +70,7 @@ export interface changeClass {
 }
 
 export interface FloorClass {
-  id: string;
+  user_id: string;
   class_num: number;
   classroom_name: string;
   end_period: number;

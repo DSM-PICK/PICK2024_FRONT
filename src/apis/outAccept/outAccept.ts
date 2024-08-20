@@ -57,6 +57,7 @@ export const useOutAccept = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.patch(`${param.type}/status`, {
+          type: param.type,
           status: param.status,
           ids: param.ids,
         });
