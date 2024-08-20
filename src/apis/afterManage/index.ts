@@ -6,7 +6,7 @@ import apiError from "@/hook/apiError";
 export const After = (param: Type) => {
   const { handleError } = apiError();
   return useQuery({
-    queryKey: ["After"],
+    queryKey: ["After", param],
     queryFn: async () => {
       try {
         await instance.post("after", {
@@ -116,7 +116,9 @@ export const GetClubList = (club: string) => {
     queryKey: ["GetClubList", club],
     queryFn: async () => {
       try {
-        const response = await instance.get(`/attendance/club?club=${club}`);
+        const response = await instance.get(
+          `/attendance/alltime/club?club=${club}`
+        );
         return response.data;
       } catch (error) {
         handleError(error);
