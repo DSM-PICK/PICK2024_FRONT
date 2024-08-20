@@ -25,7 +25,7 @@ export const CheckStatus = () => {
   return useMutation<void, Error, Change[]>({
     mutationFn: async (param) => {
       try {
-        await instance.patch(`/attendance/modify`, param);
+        await instance.patch(`/attendance/alltime/modify`, param);
       } catch (error) {
         handleError(error);
       }
@@ -39,7 +39,7 @@ export const ClassStudentCheck = () => {
     mutationFn: async (param) => {
       try {
         const response = await instance.get(
-          `/attendance/grade?grade=${param.grade}&class_num=${param.class}`
+          `/attendance/alltime/grade?grade=${param.grade}&class_num=${param.class}`
         );
         return response.data;
       } catch (error) {

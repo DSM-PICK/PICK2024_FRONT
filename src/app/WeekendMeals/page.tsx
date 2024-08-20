@@ -30,8 +30,6 @@ interface notCheckMeal {
 
 const WeekendMeals: NextPage = () => {
   const router = useRouter();
-  const [checkMeal, setCheckMeal] = useState<mealcheckProp[]>([]);
-  const [notCheckMeal, setNotCheckMeal] = useState<notCheckMeal[]>([]);
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
   const [effect, setEffect] = useState<number>(0);
@@ -42,24 +40,12 @@ const WeekendMeals: NextPage = () => {
     router.push("/WeekendMeals/all");
   };
 
-  const { mutate: checkMealMutate } = MealCheck();
-  const { mutate: notCheckMealMutate } = NotMealCheck();
-
-  useEffect(() => {
-    checkMealList();
-    notCheckMealList();
-  }, [selectGrade, selectClass]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      notCheckMealList();
-      checkMealList();
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [effect]);
+  const { data: checkMealMutate, refetch: RecheckMealMutate } = MealCheck(
+    selectGrade,
+    selectClass
+  );
+  const { data: notCheckMealMutate, refetch: RenotCheckMealMutate } =
+    NotMealCheck(selectGrade, selectClass);
 
   useEffect(() => {
     const grade = parseInt(localStorage.getItem("grade") || "1", 10);
@@ -76,45 +62,6 @@ const WeekendMeals: NextPage = () => {
 
   const handleClassChange = (selectedOption: number) => {
     setSelectClass(selectedOption);
-  };
-
-  const checkMealList = async () => {
-    try {
-      await checkMealMutate(
-        { grade: selectGrade, class_num: selectClass },
-        {
-          onSuccess: (data) => {
-            setCheckMeal(data);
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const notCheckMealList = async () => {
-    try {
-      await notCheckMealMutate(
-        {
-          grade: selectGrade,
-          class_num: selectClass,
-        },
-        {
-          onSuccess: (data) => {
-            setNotCheckMeal(data);
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -154,7 +101,7 @@ const WeekendMeals: NextPage = () => {
             </div>
           </div>
           <div className=" flex flex-col gap-3">
-            {checkMeal?.map((item, index) => (
+            {checkMealMutate?.map((item, index) => (
               <Classmeals
                 key={index}
                 number={setStudentNum(item)}
@@ -174,7 +121,7 @@ const WeekendMeals: NextPage = () => {
             </div>
           </div>
           <div className="flex flex-col gap-3 h-full">
-            {notCheckMeal?.map((item, index) => (
+            {notCheckMealMutate?.map((item, index) => (
               <Classmeals
                 id={item.id}
                 key={index}
