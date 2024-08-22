@@ -8,6 +8,7 @@ import { BackGround } from "../components/common/background";
 import Dropdown from "../components/common/dropdown";
 import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
+import useAttendanceStore from "@/stores/useChangeStatus";
 
 interface ClassCheck {
   id: string;
@@ -31,16 +32,17 @@ const SelfStudyCheck = () => {
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedClass, setSelectedClass] = useState<number>(1);
   const [edit, setEdit] = useState<boolean>(false);
-  const [data, setData] = useState<ClassCheck[]>([]);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: ChangeMutate } = CheckStatus();
-  const { mutate: CheckMutate } = ClassStudentCheck();
+  const { data: CheckMutate } = ClassStudentCheck(selectedGrade, selectedClass);
   const { selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
+  const { addStudent, updateStatus, getStatus, students } =
+    useAttendanceStore();
 
   const handleSaveModalConfirm = async () => {
     const updatedData: ChangeStatus[] = [];
-    data?.forEach((item) => {
+    CheckMutate?.forEach((item) => {
       const localData = localStorage.getItem(item.id);
       if (localData) {
         const parsedData = JSON.parse(localData);
@@ -86,51 +88,14 @@ const SelfStudyCheck = () => {
     setSaveModal(false);
   };
 
-  const Check = async () => {
-    try {
-      await CheckMutate(
-        {
-          grade: selectedGrade,
-          class: selectedClass,
-        },
-        {
-          onSuccess: (data) => {
-            setData(data);
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onClickEdit = () => {
     setEdit(true);
   };
-
-  useEffect(() => {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      if (key.includes("-")) {
-        localStorage.removeItem(key);
-      }
-    });
-    Check();
-  }, []);
 
   const onClickSave = () => {
     setSaveModal(true);
     setEdit(false);
   };
-
-  useEffect(() => {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      if (key.includes("-")) {
-        localStorage.removeItem(key);
-      }
-    });
-  }, [selectedClass, selectedGrade]);
 
   const handleGradeChange = (selectedOption: number) => {
     setSelectedGrade(selectedOption);
@@ -179,7 +144,7 @@ const SelfStudyCheck = () => {
         </div>
         <div className=" flex gap-20">
           <div className=" flex flex-col gap-6">
-            {data?.map((item, index) => (
+            {CheckMutate?.map((item, index) => (
               <div
                 className="flex w-32 bg-white justify-center items-center h-14 rounded-lg text-label1"
                 key={index}
@@ -191,7 +156,7 @@ const SelfStudyCheck = () => {
           <div className=" w-full flex gap-x-11 gap-y-6 flex-wrap content-start">
             {edit ? (
               <>
-                {data?.map((item, index) => {
+                {CheckMutate?.map((item, index) => {
                   return (
                     <CheckList
                       key={index}
@@ -201,16 +166,13 @@ const SelfStudyCheck = () => {
                       state3={item.status8}
                       state4={item.status9}
                       state5={item.status10}
-                      onClick={() =>
-                        handleAcceptListClick(item.id, item.username)
-                      }
                     />
                   );
                 })}
               </>
             ) : (
               <>
-                {data?.map((item, index) => {
+                {CheckMutate?.map((item, index) => {
                   return (
                     <CheckList
                       key={index}
