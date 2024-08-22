@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance } from "..";
 import apiError from "@/hook/apiError";
 
@@ -33,15 +33,16 @@ export const CheckStatus = () => {
   });
 };
 
-export const ClassStudentCheck = () => {
+export const ClassStudentCheck = (grade: number, class_num: number) => {
   const { handleError } = apiError();
-  return useMutation<ClassCheck[], Error, { grade: number; class: number }>({
-    mutationFn: async (param) => {
+  return useQuery({
+    queryKey: ["ClassStudentCheck", grade, class_num],
+    queryFn: async () => {
       try {
-        const response = await instance.get(
-          `/attendance/alltime/grade?grade=${param.grade}&class_num=${param.class}`
+        const { data } = await instance.get<ClassCheck[]>(
+          `/attendance/alltime/grade?grade=${grade}&class_num=${class_num}`
         );
-        return response.data;
+        return data;
       } catch (error) {
         handleError(error);
       }
