@@ -29,8 +29,8 @@ const AfterManage = () => {
   const [selectClub, setSelectClub] = useState<string>("대동여지도");
   const { selectedStudents, selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
-  const { data: getAfter } = GetAfterStudent();
-  const { data: getClub } = GetClubList(selectClub);
+  const { data: getAfter, refetch: ReGetAfter } = GetAfterStudent();
+  const { data: getClub, refetch: ReGetClub } = GetClubList(selectClub);
   const { mutate: Post } = PostStudent();
 
   const { mutate: CheckClub } = CheckStatus();
