@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import AfterCheck from "../page";
+import useAttendanceStore from "@/stores/useChangeStatus";
 
 interface State {
   state1: string;
@@ -41,6 +42,8 @@ const CheckList: React.FC<State> = ({
         return "현체";
       case "EMPLOYMENT":
         return "취업";
+      case "GO_HOME":
+        return "귀가";
       default:
         return "";
     }
@@ -55,7 +58,6 @@ const CheckList: React.FC<State> = ({
   useEffect(() => {
     localStorage.setItem(id, JSON.stringify(statusList));
   }, [id, statusList]);
-
   const handleChange = (index: number, newState: string) => {
     const newStatusList = [...statusList];
     for (let i = index; i < newStatusList.length; i++) {
