@@ -10,24 +10,6 @@ import { BackGround } from "../components/common/background";
 import { useRouter } from "next/navigation";
 import { NextPage } from "next";
 
-interface mealcheckProp {
-  id: string;
-  name: string;
-  status: "OK" | "NO";
-  grade: number;
-  class_num: number;
-  num: number;
-}
-
-interface notCheckMeal {
-  id: string;
-  name: string;
-  status: "QUIET";
-  grade: number;
-  class_num: number;
-  num: number;
-}
-
 const WeekendMeals: NextPage = () => {
   const router = useRouter();
   const [selectGrade, setSelectGrade] = useState<number>(1);
@@ -40,12 +22,7 @@ const WeekendMeals: NextPage = () => {
     router.push("/WeekendMeals/all");
   };
 
-  const { data: checkMealMutate, refetch: RecheckMealMutate } = MealCheck(
-    selectGrade,
-    selectClass
-  );
-  const { data: notCheckMealMutate, refetch: RenotCheckMealMutate } =
-    NotMealCheck(selectGrade, selectClass);
+  const { data: checkMealMutate } = MealCheck(selectGrade, selectClass);
 
   useEffect(() => {
     const grade = parseInt(localStorage.getItem("grade") || "1", 10);
@@ -95,33 +72,30 @@ const WeekendMeals: NextPage = () => {
       <div className=" flex justify-between w-full">
         <div className=" flex flex-col gap-9 w-1/2">
           <div className=" flex flex-col gap-1">
-            <div className=" text-heading6-M text-gray-900">응답자</div>
-            <div className=" text-caption1 text-neutral-300">
-              응답자의 상태는 수정할 수 없습니다.
-            </div>
+            <div className=" text-heading6-M text-gray-900">신청자</div>
           </div>
           <div className=" flex flex-col gap-3">
-            {checkMealMutate?.map((item, index) => (
-              <Classmeals
-                key={index}
-                number={setStudentNum(item)}
-                name={item.name}
-                state={item.status || "NO"}
-                onclick={() => {}}
-                id=""
-              />
-            ))}
+            {checkMealMutate?.map(
+              (item, index) =>
+                item.status === "OK" && (
+                  <Classmeals
+                    key={index}
+                    number={setStudentNum(item)}
+                    name={item.name}
+                    state={item.status || "NO"}
+                    onclick={() => {}}
+                    id=""
+                  />
+                )
+            )}
           </div>
         </div>
         <div className=" flex flex-col gap-9 w-1/2 h-full">
           <div className=" flex flex-col gap-1">
-            <div className=" text-heading6-M text-gray-900">미응답자</div>
-            <div className=" text-caption1 text-neutral-300">
-              매달 5일 전까지 상태를 수정할 수 있습니다
-            </div>
+            <div className=" text-heading6-M text-gray-900">미신청자</div>
           </div>
           <div className="flex flex-col gap-3 h-full">
-            {notCheckMealMutate?.map((item, index) => (
+            {/* {notCheckMealMutate?.map((item, index) => (
               <Classmeals
                 id={item.id}
                 key={index}
@@ -132,7 +106,20 @@ const WeekendMeals: NextPage = () => {
                   setEffect(effect + 1);
                 }}
               />
-            ))}
+            ))} */}
+            {checkMealMutate?.map(
+              (item, index) =>
+                item.status === "NO" && (
+                  <Classmeals
+                    key={index}
+                    number={setStudentNum(item)}
+                    name={item.name}
+                    state={item.status || "NO"}
+                    onclick={() => {}}
+                    id=""
+                  />
+                )
+            )}
           </div>
         </div>
       </div>
