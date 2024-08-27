@@ -12,18 +12,6 @@ import { useRouter } from "next/navigation";
 import { BackGround } from "../components/common/background";
 import useAcceptListSelection from "@/hook/hook";
 
-interface applicationDataProp {
-  class_num: number;
-  end_time: string;
-  grade: number;
-  id: string;
-  num: number;
-  reason: string;
-  start_time: string;
-  user_id: string;
-  username: string;
-}
-
 const OutAccept = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<boolean>(true);
@@ -203,7 +191,7 @@ const OutAccept = () => {
                   handleAcceptListClick(dataItem.id, dataItem.username)
                 }
                 key={index}
-                time={`${dataItem.start_time} ~ ${dataItem.end_time}`}
+                time={`${dataItem.start} ~ ${dataItem.end}`}
                 student={getStudentString(dataItem)}
                 why={`${dataItem.reason}`}
               />
@@ -214,10 +202,10 @@ const OutAccept = () => {
             {getClassMutate?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
-                  handleAcceptListClick(dataItem.user_id, dataItem.username)
+                  handleAcceptListClick(dataItem.id, dataItem.username)
                 }
                 key={index}
-                time={`${dataItem.start_time} ~`}
+                time={`${dataItem.start} ~`}
                 student={`${getStudentString(dataItem)}`}
                 why={dataItem.reason}
               />

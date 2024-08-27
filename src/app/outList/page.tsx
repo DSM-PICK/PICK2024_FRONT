@@ -20,8 +20,8 @@ import useAcceptListSelection from "@/hook/hook";
 interface applicationOK {
   id: string;
   username: string;
-  start_time: string;
-  end_time: string;
+  start: string;
+  end: string;
   grade: number;
   class_num: number;
   num: number;
@@ -103,7 +103,7 @@ const OutList = () => {
               onClick={() => handleAcceptListClick(data.id, data.username)}
               id={data.id}
               key={index}
-              returnTime={data.end_time}
+              returnTime={data.end}
               student={getStudentString(data)}
               reason={data.reason}
             />

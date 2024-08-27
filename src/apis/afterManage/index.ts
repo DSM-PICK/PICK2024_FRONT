@@ -117,7 +117,7 @@ export const GetClubList = (club: string) => {
     queryFn: async () => {
       try {
         const response = await instance.get(
-          `/attendance/alltime/club?club=${club}`
+          `/attendance/total-time/club?club=${club}`
         );
         return response.data;
       } catch (error) {
