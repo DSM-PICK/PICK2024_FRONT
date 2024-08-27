@@ -65,6 +65,8 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
         return "#414BA2";
       case "출석":
         return "#475467";
+      case "귀가":
+        "#475467";
       default:
         return undefined;
     }
@@ -80,6 +82,8 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
         return "MOVEMENT";
       case "출석":
         return "ATTENDANCE";
+      case "귀가":
+        return "GO_HOME";
       default:
         return "";
     }
@@ -130,6 +134,12 @@ const AfterCheck: React.FC<AfterCheckProp> = ({ state, onChange, type }) => {
             onClick={() => handleOptionClick("외출")}
           >
             외출
+          </div>
+          <div
+            className={`${commonStyle} text-neutral-50`}
+            onClick={() => handleOptionClick("귀가")}
+          >
+            귀가
           </div>
           <div
             className={`${commonStyle} text-error-400`}

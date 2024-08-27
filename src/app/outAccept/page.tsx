@@ -33,22 +33,16 @@ const OutAccept = () => {
   const [accept, setAccept] = useState<boolean>(false);
   const { selectedStudents, selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
-  const [data, setData] = useState<applicationDataProp[]>([]);
-
   const { mutate: outAcceptMutate } = useOutAccept();
-  const { mutate: getClassMutate } = useGetClass();
+  const { data: getClassMutate, refetch: ReGetClassMutate } = useGetClass(
+    selectedGrade,
+    selectedClass,
+    selectedTab ? "application" : "early-return"
+  );
 
   const onClickTab = (tab: boolean) => {
     setSelectedTab(tab);
   };
-
-  useEffect(() => {
-    AcceptDataList();
-  }, [selectedTab]);
-
-  useEffect(() => {
-    AcceptDataList();
-  }, [selectedGrade, selectedClass]);
 
   const handleGradeChange = (selectedOption: number) => {
     if (selectedOption === 5) {
@@ -77,31 +71,6 @@ const OutAccept = () => {
     setSelectedClass(setclass_num);
   }, []);
 
-  const AcceptDataList = async () => {
-    try {
-      if (selectedGrade && selectedClass) {
-        const reqOption = selectedTab ? "application" : "early-return";
-        await getClassMutate(
-          {
-            type: reqOption,
-            grade: selectedGrade,
-            class: selectedClass,
-          },
-          {
-            onSuccess: (data) => {
-              setData(data);
-            },
-            onError: (error) => {
-              console.log(error);
-            },
-          }
-        );
-      }
-    } catch (error) {
-      console.error("Out accept error", error);
-    }
-  };
-
   const Acceptconfirm = async () => {
     try {
       if (selectedGrade && selectedClass) {
@@ -114,9 +83,8 @@ const OutAccept = () => {
           },
           {
             onSuccess: () => {
-              setData(data);
               setAccept(false);
-              location.reload();
+              ReGetClassMutate();
             },
             onError: () => {
               setAccept(false);
@@ -167,12 +135,11 @@ const OutAccept = () => {
             ids: selectedStudents,
           },
           {
-            onSuccess: (response) => {
-              setData(data);
+            onSuccess: () => {
               setRefuse(false);
-              location.reload();
+              ReGetClassMutate();
             },
-            onError: (error) => {
+            onError: () => {
               setRefuse(false);
             },
           }
@@ -192,10 +159,6 @@ const OutAccept = () => {
     setAccept(false);
   };
 
-  const previous = () => {
-    router.push("/outAccept/previous");
-  };
-
   return (
     <BackGround
       linkChildren="외출 수락"
@@ -203,36 +166,26 @@ const OutAccept = () => {
       secondTitle={getFullToday()}
       DropChildren={
         <>
-          <Button colorType="ghost" buttonSize="small" onClick={previous}>
+          <Button
+            colorType="ghost"
+            buttonSize="small"
+            onClick={() => router.push("/outAccept/previous")}
+          >
             외출 기록보기
           </Button>
-          {selectedTab ? (
-            <div className=" flex gap-5">
-              <Dropdown
-                type="all"
-                onChange={handleGradeChange}
-                homeRoom={true}
-              />
-              <Dropdown
-                type="class"
-                onChange={handleClassChange}
-                homeRoom={true}
-              />
-            </div>
-          ) : (
-            <div className=" flex gap-5">
-              <Dropdown
-                type="all"
-                onChange={handleGradeChange}
-                homeRoom={true}
-              />
-              <Dropdown
-                type="class"
-                onChange={handleClassChange}
-                homeRoom={true}
-              />
-            </div>
-          )}
+          <div className=" flex gap-5">
+            {selectedTab ? (
+              <>
+                <Dropdown type="all" onChange={handleGradeChange} homeRoom />
+                <Dropdown type="class" onChange={handleClassChange} homeRoom />
+              </>
+            ) : (
+              <>
+                <Dropdown type="all" onChange={handleGradeChange} homeRoom />
+                <Dropdown type="class" onChange={handleClassChange} homeRoom />
+              </>
+            )}
+          </div>
         </>
       }
     >
@@ -244,7 +197,7 @@ const OutAccept = () => {
         />
         {selectedTab ? (
           <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
+            {getClassMutate?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
                   handleAcceptListClick(dataItem.id, dataItem.username)
@@ -258,7 +211,7 @@ const OutAccept = () => {
           </div>
         ) : (
           <div className="flex flex-wrap gap-5 justify-between">
-            {data.map((dataItem, index) => (
+            {getClassMutate?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
                   handleAcceptListClick(dataItem.user_id, dataItem.username)

@@ -34,7 +34,10 @@ const SelfStudyCheck = () => {
   const [edit, setEdit] = useState<boolean>(false);
   const [saveModal, setSaveModal] = useState<boolean>(false);
   const { mutate: ChangeMutate } = CheckStatus();
-  const { data: CheckMutate } = ClassStudentCheck(selectedGrade, selectedClass);
+  const { data: CheckMutate, refetch: ReCheckData } = ClassStudentCheck(
+    selectedGrade,
+    selectedClass
+  );
   const { selectedStudentName, handleAcceptListClick } =
     useAcceptListSelection();
   const { addStudent, updateStatus, getStatus, students } =
@@ -63,7 +66,7 @@ const SelfStudyCheck = () => {
     try {
       await ChangeMutate(updatedData, {
         onSuccess: () => {
-          location.reload();
+          ReCheckData();
         },
         onError: (error) => {
           alert(error.name);

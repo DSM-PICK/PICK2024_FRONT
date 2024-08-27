@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance } from "..";
 import apiError from "@/hook/apiError";
 
@@ -35,15 +35,16 @@ interface ClassProp {
   type: string;
 }
 
-export const useGetClass = () => {
+export const useGetClass = (grade: number, class_num: number, type: string) => {
   const { handleError } = apiError();
-  return useMutation<applicationDataProp[], applicationDataProp[], ClassProp>({
-    mutationFn: async (param: ClassProp) => {
+  return useQuery({
+    queryKey: ["useGetClass", grade, class_num, type],
+    queryFn: async () => {
       try {
-        const response = await instance.get(
-          `${param.type}/grade?grade=${param.grade}&class_num=${param.class}`
+        const { data } = await instance.get<applicationDataProp[]>(
+          `${type}/grade?grade=${grade}&class_num=${class_num}`
         );
-        return response.data;
+        return data;
       } catch (error) {
         handleError(error);
       }
