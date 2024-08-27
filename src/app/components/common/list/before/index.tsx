@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import arrow from "@/assets/img/Icon/chevron-right.svg";
 import downarrow from "@/assets/img/Icon/downarrow.svg";
-import { GetPreviousList } from "@/apis/previousList";
+import { GetPreviousList, PreviousType } from "@/apis/previousList";
 import BeforeList from "./list";
 import OutBedge from "./badge";
 
@@ -18,8 +18,8 @@ interface Type {
   username: string;
   application_story: {
     reason: string;
-    start_time: string;
-    end_time: string;
+    start: string;
+    end: string;
     date: string;
     type: "APPLICATION" | "EARLY_RETURN";
   }[];
@@ -33,7 +33,7 @@ const PreviousList: React.FC<getProp> = ({
 }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
   const { mutate: getPrevious } = GetPreviousList();
-  const [data, setData] = useState<Type>();
+  const [data, setData] = useState<PreviousType>();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = async () => {

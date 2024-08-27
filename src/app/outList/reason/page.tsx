@@ -12,8 +12,8 @@ interface OutListData {
   id: string;
   user_id: string;
   username: string;
-  start_time: string;
-  end_time: string;
+  start: string;
+  end: string;
   grade: number;
   class_num: number;
   num: number;
@@ -24,7 +24,7 @@ interface HomeData {
   id: string;
   user_id: string;
   username: string;
-  start_time: string;
+  start: string;
   grade: number;
   class_num: number;
   num: number;
@@ -79,7 +79,7 @@ const Reason = () => {
         {(selectedTab ? outData : returnHomeData).map((item, index) => (
           <ReasonList
             key={index}
-            time={item.start_time}
+            time={item.start}
             endTime=""
             student={student(item)}
             why={item.reason}

@@ -6,8 +6,8 @@ interface applicationOK {
   id: string;
   username: string;
   user_id: string;
-  start_time: string;
-  end_time: string;
+  start: string;
+  end: string;
   grade: number;
   class_num: number;
   num: number;
@@ -18,8 +18,8 @@ interface OutListData {
   id: string;
   user_id: string;
   username: string;
-  start_time: string;
-  end_time: string;
+  start: string;
+  end: string;
   grade: number;
   class_num: number;
   num: number;
@@ -34,8 +34,8 @@ interface data {
 
 interface previousStudent {
   reason: string;
-  start_time: string;
-  end_time: string;
+  start: string;
+  end: string;
   username: string;
   date: string;
   type: "APPLICATION" | "EARLY_RETURN";
@@ -45,7 +45,7 @@ interface ReturnHomeData {
   id: string;
   user_id: string;
   username: string;
-  start_time: string;
+  start: string;
   grade: number;
   class_num: number;
   num: number;
@@ -55,7 +55,7 @@ interface ReturnHomeData {
 interface earlyReturnHome {
   user_id: string;
   username: string;
-  start_time: string;
+  start: string;
   grade: number;
   class_num: number;
   num: number;

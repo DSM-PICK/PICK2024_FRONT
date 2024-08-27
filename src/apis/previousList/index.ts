@@ -2,7 +2,7 @@ import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
-interface Type {
+export interface PreviousType {
   username: string;
   application_story: {
     reason: string;
@@ -29,7 +29,7 @@ interface id {
 
 export const GetPreviousList = () => {
   const { handleError } = apiError();
-  return useMutation<Type, void, { id: string }>({
+  return useMutation<PreviousType, void, { id: string }>({
     mutationFn: async (param: id) => {
       try {
         const response = await instance.get(`story/query/${param.id}`);
