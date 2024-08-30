@@ -28,7 +28,7 @@ const AllWeekendMeal = () => {
       DropChildren={
         <>
           <Button colorType="ghost" onClick={downloadExcel} buttonSize="small">
-            엑셀로 출력하기
+            전체 엑셀 출력하기
           </Button>
           <Button
             colorType="primary"

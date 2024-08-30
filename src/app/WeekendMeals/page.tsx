@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "@/app/components/common/dropdown";
 import Classmeals from "../components/common/list/classmeal/page";
-import { MealCheck, NotMealCheck } from "@/apis/weekendMeal";
+import {
+  MealCheck,
+  NotMealCheck,
+  useClassWeekendMealExcel,
+} from "@/apis/weekendMeal";
 import { setStudentNum } from "@/utils/until";
 import Button from "../components/common/Button";
 import { Printexcel } from "@/apis/weekendMeal";
@@ -17,6 +21,7 @@ const WeekendMeals: NextPage = () => {
   const [effect, setEffect] = useState<number>(0);
 
   const { downloadExcel } = Printexcel();
+  const { usedownloadClassExcel } = useClassWeekendMealExcel();
 
   const AllMeals = () => {
     router.push("/WeekendMeals/all");
@@ -48,8 +53,12 @@ const WeekendMeals: NextPage = () => {
       linkChildren={`주말 급식 신청 현황 > ${selectGrade}학년 ${selectClass}반`}
       DropChildren={
         <>
-          <Button colorType="ghost" buttonSize="small" onClick={downloadExcel}>
-            엑셀로 출력하기
+          <Button
+            colorType="ghost"
+            buttonSize="small"
+            onClick={() => usedownloadClassExcel(selectGrade, selectClass)}
+          >
+            반별 엑셀 출력하기
           </Button>
           <Button colorType="primary" buttonSize="small" onClick={AllMeals}>
             전체 학생 보기
