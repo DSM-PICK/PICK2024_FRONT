@@ -1,7 +1,6 @@
 import apiError from "@/hook/apiError";
 import { instance } from "..";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { link } from "fs";
 
 interface ChangeStateParams {
   status: "OK" | "NO";

@@ -58,7 +58,7 @@ const WeekendMeals: NextPage = () => {
             buttonSize="small"
             onClick={() => usedownloadClassExcel(selectGrade, selectClass)}
           >
-            엑셀로 출력하기
+            반별 엑셀 출력하기
           </Button>
           <Button colorType="primary" buttonSize="small" onClick={AllMeals}>
             전체 학생 보기
