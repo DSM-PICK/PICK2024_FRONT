@@ -48,6 +48,35 @@ export const Printexcel = () => {
   return { downloadExcel };
 };
 
+export const useClassWeekendMealExcel = () => {
+  const usedownloadClassExcel = async (grade: number, class_num: number) => {
+    try {
+      const { data } = await instance.get(
+        `/weekend-meal/excel/grade?grade=${grade}&class_num=${class_num}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `${grade}학년 ${class_num}반 주말급식.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(error);
+      alert("잠시후 다시 시도해주세요");
+    }
+  };
+
+  return { usedownloadClassExcel };
+};
+
 export const ChangeState = () => {
   const { handleError } = apiError();
   return useMutation<void, Error, ChangeStateParams>({
