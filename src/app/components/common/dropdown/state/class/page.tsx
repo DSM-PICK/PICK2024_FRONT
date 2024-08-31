@@ -10,6 +10,7 @@ interface StateDropProps {
 const ClassmealDrop = ({ option, id, onclick }: StateDropProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+  const [grade, setGrade] = useState<number>(0);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -17,7 +18,7 @@ const ClassmealDrop = ({ option, id, onclick }: StateDropProps) => {
 
   const handleOptionClick = (selectedOption: "신청" | "미신청") => {
     setIsDropdownVisible(false);
-    onclick(selectedOption); // 수정된 부분
+    onclick(selectedOption);
   };
 
   const dropStyle = () => {
@@ -47,7 +48,9 @@ const ClassmealDrop = ({ option, id, onclick }: StateDropProps) => {
     };
   }, []);
 
-  const grade = parseInt(localStorage.getItem("grade") || "1", 10);
+  useEffect(() => {
+    setGrade(parseInt(localStorage.getItem("grade") || "1", 10));
+  }, []);
 
   return (
     <div className="relative w-24 " ref={dropdownRef}>
