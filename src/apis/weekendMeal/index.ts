@@ -35,7 +35,7 @@ export const Printexcel = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "주말급식리스트.xlsx");
+      link.setAttribute("download", "10월 주말급식리스트.xlsx");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
