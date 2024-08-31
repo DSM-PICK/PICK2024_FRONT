@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "@/app/components/common/dropdown";
 import Classmeals from "../components/common/list/classmeal/page";
 import {
+  ChangeState,
   MealCheck,
-  NotMealCheck,
   useClassWeekendMealExcel,
 } from "@/apis/weekendMeal";
 import { setStudentNum } from "@/utils/until";
 import Button from "../components/common/Button";
-import { Printexcel } from "@/apis/weekendMeal";
 import { BackGround } from "../components/common/background";
 import { useRouter } from "next/navigation";
 import { NextPage } from "next";
@@ -18,16 +17,38 @@ const WeekendMeals: NextPage = () => {
   const router = useRouter();
   const [selectGrade, setSelectGrade] = useState<number>(1);
   const [selectClass, setSelectClass] = useState<number>(1);
-  const [effect, setEffect] = useState<number>(0);
 
-  const { downloadExcel } = Printexcel();
   const { usedownloadClassExcel } = useClassWeekendMealExcel();
 
   const AllMeals = () => {
     router.push("/WeekendMeals/all");
   };
 
-  const { data: checkMealMutate } = MealCheck(selectGrade, selectClass);
+  const { data: checkMealMutate, refetch: ReCheckMealMutate } = MealCheck(
+    selectGrade,
+    selectClass
+  );
+  const { mutate: ChangeMealMutate } = ChangeState();
+
+  const Change = async (selectedOption: "신청" | "미신청", id: string) => {
+    const status = selectedOption === "미신청" ? "NO" : "OK";
+    try {
+      await ChangeMealMutate(
+        { status, id },
+        {
+          onSuccess: () => {
+            ReCheckMealMutate();
+          },
+          onError: (error) => {
+            alert(`${error.message} : 에러가 발생하였습니다`);
+          },
+        }
+      );
+    } catch (error) {
+      alert(`상태변경중 에러가 발생했습니다`);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const grade = parseInt(localStorage.getItem("grade") || "1", 10);
@@ -92,8 +113,10 @@ const WeekendMeals: NextPage = () => {
                     number={setStudentNum(item)}
                     name={item.name}
                     state={item.status || "NO"}
-                    onclick={() => {}}
-                    id=""
+                    onclick={(selectedOption) =>
+                      Change(selectedOption, item.id)
+                    }
+                    id={item.id}
                   />
                 )
             )}
@@ -104,18 +127,6 @@ const WeekendMeals: NextPage = () => {
             <div className=" text-heading6-M text-gray-900">미신청자</div>
           </div>
           <div className="flex flex-col gap-3 h-full">
-            {/* {notCheckMealMutate?.map((item, index) => (
-              <Classmeals
-                id={item.id}
-                key={index}
-                number={setStudentNum(item)}
-                name={item.name}
-                state={item.status || "QUIET"}
-                onclick={() => {
-                  setEffect(effect + 1);
-                }}
-              />
-            ))} */}
             {checkMealMutate?.map(
               (item, index) =>
                 item.status === "NO" && (
@@ -124,8 +135,10 @@ const WeekendMeals: NextPage = () => {
                     number={setStudentNum(item)}
                     name={item.name}
                     state={item.status || "NO"}
-                    onclick={() => {}}
-                    id=""
+                    onclick={(selectedOption) =>
+                      Change(selectedOption, item.id)
+                    }
+                    id={item.id}
                   />
                 )
             )}

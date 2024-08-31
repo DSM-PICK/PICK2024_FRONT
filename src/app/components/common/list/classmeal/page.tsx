@@ -5,9 +5,9 @@ import ClassmealDrop from "../../dropdown/state/class/page";
 interface allmealsProps {
   number: string;
   name: string;
-  state: "OK" | "NO" | "QUIET";
+  state: "OK" | "NO";
   id: string;
-  onclick: () => void;
+  onclick: (selectedOption: "신청" | "미신청") => void;
 }
 
 const Classmeals = ({ number, name, state, id, onclick }: allmealsProps) => {
@@ -17,8 +17,6 @@ const Classmeals = ({ number, name, state, id, onclick }: allmealsProps) => {
         return "미신청";
       case "OK":
         return "신청";
-      case "QUIET":
-        return "미응답";
     }
   };
 
