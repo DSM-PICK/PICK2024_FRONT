@@ -19,10 +19,6 @@ const BeforeList: React.FC<Prop> = ({
   type,
   date,
 }) => {
-  const TimeSet = () => {
-    return `${date} ${startTime}~${endTime}`;
-  };
-
   return (
     <div className="flex whitespace-nowrap w-full px-4 bg-white rounded-lg">
       <div className=" flex justify-between w-full items-center h-fit py-1">
@@ -31,7 +27,9 @@ const BeforeList: React.FC<Prop> = ({
             {title}
           </div>
           <div className=" text-neutral-300 text-caption3 flex justify-center items-center">
-            {TimeSet()}
+            {type === "APPLICATION"
+              ? `${date} ${startTime}~${endTime}`
+              : `${date} ${startTime}~`}
           </div>
         </div>
         <OutBedge type={type} />
