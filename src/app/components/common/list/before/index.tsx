@@ -69,7 +69,7 @@ const PreviousList: React.FC<getProp> = ({
   }, []);
 
   return (
-    <div className="flex h-fit w-29%">
+    <div className="flex h-fit">
       <div className="relative w-full">
         <div
           className="group whitespace-nowrap gap-4 py-4 px-6 rounded-lg cursor-pointer flex items-center justify-between bg-white w-max"
