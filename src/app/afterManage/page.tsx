@@ -293,7 +293,7 @@ const AfterManage = () => {
                               state5={item.status10}
                               friday={true}
                               onClick={() =>
-                                handleAcceptListClick(item.id, item.username)
+                                handleAcceptListClick(item.id, item.user_name)
                               }
                             />
                           );
@@ -309,7 +309,7 @@ const AfterManage = () => {
                               state4={item.status9}
                               state5={item.status10}
                               onClick={() =>
-                                handleAcceptListClick(item.id, item.username)
+                                handleAcceptListClick(item.id, item.user_name)
                               }
                             />
                           );
@@ -330,7 +330,7 @@ const AfterManage = () => {
                               state5={item.status10}
                               friday={true}
                               onClick={() =>
-                                handleAcceptListClick(item.id, item.username)
+                                handleAcceptListClick(item.id, item.user_name)
                               }
                               type="NO"
                             />
@@ -347,7 +347,7 @@ const AfterManage = () => {
                               state4={item.status9}
                               state5={item.status10}
                               onClick={() =>
-                                handleAcceptListClick(item.id, item.username)
+                                handleAcceptListClick(item.id, item.user_name)
                               }
                               type="NO"
                             />
@@ -379,7 +379,7 @@ const AfterManage = () => {
                         className="flex w-32 bg-white h-14 items-center justify-center rounded-lg text-label1"
                         key={index}
                       >
-                        {setStudentNum(item)} {item.name}
+                        {setStudentNum(item)} {item.user_name}
                       </div>
                     ))}
                   </div>
@@ -397,7 +397,7 @@ const AfterManage = () => {
                               state4={item.status2}
                               state5={item.status3}
                               onClick={() =>
-                                handleAcceptListClick(item.id, item.name)
+                                handleAcceptListClick(item.id, item.user_name)
                               }
                               createRoom={true}
                             />
@@ -415,7 +415,7 @@ const AfterManage = () => {
                 <div className=" text-heading5 text-primary-100">창조실</div>
                 <div className=" flex gap-x-13 gap-y-5 flex-wrap w-full">
                   {dataList?.map((item, index) => (
-                    <AfterDelete student={item.name} key={index} id={item.id} />
+                    <AfterDelete student={item.user_name} key={index} id={item.id} />
                   ))}
                 </div>
               </div>
