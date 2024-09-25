@@ -20,7 +20,7 @@ interface FloorClass {
   move: string;
   num: number;
   start_period: number;
-  username: string;
+  user_name: string;
 }
 
 const ClassChange = () => {
@@ -154,7 +154,7 @@ const ClassChange = () => {
         <ChangeClass
           type="accept"
           key={index}
-          onClick={() => handleAcceptListClick(item.user_id, item.username)}
+          onClick={() => handleAcceptListClick(item.user_id, item.user_name)}
           prevClass={item.move}
           nextClass={`${item.classroom_name}`}
           student={getStudentString(item)}

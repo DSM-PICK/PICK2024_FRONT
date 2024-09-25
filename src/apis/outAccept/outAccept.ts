@@ -11,13 +11,13 @@ interface applicationDataProp {
   reason: string;
   start: string;
   user_id: string;
-  username: string;
+  user_name: string;
 }
 
 interface accept {
   type: "application" | "early-return";
   status: "OK" | "NO";
-  ids: string[];
+  id_list: string[];
 }
 
 type RequestType = {
@@ -59,7 +59,7 @@ export const useOutAccept = () => {
       try {
         const response = await instance.patch(`${param.type}/status`, {
           status: param.status,
-          ids: param.ids,
+          id_list: param.id_list,
         });
         return response.data;
       } catch (error) {

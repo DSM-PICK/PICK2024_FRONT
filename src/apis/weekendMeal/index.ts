@@ -9,7 +9,7 @@ interface ChangeStateParams {
 
 interface mealcheckProp {
   id: string;
-  name: string;
+  user_name: string;
   status: "OK" | "NO";
   grade: number;
   class_num: number;
@@ -18,7 +18,7 @@ interface mealcheckProp {
 
 interface notCheckMeal {
   id: string;
-  name: string;
+  user_name: string;
   status: "QUIET";
   grade: number;
   class_num: number;

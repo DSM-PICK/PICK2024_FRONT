@@ -13,7 +13,7 @@ export const After = (param: Type) => {
           grade: param.grade,
           class_num: param.class_num,
           num: param.num,
-          name: param.name,
+          user_name: param.user_name,
         });
       } catch (error) {
         handleError(error);

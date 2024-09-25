@@ -11,7 +11,7 @@ import { BackGround } from "@/app/components/common/background";
 interface OutListData {
   id: string;
   user_id: string;
-  username: string;
+  user_name: string;
   start: string;
   end: string;
   grade: number;
@@ -23,7 +23,7 @@ interface OutListData {
 interface HomeData {
   id: string;
   user_id: string;
-  username: string;
+  user_name: string;
   start: string;
   grade: number;
   class_num: number;
