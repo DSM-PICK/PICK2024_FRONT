@@ -19,7 +19,7 @@ import useAcceptListSelection from "@/hook/hook";
 
 interface applicationOK {
   id: string;
-  username: string;
+  user_name: string;
   start: string;
   end: string;
   grade: number;
@@ -100,7 +100,7 @@ const OutList = () => {
         <div className="flex flex-wrap gap-5 justify-between">
           {applicationList?.map((data, index) => (
             <Out
-              onClick={() => handleAcceptListClick(data.id, data.username)}
+              onClick={() => handleAcceptListClick(data.id, data.user_name)}
               id={data.id}
               key={index}
               returnTime={data.end}

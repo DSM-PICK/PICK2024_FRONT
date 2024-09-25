@@ -9,13 +9,13 @@ import OutBedge from "./badge";
 
 interface getProp {
   id: string;
-  userName: string;
+  user_name: string;
   APPLICATION: number;
   EARLY_RETURN: number;
 }
 
 interface Type {
-  username: string;
+  user_name: string;
   application_story: {
     reason: string;
     start: string;
@@ -27,7 +27,7 @@ interface Type {
 
 const PreviousList: React.FC<getProp> = ({
   id,
-  userName,
+  user_name,
   APPLICATION,
   EARLY_RETURN,
 }) => {
@@ -76,7 +76,7 @@ const PreviousList: React.FC<getProp> = ({
           onClick={toggleDropdown}
         >
           <div className=" flex flex-col text-label1 gap-3">
-            <div>{userName}</div>
+            <div>{user_name}</div>
             <div className=" flex items-center gap-3">
               <div className=" flex gap-2 items-center">
                 <OutBedge type="APPLICATION" />

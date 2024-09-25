@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 interface StudentStatus {
   id: string;
-  name: string;
+  user_name: string;
   status: "OK" | "NO" | "QUIET";
   grade: number;
   class_num: number;
@@ -54,7 +54,7 @@ const AllWeekendMeal = () => {
           <Allmeals
             key={index}
             state={item.status}
-            name={item.name}
+            name={item.user_name}
             number={setStudentNum(item)}
           />
         ))}

@@ -3,7 +3,7 @@ import { instance } from "..";
 import { useMutation } from "@tanstack/react-query";
 
 export interface PreviousType {
-  username: string;
+  user_name: string;
   application_story: {
     reason: string;
     start_time: string;
@@ -15,7 +15,7 @@ export interface PreviousType {
 
 interface GetCntType {
   id: string;
-  name: string;
+  user_name: string;
   grade: number;
   class_num: number;
   num: number;

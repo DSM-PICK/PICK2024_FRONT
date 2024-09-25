@@ -13,7 +13,7 @@ export interface Type {
   grade: number;
   class_num: number;
   num: number;
-  name: string;
+  user_name: string;
 }
 
 export interface ChangeStatus {
@@ -26,7 +26,7 @@ export interface AfterStudent {
   grade: number;
   class_num: number;
   num: number;
-  name: string;
+  user_name: string;
   status1: string;
   status2: string;
   status3: string;
@@ -34,7 +34,7 @@ export interface AfterStudent {
 
 export interface ClubList {
   id: string;
-  username: string;
+  user_name: string;
   grade: number;
   class_num: number;
   num: number;
@@ -46,7 +46,7 @@ export interface ClubList {
 }
 
 export interface Students {
-  name: string;
+  user_name: string;
   grade: number;
   class_num: number;
   num: number;
@@ -66,7 +66,7 @@ export interface changeClass {
   move: string;
   num: number;
   start_period: number;
-  username: string;
+  user_name: string;
 }
 
 export interface FloorClass {
@@ -78,7 +78,7 @@ export interface FloorClass {
   move: string;
   num: number;
   start_period: number;
-  username: string;
+  user_name: string;
 }
 
 export interface postTeacherProp {
@@ -94,7 +94,7 @@ export interface data {
 
 export interface Student {
   user_id: string;
-  name: string;
+  user_name: string;
   grade: number;
   class_num: number;
   num: number;

@@ -4,7 +4,7 @@ import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 
 interface applicationOK {
   id: string;
-  username: string;
+  user_name: string;
   user_id: string;
   start: string;
   end: string;
@@ -17,7 +17,7 @@ interface applicationOK {
 interface OutListData {
   id: string;
   user_id: string;
-  username: string;
+  user_name: string;
   start: string;
   end: string;
   grade: number;
@@ -36,7 +36,7 @@ interface previousStudent {
   reason: string;
   start: string;
   end: string;
-  username: string;
+  user_name: string;
   date: string;
   type: "APPLICATION" | "EARLY_RETURN";
 }
@@ -44,7 +44,7 @@ interface previousStudent {
 interface ReturnHomeData {
   id: string;
   user_id: string;
-  username: string;
+  user_name: string;
   start: string;
   grade: number;
   class_num: number;
@@ -54,7 +54,7 @@ interface ReturnHomeData {
 
 interface earlyReturnHome {
   user_id: string;
-  username: string;
+  user_name: string;
   start: string;
   grade: number;
   class_num: number;
@@ -98,7 +98,7 @@ export const GetPreviousList = () => {
       try {
         const response = await instance.get(`/story/query`, {
           params: {
-            name: requestParam.name,
+            user_name: requestParam.name,
           },
         });
         return response.data;

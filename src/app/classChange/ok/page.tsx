@@ -19,7 +19,7 @@ interface changeClass {
   move: string;
   num: number;
   start_period: number;
-  username: string;
+  user_name: string;
 }
 
 const ClassChangeOk = () => {

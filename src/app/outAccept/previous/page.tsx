@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 interface StudentData {
   id: string;
-  name: string;
+  user_name: string;
   grade: number;
   class_num: number;
   num: number;
@@ -87,7 +87,7 @@ const Previous = () => {
             key={index}
             APPLICATION={item.application_cnt}
             EARLY_RETURN={item.early_return_cnt}
-            userName={`${setStudentNum(item)} ${item.name}`}
+            user_name={`${setStudentNum(item)} ${item.user_name}`}
           />
         ))}
     </BackGround>

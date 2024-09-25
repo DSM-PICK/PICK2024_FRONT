@@ -10,19 +10,6 @@ import CheckList from "../components/common/list/after/check/page";
 import Modal from "../components/common/modal/page";
 import useAttendanceStore from "@/stores/useChangeStatus";
 
-interface ClassCheck {
-  id: string;
-  username: string;
-  grade: number;
-  class_num: number;
-  num: number;
-  status6: string;
-  status7: string;
-  status8: string;
-  status9: string;
-  status10: string;
-}
-
 interface ChangeStatus {
   user_id: string;
   status_list: string[];
@@ -186,7 +173,7 @@ const SelfStudyCheck = () => {
                       state4={item.status9}
                       state5={item.status10}
                       onClick={() =>
-                        handleAcceptListClick(item.id, item.username)
+                        handleAcceptListClick(item.id, item.user_name)
                       }
                       type="NO"
                     />

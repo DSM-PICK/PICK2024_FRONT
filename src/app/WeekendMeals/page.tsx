@@ -111,7 +111,7 @@ const WeekendMeals: NextPage = () => {
                   <Classmeals
                     key={index}
                     number={setStudentNum(item)}
-                    name={item.name}
+                    name={item.user_name}
                     state={item.status || "NO"}
                     onclick={(selectedOption) =>
                       Change(selectedOption, item.id)
@@ -133,7 +133,7 @@ const WeekendMeals: NextPage = () => {
                   <Classmeals
                     key={index}
                     number={setStudentNum(item)}
-                    name={item.name}
+                    name={item.user_name}
                     state={item.status || "NO"}
                     onclick={(selectedOption) =>
                       Change(selectedOption, item.id)

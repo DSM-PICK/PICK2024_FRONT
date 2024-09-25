@@ -67,7 +67,7 @@ const OutAccept = () => {
           {
             type: reqOption,
             status: "OK",
-            ids: selectedStudents,
+            id_list: selectedStudents,
           },
           {
             onSuccess: () => {
@@ -120,7 +120,7 @@ const OutAccept = () => {
           {
             type: reqOption,
             status: "NO",
-            ids: selectedStudents,
+            id_list: selectedStudents,
           },
           {
             onSuccess: () => {
@@ -188,7 +188,7 @@ const OutAccept = () => {
             {getClassMutate?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
-                  handleAcceptListClick(dataItem.id, dataItem.username)
+                  handleAcceptListClick(dataItem.id, dataItem.user_name)
                 }
                 key={index}
                 time={`${dataItem.start} ~ ${dataItem.end}`}
@@ -202,7 +202,7 @@ const OutAccept = () => {
             {getClassMutate?.map((dataItem, index) => (
               <AcceptList
                 onClick={() =>
-                  handleAcceptListClick(dataItem.id, dataItem.username)
+                  handleAcceptListClick(dataItem.id, dataItem.user_name)
                 }
                 key={index}
                 time={`${dataItem.start} ~`}
