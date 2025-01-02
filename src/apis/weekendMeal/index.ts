@@ -25,10 +25,12 @@ interface notCheckMeal {
   num: number;
 }
 
+const router = "/weekend-meal";
+
 export const Printexcel = () => {
   const downloadExcel = async () => {
     try {
-      const response = await instance.get("/weekend-meal/excel", {
+      const response = await instance.get(`${router}/excel`, {
         responseType: "blob",
       });
 
@@ -52,7 +54,7 @@ export const useClassWeekendMealExcel = () => {
   const usedownloadClassExcel = async (grade: number, class_num: number) => {
     try {
       const { data } = await instance.get(
-        `/weekend-meal/excel/grade?grade=${grade}&class_num=${class_num}`,
+        `${router}/excel/grade?grade=${grade}&class_num=${class_num}`,
         {
           responseType: "blob",
         }
@@ -83,7 +85,7 @@ export const ChangeState = () => {
     mutationFn: async (params) => {
       try {
         await instance.patch(
-          `/weekend-meal/status?id=${params.id}&status=${params.status}`
+          `${router}/status?id=${params.id}&status=${params.status}`
         );
       } catch (error) {
         handleError(error);
@@ -98,7 +100,7 @@ export const GetAllStudentMeal = () => {
     queryKey: ["GetAllStudentMeal"],
     queryFn: async () => {
       try {
-        const { data } = await instance.get(`weekend-meal/hey`);
+        const { data } = await instance.get(`${router}/application-list`);
         return data;
       } catch (error) {
         handleError(error);
@@ -114,7 +116,7 @@ export const MealCheck = (grade: number, class_num: number) => {
     queryFn: async () => {
       try {
         const { data } = await instance.get<mealcheckProp[]>(
-          `/weekend-meal/all?grade=${grade}&class_num=${class_num}`
+          `${router}/all?grade=${grade}&class_num=${class_num}`
         );
         return data;
       } catch (error) {
@@ -131,7 +133,7 @@ export const NotMealCheck = (grade: number, class_num: number) => {
     queryFn: async () => {
       try {
         const { data } = await instance.get<notCheckMeal[]>(
-          `/weekend-meal/quit?grade=${grade}&class_num=${class_num}`
+          `${router}l/quit?grade=${grade}&class_num=${class_num}`
         );
         return data;
       } catch (error) {
